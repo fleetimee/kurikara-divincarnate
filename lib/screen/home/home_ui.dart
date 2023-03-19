@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:huixinapp/data/active_students.dart';
 import 'package:huixinapp/data/home_course.dart';
+import 'package:huixinapp/widget/navigator_style.dart';
 
 import '../../widget/AppBar/appbar_style.dart';
 
@@ -172,6 +173,7 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
+      bottomNavigationBar: const NavigatorBar(),
     );
   }
 }
