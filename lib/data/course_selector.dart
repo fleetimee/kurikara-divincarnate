@@ -1,13 +1,13 @@
 class CourseSelector {
   final String day;
   final String logoUrl;
-  final String route;
+  final String routeName;
   final bool isUnlocked;
 
   CourseSelector({
     required this.day,
     required this.logoUrl,
-    this.route = '',
+    this.routeName = '',
     required this.isUnlocked,
   });
 }
@@ -31,6 +31,7 @@ final List<CourseSelector> allCourseSelector = [
   CourseSelector(
     day: 'Day 4',
     logoUrl: 'assets/images/tree.png',
+    routeName: '/course_initial',
     isUnlocked: true,
   ),
   CourseSelector(

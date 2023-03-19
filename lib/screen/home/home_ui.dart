@@ -4,7 +4,6 @@ import 'package:huixinapp/data/active_students.dart';
 import 'package:huixinapp/data/home_course.dart';
 
 import '../../widget/AppBar/appbar_style.dart';
-import '../../widget/navigator_style.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -32,7 +31,7 @@ class HomePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  width: 280,
+                  width: 350,
                   height: 100,
                   child: ListView.separated(
                     separatorBuilder: (context, index) =>
@@ -116,6 +115,8 @@ class HomePage extends StatelessWidget {
                                         padding: const EdgeInsets.all(8.0),
                                         child: Center(
                                           child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
                                             children: [
                                               Text(
                                                 allHomeCourse[index].courseName,
@@ -171,7 +172,6 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: const NavigatorBar(),
     );
   }
 }

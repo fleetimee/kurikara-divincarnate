@@ -29,4 +29,8 @@ final List<ActiveStudents> studentsData = [
     studentName: 'Pikamee',
     imageUrl: 'assets/images/pikamee.jpg',
   ),
+  ActiveStudents(
+    studentName: 'Moona',
+    imageUrl: 'assets/images/moona.jpg',
+  ),
 ];

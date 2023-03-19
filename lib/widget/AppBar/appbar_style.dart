@@ -47,18 +47,16 @@ class AppBarHome extends AppBar {
     ),
   }) : super(
           key: key,
-          title: Padding(
-            padding: const EdgeInsets.only(left: 20.0),
-            child: Text(
-              'Hi $title',
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 20,
-                fontWeight: FontWeight.w400,
-              ),
-              textAlign: TextAlign.center,
+          title: Text(
+            'Hi $title',
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 25,
+              fontWeight: FontWeight.w400,
             ),
+            textAlign: TextAlign.center,
           ),
+          toolbarHeight: 100,
           actions: [
             Padding(
               padding: const EdgeInsets.only(right: 30.0),
@@ -119,11 +117,18 @@ class AppBarHome extends AppBar {
           shape: RoundedRectangleBorder(
             borderRadius: borderRadius,
           ),
-          leading: Transform.translate(
-            offset: const Offset(30, -2),
-            child: Image.asset(
-              "assets/images/home-appbar-logo.png",
-              fit: BoxFit.fill,
+          leadingWidth: 100,
+          // leading: Transform.translate(
+          //   offset: const Offset(30, -5),
+          //   child: Image.asset(
+          //     "assets/images/home-appbar-logo.png",
+          //     fit: BoxFit.fill,
+          //   ),
+          // ),
+          leading: const Padding(
+            padding: EdgeInsets.only(left: 40.0),
+            child: Image(
+              image: AssetImage("assets/images/home-appbar-logo.png"),
             ),
           ),
         );
@@ -176,7 +181,7 @@ class AppBarBack extends AppBar {
             padding: const EdgeInsets.only(left: 20.0),
             
             child: Text(
-              '$title',
+              title,
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 25,

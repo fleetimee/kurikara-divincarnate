@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:huixinapp/screen/course_initial/course_initial_ui.dart';
 import 'package:huixinapp/screen/course_selector/course_selector_ui.dart';
 import 'package:huixinapp/screen/home/home_ui.dart';
 import 'package:huixinapp/screen/profile/information_ui.dart';
@@ -14,6 +15,7 @@ final Map<String, WidgetBuilder> routes = {
   '/': (context) => const LoginPage(),
   '/home': (context) => const HomePage(),
   '/course_selector': (context) => const CourseSelector(),
+  '/course_initial': (context) => const CourseInitial(),
   '/profile': (context) => const ProfilePage(),
   '/profile/profiledetail': (context) => const ProfileDetailPage(),
   '/profile/information': (context) => const InformationPage(),
