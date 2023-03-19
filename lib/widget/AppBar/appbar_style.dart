@@ -161,15 +161,15 @@ class TitleAppBarDefault extends StatelessWidget {
 class AppBarBack extends AppBar {
   AppBarBack({
     Key? key,
-    Function()? onPressed,
     required String title,
     Color? appbarColor,
-    double? elevation = 4.0, // Set a default value for the elevation property
+    double? elevation = 4.0,
     PreferredSizeWidget? bottom,
-    borderRadius = const BorderRadius.only(
+    BorderRadius borderRadius = const BorderRadius.only(
       bottomLeft: Radius.circular(50.0),
       bottomRight: Radius.circular(50.0),
     ),
+    BuildContext? context, // optional parameter with default value of null
   }) : super(
           key: key,
           title: Padding(
@@ -184,71 +184,26 @@ class AppBarBack extends AppBar {
               textAlign: TextAlign.center,
             ),
           ),
-          // actions: [
-          //   Padding(
-          //     padding: const EdgeInsets.only(right: 30.0),
-          //     child: Row(
-          //       children: [
-          //         Row(
-          //           children: [
-          //             GestureDetector(
-          //               child: Image.asset(
-          //                 "assets/images/crown.png",
-          //                 fit: BoxFit.fill,
-          //               ),
-          //             ),
-          //             const SizedBox(
-          //               width: 10,
-          //             ),
-          //             const Text(
-          //               "4",
-          //               style: TextStyle(
-          //                 color: Colors.black,
-          //                 fontSize: 20,
-          //                 fontWeight: FontWeight.w400,
-          //               ),
-          //             ),
-          //           ],
-          //         ),
-          //         const SizedBox(
-          //           width: 10,
-          //         ),
-          //         Row(
-          //           children: [
-          //             GestureDetector(
-          //               child: Image.asset(
-          //                 "assets/images/heart.png",
-          //                 fit: BoxFit.fill,
-          //               ),
-          //             ),
-          //             const SizedBox(
-          //               width: 10,
-          //             ),
-          //             const Text(
-          //               "13",
-          //               style: TextStyle(
-          //                 color: Colors.black,
-          //                 fontSize: 20,
-          //                 fontWeight: FontWeight.w400,
-          //               ),
-          //             ),
-          //           ],
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          // ],
-          backgroundColor: AppColors.appbarColor,
+          backgroundColor: appbarColor ?? AppColors.appbarColor,
           bottom: bottom,
           elevation: elevation,
           shape: RoundedRectangleBorder(
             borderRadius: borderRadius,
           ),
-          leading: Transform.translate(
-            offset: const Offset(30, -2),
-            child: Image.asset(
-              "assets/images/appbarback.png",
-              fit: BoxFit.fill,
+          leading: GestureDetector(
+            onTap: () {
+              if (context != null) {
+                Navigator.pop(context); // Navigate back to previous screen using the provided context
+              }
+            },
+            child: Transform.translate(
+              offset: const Offset(30, -5),
+              child: Image.asset(
+                "assets/images/appbarback.png",
+                fit: BoxFit.fill,
+                // height: 20,
+                // width: 20,
+              ),
             ),
           ),
         );

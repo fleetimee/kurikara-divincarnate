@@ -13,6 +13,7 @@ class ReportingDetailPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBarBack(
         title: 'Reporting Detail',
+        context: context, 
       ),
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 50),
