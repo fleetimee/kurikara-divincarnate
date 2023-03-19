@@ -6,6 +6,7 @@ import 'package:huixinapp/screen/profile/profile_ui.dart';
 import 'package:huixinapp/screen/signin/signin_ui.dart';
 import 'package:huixinapp/screen/singup/signup_ui.dart';
 
+import '../screen/profile/detail_profile_ui.dart';
 import '../screen/reporting/reporting_detail_ui.dart';
 import '../screen/reporting/reporting_ui.dart';
 
@@ -14,6 +15,7 @@ final Map<String, WidgetBuilder> routes = {
   '/home': (context) => const HomePage(),
   '/course_selector': (context) => const CourseSelector(),
   '/profile': (context) => const ProfilePage(),
+  '/profile/profiledetail': (context) => const ProfileDetailPage(),
   '/profile/information': (context) => const InformationPage(),
   '/signup': (context) => const SignUpPage(),
   '/reporting': (context) => const ReportingPage(),
