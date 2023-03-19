@@ -174,12 +174,13 @@ class AppBarBack extends AppBar {
           key: key,
           title: Padding(
             padding: const EdgeInsets.only(left: 20.0),
+            
             child: Text(
               '$title',
               style: const TextStyle(
                 color: Colors.black,
-                fontSize: 20,
-                fontWeight: FontWeight.w400,
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
               ),
               textAlign: TextAlign.center,
             ),

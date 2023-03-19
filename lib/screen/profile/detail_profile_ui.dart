@@ -6,6 +6,8 @@ import 'package:huixinapp/widget/button.dart';
 import 'package:huixinapp/widget/register_form.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../widget/profile_form.dart';
+
 class ProfileDetailPage extends StatefulWidget {
   const ProfileDetailPage({super.key});
 
@@ -27,12 +29,18 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
     }
   }
 
+  
+  var Space = const SizedBox(
+    height: 25.0,
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBarDefault(
-        title: "Signup",
+      appBar: AppBarBack(
+        title: 'Profile',
+        context: context,
       ),
       body: Container(
         padding: const EdgeInsets.only(top: 50, bottom: 50),
@@ -40,43 +48,33 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             _imagePicker(),
-            const SizedBox(
-              height: 20.0,
-            ),
-            const RegisterForm(
+            Space,
+            const ProfileForm(
               label: 'UserX123',
               obscureTextEnabled: 'false',
             ),
-            const SizedBox(
-              height: 10.0,
-            ),
-            const RegisterForm(
+            Space,
+            const ProfileForm(
               label: '12345678',
               obscureTextEnabled: 'true',
               obscureToggle: true,
             ),
-            const SizedBox(
-              height: 10.0,
-            ),
-            const RegisterForm(
+            Space,
+            const ProfileForm(
               label: 'H123456',
               obscureTextEnabled: 'false',
             ),
-            const SizedBox(
-              height: 10.0,
-            ),
-            const RegisterForm(
+            Space,
+            const ProfileForm(
               label: 'Ahmad TaftaZani',
               obscureTextEnabled: 'false',
             ),
-            const SizedBox(
-              height: 10.0,
-            ),
-            const RegisterForm(
+            Space,
+            const ProfileForm(
               label: 'Birth Date',
               obscureTextEnabled: 'false',
             ),
-            Spacer(),
+            const Spacer(),
             PrimaryButton(
               text: 'SUBMIT',
               onPressed: () {

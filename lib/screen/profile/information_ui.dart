@@ -8,8 +8,9 @@ class InformationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBarDefault(
+        appBar: AppBarBack(
           title: "Info",
+          context: context,
         ),
         body: Column(
           children: [
@@ -64,7 +65,7 @@ class InformationPage extends StatelessWidget {
                   ),
                   const Text(
                     'Nah, bagi kamu yang ingin tahu mengenai info kegiatan dan momen-momen penting di sekolah selama satu tahun kedepan, kalender pendidikan ini harus kamu simak sebaik-baiknya. Di sini, kamu bisa melihat periode ujian, hari libur nasional, jatwal tahun ajaran baru, hingga jatwal pelaksanaan SNMPTN dan UTBK SBMPTN 2022',
-                    style: TextStyle(fontSize: 17, color: Colors.black),
+                    style: TextStyle(fontSize: 16, color: Colors.black),
                     textAlign: TextAlign.justify,
                   ),
                   const SizedBox(
@@ -72,7 +73,7 @@ class InformationPage extends StatelessWidget {
                   ),
                   const Text(
                     'Yuk, cek jatwal kalender pendidikan tahun ajaran 2021/2022 berikut ini. Jatwal dibawah ini mengacu pada Dinas Pendidikan DKI Jakarta dan dapat berbeda di tiap daerah sesuai dengan kebijakan pemerintah daerah masing-masing.',
-                    style: TextStyle(fontSize: 17, color: Colors.black),
+                    style: TextStyle(fontSize: 16, color: Colors.black),
                     textAlign: TextAlign.justify,
                   ),
                 ],
