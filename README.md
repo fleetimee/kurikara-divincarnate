@@ -1,4 +1,4 @@
-# huixinapp
+# kurikara-divincarnate
 
 A new Flutter project.
 
