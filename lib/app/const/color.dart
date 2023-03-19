@@ -6,4 +6,5 @@ class AppColors {
   static const Color background = Color(0xFFF2F2F2);
   static const Color appbarColor = Color(0xFFFDEEA5);
   static const Color bottom = Color(0xFFFF4546);
+  static const Color borderform = Color.fromRGBO(0, 0, 0, 0.1);
 }
