@@ -4,6 +4,7 @@ import 'package:huixinapp/data/active_students.dart';
 import 'package:huixinapp/data/home_course.dart';
 
 import '../../widget/AppBar/appbar_style.dart';
+import '../../widget/navigator_style.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -170,7 +171,7 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
-      // bottomNavigationBar: const NavigatorBar(),
+      bottomNavigationBar: const NavigatorBar(),
     );
   }
 }

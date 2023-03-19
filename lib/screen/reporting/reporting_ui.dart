@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:huixinapp/widget/AppBar/appbar_style.dart';
+
+import '../../widget/navigator_style.dart';
 
 class ReportingPage extends StatelessWidget {
   const ReportingPage({super.key});
@@ -6,12 +9,13 @@ class ReportingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Reporting'),
+      appBar: AppBarDefault(
+        title: "Profile",
       ),
       body: const Center(
         child: Text('Reporting'),
       ),
+      bottomNavigationBar: NavigatorBar(),
     );
   }
 }
