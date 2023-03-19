@@ -157,3 +157,99 @@ class TitleAppBarDefault extends StatelessWidget {
     );
   }
 }
+
+class AppBarBack extends AppBar {
+  AppBarBack({
+    Key? key,
+    Function()? onPressed,
+    required String title,
+    Color? appbarColor,
+    double? elevation = 4.0, // Set a default value for the elevation property
+    PreferredSizeWidget? bottom,
+    borderRadius = const BorderRadius.only(
+      bottomLeft: Radius.circular(50.0),
+      bottomRight: Radius.circular(50.0),
+    ),
+  }) : super(
+          key: key,
+          title: Padding(
+            padding: const EdgeInsets.only(left: 20.0),
+            child: Text(
+              '$title',
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 20,
+                fontWeight: FontWeight.w400,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          // actions: [
+          //   Padding(
+          //     padding: const EdgeInsets.only(right: 30.0),
+          //     child: Row(
+          //       children: [
+          //         Row(
+          //           children: [
+          //             GestureDetector(
+          //               child: Image.asset(
+          //                 "assets/images/crown.png",
+          //                 fit: BoxFit.fill,
+          //               ),
+          //             ),
+          //             const SizedBox(
+          //               width: 10,
+          //             ),
+          //             const Text(
+          //               "4",
+          //               style: TextStyle(
+          //                 color: Colors.black,
+          //                 fontSize: 20,
+          //                 fontWeight: FontWeight.w400,
+          //               ),
+          //             ),
+          //           ],
+          //         ),
+          //         const SizedBox(
+          //           width: 10,
+          //         ),
+          //         Row(
+          //           children: [
+          //             GestureDetector(
+          //               child: Image.asset(
+          //                 "assets/images/heart.png",
+          //                 fit: BoxFit.fill,
+          //               ),
+          //             ),
+          //             const SizedBox(
+          //               width: 10,
+          //             ),
+          //             const Text(
+          //               "13",
+          //               style: TextStyle(
+          //                 color: Colors.black,
+          //                 fontSize: 20,
+          //                 fontWeight: FontWeight.w400,
+          //               ),
+          //             ),
+          //           ],
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ],
+          backgroundColor: AppColors.appbarColor,
+          bottom: bottom,
+          elevation: elevation,
+          shape: RoundedRectangleBorder(
+            borderRadius: borderRadius,
+          ),
+          leading: Transform.translate(
+            offset: const Offset(30, -2),
+            child: Image.asset(
+              "assets/images/appbarback.png",
+              fit: BoxFit.fill,
+            ),
+          ),
+        );
+}

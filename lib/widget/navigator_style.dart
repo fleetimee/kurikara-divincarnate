@@ -22,7 +22,7 @@ class _NavigatorBarState extends State<NavigatorBar> {
           Navigator.pushNamed(context, '/home');
           break;
         case _SelectedTab.ranked:
-          Navigator.pushNamed(context, '/ranked');
+          Navigator.pushNamed(context, '/reportingdetail');
           break;
         case _SelectedTab.profile:
           Navigator.pushNamed(context, '/profile');
