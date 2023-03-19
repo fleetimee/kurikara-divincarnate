@@ -19,6 +19,7 @@ dependencies:
   form_builder_validators: ^8.5.0
   google_fonts: ^4.0.3
   image_picker: ^0.8.7
+  responsive_framework: ^0.2.0
 
 dev_dependencies:
   flutter_lints: ^2.0.0

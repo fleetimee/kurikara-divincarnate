@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:huixinapp/data/course_selector.dart';
 import 'package:huixinapp/widget/AppBar/appbar_style.dart';
+import 'package:huixinapp/widget/bottom_appbar_note.dart';
 
 class CourseSelector extends StatelessWidget {
   const CourseSelector({super.key});
@@ -25,12 +26,12 @@ class CourseSelector extends StatelessWidget {
                 ),
                 itemBuilder: (context, index) {
                   return GestureDetector(
-                    // onTap: () {
-                    //   allCourseSelector[index].isUnlocked == true
-                    //       ? Navigator.pushNamed(
-                    //           context, allCourseSelector[index].route)
-                    //       : null;
-                    // },
+                    onTap: () {
+                      allCourseSelector[index].routeName != ''
+                          ? Navigator.pushNamed(
+                              context, allCourseSelector[index].routeName)
+                          : null;
+                    },
                     child: Card(
                       child: Column(
                         children: [
@@ -43,6 +44,8 @@ class CourseSelector extends StatelessWidget {
                                         padding: const EdgeInsets.all(8.0),
                                         child: Center(
                                           child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
                                             children: [
                                               Text(
                                                 allCourseSelector[index].day,
@@ -99,93 +102,7 @@ class CourseSelector extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: BottomAppBar(
-        color: const Color(0xffFFF9E9),
-        child: SizedBox(
-            height: 125,
-            child: Padding(
-              padding: const EdgeInsets.only(
-                left: 45,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'NOTE :',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFFF44336),
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Table(
-                    columnWidths: const {
-                      0: FlexColumnWidth(0.05),
-                      1: FlexColumnWidth(0.83),
-                      2: FlexColumnWidth(0.12),
-                    },
-                    children: const [
-                      TableRow(
-                        children: [
-                          Text(
-                            '-',
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFF000000),
-                            ),
-                          ),
-                          Text(
-                            'This lesson must finish in one day. If you miss this leasone you must finish previous lesson to learn & finish this lesson ',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Color(0xFF000000),
-                            ),
-                          ),
-                          Text(
-                            '',
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFF000000),
-                            ),
-                          ),
-                        ],
-                      ),
-                      TableRow(
-                        children: [
-                          Text(
-                            '-',
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFF000000),
-                            ),
-                          ),
-                          Text(
-                            'The exercise point below 70 must repeat',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Color(0xFF000000),
-                            ),
-                          ),
-                          Text(
-                            '',
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFF000000),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            )),
-      ),
+      bottomNavigationBar: const BottomAppBarWithNotes(),
     );
   }
 }

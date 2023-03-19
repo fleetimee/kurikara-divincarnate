@@ -122,7 +122,7 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
         Positioned(
           top: 100,
-          right: 120,
+          right: 160,
           child: GestureDetector(
             child: Image.asset(
               "assets/images/photo-picker.png",
