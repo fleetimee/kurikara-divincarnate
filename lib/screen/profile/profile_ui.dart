@@ -18,7 +18,12 @@ class ProfilePage extends StatelessWidget {
 
       body: Column(
         children: [
-          profileUser(),
+          InkWell(
+            child: profileUser(),
+            onTap: () {
+              Navigator.pushNamed(context, '/profile/profiledetail');
+            },
+          ),
           information(context),
           Container(
             alignment: Alignment.centerLeft,
@@ -65,9 +70,9 @@ class ProfilePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
-                  'Novian Andika',
+                  'Ahmad TaftaZani',
                   style: TextStyle(
-                      fontSize: 40,
+                      fontSize: 30,
                       fontWeight: FontWeight.w500,
                       color: Colors.black),
                 ),
@@ -90,7 +95,7 @@ class ProfilePage extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(50),
               child: Image.asset(
-                'assets/images/profile.jpg',
+                'assets/images/user.png',
                 width: 100,
                 height: 100,
                 fit: BoxFit.cover,
