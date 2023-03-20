@@ -1,3 +1,5 @@
+// ignore_for_file: override_on_non_overriding_member
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';

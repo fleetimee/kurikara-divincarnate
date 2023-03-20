@@ -8,7 +8,11 @@ class CourseInitial extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarHome(title: 'Nanao Ise'),
+      appBar: AppBarCourse(
+        title: 'Day 4',
+        progression: '0/14',
+        context: context,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(32),
         child: Center(
