@@ -332,8 +332,8 @@ class ProfilePage extends StatelessWidget {
                 ),
               ),
             ),
-            child: const Text('Following',
-                style: TextStyle(fontSize: 25, color: Colors.orange)),
+            // child: const Text('Following',
+            //     style: TextStyle(fontSize: 25, color: Colors.orange)),
           ),
 
           // SizedBox(

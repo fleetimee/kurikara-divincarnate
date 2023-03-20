@@ -198,7 +198,7 @@ class HomeItems extends StatelessWidget {
           )
         ],
       ),
-      bottomNavigationBar: const NavigatorBar(),
+      // bottomNavigationBar: const NavigatorBar(),
 
     );
   }
