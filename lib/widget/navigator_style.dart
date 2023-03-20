@@ -26,9 +26,10 @@ class _NavigatorBarState extends State<NavigatorBar> {
           Navigator.push(
               context, FadePageRoute(builder: (context) => const HomePage()));
           break;
-        case _SelectedTab.ranked:
-          Navigator.push(context,
-              FadePageRoute(builder: (context) => const ReportingDetailPage()));
+
+        case _SelectedTab.reporting:
+          Navigator.pushNamed(context, '/reporting');
+
           break;
         case _SelectedTab.profile:
           Navigator.push(context,
@@ -79,4 +80,4 @@ class _NavigatorBarState extends State<NavigatorBar> {
   }
 }
 
-enum _SelectedTab { home, ranked, profile }
+enum _SelectedTab { home, reporting, profile }

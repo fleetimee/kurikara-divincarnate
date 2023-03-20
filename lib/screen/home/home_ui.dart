@@ -7,6 +7,7 @@ import 'package:huixinapp/widget/navigator_style.dart';
 import 'package:huixinapp/widget/pageroute.dart';
 
 import '../../widget/AppBar/appbar_style.dart';
+import '../../widget/navigator_style.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -197,6 +198,8 @@ class HomeItems extends StatelessWidget {
           )
         ],
       ),
+      bottomNavigationBar: const NavigatorBar(),
+
     );
   }
 }
