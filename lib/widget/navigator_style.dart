@@ -21,8 +21,8 @@ class _NavigatorBarState extends State<NavigatorBar> {
         case _SelectedTab.home:
           Navigator.pushNamed(context, '/home');
           break;
-        case _SelectedTab.ranked:
-          Navigator.pushNamed(context, '/reportingdetail');
+        case _SelectedTab.reporting:
+          Navigator.pushNamed(context, '/reporting');
           break;
         case _SelectedTab.profile:
           Navigator.pushNamed(context, '/profile');
@@ -66,4 +66,4 @@ class _NavigatorBarState extends State<NavigatorBar> {
   }
 }
 
-enum _SelectedTab { home, ranked, profile }
+enum _SelectedTab { home, reporting, profile }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:huixinapp/app/const/color.dart';
 
+import '../../data/profile_followers.dart';
 import '../../widget/AppBar/appbar_style.dart';
 import '../../widget/navigator_style.dart';
 
@@ -49,7 +50,11 @@ class ProfilePage extends StatelessWidget {
             ),
           ),
           friend(context),
+          const Spacer(),
           logout(context),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.07,
+          ),
         ],
       ),
       bottomNavigationBar: const NavigatorBar(),
@@ -89,13 +94,13 @@ class ProfilePage extends StatelessWidget {
                 Row(
                   children: [
                     Image.asset(
-                'assets/images/clock.png',
-                width: 20,
-                height: 20,
-                fit: BoxFit.cover,
-              ),
-                    SizedBox(width: 10),
-                    Text(
+                      'assets/images/clock.png',
+                      width: 20,
+                      height: 20,
+                      fit: BoxFit.cover,
+                    ),
+                    const SizedBox(width: 10),
+                    const Text(
                       'Joined March 2023',
                       style: TextStyle(fontSize: 20, color: Colors.black),
                     ),
@@ -117,19 +122,23 @@ class ProfilePage extends StatelessWidget {
   }
 
   Widget information(BuildContext context) {
-    return Container(
-        width: MediaQuery.of(context).size.width * 0.9,
-        height: MediaQuery.of(context).size.height * 0.07,
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: const BorderRadius.all(Radius.circular(20)),
-            border: Border.all(
-              color: AppColors.borderform,
-              width: 3,
-            ),
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * 0.9,
+      height: MediaQuery.of(context).size.height * 0.07,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: const BorderRadius.all(Radius.circular(20)),
+          border: Border.all(
+            color: AppColors.borderform,
+            width: 3,
           ),
+        ),
+        child: GestureDetector(
+          onTap: () {
+            Navigator.pushNamed(context, '/profile/information');
+          },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -145,16 +154,15 @@ class ProfilePage extends StatelessWidget {
                 'Pengumuman untuk peserta ...',
                 style: TextStyle(fontSize: 18, color: Colors.black),
               ),
-              IconButton(
-                icon: const Icon(Icons.arrow_forward_ios),
+              const Icon(
+                Icons.arrow_forward_ios,
                 color: AppColors.borderform,
-                onPressed: () {
-                  Navigator.pushNamed(context, '/profile/information');
-                },
               ),
             ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 
   Widget statistic() {
@@ -307,10 +315,12 @@ class ProfilePage extends StatelessWidget {
           Container(
             width: MediaQuery.of(context).size.width * 0.9,
             padding: const EdgeInsets.only(left: 50),
-            child: Text('Following',
-                style: TextStyle(fontSize: 25, color: Colors.orange)),
+            child: Text(
+              'Following',
+              style: TextStyle(fontSize: 25, color: Colors.orange),
+            ),
             decoration: BoxDecoration(
-              border: Border(
+              border: const Border(
                 bottom: BorderSide(
                   color: Colors.orange,
                   width: 3,
@@ -319,10 +329,53 @@ class ProfilePage extends StatelessWidget {
               ),
             ),
           ),
-          Container(
-            child: Text('Follower',
-                style: TextStyle(fontSize: 25, color: Colors.orange)),
-          )
+          // SizedBox(
+          //   child: ListView.separated(
+          //     separatorBuilder: (context, index) => const SizedBox(width: 8),
+          //     itemCount: followersData.length,
+          //     scrollDirection: Axis.vertical,
+          //     itemBuilder: (context, index) {
+          //       return Row(
+          //         children: [
+          //           Container(
+          //             width: 50,
+          //             height: 50,
+          //             decoration: BoxDecoration(
+          //               shape: BoxShape.circle,
+          //               image: DecorationImage(
+          //                 image: AssetImage(followersData[index].imageUrl),
+          //                 fit: BoxFit.cover,
+          //               ),
+          //             ),
+          //           ),
+          //           const SizedBox(width: 8),
+          //           Column(
+          //             children: [
+          //               Text(
+          //                 followersData[index].nameFollower,
+          //                 style: const TextStyle(
+          //                   fontSize: 15,
+          //                   color: Colors.black,
+          //                 ),
+          //               ),
+          //               Text(
+          //                 '${followersData[index].pointFollower}XP',
+          //                 style: const TextStyle(
+          //                   fontSize: 15,
+          //                   color: Colors.grey,
+          //                 ),
+          //               ),
+          //             ],
+          //           ),
+          //           const Divider(
+          //             color: AppColors.borderform,
+          //             thickness: 3,
+          //           ),
+          //         ],
+          //       );
+          //     },
+          //   ),
+          // ),
         ],
       ),
     );
