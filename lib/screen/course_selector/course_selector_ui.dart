@@ -10,8 +10,10 @@ class CourseSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarHome(
-        title: 'Nanao Ise',
+      appBar: AppBarCourse(
+        title: '1A',
+        progression: '5/12',
+        context: context,
       ),
       body: Padding(
         padding: const EdgeInsets.all(32.0),

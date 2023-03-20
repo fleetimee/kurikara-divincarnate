@@ -28,6 +28,7 @@ class AppBarDefault extends AppBar {
           shape: RoundedRectangleBorder(
             borderRadius: borderRadius,
           ),
+          toolbarHeight: 100,
           automaticallyImplyLeading: false,
           leading: leading,
         );
@@ -134,6 +135,205 @@ class AppBarHome extends AppBar {
         );
 }
 
+class AppBarCourse extends AppBar {
+  AppBarCourse({
+    Key? key,
+    Function()? onPressed,
+    required String title,
+    required String progression,
+    Color? appbarColor,
+    double? elevation = 4.0, // Set a default value for the elevation property
+    PreferredSizeWidget? bottom,
+    borderRadius = const BorderRadius.only(
+      bottomLeft: Radius.circular(50.0),
+      bottomRight: Radius.circular(50.0),
+    ),
+    required context,
+  }) : super(
+          key: key,
+          title: Text(
+            title,
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 36,
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          toolbarHeight: 100,
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 40.0),
+              child: Row(
+                children: [
+                  Row(
+                    children: [
+                      GestureDetector(
+                        child: Image.asset(
+                          "assets/images/crown.png",
+                          height: 25,
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        progression,
+                        style: const TextStyle(
+                          color: Colors.black38,
+                          fontSize: 25,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+          backgroundColor: AppColors.appbarColor,
+          bottom: bottom,
+          elevation: elevation,
+          shape: RoundedRectangleBorder(
+            borderRadius: borderRadius,
+          ),
+          leadingWidth: 100,
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 40.0),
+            child: InkWell(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: const Image(
+                image: AssetImage("assets/images/back-button.png"),
+              ),
+            ),
+          ),
+        );
+}
+
+class AppBarReading extends AppBar {
+  AppBarReading({
+    Key? key,
+    Function()? onPressed,
+    required String title,
+    Color? appbarColor,
+    double? elevation = 4.0, // Set a default value for the elevation property
+    PreferredSizeWidget? bottom,
+    borderRadius = const BorderRadius.only(
+      bottomLeft: Radius.circular(50.0),
+      bottomRight: Radius.circular(50.0),
+    ),
+    required context,
+  }) : super(
+          key: key,
+          title: Text(
+            title,
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 36,
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          toolbarHeight: 100,
+          backgroundColor: AppColors.appbarColor,
+          bottom: bottom,
+          elevation: elevation,
+          shape: RoundedRectangleBorder(
+            borderRadius: borderRadius,
+          ),
+          leadingWidth: 100,
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 40.0),
+            child: InkWell(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: const Image(
+                image: AssetImage("assets/images/back-button.png"),
+              ),
+            ),
+          ),
+        );
+}
+
+class AppBarExercise extends AppBar {
+  AppBarExercise({
+    Key? key,
+    Function()? onPressed,
+    required String title,
+    Color? appbarColor,
+    double? elevation = 4.0, // Set a default value for the elevation property
+    borderRadius = const BorderRadius.only(
+      bottomLeft: Radius.circular(50.0),
+      bottomRight: Radius.circular(50.0),
+    ),
+    required context,
+  }) : super(
+          key: key,
+          title: Text(
+            title,
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 36,
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          centerTitle: true,
+          toolbarHeight: 100,
+          backgroundColor: AppColors.appbarColor,
+          elevation: elevation,
+          shape: RoundedRectangleBorder(
+            borderRadius: borderRadius,
+          ),
+        );
+}
+
+class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const CustomAppBar({
+    Key? key,
+    required this.title,
+    required this.numberOfExercises,
+    this.appbarColor,
+  }) : super(key: key);
+
+  final String title;
+  final Color? appbarColor;
+  final String numberOfExercises;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        AppBarExercise(title: title, context: context),
+        Positioned(
+          top: 80,
+          left: 50,
+          child: CircleAvatar(
+            radius: 50,
+            backgroundColor: const Color(0xFFFF4546),
+            child: Text(
+              numberOfExercises,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 40,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight + 50);
+}
+
 class TitleAppBarDefault extends StatelessWidget {
   final String labelTitle;
 
@@ -179,7 +379,6 @@ class AppBarBack extends AppBar {
           key: key,
           title: Padding(
             padding: const EdgeInsets.only(left: 20.0),
-            
             child: Text(
               title,
               style: const TextStyle(
@@ -199,7 +398,8 @@ class AppBarBack extends AppBar {
           leading: GestureDetector(
             onTap: () {
               if (context != null) {
-                Navigator.pop(context); // Navigate back to previous screen using the provided context
+                Navigator.pop(
+                    context); // Navigate back to previous screen using the provided context
               }
             },
             child: Transform.translate(

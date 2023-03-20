@@ -9,8 +9,9 @@ class ExerciseTwo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarHome(
-        title: 'Exercise Two',
+      appBar: const CustomAppBar(
+        title: 'Exercise',
+        numberOfExercises: '2',
       ),
       body: Center(
         child: Column(

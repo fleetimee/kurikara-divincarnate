@@ -176,7 +176,15 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
-      // bottomNavigationBar: const NavigatorBar(),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      // // Make floating action button that act like bottomNavigationbar
+      // floatingActionButton: FloatingActionButton.extended(
+      //   onPressed: () {},
+      //   label: const Text('Start'),
+      //   icon: const Icon(Icons.play_arrow),
+      //   backgroundColor: const Color(0xffFF4546),
+      // ),
     );
+    // bottomNavigationBar: const NavigatorBar(),
   }
 }
