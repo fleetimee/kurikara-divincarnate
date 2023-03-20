@@ -2,6 +2,10 @@ import 'package:dot_navigation_bar/dot_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:huixinapp/app/const/color.dart';
+import 'package:huixinapp/screen/home/home_ui.dart';
+import 'package:huixinapp/screen/profile/profile_ui.dart';
+import 'package:huixinapp/screen/reporting/reporting_detail_ui.dart';
+import 'package:huixinapp/widget/pageroute.dart';
 
 class NavigatorBar extends StatefulWidget {
   const NavigatorBar({super.key});
@@ -19,13 +23,16 @@ class _NavigatorBarState extends State<NavigatorBar> {
 
       switch (_selectedTab) {
         case _SelectedTab.home:
-          Navigator.pushNamed(context, '/home');
+          Navigator.push(
+              context, FadePageRoute(builder: (context) => const HomePage()));
           break;
         case _SelectedTab.ranked:
-          Navigator.pushNamed(context, '/reportingdetail');
+          Navigator.push(context,
+              FadePageRoute(builder: (context) => const ReportingDetailPage()));
           break;
         case _SelectedTab.profile:
-          Navigator.pushNamed(context, '/profile');
+          Navigator.push(context,
+              FadePageRoute(builder: (context) => const ProfilePage()));
           break;
       }
     });
@@ -33,12 +40,15 @@ class _NavigatorBarState extends State<NavigatorBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(bottom: 10),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 1),
       child: DotNavigationBar(
-        paddingR: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+        dotIndicatorColor: AppColors.bottom,
+        marginR: const EdgeInsets.symmetric(horizontal: 40, vertical: 1),
+        paddingR: const EdgeInsets.symmetric(horizontal: 80, vertical: 5),
+        enableFloatingNavBar: true,
+        borderRadius: 15,
         backgroundColor: AppColors.bottom,
-        currentIndex: _SelectedTab.values.indexOf(_selectedTab),
         onTap: _handleIndexChanged,
 
         // dotIndicatorColor: Colors.black,
@@ -46,19 +56,22 @@ class _NavigatorBarState extends State<NavigatorBar> {
           /// Home
           DotNavigationBarItem(
             icon: const Icon(Icons.home),
+            unselectedColor: Colors.white,
             selectedColor: Colors.white,
           ),
 
           /// Likes
           DotNavigationBarItem(
             icon: const FaIcon(FontAwesomeIcons.bullseye),
-            selectedColor: Colors.white,
+            // selectedColor: Colors.white,
+            unselectedColor: Colors.white,
           ),
 
           /// Search
           DotNavigationBarItem(
             icon: const Icon(Icons.people),
-            selectedColor: Colors.white,
+            // selectedColor: Colors.white,
+            unselectedColor: Colors.white,
           ),
         ],
       ),
