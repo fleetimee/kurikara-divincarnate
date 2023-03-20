@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:huixinapp/app/const/color.dart';
 
+import '../../data/active_students.dart';
 import '../../data/profile_followers.dart';
 import '../../widget/AppBar/appbar_style.dart';
 import '../../widget/navigator_style.dart';
@@ -123,7 +124,6 @@ class ProfilePage extends StatelessWidget {
 
   Widget information(BuildContext context) {
     return SizedBox(
-
       width: MediaQuery.of(context).size.width * 0.9,
       height: MediaQuery.of(context).size.height * 0.07,
       child: Container(
@@ -134,7 +134,6 @@ class ProfilePage extends StatelessWidget {
           border: Border.all(
             color: AppColors.borderform,
             width: 3,
-
           ),
         ),
         child: GestureDetector(
@@ -257,50 +256,6 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  // Widget friend() {
-  //   return Column(
-  //     children: [
-  //       Container(
-  //         padding: const EdgeInsets.only(left: 20),
-  //         child: const Text(
-  //           'Friends',
-  //           style: TextStyle(fontSize: 30, color: Colors.black),
-  //         ),
-  //       ),
-  //       Container(
-  //         padding: const EdgeInsets.all(10),
-  //         child: Column(
-  //           children: [
-  //             Container(
-  //               // alignment: Alignment.center,
-  //               padding: const EdgeInsets.only(left: 50, top: 10, bottom: 10),
-  //               width: 350,
-  //               decoration: const BoxDecoration(
-  //                 color: Colors.white,
-  //                 borderRadius: BorderRadius.only(
-  //                   topLeft: Radius.circular(20),
-  //                   topRight: Radius.circular(20),
-  //                 ),
-  //               ),
-  //               child: const Text(
-  //                 'Follower',
-  //                 textAlign: TextAlign.start,
-  //                 style: TextStyle(fontSize: 25, color: Colors.orange),
-  //               ),
-  //             ),
-  //             ListView.builder(
-  //               itemCount: 1,
-  //               itemBuilder: (BuildContext context, int index) {
-  //                 return;
-  //               },
-  //             ),
-  //           ],
-  //         ),
-  //       )
-  //     ],
-  //   );
-  // }
-
   Widget friend(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.9,
@@ -317,14 +272,8 @@ class ProfilePage extends StatelessWidget {
           Container(
             width: MediaQuery.of(context).size.width * 0.9,
             padding: const EdgeInsets.only(left: 50),
-
-            child: Text(
-              'Following',
-              style: TextStyle(fontSize: 25, color: Colors.orange),
-            ),
             decoration: BoxDecoration(
               border: const Border(
-
                 bottom: BorderSide(
                   color: Colors.orange,
                   width: 3,
@@ -332,9 +281,14 @@ class ProfilePage extends StatelessWidget {
                 ),
               ),
             ),
+            child: Text(
+              'Following',
+              style: TextStyle(fontSize: 25, color: Colors.orange),
+            ),
             // child: const Text('Following',
             //     style: TextStyle(fontSize: 25, color: Colors.orange)),
           ),
+          listfriend(),
 
           // SizedBox(
           //   child: ListView.separated(
@@ -383,8 +337,57 @@ class ProfilePage extends StatelessWidget {
           //     },
           //   ),
           // ),
-
         ],
+      ),
+    );
+  }
+
+  Widget listfriend() {
+    return SizedBox(
+      width: 330,
+      height: 100,
+      child: ListView.separated(
+        separatorBuilder: (context, index) => const SizedBox(width: 8),
+        itemCount: studentsData.length,
+        scrollDirection: Axis.vertical,
+        itemBuilder: (context, index) {
+          return Row(
+            children: [
+              Container(
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    image: AssetImage(followersData[index].imageUrl),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    followersData[index].nameFollower,
+                    style: const TextStyle(
+                      fontSize: 15,
+                      color: Colors.black,
+                    ),
+                  ),
+                  Text(
+                    '${followersData[index].pointFollower}XP',
+                    style: const TextStyle(
+                      fontSize: 15,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          );
+        },
       ),
     );
   }

@@ -14,11 +14,11 @@ final List<FollowersData> followersData = [
   FollowersData(
     nameFollower: 'Bluesky',
     pointFollower: '1234',
-    imageUrl: 'assets/images/reporting1.png',
+    imageUrl: 'assets/images/gura.jpg',
   ),
   FollowersData(
     nameFollower: 'Berry Benka',
     pointFollower: '5678',
-    imageUrl: 'assets/images/reporting1.png',
+    imageUrl: 'assets/images/pekora.jpg',
   ),
 ];
