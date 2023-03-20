@@ -16,6 +16,7 @@ final List<CourseSelector> allCourseSelector = [
   CourseSelector(
     day: 'Day 1',
     logoUrl: 'assets/images/chicken.png',
+    routeName: '/course_done',
     isUnlocked: true,
   ),
   CourseSelector(
