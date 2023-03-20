@@ -89,13 +89,13 @@ class ProfilePage extends StatelessWidget {
                 Row(
                   children: [
                     Image.asset(
-                'assets/images/clock.png',
-                width: 20,
-                height: 20,
-                fit: BoxFit.cover,
-              ),
-                    SizedBox(width: 10),
-                    Text(
+                      'assets/images/clock.png',
+                      width: 20,
+                      height: 20,
+                      fit: BoxFit.cover,
+                    ),
+                    const SizedBox(width: 10),
+                    const Text(
                       'Joined March 2023',
                       style: TextStyle(fontSize: 20, color: Colors.black),
                     ),
@@ -117,7 +117,7 @@ class ProfilePage extends StatelessWidget {
   }
 
   Widget information(BuildContext context) {
-    return Container(
+    return SizedBox(
         width: MediaQuery.of(context).size.width * 0.9,
         height: MediaQuery.of(context).size.height * 0.07,
         child: Container(
@@ -307,9 +307,7 @@ class ProfilePage extends StatelessWidget {
           Container(
             width: MediaQuery.of(context).size.width * 0.9,
             padding: const EdgeInsets.only(left: 50),
-            child: Text('Following',
-                style: TextStyle(fontSize: 25, color: Colors.orange)),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               border: Border(
                 bottom: BorderSide(
                   color: Colors.orange,
@@ -318,9 +316,11 @@ class ProfilePage extends StatelessWidget {
                 ),
               ),
             ),
+            child: const Text('Following',
+                style: TextStyle(fontSize: 25, color: Colors.orange)),
           ),
           Container(
-            child: Text('Follower',
+            child: const Text('Follower',
                 style: TextStyle(fontSize: 25, color: Colors.orange)),
           )
         ],
@@ -339,8 +339,8 @@ class ProfilePage extends StatelessWidget {
             onTap: () {
               Navigator.pushNamed(context, '/');
             },
-            child: Image(
-              image: const AssetImage('assets/images/door.png'),
+            child: const Image(
+              image: AssetImage('assets/images/door.png'),
               width: 30,
               height: 30,
             ),

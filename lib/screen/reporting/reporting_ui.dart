@@ -15,7 +15,7 @@ class ReportingPage extends StatelessWidget {
       body: const Center(
         child: Text('Reporting'),
       ),
-      bottomNavigationBar: NavigatorBar(),
+      bottomNavigationBar: const NavigatorBar(),
     );
   }
 }
