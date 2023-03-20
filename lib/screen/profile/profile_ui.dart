@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:huixinapp/app/const/color.dart';
 
+
 import '../../data/active_students.dart';
 import '../../data/profile_followers.dart';
+
 import '../../widget/AppBar/appbar_style.dart';
 import '../../widget/navigator_style.dart';
 
@@ -58,7 +60,9 @@ class ProfilePage extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: const NavigatorBar(),
+      bottomNavigationBar: const NavigatorBar(
+        currentIndex: 2,
+      ),
     );
   }
 
@@ -272,8 +276,8 @@ class ProfilePage extends StatelessWidget {
           Container(
             width: MediaQuery.of(context).size.width * 0.9,
             padding: const EdgeInsets.only(left: 50),
-            decoration: BoxDecoration(
-              border: const Border(
+            decoration: const BoxDecoration(
+              border: Border(
                 bottom: BorderSide(
                   color: Colors.orange,
                   width: 3,
@@ -281,12 +285,10 @@ class ProfilePage extends StatelessWidget {
                 ),
               ),
             ),
-            child: Text(
+            child: const Text(
               'Following',
               style: TextStyle(fontSize: 25, color: Colors.orange),
             ),
-            // child: const Text('Following',
-            //     style: TextStyle(fontSize: 25, color: Colors.orange)),
           ),
           listfriend(),
 
