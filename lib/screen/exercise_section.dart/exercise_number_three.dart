@@ -9,7 +9,10 @@ class ExerciseThree extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarHome(title: 'Exercise Three'),
+      appBar: const CustomAppBar(
+        title: 'Exercise',
+        numberOfExercises: '3',
+      ),
       body: Padding(
         padding: const EdgeInsets.all(32.0),
         child: Column(

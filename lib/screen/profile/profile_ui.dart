@@ -123,6 +123,7 @@ class ProfilePage extends StatelessWidget {
 
   Widget information(BuildContext context) {
     return SizedBox(
+
       width: MediaQuery.of(context).size.width * 0.9,
       height: MediaQuery.of(context).size.height * 0.07,
       child: Container(
@@ -133,6 +134,7 @@ class ProfilePage extends StatelessWidget {
           border: Border.all(
             color: AppColors.borderform,
             width: 3,
+
           ),
         ),
         child: GestureDetector(
@@ -315,12 +317,14 @@ class ProfilePage extends StatelessWidget {
           Container(
             width: MediaQuery.of(context).size.width * 0.9,
             padding: const EdgeInsets.only(left: 50),
+
             child: Text(
               'Following',
               style: TextStyle(fontSize: 25, color: Colors.orange),
             ),
             decoration: BoxDecoration(
               border: const Border(
+
                 bottom: BorderSide(
                   color: Colors.orange,
                   width: 3,
@@ -328,7 +332,10 @@ class ProfilePage extends StatelessWidget {
                 ),
               ),
             ),
+            child: const Text('Following',
+                style: TextStyle(fontSize: 25, color: Colors.orange)),
           ),
+
           // SizedBox(
           //   child: ListView.separated(
           //     separatorBuilder: (context, index) => const SizedBox(width: 8),
@@ -376,6 +383,7 @@ class ProfilePage extends StatelessWidget {
           //     },
           //   ),
           // ),
+
         ],
       ),
     );
@@ -392,8 +400,8 @@ class ProfilePage extends StatelessWidget {
             onTap: () {
               Navigator.pushNamed(context, '/');
             },
-            child: Image(
-              image: const AssetImage('assets/images/door.png'),
+            child: const Image(
+              image: AssetImage('assets/images/door.png'),
               width: 30,
               height: 30,
             ),

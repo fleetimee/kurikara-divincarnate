@@ -18,7 +18,10 @@ class _ReadingSectionState extends State<ReadingSection> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBarHome(title: 'Reading Section'),
+        appBar: AppBarReading(
+          title: 'Reading & Speaking',
+          context: context,
+        ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -37,9 +40,7 @@ class _ReadingSectionState extends State<ReadingSection> {
                               text: '你好',
                               color: _isReadyForNextContent == true
                                   ? const Color(0xFFE1DEDE)
-                                  : const Color(
-                                      0xFFE6E6E6,
-                                    ),
+                                  : Colors.white,
                             ),
                           ),
                           Positioned(

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:huixinapp/widget/AppBar/appbar_style.dart';
 
 import '../../widget/navigator_style.dart';
@@ -13,11 +11,11 @@ class ReportingDetailPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBarBack(
         title: 'Reporting Detail',
-        context: context, 
+        context: context,
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(vertical: 50),
-        margin: EdgeInsets.symmetric(horizontal: 15, vertical: 50),
+        padding: const EdgeInsets.symmetric(vertical: 50),
+        margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 50),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
@@ -51,7 +49,7 @@ class ReportingDetailPage extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: NavigatorBar(),
+      bottomNavigationBar: const NavigatorBar(),
     );
   }
 
@@ -159,7 +157,7 @@ class ReportingDetailPage extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Reading',
                   style: TextStyle(
                     fontSize: 20,
@@ -169,7 +167,7 @@ class ReportingDetailPage extends StatelessWidget {
                 Container(
                   height: 30,
                   width: MediaQuery.of(context).size.width * 0.5,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Color(0xffD9D9D9),
                     borderRadius: BorderRadius.only(
                       topRight: Radius.circular(20),
@@ -178,8 +176,11 @@ class ReportingDetailPage extends StatelessWidget {
                   ),
                 ),
                 // Spacer(), // this will push the "80/100" text to the end
-                Text('80/100',
-                    style: TextStyle(fontSize: 25, color: Colors.black, fontWeight: FontWeight.bold),
+                const Text('80/100',
+                    style: TextStyle(
+                        fontSize: 25,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
                     textAlign: TextAlign.right),
               ],
             ),
@@ -195,7 +196,7 @@ class ReportingDetailPage extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Speaking',
                   style: TextStyle(
                     fontSize: 20,
@@ -205,7 +206,7 @@ class ReportingDetailPage extends StatelessWidget {
                 Container(
                   height: 30,
                   width: MediaQuery.of(context).size.width * 0.5,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Color(0xffD9D9D9),
                     borderRadius: BorderRadius.only(
                       topRight: Radius.circular(20),
@@ -214,9 +215,13 @@ class ReportingDetailPage extends StatelessWidget {
                   ),
                 ),
                 // Spacer(), // this will push the "80/100" text to the end
-                Text('60/100',
-                    style: TextStyle(fontSize: 25, color: Colors.black, fontWeight: FontWeight.bold),
-                    ),
+                const Text(
+                  '60/100',
+                  style: TextStyle(
+                      fontSize: 25,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold),
+                ),
               ],
             ),
           ]),
