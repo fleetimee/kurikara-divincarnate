@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:huixinapp/data/active_students.dart';
 import 'package:huixinapp/data/home_course.dart';
-import 'package:huixinapp/widget/navigator_style.dart';
 
 import '../../widget/AppBar/appbar_style.dart';
 
@@ -27,42 +26,45 @@ class HomePage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  width: 350,
-                  height: 100,
-                  child: ListView.separated(
-                    separatorBuilder: (context, index) =>
-                        const SizedBox(width: 8),
-                    itemCount: studentsData.length,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return Column(
-                        children: [
-                          CircleAvatar(
-                            radius: 30,
-                            backgroundImage:
-                                AssetImage(studentsData[index].imageUrl),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(studentsData[index].studentName),
-                        ],
-                      );
-                    },
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 330,
+                    height: 100,
+                    child: ListView.separated(
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(width: 8),
+                      itemCount: studentsData.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return Column(
+                          children: [
+                            CircleAvatar(
+                              radius: 30,
+                              backgroundImage:
+                                  AssetImage(studentsData[index].imageUrl),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(studentsData[index].studentName),
+                          ],
+                        );
+                      },
+                    ),
                   ),
-                ),
-                GestureDetector(
-                  onTap: () {},
-                  child: Image.asset(
-                    "assets/images/more_students.png",
-                    height: 60,
-                    fit: BoxFit.fill,
+                  GestureDetector(
+                    onTap: () {},
+                    child: Image.asset(
+                      "assets/images/more_students.png",
+                      height: 60,
+                      fit: BoxFit.fill,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             const SizedBox(height: 16),
             Expanded(
@@ -81,6 +83,7 @@ class HomePage extends StatelessWidget {
                           : null;
                     },
                     child: Card(
+                      color: const Color(0xffFFF9E9),
                       child: Column(
                         children: [
                           Padding(
@@ -173,7 +176,7 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: const NavigatorBar(),
+      // bottomNavigationBar: const NavigatorBar(),
     );
   }
 }

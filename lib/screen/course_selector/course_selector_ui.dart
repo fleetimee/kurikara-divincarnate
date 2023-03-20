@@ -33,6 +33,7 @@ class CourseSelector extends StatelessWidget {
                           : null;
                     },
                     child: Card(
+                      color: const Color(0xffFFF9E9),
                       child: Column(
                         children: [
                           Expanded(

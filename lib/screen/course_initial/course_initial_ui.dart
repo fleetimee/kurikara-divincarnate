@@ -56,9 +56,14 @@ class CourseInitial extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 16),
-              Image.asset(
-                "assets/images/reading.png",
-                fit: BoxFit.fill,
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/reading_section');
+                },
+                child: Image.asset(
+                  "assets/images/reading.png",
+                  fit: BoxFit.fill,
+                ),
               ),
               const SizedBox(height: 16),
               Image.asset(
