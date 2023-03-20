@@ -24,18 +24,18 @@ class CourseInitial extends StatelessWidget {
                     fit: BoxFit.fill,
                   ),
                   Positioned(
-                    bottom: 70,
-                    left: 40,
+                    bottom: MediaQuery.of(context).size.height / 15,
+                    left: MediaQuery.of(context).size.width / 12,
                     child: Image.asset(
                       "assets/images/tree.png",
                       height: 100,
                       fit: BoxFit.fill,
                     ),
                   ),
-                  const Positioned(
-                    bottom: 35,
-                    right: 40,
-                    child: Text(
+                  Positioned(
+                    bottom: MediaQuery.of(context).size.height / 30,
+                    right: MediaQuery.of(context).size.width / 17,
+                    child: const Text(
                       'Lesson Day 4',
                       style: TextStyle(
                         fontSize: 25,
@@ -45,8 +45,8 @@ class CourseInitial extends StatelessWidget {
                     ),
                   ),
                   Positioned(
-                    bottom: 15,
-                    right: 10,
+                    bottom: MediaQuery.of(context).size.height / 70,
+                    right: MediaQuery.of(context).size.width / 30,
                     child: Image.asset(
                       "assets/images/progress_bar.png",
                       height: 25,

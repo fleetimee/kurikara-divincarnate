@@ -27,18 +27,18 @@ class CourseDone extends StatelessWidget {
                     fit: BoxFit.fill,
                   ),
                   Positioned(
-                    bottom: 70,
-                    left: 40,
+                    bottom: MediaQuery.of(context).size.height / 15,
+                    left: MediaQuery.of(context).size.width / 12,
                     child: Image.asset(
                       "assets/images/chicken.png",
                       height: 100,
                       fit: BoxFit.fill,
                     ),
                   ),
-                  const Positioned(
-                    bottom: 35,
-                    right: 40,
-                    child: Text(
+                  Positioned(
+                    bottom: MediaQuery.of(context).size.height / 30,
+                    right: MediaQuery.of(context).size.width / 17,
+                    child: const Text(
                       'Lesson Day 1',
                       style: TextStyle(
                         fontSize: 25,
@@ -48,8 +48,8 @@ class CourseDone extends StatelessWidget {
                     ),
                   ),
                   Positioned(
-                    bottom: 15,
-                    right: 10,
+                    bottom: MediaQuery.of(context).size.height / 70,
+                    right: MediaQuery.of(context).size.width / 30,
                     child: Image.asset(
                       "assets/images/progress_bar.png",
                       height: 25,
@@ -112,9 +112,14 @@ class CourseDone extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 8),
-                  Image.asset(
-                    "assets/images/exercise_remedial.png",
-                    fit: BoxFit.fill,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/exercise_one');
+                    },
+                    child: Image.asset(
+                      "assets/images/exercise_remedial.png",
+                      fit: BoxFit.fill,
+                    ),
                   ),
                   const SizedBox(height: 8),
                   Row(

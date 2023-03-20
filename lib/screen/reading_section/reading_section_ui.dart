@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:huixinapp/widget/AppBar/appbar_style.dart';
+import 'package:huixinapp/widget/bottom_appbar_button.dart';
+import 'package:huixinapp/widget/container_course.dart';
 
 class ReadingSection extends StatefulWidget {
   const ReadingSection({super.key});
@@ -9,15 +11,8 @@ class ReadingSection extends StatefulWidget {
 }
 
 class _ReadingSectionState extends State<ReadingSection> {
-  @override
-  void setState(VoidCallback fn) {
-    // TODO: implement setState
-    super.setState(fn);
-  }
-
   bool _isVolumeClicked = false;
   bool _isMicrophoneClicked = false;
-  // ignore: prefer_final_fields
   bool _isReadyForNextContent = false;
 
   @override
@@ -38,42 +33,18 @@ class _ReadingSectionState extends State<ReadingSection> {
                         clipBehavior: Clip.none,
                         children: [
                           Center(
-                            child: Container(
-                              height: 350,
-                              width: 350,
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(10)),
-                                color: _isReadyForNextContent == true
-                                    ? const Color(0xFFE1DEDE)
-                                    : const Color(0xFFE6E6E6),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    blurRadius: 5,
-                                    offset: const Offset(0, 2),
-                                    spreadRadius: 0,
-                                  ),
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    blurRadius: 10,
-                                    offset: const Offset(0, 8),
-                                    spreadRadius: -3,
-                                  ),
-                                ],
-                              ),
-                              child: const Center(
-                                child: Text(
-                                  "你好",
-                                  style: TextStyle(
-                                      fontSize: 64, color: Colors.black),
-                                ),
-                              ),
+                            child: ContainerCourse(
+                              text: '你好',
+                              color: _isReadyForNextContent == true
+                                  ? const Color(0xFFE1DEDE)
+                                  : const Color(
+                                      0xFFE6E6E6,
+                                    ),
                             ),
                           ),
                           Positioned(
-                            top: 320,
-                            left: 320,
+                            top: MediaQuery.of(context).size.height / 2 - 200,
+                            right: MediaQuery.of(context).size.width / 2 - 190,
                             child: GestureDetector(
                               onTap: () => setState(() {
                                 _isVolumeClicked = !_isVolumeClicked;
@@ -234,29 +205,14 @@ class _ReadingSectionState extends State<ReadingSection> {
             ),
           ],
         ),
-        bottomNavigationBar: ClipRRect(
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(20.0),
-            topRight: Radius.circular(20.0),
-          ),
-          child: BottomAppBar(
-            color: _isReadyForNextContent
-                ? const Color(0xFF2AD352)
-                : const Color(0xFFCACACA),
-            child: const SizedBox(
-              height: 70,
-              child: Center(
-                child: Text(
-                  "NEXT",
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-          ),
+        bottomNavigationBar: BottomNavigationBarButton(
+          name: "NEXT",
+          color: _isReadyForNextContent
+              ? const Color(0xFF2AD352)
+              : const Color(0xFFCACACA),
+          onTap: () {
+            // perform action on button click
+          },
         ));
   }
 }
