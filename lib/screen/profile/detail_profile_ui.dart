@@ -1,11 +1,12 @@
+// ignore_for_file: override_on_non_overriding_member
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:huixinapp/widget/AppBar/appbar_style.dart';
 import 'package:huixinapp/widget/button.dart';
+import 'package:huixinapp/widget/profile_form.dart';
 import 'package:image_picker/image_picker.dart';
-
-import '../../widget/profile_form.dart';
 
 class ProfileDetailPage extends StatefulWidget {
   const ProfileDetailPage({super.key});
@@ -36,7 +37,7 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBarBack(
+      appBar: AppBarReading(
         title: 'Profile',
         context: context,
       ),

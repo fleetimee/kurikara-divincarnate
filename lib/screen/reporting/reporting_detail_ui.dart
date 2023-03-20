@@ -9,7 +9,7 @@ class ReportingDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarBack(
+      appBar: AppBarReading(
         title: 'Reporting Detail',
         context: context,
       ),
@@ -49,7 +49,9 @@ class ReportingDetailPage extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: const NavigatorBar(),
+      bottomNavigationBar: const NavigatorBar(
+        currentIndex: 1,
+      ),
     );
   }
 

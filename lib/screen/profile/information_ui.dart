@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../widget/AppBar/appbar_style.dart';
+import 'package:huixinapp/widget/AppBar/appbar_style.dart';
 
 class InformationPage extends StatelessWidget {
   const InformationPage({super.key});
@@ -8,8 +7,8 @@ class InformationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBarBack(
-          title: "Info",
+        appBar: AppBarReading(
+          title: 'Info',
           context: context,
         ),
         body: Column(
