@@ -95,7 +95,7 @@ class LoginPage extends StatelessWidget {
           effects: const [FadeEffect(), ScaleEffect()],
           child: Image.asset(
             "assets/images/illust-login.png",
-            height: 300,
+            height: 400,
             fit: BoxFit.contain,
           ),
         ),

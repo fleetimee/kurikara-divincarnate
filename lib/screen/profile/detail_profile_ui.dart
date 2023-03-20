@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:huixinapp/widget/AppBar/appbar_style.dart';
 import 'package:huixinapp/widget/button.dart';
-import 'package:huixinapp/widget/register_form.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../widget/profile_form.dart';
@@ -29,7 +28,6 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
     }
   }
 
-  
   var Space = const SizedBox(
     height: 25.0,
   );
@@ -106,8 +104,8 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
                 ),
         ),
         Positioned(
-          top: 100,
-          right: 120,
+          top: MediaQuery.of(context).size.height / 10,
+          right: MediaQuery.of(context).size.width / 2 - 80,
           child: GestureDetector(
             child: Image.asset(
               "assets/images/photo-picker.png",

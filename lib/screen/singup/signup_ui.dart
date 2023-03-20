@@ -121,8 +121,8 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
         ),
         Positioned(
-          top: 100,
-          right: 160,
+          top: MediaQuery.of(context).size.height / 10,
+          right: MediaQuery.of(context).size.width / 2 - 80,
           child: GestureDetector(
             child: Image.asset(
               "assets/images/photo-picker.png",
