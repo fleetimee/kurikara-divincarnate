@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:huixinapp/app/const/color.dart';
 import 'package:huixinapp/widget/AppBar/appbar_style.dart';
 import 'package:huixinapp/widget/bottom_appbar_button.dart';
 import 'package:huixinapp/widget/container_course.dart';
@@ -39,7 +40,7 @@ class _ReadingSectionState extends State<ReadingSection> {
                             child: ContainerCourse(
                               text: '你好',
                               color: _isReadyForNextContent == true
-                                  ? const Color(0xFFE1DEDE)
+                                  ? AppColors.whiteColor4
                                   : Colors.white,
                             ),
                           ),
@@ -117,7 +118,7 @@ class _ReadingSectionState extends State<ReadingSection> {
                                             decoration: const BoxDecoration(
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(10)),
-                                              color: Color(0xFFC1F7CE),
+                                              color:AppColors.lightGreen,
                                             ),
                                             child: Center(
                                               child: Row(
@@ -192,7 +193,7 @@ class _ReadingSectionState extends State<ReadingSection> {
                                       style: const TextStyle(
                                         fontSize: 24,
                                         fontWeight: FontWeight.bold,
-                                        color: Color(0xFFD79F00),
+                                        color: AppColors.yellowColor,
                                       ),
                                     ),
                                   ],
@@ -209,8 +210,8 @@ class _ReadingSectionState extends State<ReadingSection> {
         bottomNavigationBar: BottomNavigationBarButton(
           name: "NEXT",
           color: _isReadyForNextContent
-              ? const Color(0xFF2AD352)
-              : const Color(0xFFCACACA),
+              ? AppColors.greenColor
+              : AppColors.greyWhite,
           onTap: () {
             // perform action on button click
           },

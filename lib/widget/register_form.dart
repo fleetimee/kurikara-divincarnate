@@ -3,6 +3,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter/services.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:huixinapp/app/const/color.dart';
 
 class RegisterForm extends StatelessWidget {
   final String label;
@@ -28,7 +29,7 @@ class RegisterForm extends StatelessWidget {
         obscureText: obscureTextEnabled == 'true',
         name: label.toLowerCase().replaceAll(' ', '_'),
         style: TextStyle(
-          color: const Color(0xFF8C2828),
+          color: AppColors.darkOrange,
           fontSize: 20,
           fontWeight: FontWeight.w600,
           fontFamily: GoogleFonts.montserrat().fontFamily,
@@ -47,7 +48,7 @@ class RegisterForm extends StatelessWidget {
           hoverColor: Colors.red,
           filled: true,
           focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Color(0xFF8C2828)),
+            borderSide: const BorderSide(color: AppColors.darkOrange),
             borderRadius: BorderRadius.circular(20.0),
           ),
           enabledBorder: OutlineInputBorder(

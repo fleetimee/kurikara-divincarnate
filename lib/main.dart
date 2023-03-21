@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:huixinapp/app/const/color.dart';
 import 'package:huixinapp/app/theme/theme_data.dart';
 import 'package:huixinapp/routes/routes.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
             const ResponsiveBreakpoint.autoScale(800, name: TABLET),
             const ResponsiveBreakpoint.resize(1000, name: DESKTOP),
           ],
-          background: Container(color: const Color(0xFFF5F5F5))),
+          background: Container(color: AppColors.backgroundcolor)),
       title: 'Hui Xin: MANDARIN LEARNING CENTER',
       theme: myLightTheme,
       darkTheme: myDarkTheme,

@@ -388,7 +388,7 @@ class ProfilePage extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFFFF9900),
+                  color: AppColors.yellowColor1,
                 ),
               ),
             ),

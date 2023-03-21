@@ -315,7 +315,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           left: 50,
           child: CircleAvatar(
             radius: 50,
-            backgroundColor: const Color(0xFFFF4546),
+            backgroundColor: AppColors.bottom,
             child: Text(
               numberOfExercises,
               style: const TextStyle(

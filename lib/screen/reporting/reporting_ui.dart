@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:huixinapp/app/const/color.dart';
 import 'package:huixinapp/data/reporting_data.dart';
 import 'package:huixinapp/widget/AppBar/appbar_style.dart';
 import 'package:huixinapp/widget/navigator_style.dart';
@@ -45,10 +46,10 @@ class ReportingPage extends StatelessWidget {
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                          color: const Color(0xFFFFF9E9),
+                          color: AppColors.whiteColor,
                           borderRadius: BorderRadius.circular(30),
                           border: Border.all(
-                            color: const Color(0xFFE0E0E0),
+                            color: AppColors.whiteColor5,
                             width: 4,
                           ),
                         ),

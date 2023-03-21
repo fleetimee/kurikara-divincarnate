@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:huixinapp/app/const/color.dart';
 import 'package:huixinapp/data/active_students.dart';
 import 'package:huixinapp/data/home_course.dart';
 import 'package:huixinapp/screen/course_selector/course_selector_ui.dart';
@@ -107,7 +108,7 @@ class HomeItems extends StatelessWidget {
                         : null;
                   },
                   child: Card(
-                    color: const Color(0xffFFF9E9),
+                    color: AppColors.whiteColor,
                     child: Column(
                       children: [
                         Padding(
@@ -138,7 +139,7 @@ class HomeItems extends StatelessWidget {
                           child: Card(
                             child: allHomeCourse[index].isUnlocked == true
                                 ? Container(
-                                    color: const Color(0xFFFF4546),
+                                    color: AppColors.bottom,
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Center(
@@ -171,7 +172,7 @@ class HomeItems extends StatelessWidget {
                                     ),
                                   )
                                 : Container(
-                                    color: const Color(0xFFD8D8D8),
+                                    color: AppColors.whiteColor2,
                                     child: Center(
                                       child: Image.asset(
                                         "assets/images/lock.png",

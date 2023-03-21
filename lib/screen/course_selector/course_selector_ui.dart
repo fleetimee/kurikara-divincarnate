@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:huixinapp/app/const/color.dart';
 import 'package:huixinapp/data/course_selector.dart';
 import 'package:huixinapp/widget/AppBar/appbar_style.dart';
 import 'package:huixinapp/widget/bottom_appbar_note.dart';
@@ -35,14 +36,14 @@ class CourseSelector extends StatelessWidget {
                           : null;
                     },
                     child: Card(
-                      color: const Color(0xffFFF9E9),
+                      color: AppColors.whiteColor,
                       child: Column(
                         children: [
                           Expanded(
                             child: Card(
                               child: allCourseSelector[index].isUnlocked == true
                                   ? Container(
-                                      color: const Color(0xFFFF4546),
+                                      color: AppColors.bottom,
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Center(
@@ -53,7 +54,7 @@ class CourseSelector extends StatelessWidget {
                                               Text(
                                                 allCourseSelector[index].day,
                                                 style: const TextStyle(
-                                                  color: Colors.white,
+                                                  color: AppColors.whiteColor,
                                                   fontSize: 20,
                                                   fontWeight: FontWeight.bold,
                                                 ),
@@ -76,7 +77,7 @@ class CourseSelector extends StatelessWidget {
                                       ),
                                     )
                                   : Container(
-                                      color: const Color(0xFFD8D8D8),
+                                      color: AppColors.whiteColor2,
                                       child: Center(
                                         child: Image.asset(
                                           "assets/images/lock.png",

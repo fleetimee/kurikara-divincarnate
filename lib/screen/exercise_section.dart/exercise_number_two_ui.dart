@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:huixinapp/app/const/color.dart';
 import 'package:huixinapp/widget/AppBar/appbar_style.dart';
 import 'package:huixinapp/widget/bottom_appbar_button.dart';
 import 'package:huixinapp/widget/container_course.dart';
@@ -30,7 +31,7 @@ class ExerciseTwo extends StatelessWidget {
               style: TextStyle(
                 fontSize: 26,
                 fontWeight: FontWeight.w400,
-                color: Color(0xFF000000),
+                color: AppColors.blackColor,
               ),
               textAlign: TextAlign.center,
             ),
@@ -62,7 +63,7 @@ class ExerciseTwo extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFFD79F00),
+                    color: AppColors.yellowColor,
                   ),
                 ),
               ],
@@ -72,7 +73,7 @@ class ExerciseTwo extends StatelessWidget {
       ),
       bottomNavigationBar: BottomNavigationBarButton(
         name: 'NEXT',
-        color: const Color(0xFFFF4546),
+        color: AppColors.bottom,
         onTap: () {
           Navigator.pushNamed(context, '/exercise_three');
         },

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:huixinapp/app/const/color.dart';
 import 'package:huixinapp/data/exercise_three.dart';
 import 'package:huixinapp/widget/AppBar/appbar_style.dart';
 import 'package:huixinapp/widget/bottom_appbar_button.dart';
@@ -28,7 +29,7 @@ class ExerciseThree extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 32,
                   fontWeight: FontWeight.w400,
-                  color: Color(0xFF000000),
+                  color: AppColors.blackColor ,
                 ),
               ),
             ),
@@ -67,7 +68,7 @@ class ExerciseThree extends StatelessWidget {
       ),
       bottomNavigationBar: BottomNavigationBarButton(
         name: 'FINISH',
-        color: const Color(0xFF2AD352),
+        color: AppColors.greenColor,
         onTap: () {},
       ),
     );

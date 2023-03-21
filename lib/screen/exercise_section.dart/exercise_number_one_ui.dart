@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:huixinapp/app/const/color.dart';
 import 'package:huixinapp/data/question_data.dart';
 import 'package:huixinapp/widget/AppBar/appbar_style.dart';
 import 'package:huixinapp/widget/bottom_appbar_button.dart';
@@ -50,8 +51,8 @@ class ExerciseOne extends StatelessWidget {
                           margin: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
                             color: allQuestionData[index].isSelected
-                                ? const Color(0xFF2AD352)
-                                : const Color(0xFFD9D9D9),
+                                ? AppColors.greenColor
+                                : AppColors.whiteColor3 ,
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Center(
@@ -74,7 +75,7 @@ class ExerciseOne extends StatelessWidget {
       ),
       bottomNavigationBar: BottomNavigationBarButton(
         name: 'NEXT',
-        color: const Color(0xFFFF4546),
+        color: AppColors.bottom,
         onTap: () {
           Navigator.pushNamed(context, '/exercise_two');
         },

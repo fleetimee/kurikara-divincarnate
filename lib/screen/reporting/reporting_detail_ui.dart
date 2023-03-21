@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:huixinapp/app/const/color.dart';
 import 'package:huixinapp/data/stats.dart';
 import 'package:huixinapp/widget/AppBar/appbar_style.dart';
 
@@ -74,7 +75,7 @@ class ReportingDetailPage extends StatelessWidget {
                                     backgroundColor: Colors.grey.shade200,
                                     valueColor:
                                         const AlwaysStoppedAnimation<Color>(
-                                      Color(0xFF2AD352),
+                                      AppColors.greenColor,
                                     ),
                                   ),
                                 ),
@@ -152,7 +153,7 @@ class Statistics extends StatelessWidget {
         itemBuilder: (context, index) {
           return Container(
             decoration: BoxDecoration(
-              color: const Color(0xFFFFF9E9),
+              color: AppColors.whiteColor,
               borderRadius: BorderRadius.circular(20),
               border: Border.all(
                 color: Colors.grey.shade300,

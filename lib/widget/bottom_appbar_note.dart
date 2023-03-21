@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:huixinapp/app/const/color.dart';
 
 class BottomAppBarWithNotes extends StatelessWidget {
   const BottomAppBarWithNotes({
@@ -8,7 +9,7 @@ class BottomAppBarWithNotes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
-      color: const Color(0xffFFF9E9),
+      color: AppColors.whiteColor6,
       child: SizedBox(
           height: 125,
           child: Padding(
@@ -23,7 +24,7 @@ class BottomAppBarWithNotes extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFFF44336),
+                    color: AppColors.orangeColor,
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -41,14 +42,14 @@ class BottomAppBarWithNotes extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
-                            color: Color(0xFF000000),
+                            color: AppColors.blackColor,
                           ),
                         ),
                         Text(
                           'This lesson must finish in one day. If you miss this leasone you must finish previous lesson to learn & finish this lesson ',
                           style: TextStyle(
                             fontSize: 14,
-                            color: Color(0xFF000000),
+                            color: AppColors.blackColor,
                           ),
                         ),
                         Text(
@@ -56,7 +57,7 @@ class BottomAppBarWithNotes extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
-                            color: Color(0xFF000000),
+                            color: AppColors.blackColor,
                           ),
                         ),
                       ],
@@ -68,14 +69,14 @@ class BottomAppBarWithNotes extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
-                            color: Color(0xFF000000),
+                            color: AppColors.blackColor,
                           ),
                         ),
                         Text(
                           'The exercise point below 70 must repeat',
                           style: TextStyle(
                             fontSize: 14,
-                            color: Color(0xFF000000),
+                            color: AppColors.blackColor,
                           ),
                         ),
                         Text(
@@ -83,7 +84,7 @@ class BottomAppBarWithNotes extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
-                            color: Color(0xFF000000),
+                            color: AppColors.blackColor,
                           ),
                         ),
                       ],
