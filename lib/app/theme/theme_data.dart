@@ -48,3 +48,5 @@ final myDarkTheme = FlexThemeData.dark(
   scaffoldBackground: const Color(0xff00325b),
   fontFamily: GoogleFonts.roboto().fontFamily,
 );
+
+final orangeText = const TextStyle(color: Color(0xffff4546));

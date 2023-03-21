@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:huixinapp/app/const/color.dart';
 
 class ExerciseThree {
   final String courseName;
@@ -13,34 +14,34 @@ class ExerciseThree {
 final List<ExerciseThree> allExerciseThree = [
   ExerciseThree(
     courseName: '1',
-    color: const Color(0xFFECC055),
+    color: AppColors.yellowColor2,
   ),
   ExerciseThree(
     courseName: 'Yī',
-    color: const Color(0xFFBC56FB),
+    color: AppColors.purpleColor,
   ),
   ExerciseThree(
     courseName: '2',
-    color: const Color(0xFF8EF50C),
+    color: AppColors.greenColor1 ,
   ),
   ExerciseThree(
     courseName: 'Sān',
-    color: const Color(0xFFECC055),
+    color: AppColors.yellowColor2,
   ),
   ExerciseThree(
     courseName: '3',
-    color: const Color(0xFFBC56FB),
+    color: AppColors.purpleColor,
   ),
   ExerciseThree(
     courseName: 'Èr',
-    color: const Color(0xFF8EF50C),
+    color: AppColors.greenColor1,
   ),
   ExerciseThree(
     courseName: '4',
-    color: const Color(0xFF09A6FF),
+    color: AppColors.blueColor,
   ),
   ExerciseThree(
     courseName: 'Sì',
-    color: const Color(0xFF09A6FF),
+    color: AppColors.blueColor,
   ),
 ];
