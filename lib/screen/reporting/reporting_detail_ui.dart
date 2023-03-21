@@ -10,7 +10,7 @@ class ReportingDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarReading(
-        title: 'Reporting Detail',
+        title: 'Reporting 1A',
         context: context,
       ),
       body: Container(
