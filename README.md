@@ -22,7 +22,11 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://raw.githubusercontent.com/fleetimee/kurikara-divincarnate/master/assets/images/logo-login.png" alt="Logo" width="250" height="250">
+  <a href="https://github.com/othneildrew/Best-README-Template">
+    <img src="https://user-images.githubusercontent.com/45744788/226549333-e5d14f40-f9e9-45c7-b0a5-6e41a777247a.png" alt="Logo" width="250" height="250">
+  
+
+  </a>
 
 
   </a>
@@ -33,3 +37,4 @@
     Mandarin Learning App that helps you learn Mandarin in a fun and interactive way!  
   </p>
 </div>
+
