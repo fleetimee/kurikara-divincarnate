@@ -18,7 +18,7 @@ class ReportingPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(
-              height: 100,
+              height: 60,
             ),
             Expanded(
               child: Padding(
@@ -30,7 +30,7 @@ class ReportingPage extends StatelessWidget {
                     crossAxisCount: 2,
                     childAspectRatio: 2,
                     crossAxisSpacing: 48,
-                    mainAxisSpacing: 16,
+                    mainAxisSpacing: 20,
                   ),
                   itemCount: reportingData.length,
                   itemBuilder: (context, index) {
@@ -44,35 +44,36 @@ class ReportingPage extends StatelessWidget {
                         }
                       },
                       child: Container(
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFFFF9E9),
-                            borderRadius: BorderRadius.circular(30),
-                            border: Border.all(
-                              color: const Color(0xFFE0E0E0),
-                              width: 4,
-                            ),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFFFF9E9),
+                          borderRadius: BorderRadius.circular(30),
+                          border: Border.all(
+                            color: const Color(0xFFE0E0E0),
+                            width: 4,
                           ),
-                          child: Center(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  reportingData[index].isUnlocked
-                                      ? reportingData[index].imageUrl
-                                      : 'assets/images/lock.png',
-                                  width: 50,
-                                  height: 50,
+                        ),
+                        child: Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                reportingData[index].isUnlocked
+                                    ? reportingData[index].imageUrl
+                                    : 'assets/images/lock_black.png',
+                                width: 50,
+                                height: 50,
+                              ),
+                              Text(
+                                reportingData[index].classReporting,
+                                style: const TextStyle(
+                                  fontSize: 35,
+                                  color: Colors.black,
                                 ),
-                                Text(
-                                  reportingData[index].classReporting,
-                                  style: const TextStyle(
-                                    fontSize: 35,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     );
                   },
                 ),
