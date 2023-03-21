@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
       # Menyiapkan Java
       - name: Setup Java
         uses: actions/setup-java@v3
@@ -26,6 +27,26 @@ jobs:
         with:
           flutter-version: "3.7.7"
           channel: "stable"
+
+      # Decode file KEYSTORE_JKS_PROD yang berbentuk base64 dan mengubahnya menjadi keystore.jks
+      - name: Decode android/neumodore_key.jks
+        run: echo "${{ secrets.KEYSTORE_JKS_PROD }}" | base64 --decode > android/app/keystore.jks
+
+      # Decode file KEY_PROPERTIES_PROD yang berbentuk base64 dan mengubahnya menjadi keystore.jks
+      - name: Decode android/key.properties
+        run: echo "${{ secrets.KEY_PROPERTIES_PROD }}" | base64 --decode > android/key.properties
+
+      # - uses: olegtarasov/get-tag@v2 # that generate $GIT_TAG_NAME env
+      #   id: tagName
+      #   with: # optional
+      #    tagRegex: '([0-9]+.[0-9]+.[0-9]+\+[0-9]+)' # Optional. Returns specified group text as tag name. Full tag string is returned if regex is not defined.
+      #    tagRegexGroup: 1 # Optional. Default is 1.
+
+      # # Step ini digunakan untuk mengubah versi pada pubspec.yaml sesuai dengan tag yang di push
+      # - name: Replace YAML version with tag version
+      #   run: |
+      #     sed -i 's/99.99.99+99/'$GIT_TAG_NAME'/g' pubspec.yaml|
+      #     echo "Tag used version:"$GIT_TAG_NAME
 
       # Step ini digunakan untuk menginstall dependency yang dibutuhkan
       - name: Pub Get Packages
@@ -44,3 +65,10 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           artifacts: "build/app/outputs/apk/release/*.apk,build/app/outputs/bundle/release/*.aab"
+
+      # Step ini digunakan untuk menyimpan appbundle ke artifacts yang nantinya akan diteruskan ke step 2
+      - name: Save APPBUNDLE to Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: APPBUNDLE
+          path: build/app/outputs/bundle/release/app-release.aab
