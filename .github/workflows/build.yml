@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
       # Menyiapkan Java
       - name: Setup Java
         uses: actions/setup-java@v3
@@ -44,3 +45,10 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           artifacts: "build/app/outputs/apk/release/*.apk,build/app/outputs/bundle/release/*.aab"
+
+      # Step ini digunakan untuk menyimpan appbundle ke artifacts yang nantinya akan diteruskan ke step 2
+      - name: Save APPBUNDLE to Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: APPBUNDLE
+          path: build/app/outputs/bundle/release/app-release.aab
