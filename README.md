@@ -1,16 +1,35 @@
-# kurikara-divincarnate
+<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
 
-A new Flutter project.
+<a name="readme-top"></a>
 
-## Getting Started
+<!--
+*** Thanks for checking out the Best-README-Template. If you have a suggestion
+*** that would make this better, please fork the repo and create a pull request
+*** or simply open an issue with the tag "enhancement".
+*** Don't forget to give the project a star!
+*** Thanks again! Now go create something AMAZING! :D
+-->
 
-This project is a starting point for a Flutter application.
+<!-- PROJECT SHIELDS -->
+<!--
+*** I'm using markdown "reference style" links for readability.
+*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
+*** See the bottom of this document for the declaration of the reference variables
+*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
+*** https://www.markdownguide.org/basic-syntax/#reference-style-links
+-->
 
-A few resources to get you started if this is your first Flutter project:
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://raw.githubusercontent.com/fleetimee/kurikara-divincarnate/master/assets/images/logo-login.png" alt="Logo" width="250" height="250">
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+  </a>
+
+  <h3 align="center">Huixin App</h3>
+
+  <p align="center">
+    Mandarin Learning App that helps you learn Mandarin in a fun and interactive way!  
+  </p>
+</div>
