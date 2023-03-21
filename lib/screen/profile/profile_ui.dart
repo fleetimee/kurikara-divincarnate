@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:huixinapp/app/const/color.dart';
-
-
-import '../../data/active_students.dart';
-import '../../data/profile_followers.dart';
+import 'package:huixinapp/data/fren.dart';
+import 'package:huixinapp/data/stats.dart';
 
 import '../../widget/AppBar/appbar_style.dart';
 import '../../widget/navigator_style.dart';
@@ -19,44 +17,141 @@ class ProfilePage extends StatelessWidget {
       ),
       body: Column(
         children: [
-          InkWell(
-            child: profileUser(),
-            onTap: () {
-              Navigator.pushNamed(context, '/profile/profiledetail');
-            },
-          ),
-          const SizedBox(
-            height: 25,
-          ),
-          information(context),
-          const SizedBox(
-            height: 25,
-          ),
-          Container(
-            alignment: Alignment.centerLeft,
-            padding: const EdgeInsets.only(left: 20),
-            child: const Text(
-              'Statistic',
-              style: TextStyle(fontSize: 30, color: Colors.black),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                    ),
+                    child: InkWell(
+                      child: profileUser(),
+                      onTap: () {
+                        Navigator.pushNamed(context, '/profile/profiledetail');
+                      },
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  information(context),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Container(
+                      alignment: Alignment.centerLeft,
+                      padding: const EdgeInsets.only(left: 20),
+                      child: const Text(
+                        'Statistics',
+                        style: TextStyle(
+                          fontSize: 36,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    child: SizedBox(
+                      height: 125,
+                      child: GridView.builder(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: 2.5,
+                          crossAxisSpacing: 12,
+                          mainAxisSpacing: 20,
+                        ),
+                        itemCount: allStats.length,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(
+                                color: Colors.grey.shade300,
+                                width: 4,
+                              ),
+                            ),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
+                              child: Row(
+                                children: [
+                                  Image.asset(
+                                    allStats[index].imageUrl,
+                                    fit: BoxFit.fill,
+                                  ),
+                                  const SizedBox(width: 20),
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          allStats[index].value,
+                                          style: const TextStyle(
+                                            fontSize: 25,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        Text(
+                                          allStats[index].title,
+                                          style: const TextStyle(
+                                            fontSize: 18,
+                                            color: Colors.black54,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Container(
+                      alignment: Alignment.centerLeft,
+                      padding: const EdgeInsets.only(left: 20),
+                      child: const Text(
+                        'Friends',
+                        style: TextStyle(
+                          fontSize: 36,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    child: friend(context),
+                  ),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 40),
+                    child: logout(context),
+                  ),
+                ],
+              ),
             ),
-          ),
-          statistic(),
-          const SizedBox(
-            height: 25,
-          ),
-          Container(
-            alignment: Alignment.centerLeft,
-            padding: const EdgeInsets.only(left: 20),
-            child: const Text(
-              'Friends',
-              style: TextStyle(fontSize: 30, color: Colors.black),
-            ),
-          ),
-          friend(context),
-          const Spacer(),
-          logout(context),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.07,
           ),
         ],
       ),
@@ -86,16 +181,17 @@ class ProfilePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
-                  'Ahmad TaftaZani',
+                  'Usada Pekora',
                   style: TextStyle(
-                      fontSize: 30,
+                      fontSize: 36,
                       fontWeight: FontWeight.w500,
                       color: Colors.black),
                 ),
                 const Text(
-                  'UserX123',
+                  'peko-peko69',
                   style: TextStyle(fontSize: 20, color: Colors.grey),
                 ),
+                const SizedBox(height: 10),
                 Row(
                   children: [
                     Image.asset(
@@ -113,23 +209,19 @@ class ProfilePage extends StatelessWidget {
                 ),
               ],
             ),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(50),
-              child: Image.asset(
-                'assets/images/user.png',
-                width: 100,
-                height: 100,
-                fit: BoxFit.cover,
-              ),
-            ),
+            const CircleAvatar(
+              radius: 50,
+              backgroundImage: AssetImage('assets/images/usada-pekora.png'),
+              backgroundColor: Colors.grey,
+            )
           ],
         ));
   }
 
   Widget information(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.9,
-      height: MediaQuery.of(context).size.height * 0.07,
+      width: MediaQuery.of(context).size.width - 60,
+      height: 80,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         decoration: BoxDecoration(
@@ -156,8 +248,11 @@ class ProfilePage extends StatelessWidget {
               ),
               // const SizedBox(width: 10),
               const Text(
-                'Pengumuman untuk peserta ...',
-                style: TextStyle(fontSize: 18, color: Colors.black),
+                'Pengumuman untuk Peserta ...',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.black,
+                ),
               ),
               const Icon(
                 Icons.arrow_forward_ios,
@@ -275,6 +370,7 @@ class ProfilePage extends StatelessWidget {
         children: [
           Container(
             width: MediaQuery.of(context).size.width * 0.9,
+            height: 40,
             padding: const EdgeInsets.only(left: 50),
             decoration: const BoxDecoration(
               border: Border(
@@ -285,60 +381,22 @@ class ProfilePage extends StatelessWidget {
                 ),
               ),
             ),
-            child: const Text(
-              'Following',
-              style: TextStyle(fontSize: 25, color: Colors.orange),
+            child: const Padding(
+              padding: EdgeInsets.only(top: 7),
+              child: Text(
+                'FOLLOWING',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFFFF9900),
+                ),
+              ),
             ),
           ),
+          const SizedBox(
+            height: 2,
+          ),
           listfriend(),
-
-          // SizedBox(
-          //   child: ListView.separated(
-          //     separatorBuilder: (context, index) => const SizedBox(width: 8),
-          //     itemCount: followersData.length,
-          //     scrollDirection: Axis.vertical,
-          //     itemBuilder: (context, index) {
-          //       return Row(
-          //         children: [
-          //           Container(
-          //             width: 50,
-          //             height: 50,
-          //             decoration: BoxDecoration(
-          //               shape: BoxShape.circle,
-          //               image: DecorationImage(
-          //                 image: AssetImage(followersData[index].imageUrl),
-          //                 fit: BoxFit.cover,
-          //               ),
-          //             ),
-          //           ),
-          //           const SizedBox(width: 8),
-          //           Column(
-          //             children: [
-          //               Text(
-          //                 followersData[index].nameFollower,
-          //                 style: const TextStyle(
-          //                   fontSize: 15,
-          //                   color: Colors.black,
-          //                 ),
-          //               ),
-          //               Text(
-          //                 '${followersData[index].pointFollower}XP',
-          //                 style: const TextStyle(
-          //                   fontSize: 15,
-          //                   color: Colors.grey,
-          //                 ),
-          //               ),
-          //             ],
-          //           ),
-          //           const Divider(
-          //             color: AppColors.borderform,
-          //             thickness: 3,
-          //           ),
-          //         ],
-          //       );
-          //     },
-          //   ),
-          // ),
         ],
       ),
     );
@@ -347,47 +405,33 @@ class ProfilePage extends StatelessWidget {
   Widget listfriend() {
     return SizedBox(
       width: 330,
-      height: 100,
-      child: ListView.separated(
-        separatorBuilder: (context, index) => const SizedBox(width: 8),
-        itemCount: studentsData.length,
+      height: 120,
+      child: ListView.builder(
+        itemCount: allMyFren.length,
         scrollDirection: Axis.vertical,
         itemBuilder: (context, index) {
-          return Row(
-            children: [
-              Container(
-                width: 50,
-                height: 50,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    image: AssetImage(followersData[index].imageUrl),
-                    fit: BoxFit.cover,
-                  ),
-                ),
+          return ListTile(
+            dense: true,
+            contentPadding: EdgeInsets.zero,
+            horizontalTitleGap: 10,
+            minVerticalPadding: -15,
+            leading: CircleAvatar(
+              backgroundImage: AssetImage(allMyFren[index].imageUrl),
+            ),
+            title: Text(
+              allMyFren[index].name,
+              style: const TextStyle(
+                fontSize: 20,
+                color: Colors.black,
               ),
-              const SizedBox(width: 8),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    followersData[index].nameFollower,
-                    style: const TextStyle(
-                      fontSize: 15,
-                      color: Colors.black,
-                    ),
-                  ),
-                  Text(
-                    '${followersData[index].pointFollower}XP',
-                    style: const TextStyle(
-                      fontSize: 15,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ],
+            ),
+            subtitle: Text(
+              '${allMyFren[index].xp} XP',
+              style: const TextStyle(
+                fontSize: 16,
+                color: Colors.black54,
               ),
-            ],
+            ),
           );
         },
       ),
@@ -413,8 +457,11 @@ class ProfilePage extends StatelessWidget {
           ),
           const SizedBox(width: 10),
           const Text(
-            'Logout',
-            style: TextStyle(fontSize: 20, color: Colors.black),
+            'Log Out',
+            style: TextStyle(
+              fontSize: 26,
+              color: Colors.black,
+            ),
           ),
         ],
       ),
