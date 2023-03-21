@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:huixinapp/app/const/color.dart';
+import 'package:huixinapp/data/reporting_data.dart';
 import 'package:huixinapp/widget/AppBar/appbar_style.dart';
-
-import '../../data/reporting_data.dart';
-import '../../widget/navigator_style.dart';
+import 'package:huixinapp/widget/navigator_style.dart';
 
 class ReportingPage extends StatelessWidget {
   const ReportingPage({super.key});
@@ -14,46 +12,73 @@ class ReportingPage extends StatelessWidget {
       appBar: AppBarDefault(
         title: "Reporting",
       ),
-      body: Container(
-        alignment: Alignment.center,
-        height: MediaQuery.of(context).size.height * 0.8,
-        child: GridView.count(
-          crossAxisCount: 2,
-          children: List.generate(12, (index) {
-            return Center(
-              child: GestureDetector(
-                onTap: () {
-                  reportingData[index].isUnlocked == true
-                      ? Navigator.pushNamed(
-                          context, reportingData[index].routeName)
-                      : null;
-                },
-                child: Container(
-                  height: MediaQuery.of(context).size.height * 0.07,
-                  width: MediaQuery.of(context).size.width * 0.3,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      border:
-                          Border.all(color: AppColors.borderform, width: 3)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        reportingData[index].imageUrl,
-                      ),
-                      const SizedBox(width: 8),
-                      Text(reportingData[index].numberReporting),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      Text(reportingData[index].classReporting),
-                    ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(
+              height: 100,
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 64,
+                ),
+                child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 2,
+                    crossAxisSpacing: 48,
+                    mainAxisSpacing: 16,
                   ),
+                  itemCount: reportingData.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        if (reportingData[index].isUnlocked) {
+                          Navigator.pushNamed(
+                            context,
+                            reportingData[index].routeName,
+                          );
+                        }
+                      },
+                      child: Container(
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFFFF9E9),
+                            borderRadius: BorderRadius.circular(30),
+                            border: Border.all(
+                              color: const Color(0xFFE0E0E0),
+                              width: 4,
+                            ),
+                          ),
+                          child: Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  reportingData[index].isUnlocked
+                                      ? reportingData[index].imageUrl
+                                      : 'assets/images/lock.png',
+                                  width: 50,
+                                  height: 50,
+                                ),
+                                Text(
+                                  reportingData[index].classReporting,
+                                  style: const TextStyle(
+                                    fontSize: 35,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )),
+                    );
+                  },
                 ),
               ),
-            );
-          }),
+            ),
+          ],
         ),
       ),
       bottomNavigationBar: const NavigatorBar(

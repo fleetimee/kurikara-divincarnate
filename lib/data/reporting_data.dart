@@ -1,13 +1,11 @@
 class ReportingData {
   final String classReporting;
-  final String numberReporting;
   final String imageUrl;
   final bool isUnlocked;
   final String routeName;
 
   ReportingData({
     required this.classReporting,
-    required this.numberReporting,
     required this.imageUrl,
     required this.isUnlocked,
     this.routeName = '',
@@ -16,77 +14,63 @@ class ReportingData {
 
 final List<ReportingData> reportingData = [
   ReportingData(
-    classReporting: 'A',
-    numberReporting: '1',
+    classReporting: '1A',
     imageUrl: 'assets/images/reporting1.png',
     routeName: '/reportingdetail',
     isUnlocked: true,
   ),
   ReportingData(
-    classReporting: 'B',
-    numberReporting: '1',
+    classReporting: '1B',
     imageUrl: 'assets/images/reporting2.png',
     isUnlocked: false,
   ),
   ReportingData(
-    classReporting: 'A',
-    numberReporting: '2',
+    classReporting: '2A',
     imageUrl: 'assets/images/reporting2.png',
     isUnlocked: false,
   ),
   ReportingData(
-    classReporting: 'B',
-    numberReporting: '2',
-    imageUrl: 'assets/images/reporting2.png',
-    isUnlocked: false,
-  ),
-
-
-  ReportingData(
-    classReporting: 'A',
-    numberReporting: '3',
+    classReporting: '2B',
     imageUrl: 'assets/images/reporting2.png',
     isUnlocked: false,
   ),
   ReportingData(
-    classReporting: 'B',
-    numberReporting: '3',
+    classReporting: '3A',
     imageUrl: 'assets/images/reporting2.png',
     isUnlocked: false,
   ),
   ReportingData(
-    classReporting: 'A',
-    numberReporting: '4',
+    classReporting: '3B',
     imageUrl: 'assets/images/reporting2.png',
     isUnlocked: false,
   ),
   ReportingData(
-    classReporting: 'B',
-    numberReporting: '4',
+    classReporting: '4A',
     imageUrl: 'assets/images/reporting2.png',
     isUnlocked: false,
   ),
   ReportingData(
-    classReporting: 'A',
-    numberReporting: '5',
+    classReporting: '4B',
     imageUrl: 'assets/images/reporting2.png',
     isUnlocked: false,
   ),
   ReportingData(
-    classReporting: 'B',
-    numberReporting: '5',
+    classReporting: '5A',
     imageUrl: 'assets/images/reporting2.png',
     isUnlocked: false,
   ),
   ReportingData(
-    classReporting: 'A',
-    numberReporting: '6',
+    classReporting: '5B',
     imageUrl: 'assets/images/reporting2.png',
     isUnlocked: false,
   ),
   ReportingData(
-    classReporting: 'B',
-    numberReporting: '6',
+    classReporting: '6A',
+    imageUrl: 'assets/images/reporting2.png',
+    isUnlocked: false,
+  ),
+  ReportingData(
+    classReporting: '6B',
     imageUrl: 'assets/images/reporting2.png',
     isUnlocked: false,
   ),
