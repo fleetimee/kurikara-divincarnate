@@ -26,6 +26,18 @@ class InformationPage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
+                  Text(
+                    'Catat, Kalender Pendidikan Tahun Ajaran 2021/2022 Terbaru!',
+                    style: TextStyle(
+                      fontSize: 23,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                    textAlign: TextAlign.justify,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
                   ItalicizedWordText(
                     wordToItalicize: 'Kalender Pendidikan',
                     italicStyle: TextStyle(
@@ -37,7 +49,7 @@ class InformationPage extends StatelessWidget {
                     fullText:
                         'Mau tahu jadwal libur dan ujian di tahun ajaran kali ini? Agar tidak ada jadwal terlewat, penting banget nih untuk kamu mengetahui Kalender Pendidikan tahun ajaran 2021/2022. Walaupun kita masih berada di tengah-tengah pandemi, kegiatan belajar kamu tidak boleh sampai terganggu.\n\n'
                         'Nah, bagi kamu yang ingin tahu mengenai info kegiatan dan momen-momen penting di sekolah selama satu tahun ke depan, kalender pendidikan ini harus kamu simak sebaik-baiknya. Di sini, kamu bisa melihat periode ujian, hari libur nasional, jadwal tahun ajaran baru, hingga jadwal pelaksanaan SNMPTN dan UTBK SBMPTN 2022.\n\n'
-                        'Yuk, cek jadwal kalender pendidikan tahun ajaran 2021/2022 berikut ini. Jadwal di bawah ini mengacu pada Dinas Pendidikan DKI Jakarta dan dapat berbeda di tiap daerah sesuai dengan kebijakan pemerintah daerah masing-masing.',
+                        'Yuk, cek jadwal kalender pendidikan tahun ajaran 2021/2022 berikut ini. ',
                   ),
                 ],
               ),
