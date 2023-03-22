@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:huixinapp/app/theme/theme_text.dart';
 import 'package:huixinapp/widget/AppBar/appbar_style.dart';
 
 class InformationPage extends StatelessWidget {
@@ -25,27 +26,18 @@ class InformationPage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 50),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   Text(
                     'Catat, Kalender Pendidikan Tahun Ajaran 2021/2022 Terbaru!',
-                    style: TextStyle(
-                      fontSize: 23,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
+                    style: ThemeText.textTheme19,
                     textAlign: TextAlign.justify,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   ItalicizedWordText(
                     wordToItalicize: 'Kalender Pendidikan',
-                    italicStyle: TextStyle(
-                      decoration: TextDecoration.underline,
-                      decorationColor: Colors.black,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                    ),
+                    italicStyle: ThemeText.textTheme20,
                     fullText:
                         'Mau tahu jadwal libur dan ujian di tahun ajaran kali ini? Agar tidak ada jadwal terlewat, penting banget nih untuk kamu mengetahui Kalender Pendidikan tahun ajaran 2021/2022. Walaupun kita masih berada di tengah-tengah pandemi, kegiatan belajar kamu tidak boleh sampai terganggu.\n\n'
                         'Nah, bagi kamu yang ingin tahu mengenai info kegiatan dan momen-momen penting di sekolah selama satu tahun ke depan, kalender pendidikan ini harus kamu simak sebaik-baiknya. Di sini, kamu bisa melihat periode ujian, hari libur nasional, jadwal tahun ajaran baru, hingga jadwal pelaksanaan SNMPTN dan UTBK SBMPTN 2022.\n\n'

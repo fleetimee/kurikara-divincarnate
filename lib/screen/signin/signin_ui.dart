@@ -3,6 +3,8 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:huixinapp/widget/button.dart';
 import 'package:huixinapp/widget/login_form.dart';
 
+import '../../app/theme/theme_text.dart';
+
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
@@ -41,13 +43,9 @@ class LoginPage extends StatelessWidget {
                   alignment: Alignment.centerRight,
                   child: TextButton(
                     onPressed: () {},
-                    child: const Text(
+                    child: Text(
                       'Forgot Password?',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: ThemeText.textTheme1,
                     ),
                   ),
                 ),
@@ -68,21 +66,14 @@ class LoginPage extends StatelessWidget {
                 onTap: () {
                   Navigator.pushNamed(context, '/signup');
                 },
-                child: const Text.rich(
+                child: Text.rich(
                   TextSpan(
                     text: 'Don\'t have an account yet? ',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: ThemeText.textTheme1,
                     children: [
                       TextSpan(
                         text: 'Sign Up',
-                        style: TextStyle(
-                          color: Colors.red,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: ThemeText.textTheme2,
                       ),
                     ],
                   ),

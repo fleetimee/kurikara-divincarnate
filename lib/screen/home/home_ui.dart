@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:huixinapp/app/const/color.dart';
+import 'package:huixinapp/app/theme/theme_text.dart';
 import 'package:huixinapp/data/active_students.dart';
 import 'package:huixinapp/data/home_course.dart';
 import 'package:huixinapp/screen/course_selector/course_selector_ui.dart';
@@ -126,11 +127,7 @@ class HomeItems extends StatelessWidget {
                               ),
                               Text(
                                 '${allHomeCourse[index].currentCourse}/${allHomeCourse[index].totalCourse}',
-                                style: const TextStyle(
-                                  color: Colors.black45,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w400,
-                                ),
+                                style: ThemeText.textTheme22,
                               )
                             ],
                           ),
@@ -149,11 +146,7 @@ class HomeItems extends StatelessWidget {
                                           children: [
                                             Text(
                                               allHomeCourse[index].courseName,
-                                              style: const TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold,
-                                              ),
+                                              style: ThemeText.textTheme23 ,
                                             ),
                                             const SizedBox(height: 8),
                                             Image.asset(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:huixinapp/app/const/color.dart';
+import 'package:huixinapp/app/theme/theme_text.dart';
 import 'package:huixinapp/data/fren.dart';
 import 'package:huixinapp/data/stats.dart';
 
@@ -44,12 +45,9 @@ class ProfilePage extends StatelessWidget {
                     child: Container(
                       alignment: Alignment.centerLeft,
                       padding: const EdgeInsets.only(left: 20),
-                      child: const Text(
+                      child: Text(
                         'Statistics',
-                        style: TextStyle(
-                          fontSize: 36,
-                          color: Colors.black,
-                        ),
+                        style: ThemeText.textTheme12,
                       ),
                     ),
                   ),
@@ -98,17 +96,11 @@ class ProfilePage extends StatelessWidget {
                                       children: [
                                         Text(
                                           allStats[index].value,
-                                          style: const TextStyle(
-                                            fontSize: 25,
-                                            color: Colors.black,
-                                          ),
+                                          style: ThemeText.textTheme6,
                                         ),
                                         Text(
                                           allStats[index].title,
-                                          style: const TextStyle(
-                                            fontSize: 18,
-                                            color: Colors.black54,
-                                          ),
+                                          style: ThemeText.textTheme7,
                                         ),
                                       ],
                                     ),
@@ -126,13 +118,7 @@ class ProfilePage extends StatelessWidget {
                     child: Container(
                       alignment: Alignment.centerLeft,
                       padding: const EdgeInsets.only(left: 20),
-                      child: const Text(
-                        'Friends',
-                        style: TextStyle(
-                          fontSize: 36,
-                          color: Colors.black,
-                        ),
-                      ),
+                      child: Text('Friends', style: ThemeText.textTheme12),
                     ),
                   ),
                   const SizedBox(
@@ -180,16 +166,14 @@ class ProfilePage extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'Usada Pekora',
-                  style: TextStyle(
-                      fontSize: 36,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black),
+                  style: ThemeText.textTheme12
+                      .copyWith(fontWeight: FontWeight.w500),
                 ),
-                const Text(
+                Text(
                   'peko-peko69',
-                  style: TextStyle(fontSize: 20, color: Colors.grey),
+                  style: ThemeText.textTheme13,
                 ),
                 const SizedBox(height: 10),
                 Row(
@@ -201,9 +185,9 @@ class ProfilePage extends StatelessWidget {
                       fit: BoxFit.cover,
                     ),
                     const SizedBox(width: 10),
-                    const Text(
+                    Text(
                       'Joined March 2023',
-                      style: TextStyle(fontSize: 20, color: Colors.black),
+                      style: ThemeText.textTheme14,
                     ),
                   ],
                 ),
@@ -247,12 +231,9 @@ class ProfilePage extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
               // const SizedBox(width: 10),
-              const Text(
+              Text(
                 'Pengumuman untuk Peserta ...',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.black,
-                ),
+                style: ThemeText.textTheme14,
               ),
               const Icon(
                 Icons.arrow_forward_ios,
@@ -299,12 +280,9 @@ class ProfilePage extends StatelessWidget {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        Text('13',
-                            style:
-                                TextStyle(fontSize: 20, color: Colors.black)),
-                        Text('Daily Activity',
-                            style: TextStyle(fontSize: 15, color: Colors.grey)),
+                      children: [
+                        Text('13', style: ThemeText.textTheme14),
+                        Text('Daily Activity', style: ThemeText.textTheme15),
                       ],
                     )
                   ],
@@ -337,12 +315,9 @@ class ProfilePage extends StatelessWidget {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        Text('4',
-                            style:
-                                TextStyle(fontSize: 20, color: Colors.black)),
-                        Text('Total XP',
-                            style: TextStyle(fontSize: 15, color: Colors.grey)),
+                      children: [
+                        Text('4', style: ThemeText.textTheme14),
+                        Text('Total XP', style: ThemeText.textTheme15),
                       ],
                     )
                   ],
@@ -381,14 +356,12 @@ class ProfilePage extends StatelessWidget {
                 ),
               ),
             ),
-            child: const Padding(
+            child: Padding(
               padding: EdgeInsets.only(top: 7),
               child: Text(
                 'FOLLOWING',
-                style: TextStyle(
-                  fontSize: 20,
+                style: ThemeText.textTheme16.copyWith(
                   fontWeight: FontWeight.w600,
-                  color: AppColors.yellowColor1,
                 ),
               ),
             ),
@@ -420,17 +393,11 @@ class ProfilePage extends StatelessWidget {
             ),
             title: Text(
               allMyFren[index].name,
-              style: const TextStyle(
-                fontSize: 20,
-                color: Colors.black,
-              ),
+              style: ThemeText.textTheme14,
             ),
             subtitle: Text(
               '${allMyFren[index].xp} XP',
-              style: const TextStyle(
-                fontSize: 16,
-                color: Colors.black54,
-              ),
+              style: ThemeText.textTheme17,
             ),
           );
         },
@@ -456,12 +423,9 @@ class ProfilePage extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 10),
-          const Text(
+          Text(
             'Log Out',
-            style: TextStyle(
-              fontSize: 26,
-              color: Colors.black,
-            ),
+            style: ThemeText.textTheme18,
           ),
         ],
       ),

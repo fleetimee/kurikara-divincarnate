@@ -5,6 +5,8 @@ import 'package:huixinapp/data/course_selector.dart';
 import 'package:huixinapp/widget/AppBar/appbar_style.dart';
 import 'package:huixinapp/widget/bottom_appbar_note.dart';
 
+import '../../app/theme/theme_text.dart';
+
 class CourseSelector extends StatelessWidget {
   const CourseSelector({super.key});
 
@@ -53,11 +55,7 @@ class CourseSelector extends StatelessWidget {
                                             children: [
                                               Text(
                                                 allCourseSelector[index].day,
-                                                style: const TextStyle(
-                                                  color: AppColors.whiteColor,
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
+                                                style: ThemeText.textTheme23,
                                               ),
                                               const SizedBox(height: 8),
                                               Image.asset(

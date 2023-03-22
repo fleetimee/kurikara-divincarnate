@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:huixinapp/app/const/color.dart';
+import 'package:huixinapp/app/theme/theme_text.dart';
 import 'package:huixinapp/data/question_data.dart';
 import 'package:huixinapp/widget/AppBar/appbar_style.dart';
 import 'package:huixinapp/widget/bottom_appbar_button.dart';
@@ -22,15 +23,11 @@ class ExerciseOne extends StatelessWidget {
             const SizedBox(
               height: 50,
             ),
-            const Padding(
-              padding: EdgeInsets.all(32),
+            Padding(
+              padding: const EdgeInsets.all(32),
               child: Text(
                 '我 artinya…',
-                style: TextStyle(
-                  fontSize: 64,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.black,
-                ),
+                style: ThemeText.textTheme27,
               ),
             ),
             const SizedBox(height: 16),

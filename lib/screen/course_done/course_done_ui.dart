@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:huixinapp/app/theme/theme_text.dart';
 import 'package:huixinapp/widget/AppBar/appbar_style.dart';
 import 'package:huixinapp/widget/bottom_appbar_note.dart';
 
@@ -42,13 +43,9 @@ class CourseDone extends StatelessWidget {
                   Positioned(
                     bottom: MediaQuery.of(context).size.height / 30,
                     right: MediaQuery.of(context).size.width / 17,
-                    child: const Text(
+                    child: Text(
                       'Lesson Day 1',
-                      style: TextStyle(
-                        fontSize: 25,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      style: ThemeText.textTheme6.copyWith(fontWeight: FontWeight.w500,),
                     ),
                   ),
                   Positioned(
@@ -82,7 +79,7 @@ class CourseDone extends StatelessWidget {
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
                         ),
-                      ),
+                      ), 
                     ],
                   ),
                   const SizedBox(height: 8),
@@ -136,13 +133,9 @@ class CourseDone extends StatelessWidget {
                       const SizedBox(
                         width: 10,
                       ),
-                      const Text(
+                      Text(
                         'Remedial needed',
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.red,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: ThemeText.textTheme28 ,
                       ),
                     ],
                   )

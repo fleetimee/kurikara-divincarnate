@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:huixinapp/app/theme/theme_text.dart';
 import 'package:huixinapp/widget/AppBar/appbar_style.dart';
 import 'package:huixinapp/widget/bottom_appbar_note.dart';
 
@@ -39,13 +40,9 @@ class CourseInitial extends StatelessWidget {
                   Positioned(
                     bottom: MediaQuery.of(context).size.height / 30,
                     right: MediaQuery.of(context).size.width / 17,
-                    child: const Text(
+                    child: Text(
                       'Lesson Day 4',
-                      style: TextStyle(
-                        fontSize: 25,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      style: ThemeText.textTheme6.copyWith(fontWeight: FontWeight.w500),
                     ),
                   ),
                   Positioned(

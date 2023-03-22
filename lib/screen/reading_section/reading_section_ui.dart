@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:huixinapp/app/const/color.dart';
+import 'package:huixinapp/app/theme/theme_text.dart';
 import 'package:huixinapp/widget/AppBar/appbar_style.dart';
 import 'package:huixinapp/widget/bottom_appbar_button.dart';
 import 'package:huixinapp/widget/container_course.dart';
@@ -67,25 +68,17 @@ class _ReadingSectionState extends State<ReadingSection> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Column(
-                            children: const [
+                            children: [
                               Text(
                                 "Nǐ hǎo",
-                                style: TextStyle(
-                                  fontSize: 36,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.red,
-                                ),
+                                style: ThemeText.textTheme8,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Text(
                                 "Halo",
-                                style: TextStyle(
-                                  fontSize: 36,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.red,
-                                ),
+                                style: ThemeText.textTheme8,
                               ),
                             ],
                           ),
@@ -125,14 +118,9 @@ class _ReadingSectionState extends State<ReadingSection> {
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.center,
                                                 children: [
-                                                  const Text(
+                                                  Text(
                                                     "Correct \nAnswer",
-                                                    style: TextStyle(
-                                                      fontSize: 36,
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
+                                                    style: ThemeText.textTheme9,
                                                   ),
                                                   const SizedBox(
                                                     width: 25,
@@ -155,14 +143,10 @@ class _ReadingSectionState extends State<ReadingSection> {
                                       height: 100,
                                     ),
                           _isReadyForNextContent
-                              ? const Center(
+                              ? Center(
                                   child: Text(
                                     'nice!',
-                                    style: TextStyle(
-                                      fontSize: 64,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.green,
-                                    ),
+                                    style: ThemeText.textTheme10,
                                   ),
                                 )
                               : Column(
@@ -190,11 +174,7 @@ class _ReadingSectionState extends State<ReadingSection> {
                                       _isMicrophoneClicked
                                           ? 'Speak Again'
                                           : 'Speak',
-                                      style: const TextStyle(
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppColors.yellowColor,
-                                      ),
+                                      style: ThemeText.textTheme11
                                     ),
                                   ],
                                 ),

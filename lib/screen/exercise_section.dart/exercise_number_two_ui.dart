@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:huixinapp/app/const/color.dart';
+import 'package:huixinapp/app/theme/theme_text.dart';
 import 'package:huixinapp/widget/AppBar/appbar_style.dart';
 import 'package:huixinapp/widget/bottom_appbar_button.dart';
 import 'package:huixinapp/widget/container_course.dart';
@@ -26,13 +27,9 @@ class ExerciseTwo extends StatelessWidget {
             const SizedBox(
               height: 30,
             ),
-            const Text(
+            Text(
               'Ucapkan kata di atas dengan lafas \nyang benar dengan menekan icon \nmic di bawah ini',
-              style: TextStyle(
-                fontSize: 26,
-                fontWeight: FontWeight.w400,
-                color: AppColors.blackColor,
-              ),
+              style: ThemeText.textTheme24,
               textAlign: TextAlign.center,
             ),
             const SizedBox(
@@ -58,13 +55,9 @@ class ExerciseTwo extends StatelessWidget {
                 const SizedBox(
                   height: 10.0,
                 ),
-                const Text(
+                Text(
                   'Speak',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.yellowColor,
-                  ),
+                  style: ThemeText.textTheme11,
                 ),
               ],
             ),

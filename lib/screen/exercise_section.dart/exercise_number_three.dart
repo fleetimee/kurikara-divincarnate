@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:huixinapp/app/const/color.dart';
+import 'package:huixinapp/app/theme/theme_text.dart';
 import 'package:huixinapp/data/exercise_three.dart';
 import 'package:huixinapp/widget/AppBar/appbar_style.dart';
 import 'package:huixinapp/widget/bottom_appbar_button.dart';
@@ -22,15 +23,11 @@ class ExerciseThree extends StatelessWidget {
             const SizedBox(
               height: 25,
             ),
-            const Padding(
-              padding: EdgeInsets.only(left: 16.0, bottom: 16),
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0, bottom: 16),
               child: Text(
                 'Cocokan angka berikut \ndengan benar',
-                style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.blackColor ,
-                ),
+                style: ThemeText.textTheme25,
               ),
             ),
             const SizedBox(height: 16),
@@ -53,11 +50,7 @@ class ExerciseThree extends StatelessWidget {
                       child: Center(
                         child: Text(
                           allExerciseThree[index].courseName,
-                          style: const TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
+                          style: ThemeText.textTheme26,
                         ),
                       ),
                     );

@@ -4,6 +4,8 @@ import 'package:huixinapp/data/reporting_data.dart';
 import 'package:huixinapp/widget/AppBar/appbar_style.dart';
 import 'package:huixinapp/widget/navigator_style.dart';
 
+import '../../app/theme/theme_text.dart';
+
 class ReportingPage extends StatelessWidget {
   const ReportingPage({super.key});
 
@@ -66,10 +68,7 @@ class ReportingPage extends StatelessWidget {
                               ),
                               Text(
                                 reportingData[index].classReporting,
-                                style: const TextStyle(
-                                  fontSize: 35,
-                                  color: Colors.black,
-                                ),
+                                style: ThemeText.textTheme3,
                               ),
                             ],
                           ),

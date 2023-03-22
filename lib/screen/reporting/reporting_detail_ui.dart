@@ -3,6 +3,8 @@ import 'package:huixinapp/app/const/color.dart';
 import 'package:huixinapp/data/stats.dart';
 import 'package:huixinapp/widget/AppBar/appbar_style.dart';
 
+import '../../app/theme/theme_text.dart';
+
 class ReportingDetailPage extends StatelessWidget {
   const ReportingDetailPage({super.key});
 
@@ -30,24 +32,14 @@ class ReportingDetailPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Statistics',
-                style: TextStyle(
-                  fontSize: 36,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
+              Text('Statistics',
+                  style: ThemeText.textTheme3
+                      .copyWith(fontWeight: FontWeight.bold)),
               const SizedBox(height: 20),
               const Statistics(),
-              const Text(
-                'Education',
-                style: TextStyle(
-                  fontSize: 36,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
+              Text('Education',
+                  style: ThemeText.textTheme3
+                      .copyWith(fontWeight: FontWeight.bold)),
               const SizedBox(height: 20),
               Expanded(
                 child: ListView.separated(
@@ -97,10 +89,7 @@ class ReportingDetailPage extends StatelessWidget {
                             ),
                             Text(
                               allEducations[index].title,
-                              style: const TextStyle(
-                                fontSize: 28,
-                                color: Colors.black,
-                              ),
+                              style: ThemeText.textTheme4,
                             ),
                             const SizedBox(
                               height: 50,
@@ -111,11 +100,7 @@ class ReportingDetailPage extends StatelessWidget {
                               ),
                               child: Text(
                                 allEducations[index].value,
-                                style: const TextStyle(
-                                  fontSize: 30,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                style: ThemeText.textTheme5
                               ),
                             ),
                           ],
@@ -176,17 +161,11 @@ class Statistics extends StatelessWidget {
                       children: [
                         Text(
                           allStats[index].value,
-                          style: const TextStyle(
-                            fontSize: 25,
-                            color: Colors.black,
-                          ),
+                          style: ThemeText.textTheme6,
                         ),
                         Text(
                           allStats[index].title,
-                          style: const TextStyle(
-                            fontSize: 18,
-                            color: Colors.black54,
-                          ),
+                          style: ThemeText.textTheme7,
                         ),
                       ],
                     ),
