@@ -13,7 +13,11 @@ import 'package:audio_session/audio_session.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:permission_handler/permission_handler.dart';
 
+import 'package:flutter_sound_platform_interface/flutter_sound_recorder_platform_interface.dart';
+
 typedef Fn = void Function();
+
+const theSource = AudioSource.microphone;
 
 class ExerciseTwo extends StatefulWidget {
   const ExerciseTwo({super.key});
@@ -25,99 +29,39 @@ class ExerciseTwo extends StatefulWidget {
 class _ExerciseTwoState extends State<ExerciseTwo> {
   final FlutterSoundPlayer _mPlayer = FlutterSoundPlayer();
   final FlutterSoundRecorder _mRecorder = FlutterSoundRecorder();
-  // FlutterSoundPlayer? _mPlayer = FlutterSoundPlayer();
   Codec _codec = Codec.aacMP4;
   String _mPath = 'fleetime.mp4';
-  bool _mRecorderIsInited = false;
-  double _mSubscriptionDuration = 0;
-  StreamSubscription? _recorderSubscription;
-  int pos = 0;
-  double dbLevel = 0;
   bool _mPlayerIsInited = false;
+  bool _mRecorderIsInited = false;
   bool _mplaybackReady = false;
 
   @override
   void initState() {
-    super.initState();
-
-    init().then((value) {
-      setState(() {
-        _mRecorderIsInited = true;
-      });
-    });
-
     _mPlayer.openPlayer().then((value) {
       setState(() {
         _mPlayerIsInited = true;
       });
     });
-  }
 
-  Future<void> init() async {
-    // _mPlayer!.openPlayer().then((value) {
-    //   setState(() {
-    //     _mPlayerIsInited = true;
-    //   });
-    // });
-
-    await openTheRecorder();
-    _recorderSubscription = _mRecorder.onProgress!.listen((e) {
+    openTheRecorder().then((value) {
       setState(() {
-        pos = e.duration.inMilliseconds;
-        if (e.decibels != null) {
-          dbLevel = e.decibels as double;
-        }
+        _mRecorderIsInited = true;
       });
     });
+    super.initState();
   }
 
   @override
   void dispose() {
-    stopRecorder(_mRecorder);
-    _mplaybackReady = true;
-    cancelRecorderSubscriptions();
-
-    // Be careful : you must `close` the audio session when you have finished with it.
-    _mRecorder.closeRecorder();
-
-    stopPlayer();
-    // Be careful : you must `close` the audio session when you have finished with it.
     _mPlayer.closePlayer();
 
+    _mRecorder.closeRecorder();
     super.dispose();
   }
 
-  void cancelRecorderSubscriptions() {
-    if (_recorderSubscription != null) {
-      _recorderSubscription!.cancel();
-      _recorderSubscription = null;
-    }
-  }
-
-  void play() async {
-    await _mPlayer.startPlayer(
-        fromURI: _mPath,
-        whenFinished: () {
-          setState(() {});
-        });
-    setState(() {});
-  }
-
-  Future<void> stopPlayer() async {
-    await _mPlayer.stopPlayer();
-  }
-
-  // void stopPlayer() {
-  //   _mPlayer!.stopPlayer().then((value) {
-  //     setState(() {});
-  //   });
-  // }
-
   Future<void> openTheRecorder() async {
     if (!kIsWeb) {
-      // Get microphone permission before opening the recorder
-      final status = await Permission.microphone.request();
-
+      var status = await Permission.microphone.request();
       if (status != PermissionStatus.granted) {
         throw RecordingPermissionException('Microphone permission not granted');
       }
@@ -125,15 +69,12 @@ class _ExerciseTwoState extends State<ExerciseTwo> {
     await _mRecorder.openRecorder();
     if (!await _mRecorder.isEncoderSupported(_codec) && kIsWeb) {
       _codec = Codec.opusWebM;
-      _mPath = 'fleetime.webm';
+      _mPath = 'tau_file.webm';
       if (!await _mRecorder.isEncoderSupported(_codec) && kIsWeb) {
         _mRecorderIsInited = true;
         return;
       }
     }
-
-    // Permission for android
-
     final session = await AudioSession.instance;
     await session.configure(AudioSessionConfiguration(
       avAudioSessionCategory: AVAudioSessionCategory.playAndRecord,
@@ -156,54 +97,62 @@ class _ExerciseTwoState extends State<ExerciseTwo> {
     _mRecorderIsInited = true;
   }
 
-  void record(FlutterSoundRecorder? recorder) async {
-    await recorder!.startRecorder(codec: _codec, toFile: _mPath);
-    setState(() {});
+  void record() {
+    _mRecorder
+        .startRecorder(
+      toFile: _mPath,
+      codec: _codec,
+      audioSource: theSource,
+    )
+        .then((value) {
+      setState(() {});
+    });
   }
 
-  Future<void> stopRecorder(FlutterSoundRecorder recorder) async {
-    await recorder.stopRecorder();
+  void stopRecorder() async {
+    await _mRecorder.stopRecorder().then((value) {
+      setState(() {
+        //var url = value;
+        _mplaybackReady = true;
+      });
+    });
   }
 
-  Future<void> setSubscriptionDuration(
-      double d) async // v is between 0.0 and 2000 (milliseconds)
-  {
-    _mSubscriptionDuration = d;
-    setState(() {});
-    await _mRecorder.setSubscriptionDuration(
-      Duration(milliseconds: d.floor()),
-    );
+  void play() {
+    assert(_mPlayerIsInited &&
+        _mplaybackReady &&
+        _mRecorder.isStopped &&
+        _mPlayer.isStopped);
+    _mPlayer
+        .startPlayer(
+            fromURI: _mPath,
+            //codec: kIsWeb ? Codec.opusWebM : Codec.aacADTS,
+            whenFinished: () {
+              setState(() {});
+            })
+        .then((value) {
+      setState(() {});
+    });
   }
 
-  Fn? getPlaybackFn(FlutterSoundRecorder? recorder) {
-    if (!_mRecorderIsInited) {
+  void stopPlayer() {
+    _mPlayer.stopPlayer().then((value) {
+      setState(() {});
+    });
+  }
+
+  Fn? getRecorderFn() {
+    if (!_mRecorderIsInited || !_mPlayer.isStopped) {
       return null;
     }
-    return recorder!.isStopped
-        ? () {
-            record(recorder);
-          }
-        : () {
-            stopRecorder(recorder).then((value) => setState(() {}));
-          };
+    return _mRecorder.isStopped ? record : stopRecorder;
   }
 
-  // Fn? getPlayButton() {
-  //   if (!_mPlayerIsInited || !_mplaybackReady || !_mRecorder.isStopped) {
-  //     return null;
-  //   }
-  //   return _mPlayer!.isStopped ? play : stopPlayer;
-  // }
-
-  Fn? getPlay() {
-    if (!_mPlayerIsInited) {
+  Fn? getPlaybackFn() {
+    if (!_mPlayerIsInited || !_mplaybackReady || !_mRecorder.isStopped) {
       return null;
     }
-    return _mPlayer.isStopped
-        ? play
-        : () {
-            stopPlayer().then((value) => setState(() {}));
-          };
+    return _mPlayer.isStopped ? play : stopPlayer;
   }
 
   @override
@@ -216,8 +165,10 @@ class _ExerciseTwoState extends State<ExerciseTwo> {
       body: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const SizedBox(
+              height: 60,
+            ),
             const ContainerCourse(
               text: '你好',
               color: Colors.white,
@@ -235,12 +186,12 @@ class _ExerciseTwoState extends State<ExerciseTwo> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(
-              height: 60,
+              height: 30,
             ),
             Column(
               children: [
                 GestureDetector(
-                  onTap: getPlaybackFn(_mRecorder),
+                  onTap: getRecorderFn(),
                   child: Image.asset(
                     "assets/images/microphone.png",
                     fit: BoxFit.fill,
@@ -258,7 +209,7 @@ class _ExerciseTwoState extends State<ExerciseTwo> {
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: getPlay(),
+                  onPressed: getPlaybackFn(),
                   //color: Colors.white,
                   //disabledColor: Colors.grey,
                   child: Text(
