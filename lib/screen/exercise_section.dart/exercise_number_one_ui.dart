@@ -13,6 +13,11 @@ class ExerciseOne extends StatefulWidget {
 
 class _ExerciseOneState extends State<ExerciseOne> {
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(

@@ -86,9 +86,14 @@ class CourseDone extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 8),
-                  Image.asset(
-                    "assets/images/reading.png",
-                    fit: BoxFit.fill,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/reading_section');
+                    },
+                    child: Image.asset(
+                      "assets/images/reading.png",
+                      fit: BoxFit.fill,
+                    ),
                   ),
                 ],
               ),
