@@ -4,8 +4,18 @@ import 'package:huixinapp/data/question_data.dart';
 import 'package:huixinapp/widget/AppBar/appbar_style.dart';
 import 'package:huixinapp/widget/bottom_appbar_button.dart';
 
-class ExerciseOne extends StatelessWidget {
+class ExerciseOne extends StatefulWidget {
   const ExerciseOne({super.key});
+
+  @override
+  State<ExerciseOne> createState() => _ExerciseOneState();
+}
+
+class _ExerciseOneState extends State<ExerciseOne> {
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,39 +46,53 @@ class ExerciseOne extends StatelessWidget {
             const SizedBox(height: 16),
             Expanded(
               child: Padding(
-                  padding: const EdgeInsets.all(32),
-                  child: GridView.builder(
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 1.5,
-                        crossAxisSpacing: 32,
-                        mainAxisSpacing: 32,
-                      ),
-                      itemCount: allQuestionData.length,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          margin: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            color: allQuestionData[index].isSelected
-                                ? AppColors.greenColor
-                                : AppColors.whiteColor3 ,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Center(
-                            child: Text(
-                              allQuestionData[index].question,
-                              style: TextStyle(
-                                fontSize: 32,
-                                fontWeight: FontWeight.bold,
-                                color: allQuestionData[index].isSelected
-                                    ? Colors.white
-                                    : Colors.black,
-                              ),
+                padding: const EdgeInsets.all(32),
+                child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 1.5,
+                    crossAxisSpacing: 32,
+                    mainAxisSpacing: 32,
+                  ),
+                  itemCount: allQuestionData.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          for (int i = 0; i < allQuestionData.length; i++) {
+                            if (i == index) {
+                              allQuestionData[i].isSelected = true;
+                            } else {
+                              allQuestionData[i].isSelected = false;
+                            }
+                          }
+                        });
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: allQuestionData[index].isSelected
+                              ? AppColors.greenColor
+                              : AppColors.whiteColor3,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Center(
+                          child: Text(
+                            allQuestionData[index].question,
+                            style: TextStyle(
+                              fontSize: 32,
+                              fontWeight: FontWeight.bold,
+                              color: allQuestionData[index].isSelected
+                                  ? Colors.white
+                                  : Colors.black,
                             ),
                           ),
-                        );
-                      })),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
             )
           ],
         ),

@@ -3,6 +3,7 @@ import 'package:huixinapp/app/const/color.dart';
 import 'package:huixinapp/widget/AppBar/appbar_style.dart';
 import 'package:huixinapp/widget/bottom_appbar_button.dart';
 import 'package:huixinapp/widget/container_course.dart';
+import 'package:just_audio/just_audio.dart';
 
 class ReadingSection extends StatefulWidget {
   const ReadingSection({super.key});
@@ -15,6 +16,25 @@ class _ReadingSectionState extends State<ReadingSection> {
   bool _isVolumeClicked = false;
   bool _isMicrophoneClicked = false;
   bool _isReadyForNextContent = false;
+
+  late AudioPlayer player;
+
+  @override
+  void initState() {
+    super.initState();
+    player = AudioPlayer();
+  }
+
+  @override
+  void dispose() {
+    player.dispose();
+    super.dispose();
+  }
+
+  void _playAudio() async {
+    await player.setAsset('assets/audio/nihao.mp3');
+    player.play();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +69,8 @@ class _ReadingSectionState extends State<ReadingSection> {
                             right: MediaQuery.of(context).size.width / 2 - 190,
                             child: GestureDetector(
                               onTap: () => setState(() {
+                                _playAudio();
+
                                 _isVolumeClicked = !_isVolumeClicked;
                                 debugPrint(_isVolumeClicked.toString());
                               }),
@@ -118,7 +140,7 @@ class _ReadingSectionState extends State<ReadingSection> {
                                             decoration: const BoxDecoration(
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(10)),
-                                              color:AppColors.lightGreen,
+                                              color: AppColors.lightGreen,
                                             ),
                                             child: Center(
                                               child: Row(

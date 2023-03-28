@@ -265,6 +265,7 @@ class AppBarExercise extends AppBar {
     Function()? onPressed,
     required String title,
     Color? appbarColor,
+    List<Widget>? actions,
     double? elevation = 4.0, // Set a default value for the elevation property
     borderRadius = const BorderRadius.only(
       bottomLeft: Radius.circular(50.0),
@@ -282,6 +283,7 @@ class AppBarExercise extends AppBar {
             ),
             textAlign: TextAlign.center,
           ),
+          actions: actions,
           centerTitle: true,
           toolbarHeight: 100,
           backgroundColor: AppColors.appbarColor,
@@ -298,18 +300,24 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     required this.title,
     required this.numberOfExercises,
     this.appbarColor,
+    this.actions,
   }) : super(key: key);
 
   final String title;
   final Color? appbarColor;
   final String numberOfExercises;
+  final List<Widget>? actions;
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       clipBehavior: Clip.none,
       children: [
-        AppBarExercise(title: title, context: context),
+        AppBarExercise(
+          title: title,
+          context: context,
+          actions: actions,
+        ),
         Positioned(
           top: 80,
           left: 50,

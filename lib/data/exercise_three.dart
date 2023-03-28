@@ -1,47 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:huixinapp/app/const/color.dart';
 
-class ExerciseThree {
+class ExerciseThreeData {
   final String courseName;
-  final Color color;
+  Color color;
+  final String correctAnswer;
+  bool isAnsweredCorrectly;
 
-  ExerciseThree({
+  ExerciseThreeData({
     required this.courseName,
     required this.color,
+    required this.correctAnswer,
+    this.isAnsweredCorrectly = false,
   });
 }
 
-final List<ExerciseThree> allExerciseThree = [
-  ExerciseThree(
+final List<ExerciseThreeData> allExerciseThree = [
+  ExerciseThreeData(
     courseName: '1',
     color: AppColors.yellowColor2,
+    correctAnswer: 'Sān',
   ),
-  ExerciseThree(
+  ExerciseThreeData(
     courseName: 'Yī',
     color: AppColors.purpleColor,
+    correctAnswer: '3',
   ),
-  ExerciseThree(
+  ExerciseThreeData(
     courseName: '2',
-    color: AppColors.greenColor1 ,
+    color: AppColors.greenColor1,
+    correctAnswer: 'Èr',
   ),
-  ExerciseThree(
+  ExerciseThreeData(
     courseName: 'Sān',
     color: AppColors.yellowColor2,
+    correctAnswer: '1',
   ),
-  ExerciseThree(
+  ExerciseThreeData(
     courseName: '3',
     color: AppColors.purpleColor,
+    correctAnswer: 'Yī',
   ),
-  ExerciseThree(
+  ExerciseThreeData(
     courseName: 'Èr',
     color: AppColors.greenColor1,
+    correctAnswer: '2',
   ),
-  ExerciseThree(
+  ExerciseThreeData(
     courseName: '4',
     color: AppColors.blueColor,
+    correctAnswer: 'Sì',
   ),
-  ExerciseThree(
+  ExerciseThreeData(
     courseName: 'Sì',
     color: AppColors.blueColor,
+    correctAnswer: '4',
   ),
 ];
