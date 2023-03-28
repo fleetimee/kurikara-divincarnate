@@ -1,6 +1,6 @@
 class QuestionData {
   final String question;
-  final bool isSelected;
+  bool isSelected;
 
   QuestionData({
     required this.question,
@@ -11,7 +11,7 @@ class QuestionData {
 final List<QuestionData> allQuestionData = [
   QuestionData(
     question: 'Kamu',
-    isSelected: true,
+    isSelected: false,
   ),
   QuestionData(
     question: 'Saya',
