@@ -23,6 +23,7 @@ class ExerciseTwo extends StatefulWidget {
 }
 
 class _ExerciseTwoState extends State<ExerciseTwo> {
+  final FlutterSoundPlayer _mPlayer = FlutterSoundPlayer();
   final FlutterSoundRecorder _mRecorder = FlutterSoundRecorder();
   // FlutterSoundPlayer? _mPlayer = FlutterSoundPlayer();
   Codec _codec = Codec.aacMP4;
@@ -44,6 +45,30 @@ class _ExerciseTwoState extends State<ExerciseTwo> {
         _mRecorderIsInited = true;
       });
     });
+
+    _mPlayer.openPlayer().then((value) {
+      setState(() {
+        _mPlayerIsInited = true;
+      });
+    });
+  }
+
+  Future<void> init() async {
+    // _mPlayer!.openPlayer().then((value) {
+    //   setState(() {
+    //     _mPlayerIsInited = true;
+    //   });
+    // });
+
+    await openTheRecorder();
+    _recorderSubscription = _mRecorder.onProgress!.listen((e) {
+      setState(() {
+        pos = e.duration.inMilliseconds;
+        if (e.decibels != null) {
+          dbLevel = e.decibels as double;
+        }
+      });
+    });
   }
 
   @override
@@ -55,6 +80,10 @@ class _ExerciseTwoState extends State<ExerciseTwo> {
     // Be careful : you must `close` the audio session when you have finished with it.
     _mRecorder.closeRecorder();
 
+    stopPlayer();
+    // Be careful : you must `close` the audio session when you have finished with it.
+    _mPlayer.closePlayer();
+
     super.dispose();
   }
 
@@ -65,22 +94,18 @@ class _ExerciseTwoState extends State<ExerciseTwo> {
     }
   }
 
-  // void play() {
-  //   assert(_mPlayerIsInited &&
-  //       _mplaybackReady &&
-  //       _mRecorder.isStopped &&
-  //       _mPlayer!.isStopped);
-  //   _mPlayer!
-  //       .startPlayer(
-  //           fromURI: _mPath,
-  //           // codec: kIsWeb ? Codec.opusWebM : Codec.aacADTS,
-  //           whenFinished: () {
-  //             setState(() {});
-  //           })
-  //       .then((value) {
-  //     setState(() {});
-  //   });
-  // }
+  void play() async {
+    await _mPlayer.startPlayer(
+        fromURI: _mPath,
+        whenFinished: () {
+          setState(() {});
+        });
+    setState(() {});
+  }
+
+  Future<void> stopPlayer() async {
+    await _mPlayer.stopPlayer();
+  }
 
   // void stopPlayer() {
   //   _mPlayer!.stopPlayer().then((value) {
@@ -100,7 +125,7 @@ class _ExerciseTwoState extends State<ExerciseTwo> {
     await _mRecorder.openRecorder();
     if (!await _mRecorder.isEncoderSupported(_codec) && kIsWeb) {
       _codec = Codec.opusWebM;
-      _mPath = 'fleetime.mp4';
+      _mPath = 'fleetime.webm';
       if (!await _mRecorder.isEncoderSupported(_codec) && kIsWeb) {
         _mRecorderIsInited = true;
         return;
@@ -129,24 +154,6 @@ class _ExerciseTwoState extends State<ExerciseTwo> {
     ));
 
     _mRecorderIsInited = true;
-  }
-
-  Future<void> init() async {
-    // _mPlayer!.openPlayer().then((value) {
-    //   setState(() {
-    //     _mPlayerIsInited = true;
-    //   });
-    // });
-
-    await openTheRecorder();
-    _recorderSubscription = _mRecorder.onProgress!.listen((e) {
-      setState(() {
-        pos = e.duration.inMilliseconds;
-        if (e.decibels != null) {
-          dbLevel = e.decibels as double;
-        }
-      });
-    });
   }
 
   void record(FlutterSoundRecorder? recorder) async {
@@ -187,6 +194,17 @@ class _ExerciseTwoState extends State<ExerciseTwo> {
   //   }
   //   return _mPlayer!.isStopped ? play : stopPlayer;
   // }
+
+  Fn? getPlay() {
+    if (!_mPlayerIsInited) {
+      return null;
+    }
+    return _mPlayer.isStopped
+        ? play
+        : () {
+            stopPlayer().then((value) => setState(() {}));
+          };
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -239,6 +257,25 @@ class _ExerciseTwoState extends State<ExerciseTwo> {
                     color: AppColors.yellowColor,
                   ),
                 ),
+                ElevatedButton(
+                  onPressed: getPlay(),
+                  //color: Colors.white,
+                  //disabledColor: Colors.grey,
+                  child: Text(
+                    _mPlayer.isPlaying ? 'Stop' : 'Play',
+                  ),
+                ),
+                // Text(
+                //   'Pos: $pos  dbLevel: ${((dbLevel * 100.0).floor()) / 100}',
+                // ),
+                // Slider(
+                //   value: _mSubscriptionDuration,
+                //   min: 0.0,
+                //   max: 2000.0,
+                //   onChanged: setSubscriptionDuration,
+                //   //divisions: 100
+                // ),
+
                 // const Text(
                 //   'Preview Suaramu',
                 // ),
