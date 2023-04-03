@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'dart:html';
 
+import 'package:dartz/dartz.dart';
 import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
 import 'package:flutter_huixin_app/data/models/auth/requests/login_request_model.dart';
 import 'package:flutter_huixin_app/data/models/auth/requests/register_request_model.dart';
@@ -8,68 +8,94 @@ import 'package:flutter_huixin_app/data/models/auth/requests/update_fcm_request_
 import 'package:flutter_huixin_app/data/models/auth/requests/update_profile_request_model.dart';
 import 'package:http/http.dart' as http;
 
+import '../../common/constants/api.dart';
+
 class AuthDataSource {
-  Future<AuthResponseModel> reqister(RegisterRequestModel model) async {
-    var request = http.MultipartRequest(
-        'POST', Uri.parse('https://huixin.id/api_register'));
-    request.fields.addAll(model.toMap());
-    request.files.add(
-        await http.MultipartFile.fromPath('img_file', model.img_file!.path));
+  Future<Either<String, AuthResponseModel>> register(
+      RegisterRequestModel model) async {
+    try {
+      var request = http.MultipartRequest(
+          'POST', Uri.parse('${AppApi.baseUrl}/api_register'));
+      request.fields.addAll(model.toMap());
+      request.files.add(
+          await http.MultipartFile.fromPath('img_file', model.img_file!.path));
 
-    http.StreamedResponse response = await request.send();
+      http.StreamedResponse response = await request.send();
 
-    return AuthResponseModel.fromJson(
-        jsonDecode(await response.stream.bytesToString()));
+      return Right(
+        AuthResponseModel.fromJson(
+            jsonDecode(await response.stream.bytesToString())),
+      );
+    } catch (e) {
+      return Left(e.toString());
+    }
   }
 
-  Future<AuthResponseModel> login(LoginRequestModel model) async {
-    var headers = {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Cookie': 'ci_session=ouvp29be2csimiohsjvhpt90oo3ejgcs'
-    };
-    var request =
-        http.Request('POST', Uri.parse('https://huixin.id/api_login'));
-    request.bodyFields = model.toMap();
-    request.headers.addAll(headers);
+  Future<Either<String, AuthResponseModel>> login(
+      LoginRequestModel model) async {
+    try {
+      var headers = {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Cookie': 'ci_session=ouvp29be2csimiohsjvhpt90oo3ejgcs'
+      };
+      var request =
+          http.Request('POST', Uri.parse('${AppApi.baseUrl}/api_login'));
+      request.bodyFields = model.toMap();
+      request.headers.addAll(headers);
 
-    http.StreamedResponse response = await request.send();
+      http.StreamedResponse response = await request.send();
 
-    return AuthResponseModel.fromJson(
-        jsonDecode(await response.stream.bytesToString()));
+      return Right(
+        AuthResponseModel.fromJson(
+            jsonDecode(await response.stream.bytesToString())),
+      );
+    } catch (e) {
+      return Left(e.toString());
+    }
   }
 
-  Future<AuthResponseModel> updateProfile(
+  Future<Either<String, AuthResponseModel>> updateProfile(
       UpdateProfileRequestModel model) async {
-    var headers = {'Cookie': 'ci_session=ouvp29be2csimiohsjvhpt90oo3ejgcs'};
-    var request = http.MultipartRequest('POST',
-        Uri.parse('https://huixin.id/api_update_profile/?token_api=323232'));
-    request.fields.addAll(model.toMap());
-    request.files.add(
-        await http.MultipartFile.fromPath('img_file', model.img_file!.path));
-    request.headers.addAll(headers);
+    try {
+      var headers = {'Cookie': 'ci_session=ouvp29be2csimiohsjvhpt90oo3ejgcs'};
+      var request = http.MultipartRequest('POST',
+          Uri.parse('${AppApi.baseUrl}/api_update_profile/?token_api=323232'));
+      request.fields.addAll(model.toMap());
+      request.files.add(
+          await http.MultipartFile.fromPath('img_file', model.img_file!.path));
+      request.headers.addAll(headers);
 
-    http.StreamedResponse response = await request.send();
+      http.StreamedResponse response = await request.send();
 
-    return AuthResponseModel.fromJson(
-        jsonDecode(await response.stream.bytesToString()));
+      return Right(
+        AuthResponseModel.fromJson(
+            jsonDecode(await response.stream.bytesToString())),
+      );
+    } catch (e) {
+      return Left(e.toString());
+    }
   }
 
-  Future<bool> updateFcm(UpdateFcmRequestModel model) async {
-    var headers = {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Cookie': 'ci_session=ouvp29be2csimiohsjvhpt90oo3ejgcs'
-    };
-    var request =
-        http.Request('POST', Uri.parse('https://huixin.id/api_update_fcm'));
-    request.bodyFields = model.toMap();
-    request.headers.addAll(headers);
+  Future<Either<String, bool>> updateFcm(UpdateFcmRequestModel model) async {
+    try {
+      var headers = {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Cookie': 'ci_session=ouvp29be2csimiohsjvhpt90oo3ejgcs'
+      };
+      var request =
+          http.Request('POST', Uri.parse('${AppApi.baseUrl}/api_update_fcm'));
+      request.bodyFields = model.toMap();
+      request.headers.addAll(headers);
 
-    http.StreamedResponse response = await request.send();
+      http.StreamedResponse response = await request.send();
 
-    if (response.statusCode == 200) {
-      return true;
-    } else {
-      return false;
+      if (response.statusCode == 200) {
+        return const Right(true);
+      } else {
+        return const Right(false);
+      }
+    } catch (e) {
+      return Left(e.toString());
     }
   }
 }
