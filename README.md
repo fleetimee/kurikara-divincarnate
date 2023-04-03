@@ -1,4 +1,4 @@
-# flutter_huxin_app
+# flutter_huixin_app
 
 A new Flutter project.
 
