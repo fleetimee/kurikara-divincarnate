@@ -8,7 +8,7 @@ class UpdateFcmRequestModel {
     required this.fcm_id,
   });
 
-  Map<String, dynamic> toMap() {
+  Map<String, String> toMap() {
     return {
       'user_id': user_id,
       'fcm_id': fcm_id,

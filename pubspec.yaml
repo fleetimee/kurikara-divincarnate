@@ -20,6 +20,7 @@ dependencies:
   font_awesome_flutter: ^10.4.0
   form_builder_validators: ^8.5.0
   google_fonts: ^4.0.3
+  http: ^0.13.5
   image_picker: ^0.8.7
   just_audio: ^0.9.32
   permission_handler: ^10.2.0

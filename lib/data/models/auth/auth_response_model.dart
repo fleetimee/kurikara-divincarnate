@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-class RegisterResponseModel {
-  RegisterResponseModel({
+class AuthResponseModel {
+  AuthResponseModel({
     this.status,
     this.message,
     this.data,
@@ -11,13 +11,13 @@ class RegisterResponseModel {
   String? message;
   DataUser? data;
 
-  factory RegisterResponseModel.fromRawJson(String str) =>
-      RegisterResponseModel.fromJson(json.decode(str));
+  factory AuthResponseModel.fromRawJson(String str) =>
+      AuthResponseModel.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory RegisterResponseModel.fromJson(Map<String, dynamic> json) =>
-      RegisterResponseModel(
+  factory AuthResponseModel.fromJson(Map<String, dynamic> json) =>
+      AuthResponseModel(
         status: json["status"],
         message: json["message"],
         data: json["data"] == null ? null : DataUser.fromJson(json["data"]),

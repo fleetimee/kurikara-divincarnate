@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-class RegisterRequestModel {
+class UpdateProfileRequestModel {
+  final String user_id;
   final String user_npp;
   final String full_name;
   final String user_name;
@@ -16,7 +17,8 @@ class RegisterRequestModel {
   File? img_file;
   final String no_member;
   final String birth_date;
-  RegisterRequestModel({
+  UpdateProfileRequestModel({
+    required this.user_id,
     required this.user_npp,
     required this.full_name,
     required this.user_name,
@@ -32,9 +34,11 @@ class RegisterRequestModel {
     required this.no_member,
     required this.birth_date,
   });
+  
 
   Map<String, String> toMap() {
     return {
+      'user_id': user_id,
       'user_npp': user_npp,
       'full_name': full_name,
       'user_name': user_name,
@@ -46,14 +50,15 @@ class RegisterRequestModel {
       'token_device': token_device,
       'email': email,
       'no_telpon': no_telpon,
-      // 'img_file': img_file.toMap(),
+      // 'img_file': img_file?.toMap(),
       'no_member': no_member,
       'birth_date': birth_date,
     };
   }
 
-  factory RegisterRequestModel.fromMap(Map<String, dynamic> map) {
-    return RegisterRequestModel(
+  factory UpdateProfileRequestModel.fromMap(Map<String, dynamic> map) {
+    return UpdateProfileRequestModel(
+      user_id: map['user_id'] ?? '',
       user_npp: map['user_npp'] ?? '',
       full_name: map['full_name'] ?? '',
       user_name: map['user_name'] ?? '',
@@ -65,7 +70,7 @@ class RegisterRequestModel {
       token_device: map['token_device'] ?? '',
       email: map['email'] ?? '',
       no_telpon: map['no_telpon'] ?? '',
-      // img_file: File.fromMap(map['img_file']),
+      // img_file: map['img_file'] != null ? File.fromMap(map['img_file']) : null,
       no_member: map['no_member'] ?? '',
       birth_date: map['birth_date'] ?? '',
     );
@@ -73,11 +78,5 @@ class RegisterRequestModel {
 
   String toJson() => json.encode(toMap());
 
-  factory RegisterRequestModel.fromJson(String source) =>
-      RegisterRequestModel.fromMap(json.decode(source));
-
-  @override
-  String toString() {
-    return 'RegisterResponseModel(user_npp: $user_npp, full_name: $full_name, user_name: $user_name, user_password: $user_password, id_google: $id_google, id_fb: $id_fb, id_apple: $id_apple, fcm_id: $fcm_id, token_device: $token_device, email: $email, no_telpon: $no_telpon, img_file: $img_file, no_member: $no_member, birth_date: $birth_date)';
-  }
+  factory UpdateProfileRequestModel.fromJson(String source) => UpdateProfileRequestModel.fromMap(json.decode(source));
 }

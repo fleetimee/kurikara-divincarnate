@@ -14,13 +14,13 @@ class LoginRequestModel {
     this.id_apple,
   });
 
-  Map<String, dynamic> toMap() {
+  Map<String, String> toMap() {
     return {
       'username': username,
       'password': password,
-      'id_google': id_google,
-      'id_fb': id_fb,
-      'id_apple': id_apple,
+      'id_google': id_google ?? '',
+      'id_fb': id_fb ?? '',
+      'id_apple': id_apple ?? '',
     };
   }
 
