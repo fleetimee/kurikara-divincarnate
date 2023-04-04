@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../common/constants/color.dart';
@@ -11,6 +12,7 @@ class RegisterForm extends StatelessWidget {
   final bool obscureToggle;
   final String? Function(String?)? validator;
   final TextInputType? keyboardType;
+  final TextEditingController? controller;
 
   const RegisterForm({
     Key? key,
@@ -20,6 +22,7 @@ class RegisterForm extends StatelessWidget {
     this.obscureToggle = false,
     this.validator,
     this.keyboardType,
+    this.controller,
   }) : super(key: key);
 
   @override
@@ -81,10 +84,75 @@ class RegisterForm extends StatelessWidget {
 }
 
 class RegisterFormDate extends StatelessWidget {
-  const RegisterFormDate({super.key});
+  final String name;
+  final String label;
+
+  const RegisterFormDate({
+    super.key,
+    required this.name,
+    required this.label,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 70),
+      child: FormBuilderDateTimePicker(
+        name: name,
+        style: TextStyle(
+          color: AppColors.darkOrange,
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          fontFamily: GoogleFonts.montserrat().fontFamily,
+        ),
+        validator: FormBuilderValidators.required(),
+        inputType: InputType.date,
+        currentDate: DateTime.now(),
+        firstDate: DateTime(1900),
+        lastDate: DateTime(2100),
+        decoration: InputDecoration(
+          alignLabelWithHint: true,
+          prefixIcon: const Text(''),
+          suffixIcon: Padding(
+            padding: const EdgeInsets.only(right: 20),
+            child: Image.asset(
+              "assets/images/calendar.png",
+            ),
+          ),
+          isDense: true,
+          contentPadding: const EdgeInsets.symmetric(
+            vertical: 15, // reduce the vertical padding
+            // horizontal: 50, // add horizontal padding
+          ),
+          focusColor: Colors.red,
+          fillColor: Colors.white,
+          hoverColor: Colors.red,
+          filled: true,
+          focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: AppColors.darkOrange),
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.transparent),
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          border: const OutlineInputBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(20.0),
+            ),
+            borderSide: BorderSide(
+              color: Colors.transparent,
+            ),
+          ),
+          hintText: label,
+          hintStyle: TextStyle(
+            color: const Color(0x808C2828),
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            fontFamily: GoogleFonts.roboto().fontFamily,
+          ),
+        ),
+      ),
+    );
   }
 }

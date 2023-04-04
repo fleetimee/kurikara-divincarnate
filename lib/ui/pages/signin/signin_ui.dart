@@ -156,6 +156,9 @@ class _LoginPageState extends State<LoginPage> {
                       height: 10,
                     ),
                     PrimaryButton(
+                      /// Render whether state is loading or not
+                      /// to show the loading indicator
+                      /// or the login button
                       text: state.maybeWhen(
                         loading: () => 'Loading...',
                         orElse: () => 'Login',
@@ -163,6 +166,9 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: () {
                         if (_fbKeyAuth.currentState?.saveAndValidate() ??
                             false) {
+                          /// Initialize the login request model
+                          /// and pass it to the [AuthCubit]
+                          /// to validate the user
                           context.read<AuthCubit>().login(
                                 LoginRequestModel(
                                   username: _usernameController.text,

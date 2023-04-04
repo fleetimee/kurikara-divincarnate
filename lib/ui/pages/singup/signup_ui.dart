@@ -23,10 +23,10 @@ class _SignUpPageState extends State<SignUpPage> {
   /// Initialize FormBuilder global key
   /// that will be used to validate form
   /// and store it in [_fbKey] variable
-
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
 
   /// Initialize File variable for image picker
+  /// that will be used to store the image
   @override
   File? _image;
 
@@ -34,14 +34,29 @@ class _SignUpPageState extends State<SignUpPage> {
   /// that will be used to pick image from gallery or camera
   /// and store it in [_image] variable
   Future<void> _pickImage(ImageSource source) async {
+    /// Pick image from gallery or camera
+    /// and store it in [pickedFile] variable
     final pickedFile = await ImagePicker().pickImage(source: source);
 
+    /// Check if the image is not null
+    /// and store it in [_image] variable
+    /// to display it in the UI
     if (pickedFile != null) {
       setState(() {
+        /// Store the image in [_image] variable
         _image = File(pickedFile.path);
       });
     }
   }
+
+  /// Bunch of TextEditingControllers
+  /// that will be used to get the value of the text field
+  /// and pass it to the [AuthCubit]
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _noMemberController = TextEditingController();
+  final TextEditingController _fullNameController = TextEditingController();
+  final TextEditingController _birthDateController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +65,8 @@ class _SignUpPageState extends State<SignUpPage> {
         title: "Signup",
       ),
       body: FormBuilder(
+        /// Initialize FormBuilder global
+        /// key to validate the form
         key: _fbKey,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -59,7 +76,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.1,
+                      height: MediaQuery.of(context).size.height * 0.07,
                     ),
                     _imagePicker(),
                     const SizedBox(
@@ -68,6 +85,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     RegisterForm(
                         name: 'username',
                         label: 'Username',
+                        controller: _usernameController,
                         obscureTextEnabled: 'false',
                         validator: FormBuilderValidators.compose(
                           [
@@ -86,6 +104,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     RegisterForm(
                       name: 'password',
                       label: 'Password',
+                      controller: _passwordController,
                       obscureTextEnabled: 'true',
                       obscureToggle: true,
                       validator: FormBuilderValidators.compose(
@@ -107,6 +126,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     RegisterForm(
                       name: 'noMember',
                       label: 'No Member',
+                      controller: _noMemberController,
                       obscureTextEnabled: 'false',
                       keyboardType: TextInputType.number,
                       validator: FormBuilderValidators.compose([
@@ -120,17 +140,15 @@ class _SignUpPageState extends State<SignUpPage> {
                     RegisterForm(
                       name: 'fullName',
                       label: 'Full Name',
+                      controller: _fullNameController,
                       obscureTextEnabled: 'false',
                       validator: FormBuilderValidators.required(),
                     ),
                     const SizedBox(
                       height: 10.0,
                     ),
-                    const RegisterForm(
-                      name: 'birthDate',
-                      label: 'Birth Date',
-                      obscureTextEnabled: 'false',
-                    ),
+                    const RegisterFormDate(
+                        name: 'birth_date', label: 'Birth Date'),
                     const SizedBox(
                       height: 20.0,
                     ),
