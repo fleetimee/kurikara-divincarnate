@@ -3,7 +3,9 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_huixin_app/cubit/auth/auth_cubit.dart';
+import 'package:flutter_huixin_app/data/datasources/local/app_secure_storage.dart';
 import 'package:flutter_huixin_app/data/models/auth/requests/login_request_model.dart';
+import 'package:flutter_huixin_app/ui/widgets/dialog_box.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
 import '../../widgets/button.dart';
@@ -30,27 +32,52 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit, AuthState>(
+      /// This code defines a state listener function that
+      /// performs different actions based on the state that is
+      /// returned by the [AuthCubit]
       listener: (context, state) {
         state.when(
           initial: () {},
           loading: () {},
-          loaded: (user) {
+          loaded: (user) async {
             if (user.data != null) {
-              Navigator.pushNamed(context, '/home');
+              /// Save the token to the secure storage
+              await AppSecureStorage.setAccessToken('323232');
+
+              // Save the user to the secure storage
+              await AppSecureStorage.setUser(user.data);
+
+              /// Navigate to the home page
+              /// if the user is valid
+              /// and the token is saved to the secure storage
+              if (context.mounted) {
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  '/home',
+                  (route) => false,
+                );
+              }
             } else {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Login failed'),
-                ),
-              );
+              /// Show the error dialog
+              /// if the user is invalid
+              /// and the token is not saved to the secure storage
+              ErrorDialog(
+                title: 'Invalid Credentials',
+                context: context,
+                desc: 'Username atau Password salah',
+                btnOkText: 'OK',
+                btnOkOnPress: () {},
+              ).show();
             }
           },
           error: (error) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(error),
-              ),
-            );
+            ErrorDialog(
+              title: 'Error',
+              context: context,
+              desc: error,
+              btnOkText: 'OK',
+              btnOkOnPress: () {},
+            ).show();
           },
         );
       },
@@ -129,7 +156,10 @@ class _LoginPageState extends State<LoginPage> {
                       height: 10,
                     ),
                     PrimaryButton(
-                      text: 'GO',
+                      text: state.maybeWhen(
+                        loading: () => 'Loading...',
+                        orElse: () => 'Login',
+                      ),
                       onPressed: () {
                         if (_fbKeyAuth.currentState?.saveAndValidate() ??
                             false) {
