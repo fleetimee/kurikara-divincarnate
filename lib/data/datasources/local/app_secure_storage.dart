@@ -16,8 +16,8 @@ class AppSecureStorage {
     return await _storage.read(key: _keyTokenApi);
   }
 
-  static Future setUser(DataUser user) async {
-    await _storage.write(key: _user, value: jsonEncode(user));
+  static Future setUser(DataUser? user) async {
+    await _storage.write(key: _user, value: jsonEncode(user?.toJson()));
   }
 
   static Future<DataUser?> getUser() async {
