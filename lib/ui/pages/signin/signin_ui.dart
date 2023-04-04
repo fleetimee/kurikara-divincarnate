@@ -36,9 +36,7 @@ class _LoginPageState extends State<LoginPage> {
       /// performs different actions based on the state that is
       /// returned by the [AuthCubit]
       listener: (context, state) {
-        state.when(
-          initial: () {},
-          loading: () {},
+        state.maybeWhen(
           loaded: (user) async {
             if (user.data != null) {
               /// Save the token to the secure storage
@@ -79,8 +77,10 @@ class _LoginPageState extends State<LoginPage> {
               btnOkOnPress: () {},
             ).show();
           },
+          orElse: () {},
         );
       },
+
       builder: (context, state) {
         return SafeArea(
           child: Scaffold(

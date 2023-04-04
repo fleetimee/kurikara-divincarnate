@@ -35,6 +35,7 @@ class RegisterForm extends StatelessWidget {
       child: FormBuilderTextField(
         obscureText: obscureTextEnabled == 'true',
         name: name,
+        controller: controller,
         style: TextStyle(
           color: AppColors.darkOrange,
           fontSize: 20,

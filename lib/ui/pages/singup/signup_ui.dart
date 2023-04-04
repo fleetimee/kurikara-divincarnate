@@ -3,7 +3,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_huixin_app/cubit/auth/auth_cubit.dart';
+import 'package:flutter_huixin_app/data/datasources/auth_datasource.dart';
+import 'package:flutter_huixin_app/data/models/auth/requests/register_request_model.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
 import 'package:image_picker/image_picker.dart';
@@ -29,6 +33,8 @@ class _SignUpPageState extends State<SignUpPage> {
   /// that will be used to store the image
   @override
   File? _image;
+
+  // late String _uuid = '';
 
   /// Initialize Image Picker
   /// that will be used to pick image from gallery or camera
@@ -60,134 +66,151 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBarDefault(
-        title: "Signup",
-      ),
-      body: FormBuilder(
-        /// Initialize FormBuilder global
-        /// key to validate the form
-        key: _fbKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.07,
-                    ),
-                    _imagePicker(),
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-                    RegisterForm(
-                        name: 'username',
-                        label: 'Username',
-                        controller: _usernameController,
-                        obscureTextEnabled: 'false',
-                        validator: FormBuilderValidators.compose(
-                          [
-                            FormBuilderValidators.required(),
-                            FormBuilderValidators.minLength(
-                              6,
-                              allowEmpty: false,
-                              errorText:
-                                  'Username must be at least 6 characters',
-                            ),
-                          ],
-                        )),
-                    const SizedBox(
-                      height: 10.0,
-                    ),
-                    RegisterForm(
-                      name: 'password',
-                      label: 'Password',
-                      controller: _passwordController,
-                      obscureTextEnabled: 'true',
-                      obscureToggle: true,
-                      validator: FormBuilderValidators.compose(
-                        [
-                          FormBuilderValidators.required(
-                            errorText: 'Password is required',
-                          ),
-                          FormBuilderValidators.minLength(
-                            6,
-                            allowEmpty: false,
-                            errorText: 'Password must be at least 6 characters',
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10.0,
-                    ),
-                    RegisterForm(
-                      name: 'noMember',
-                      label: 'No Member',
-                      controller: _noMemberController,
-                      obscureTextEnabled: 'false',
-                      keyboardType: TextInputType.number,
-                      validator: FormBuilderValidators.compose([
-                        FormBuilderValidators.required(),
-                        FormBuilderValidators.numeric(),
-                      ]),
-                    ),
-                    const SizedBox(
-                      height: 10.0,
-                    ),
-                    RegisterForm(
-                      name: 'fullName',
-                      label: 'Full Name',
-                      controller: _fullNameController,
-                      obscureTextEnabled: 'false',
-                      validator: FormBuilderValidators.required(),
-                    ),
-                    const SizedBox(
-                      height: 10.0,
-                    ),
-                    RegisterFormDate(
-                      name: 'birth_date',
-                      label: 'Birth Date',
-                      controller: _birthDateController,
-                    ),
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-                    PrimaryButton(
-                      text: 'SUBMIT',
-                      onPressed: () {
-                        if (_fbKey.currentState?.saveAndValidate() ?? false) {
-                          debugPrint(_fbKey.currentState?.value.toString());
-                        } else {
-                          debugPrint(_fbKey.currentState?.value.toString());
-                          debugPrint('validation failed');
-                        }
-                      },
-                    ),
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-                    const Text(
-                      'Or Sign Up With',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-                    _buildSocialIcon(),
-                  ],
-                ),
-              ),
+    return BlocProvider(
+        create: (context) => AuthCubit(
+              AuthDataSource(),
             ),
-          ],
-        ),
-      ),
-    );
+        child: Scaffold(
+          appBar: AppBarDefault(
+            title: "Signup",
+          ),
+          body: FormBuilder(
+            /// Initialize FormBuilder global
+            /// key to validate the form
+            key: _fbKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.07,
+                        ),
+                        _imagePicker(),
+                        const SizedBox(
+                          height: 20.0,
+                        ),
+                        RegisterForm(
+                            name: 'username',
+                            label: 'Username',
+                            controller: _usernameController,
+                            obscureTextEnabled: 'false',
+                            validator: FormBuilderValidators.compose(
+                              [
+                                FormBuilderValidators.required(),
+                                FormBuilderValidators.minLength(
+                                  6,
+                                  allowEmpty: false,
+                                  errorText:
+                                      'Username must be at least 6 characters',
+                                ),
+                              ],
+                            )),
+                        const SizedBox(
+                          height: 10.0,
+                        ),
+                        RegisterForm(
+                          name: 'password',
+                          label: 'Password',
+                          controller: _passwordController,
+                          obscureTextEnabled: 'true',
+                          obscureToggle: true,
+                          validator: FormBuilderValidators.compose(
+                            [
+                              FormBuilderValidators.required(
+                                errorText: 'Password is required',
+                              ),
+                              FormBuilderValidators.minLength(
+                                6,
+                                allowEmpty: false,
+                                errorText:
+                                    'Password must be at least 6 characters',
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10.0,
+                        ),
+                        RegisterForm(
+                          name: 'noMember',
+                          label: 'No Member',
+                          controller: _noMemberController,
+                          obscureTextEnabled: 'false',
+                          keyboardType: TextInputType.number,
+                          validator: FormBuilderValidators.compose([
+                            FormBuilderValidators.required(),
+                          ]),
+                        ),
+                        const SizedBox(
+                          height: 10.0,
+                        ),
+                        RegisterForm(
+                          name: 'fullName',
+                          label: 'Full Name',
+                          controller: _fullNameController,
+                          obscureTextEnabled: 'false',
+                          validator: FormBuilderValidators.required(),
+                        ),
+                        const SizedBox(
+                          height: 10.0,
+                        ),
+                        RegisterFormDate(
+                          name: 'birth_date',
+                          label: 'Birth Date',
+                          controller: _birthDateController,
+                        ),
+                        const SizedBox(
+                          height: 20.0,
+                        ),
+                        PrimaryButton(
+                          text: 'Sign Up',
+                          onPressed: () {
+                            if (_fbKey.currentState?.saveAndValidate() ??
+                                false) {
+                              debugPrint(_fbKey.currentState?.value.toString());
+
+                              context.read<AuthCubit>().register(
+                                    RegisterRequestModel(
+                                      user_name: _usernameController.text,
+                                      user_password: _passwordController.text,
+                                      no_member: _noMemberController.text,
+                                      full_name: _fullNameController.text,
+                                      birth_date: _birthDateController.text,
+                                      token_device: '1234567890',
+                                      img_file: _image,
+                                    ),
+                                  );
+                            } else {
+                              debugPrint(_fbKey.currentState?.value.toString());
+                              debugPrint('validation failed');
+                            }
+                          },
+                        ),
+                        const SizedBox(
+                          height: 20.0,
+                        ),
+                        const Text(
+                          'Or Sign Up With',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20.0,
+                        ),
+                        _buildSocialIcon(),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ));
   }
 
   Widget _imagePicker() {
