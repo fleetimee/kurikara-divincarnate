@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_huixin_app/cubit/auth/auth_cubit.dart';
 import 'package:flutter_huixin_app/data/datasources/auth_datasource.dart';
+import 'package:flutter_huixin_app/data/datasources/local/app_secure_storage.dart';
+import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
+import 'package:flutter_huixin_app/ui/pages/home/home_ui.dart';
+import 'package:flutter_huixin_app/ui/pages/signin/signin_ui.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 
 import 'common/constants/color.dart';
@@ -44,10 +48,43 @@ class MyApp extends StatelessWidget {
         theme: myLightTheme,
         darkTheme: myDarkTheme,
         themeMode: ThemeMode.light,
-        initialRoute: '/',
+        home: const Init(),
         routes: routes,
         debugShowCheckedModeBanner: false,
       ),
+    );
+  }
+}
+
+class Init extends StatelessWidget {
+  /// This widget determines whether to show the login page or the home page
+  /// based on whether the user is logged in or not.
+  /// If the user is logged in, the home page will be shown.
+  /// If the user is not logged in, the login page will be shown.
+  const Init({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<DataUser?>(
+      future: AppSecureStorage.getUser(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          // Show a loading screen if data is still being fetched
+          return const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        } else if (snapshot.hasData && snapshot.data != null) {
+          // If data is available, show home page
+          return const HomePage();
+        } else {
+          // If data is not available, show login page
+          return const LoginPage();
+        }
+      },
     );
   }
 }
