@@ -15,6 +15,7 @@ dependencies:
   dartz: ^0.10.1
   device_info_plus: ^8.1.0
   dot_navigation_bar: ^1.0.1+4
+  firebase_core: ^2.9.0
   flex_color_scheme: ^6.1.2
   flutter:
     sdk: flutter
