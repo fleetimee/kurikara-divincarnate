@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_huixin_app/cubit/auth/auth_cubit.dart';
-import 'package:flutter_huixin_app/data/datasources/auth_datasource.dart';
 import 'package:flutter_huixin_app/data/datasources/local/app_secure_storage.dart';
 import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
 import 'package:flutter_huixin_app/ui/pages/home/home_ui.dart';
 import 'package:flutter_huixin_app/ui/pages/signin/signin_ui.dart';
+import 'package:flutter_huixin_app/utils/providers.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 
 import 'common/constants/color.dart';
@@ -13,22 +11,15 @@ import 'common/routes/routes.dart';
 import 'common/themes/theme_data.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const HuixinApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class HuixinApp extends StatelessWidget {
+  const HuixinApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<AuthCubit>(
-          create: (_) => AuthCubit(
-            AuthDataSource(),
-          ),
-        ),
-      ],
+    return AppProviders(
       child: MaterialApp(
         builder: (context, child) => ResponsiveWrapper.builder(
           child,
