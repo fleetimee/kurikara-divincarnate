@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_huixin_app/data/datasources/local/app_secure_storage.dart';
+import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
 
 import '../../../common/constants/color.dart';
 import '../../../cubit/entities/active_students.dart';
@@ -9,16 +11,33 @@ import '../../widgets/navigator_style.dart';
 import '../../widgets/pageroute.dart';
 import '../course_selector/course_selector_ui.dart';
 
-
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  DataUser? user;
+
+  @override
+  void initState() {
+    super.initState();
+    _getUser();
+  }
+
+  void _getUser() async {
+    user = await AppSecureStorage.getUser();
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
       appBar: AppBarHome(
-        title: "Nanao Ise",
+        title: user?.userName ?? 'Loading...',
       ),
       body: const HomeItems(),
       bottomNavigationBar: const Padding(
