@@ -4,9 +4,17 @@ import 'package:flutter_animate/flutter_animate.dart';
 import '../../widgets/button.dart';
 import '../../widgets/login_form.dart';
 
-
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final TextEditingController _usernameController = TextEditingController();
+
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -22,15 +30,17 @@ class LoginPage extends StatelessWidget {
               const SizedBox(
                 height: 20.0,
               ),
-              const LoginForm(
+              LoginForm(
                 label: 'Username',
+                controller: _usernameController,
                 obscureText: 'false',
               ),
               const SizedBox(
                 height: 20,
               ),
-              const LoginForm(
+              LoginForm(
                 label: 'Password',
+                controller: _passwordController,
                 obscureText: 'true',
               ),
               const SizedBox(
