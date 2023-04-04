@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoginForm extends StatelessWidget {
   final String label;
   final String obscureText;
+  final TextEditingController controller;
+  final String? Function(String?)? validator;
+  final String name;
 
   const LoginForm({
     Key? key,
     required this.label,
     required this.obscureText,
+    required this.controller,
+    required this.name,
+    this.validator,
   }) : super(key: key);
 
   @override
@@ -18,8 +23,9 @@ class LoginForm extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 70),
       child: FormBuilderTextField(
+        name: name,
+        controller: controller,
         obscureText: obscureText == 'true',
-        name: label.toLowerCase().replaceAll(' ', '_'),
         style: TextStyle(
           color: Colors.black87,
           fontSize: 20,
@@ -65,10 +71,7 @@ class LoginForm extends StatelessWidget {
           ),
         ),
         textInputAction: TextInputAction.next,
-        validator: FormBuilderValidators.compose([
-          FormBuilderValidators.required(),
-          if (label == 'Email') FormBuilderValidators.email(),
-        ]),
+        validator: validator,
       ),
     );
   }
