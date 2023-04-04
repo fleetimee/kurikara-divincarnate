@@ -57,6 +57,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.2"
+  awesome_dialog:
+    dependency: "direct main"
+    description:
+      name: awesome_dialog
+      sha256: ac08268b991f228fc6b8880b68ec030d2941bcc8df8b6a6551fb79f2bd36b7da
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.2"
   bloc:
     dependency: "direct main"
     description:
@@ -877,6 +885,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.0"
+  rive:
+    dependency: transitive
+    description:
+      name: rive
+      sha256: "22e3755b75f4ea4492d2fecf4fc2acf1c8d0073df39781d290a20cbfe74c3760"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.9.1"
   rxdart:
     dependency: transitive
     description:
