@@ -147,8 +147,11 @@ class _SignUpPageState extends State<SignUpPage> {
                     const SizedBox(
                       height: 10.0,
                     ),
-                    const RegisterFormDate(
-                        name: 'birth_date', label: 'Birth Date'),
+                    RegisterFormDate(
+                      name: 'birth_date',
+                      label: 'Birth Date',
+                      controller: _birthDateController,
+                    ),
                     const SizedBox(
                       height: 20.0,
                     ),

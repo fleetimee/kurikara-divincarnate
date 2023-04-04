@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       extendBody: true,
       appBar: AppBarHome(
-        title: user?.userName ?? 'Loading...',
+        title: user?.fullName ?? 'Loading...',
       ),
       body: const HomeItems(),
       bottomNavigationBar: const Padding(

@@ -3,6 +3,9 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+// import intl
+import 'package:intl/intl.dart';
+
 import '../../common/constants/color.dart';
 
 class RegisterForm extends StatelessWidget {
@@ -86,11 +89,13 @@ class RegisterForm extends StatelessWidget {
 class RegisterFormDate extends StatelessWidget {
   final String name;
   final String label;
+  final TextEditingController? controller;
 
   const RegisterFormDate({
     super.key,
     required this.name,
     required this.label,
+    this.controller,
   });
 
   @override
@@ -99,6 +104,7 @@ class RegisterFormDate extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 70),
       child: FormBuilderDateTimePicker(
         name: name,
+        controller: controller,
         style: TextStyle(
           color: AppColors.darkOrange,
           fontSize: 20,
@@ -110,6 +116,8 @@ class RegisterFormDate extends StatelessWidget {
         currentDate: DateTime.now(),
         firstDate: DateTime(1900),
         lastDate: DateTime(2100),
+        valueTransformer: (date) => date.toString(),
+        format: DateFormat('EEEE, MMMM d, yyyy', 'id_ID'),
         decoration: InputDecoration(
           alignLabelWithHint: true,
           prefixIcon: const Text(''),

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_huixin_app/data/datasources/local/app_secure_storage.dart';
 import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
 import 'package:flutter_huixin_app/ui/pages/home/home_ui.dart';
 import 'package:flutter_huixin_app/ui/pages/signin/signin_ui.dart';
 import 'package:flutter_huixin_app/utils/providers.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:form_builder_validators/localization/l10n.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 
 import 'common/constants/color.dart';
@@ -42,6 +45,17 @@ class HuixinApp extends StatelessWidget {
         home: const Init(),
         routes: routes,
         debugShowCheckedModeBanner: false,
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          FormBuilderLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale('en'),
+          Locale('id'),
+        ],
+        locale: const Locale('id'),
       ),
     );
   }
