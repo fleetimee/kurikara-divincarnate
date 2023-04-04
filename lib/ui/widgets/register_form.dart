@@ -1,26 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:flutter/services.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../common/constants/color.dart';
 
-
 class RegisterForm extends StatelessWidget {
+  final String name;
   final String label;
   final String obscureTextEnabled;
   final bool obscureToggle;
-  final bool dateTimePickerEnabled;
-  final String dateTimePickerLabel;
 
   const RegisterForm({
     Key? key,
+    required this.name,
     required this.label,
     required this.obscureTextEnabled,
     this.obscureToggle = false,
-    this.dateTimePickerEnabled = false,
-    this.dateTimePickerLabel = '',
   }) : super(key: key);
 
   @override
@@ -29,7 +25,7 @@ class RegisterForm extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 70),
       child: FormBuilderTextField(
         obscureText: obscureTextEnabled == 'true',
-        name: label.toLowerCase().replaceAll(' ', '_'),
+        name: name,
         style: TextStyle(
           color: AppColors.darkOrange,
           fontSize: 20,
@@ -72,39 +68,12 @@ class RegisterForm extends StatelessWidget {
             fontWeight: FontWeight.bold,
             fontFamily: GoogleFonts.roboto().fontFamily,
           ),
-          suffixIcon: obscureToggle
-              ? IconButton(
-                  icon: Icon(obscureTextEnabled == 'true'
-                      ? Icons.visibility_off
-                      : Icons.visibility),
-                  onPressed: () {},
-                )
-              : null,
-          labelText: dateTimePickerEnabled ? dateTimePickerLabel : null,
         ),
         textInputAction: TextInputAction.next,
         validator: FormBuilderValidators.compose([
           FormBuilderValidators.required(),
           if (label == 'Email') FormBuilderValidators.email(),
         ]),
-        keyboardType: dateTimePickerEnabled ? TextInputType.datetime : null,
-        inputFormatters: dateTimePickerEnabled
-            ? [FilteringTextInputFormatter.digitsOnly]
-            : null,
-        onTap: () {
-          if (dateTimePickerEnabled) {
-            showDatePicker(
-              context: context,
-              initialDate: DateTime.now(),
-              firstDate: DateTime(1900),
-              lastDate: DateTime.now(),
-            ).then((value) {
-              if (value != null) {
-                // Do something with the selected date
-              }
-            });
-          }
-        },
       ),
     );
   }

@@ -46,6 +46,7 @@ class _SignUpPageState extends State<SignUpPage> {
             height: 20.0,
           ),
           const RegisterForm(
+            name: 'username',
             label: 'Username',
             obscureTextEnabled: 'false',
           ),
@@ -53,6 +54,7 @@ class _SignUpPageState extends State<SignUpPage> {
             height: 10.0,
           ),
           const RegisterForm(
+            name: 'password',
             label: 'Password',
             obscureTextEnabled: 'true',
             obscureToggle: true,
@@ -61,6 +63,7 @@ class _SignUpPageState extends State<SignUpPage> {
             height: 10.0,
           ),
           const RegisterForm(
+            name: 'noMember',
             label: 'No Member',
             obscureTextEnabled: 'false',
           ),
@@ -68,6 +71,7 @@ class _SignUpPageState extends State<SignUpPage> {
             height: 10.0,
           ),
           const RegisterForm(
+            name: 'fullName',
             label: 'Full Name',
             obscureTextEnabled: 'false',
           ),
@@ -75,6 +79,7 @@ class _SignUpPageState extends State<SignUpPage> {
             height: 10.0,
           ),
           const RegisterForm(
+            name: 'birthDate',
             label: 'Birth Date',
             obscureTextEnabled: 'false',
           ),
