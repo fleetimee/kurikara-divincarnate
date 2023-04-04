@@ -21,7 +21,7 @@ class LatihanLinesRequestModel {
     required this.user_id,
   });
 
-  Map<String, dynamic> toMap() {
+  Map<String, String> toMap() {
     return {
       'id_log_soal_header': id_log_soal_header,
       'id_soal': id_soal,

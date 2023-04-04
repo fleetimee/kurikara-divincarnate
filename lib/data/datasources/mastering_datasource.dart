@@ -8,17 +8,19 @@ import 'package:flutter_huixin_app/data/models/mastering/master_soal_response_mo
 import 'package:http/http.dart' as http;
 
 import '../../common/constants/api.dart';
+import 'local/app_secure_storage.dart';
 
 class MasteringDatasource {
-  String getToken() {
-    return 'token_api=323232';
+  Future<String> getToken() async {
+    final token = await AppSecureStorage.getAccessToken();
+    return 'token_api=$token';
   }
 
   Future<Either<String, MasterLevelResponseModel>> getMasterLevel(
       String userId) async {
     try {
       final response = await http.get(Uri.parse(
-          '${AppApi.baseUrl}/api_level?${getToken()}&user_id=$userId'));
+          '${AppApi.baseUrl}/api_level?${await getToken()}&user_id=$userId'));
       return Right(
         MasterLevelResponseModel.fromJson(jsonDecode(response.body)),
       );
@@ -31,7 +33,7 @@ class MasteringDatasource {
       String userId, String levelId) async {
     try {
       final response = await http.get(Uri.parse(
-          '${AppApi.baseUrl}/api_group_materi?${getToken()}&user_id=$userId&id_level=$levelId'));
+          '${AppApi.baseUrl}/api_group_materi?${await getToken()}&user_id=$userId&id_level=$levelId'));
       return Right(
         MasterGroupMateriResponseModel.fromJson(jsonDecode(response.body)),
       );
@@ -43,8 +45,10 @@ class MasteringDatasource {
   Future<Either<String, MasterMateriResponseModel>> getMasterMateri(
       String userId, String idLevel, String idGroupMateri) async {
     try {
-      final response = await http.get(Uri.parse(
-          '${AppApi.baseUrl}/api_materi?${getToken()}&user_id=$userId&id_level=$idLevel&id_group_materi=$idGroupMateri'));
+      final response = await http.get(
+        Uri.parse(
+            '${AppApi.baseUrl}/api_materi?${await getToken()}&user_id=$userId&id_level=$idLevel&id_group_materi=$idGroupMateri'),
+      );
       return Right(
         MasterMateriResponseModel.fromJson(jsonDecode(response.body)),
       );
@@ -56,8 +60,10 @@ class MasteringDatasource {
   Future<Either<String, MasterSoalResponseModel>> getMasterSoal(
       String userId, String idLevel, String idGroupMateri) async {
     try {
-      final response = await http.get(Uri.parse(
-          '${AppApi.baseUrl}/api_soal?${getToken()}&user_id=$userId&id_level=$idLevel&id_group_materi=$idGroupMateri'));
+      final response = await http.get(
+        Uri.parse(
+            '${AppApi.baseUrl}/api_soal?${await getToken()}&user_id=$userId&id_level=$idLevel&id_group_materi=$idGroupMateri'),
+      );
       return Right(
         MasterSoalResponseModel.fromJson(jsonDecode(response.body)),
       );

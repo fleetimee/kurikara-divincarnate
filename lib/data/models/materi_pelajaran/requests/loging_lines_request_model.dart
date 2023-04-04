@@ -13,7 +13,7 @@ class LogingLinesRequestModel {
     required this.user_id,
   });
 
-  Map<String, dynamic> toMap() {
+  Map<String, String> toMap() {
     return {
       'id_log_materi_header': id_log_materi_header,
       'id_materi': id_materi,
