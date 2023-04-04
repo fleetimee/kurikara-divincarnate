@@ -1,0 +1,704 @@
+[
+  {
+    "_id": "da596c17-3d7e-4ed0-a8ed-43a063bd6db0",
+    "colId": "90dac72c-d6bd-4b54-a0c3-f9d1b939443b",
+    "containerId": "5ead1e40-68a4-4b2f-9261-d08a74ab339e",
+    "name": "1. Register",
+    "url": "{{huxin}}api_register",
+    "method": "POST",
+    "sortNum": 10000,
+    "created": "2023-04-04T15:15:39.783Z",
+    "modified": "2023-04-04T15:22:51.055Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "formdata",
+      "raw": "",
+      "form": [
+        {
+          "name": "user_npp",
+          "value": "123",
+          "isDisabled": true
+        },
+        {
+          "name": "full_name",
+          "value": "Novian Andika"
+        },
+        {
+          "name": "user_name",
+          "value": "fleetime"
+        },
+        {
+          "name": "user_password",
+          "value": "123456"
+        },
+        {
+          "name": "id_google",
+          "value": "",
+          "isDisabled": true
+        },
+        {
+          "name": "id_fb",
+          "value": "",
+          "isDisabled": true
+        },
+        {
+          "name": "id_apple",
+          "value": "",
+          "isDisabled": true
+        },
+        {
+          "name": "fcm_id",
+          "value": "121212",
+          "isDisabled": true
+        },
+        {
+          "name": "token_device",
+          "value": "323232"
+        },
+        {
+          "name": "email",
+          "value": "aaa123@email.com",
+          "isDisabled": true
+        },
+        {
+          "name": "no_telpon",
+          "value": "0812345678",
+          "isDisabled": true
+        },
+        {
+          "name": "no_member",
+          "value": "H0009"
+        },
+        {
+          "name": "birth_date",
+          "value": "1"
+        }
+      ],
+      "files": [
+        {
+          "name": "img_file",
+          "value": "c:\\Users\\Novian Andika\\Pictures\\9c21eae1881cc5d526199ec72386383a.jpg"
+        }
+      ]
+    },
+    "tests": []
+  },
+  {
+    "_id": "35592398-24fd-4a4e-8a10-74087522166f",
+    "colId": "90dac72c-d6bd-4b54-a0c3-f9d1b939443b",
+    "containerId": "5ead1e40-68a4-4b2f-9261-d08a74ab339e",
+    "name": "2. Update Profile",
+    "url": "{{huxin}}api_update_profile/?token_api=323232",
+    "method": "POST",
+    "sortNum": 20000,
+    "created": "2023-04-04T15:15:39.784Z",
+    "modified": "2023-04-04T15:15:39.784Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "token_api",
+        "value": "323232"
+      }
+    ],
+    "body": {
+      "form": [
+        {
+          "name": "user_id",
+          "value": "30"
+        },
+        {
+          "name": "user_npp",
+          "value": "1234"
+        },
+        {
+          "name": "user_name",
+          "value": "aaa123"
+        },
+        {
+          "name": "user_password",
+          "value": "123456"
+        },
+        {
+          "name": "id_google",
+          "value": ""
+        },
+        {
+          "name": "id_fb",
+          "value": ""
+        },
+        {
+          "name": "id_apple",
+          "value": ""
+        },
+        {
+          "name": "fcm_id",
+          "value": "121212"
+        },
+        {
+          "name": "token_device",
+          "value": "3232321"
+        },
+        {
+          "name": "email",
+          "value": "aaa123@email.com"
+        },
+        {
+          "name": "no_telpon",
+          "value": "0812345678"
+        },
+        {
+          "name": "birth_date",
+          "value": "2012-02-02"
+        },
+        {
+          "name": "no_member",
+          "value": "H0001"
+        },
+        {
+          "name": "full_name",
+          "value": "Denies"
+        }
+      ],
+      "files": [
+        {
+          "name": "img_file",
+          "value": []
+        }
+      ],
+      "type": "formdata"
+    }
+  },
+  {
+    "_id": "39bce6db-54bd-449b-80e5-1999b6df0b87",
+    "colId": "90dac72c-d6bd-4b54-a0c3-f9d1b939443b",
+    "containerId": "5ead1e40-68a4-4b2f-9261-d08a74ab339e",
+    "name": "3. Login",
+    "url": "{{huxin}}api_login",
+    "method": "POST",
+    "sortNum": 30000,
+    "created": "2023-04-04T15:15:39.785Z",
+    "modified": "2023-04-04T16:47:55.668Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "formencoded",
+      "raw": "",
+      "form": [
+        {
+          "name": "username",
+          "value": "staf001"
+        },
+        {
+          "name": "password",
+          "value": "123456"
+        },
+        {
+          "name": "id_google",
+          "value": ""
+        },
+        {
+          "name": "id_fb",
+          "value": ""
+        },
+        {
+          "name": "id_apple",
+          "value": ""
+        }
+      ]
+    },
+    "tests": []
+  },
+  {
+    "_id": "bba29320-20ac-4153-b486-b2455b7bc805",
+    "colId": "90dac72c-d6bd-4b54-a0c3-f9d1b939443b",
+    "containerId": "5ead1e40-68a4-4b2f-9261-d08a74ab339e",
+    "name": "4. Update fcm_id",
+    "url": "{{huxin}}api_update_fcm",
+    "method": "POST",
+    "sortNum": 40000,
+    "created": "2023-04-04T15:15:39.786Z",
+    "modified": "2023-04-04T15:15:39.786Z",
+    "headers": [],
+    "body": {
+      "form": [
+        {
+          "name": "user_id",
+          "value": "1"
+        },
+        {
+          "name": "fcm_id",
+          "value": "3465346426"
+        }
+      ],
+      "type": "formencoded"
+    }
+  },
+  {
+    "_id": "e7e1d34b-075b-438c-9a25-6d54def39dce",
+    "colId": "90dac72c-d6bd-4b54-a0c3-f9d1b939443b",
+    "containerId": "909071d5-fd38-4cd6-b57b-0b92dae030b3",
+    "name": "1. Master Level",
+    "url": "{{huxin}}api_level/?token_api=323232&user_id=2",
+    "method": "GET",
+    "sortNum": 50000,
+    "created": "2023-04-04T15:15:39.787Z",
+    "modified": "2023-04-04T15:15:39.787Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "token_api",
+        "value": "323232"
+      },
+      {
+        "name": "user_id",
+        "value": "2"
+      }
+    ]
+  },
+  {
+    "_id": "423efff3-29f8-43ae-a028-8e627efcba7b",
+    "colId": "90dac72c-d6bd-4b54-a0c3-f9d1b939443b",
+    "containerId": "909071d5-fd38-4cd6-b57b-0b92dae030b3",
+    "name": "2. Master Group Materi",
+    "url": "{{huxin}}api_group_materi/?token_api=323232&id_level=1&user_id=2",
+    "method": "GET",
+    "sortNum": 60000,
+    "created": "2023-04-04T15:15:39.788Z",
+    "modified": "2023-04-04T15:15:39.788Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "token_api",
+        "value": "323232"
+      },
+      {
+        "name": "id_level",
+        "value": "1"
+      },
+      {
+        "name": "user_id",
+        "value": "2"
+      }
+    ]
+  },
+  {
+    "_id": "4230709a-239e-4d92-a978-8632b2ac38d1",
+    "colId": "90dac72c-d6bd-4b54-a0c3-f9d1b939443b",
+    "containerId": "909071d5-fd38-4cd6-b57b-0b92dae030b3",
+    "name": "3. Master Materi",
+    "url": "{{huxin}}api_materi/?token_api=323232&id_level=1&id_group_materi=1&user_id=2",
+    "method": "GET",
+    "sortNum": 70000,
+    "created": "2023-04-04T15:15:39.789Z",
+    "modified": "2023-04-04T15:15:39.789Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "token_api",
+        "value": "323232"
+      },
+      {
+        "name": "id_level",
+        "value": "1"
+      },
+      {
+        "name": "id_group_materi",
+        "value": "1"
+      },
+      {
+        "name": "user_id",
+        "value": "2"
+      }
+    ]
+  },
+  {
+    "_id": "0ab4be37-a26f-44a8-beba-4e4490227a93",
+    "colId": "90dac72c-d6bd-4b54-a0c3-f9d1b939443b",
+    "containerId": "909071d5-fd38-4cd6-b57b-0b92dae030b3",
+    "name": "4. Master Soal",
+    "url": "{{huxin}}api_soal/?token_api=323232&id_level=1&id_group_materi=1&user_id=2",
+    "method": "GET",
+    "sortNum": 80000,
+    "created": "2023-04-04T15:15:39.790Z",
+    "modified": "2023-04-04T15:15:39.790Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "token_api",
+        "value": "323232"
+      },
+      {
+        "name": "id_level",
+        "value": "1"
+      },
+      {
+        "name": "id_group_materi",
+        "value": "1"
+      },
+      {
+        "name": "user_id",
+        "value": "2"
+      }
+    ]
+  },
+  {
+    "_id": "3af063f5-943c-4e16-b3b0-1eca372394f8",
+    "colId": "90dac72c-d6bd-4b54-a0c3-f9d1b939443b",
+    "containerId": "cd57d623-62d5-400c-963b-b400acd2600b",
+    "name": "Loging_header",
+    "url": "{{huxin}}loging_header?token_api=323232",
+    "method": "POST",
+    "sortNum": 90000,
+    "created": "2023-04-04T15:15:39.791Z",
+    "modified": "2023-04-04T15:15:39.791Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "token_api",
+        "value": "323232"
+      }
+    ],
+    "body": {
+      "form": [
+        {
+          "name": "user_id",
+          "value": "2"
+        },
+        {
+          "name": "id_level",
+          "value": "1"
+        },
+        {
+          "name": "id_group_materi",
+          "value": "1"
+        }
+      ],
+      "type": "formencoded"
+    }
+  },
+  {
+    "_id": "75af483f-3bea-4080-8d10-47f6e8a4033c",
+    "colId": "90dac72c-d6bd-4b54-a0c3-f9d1b939443b",
+    "containerId": "cd57d623-62d5-400c-963b-b400acd2600b",
+    "name": "Loging_lines",
+    "url": "{{huxin}}loging_lines?token_api=323232",
+    "method": "POST",
+    "sortNum": 100000,
+    "created": "2023-04-04T15:15:39.792Z",
+    "modified": "2023-04-04T15:15:39.792Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "token_api",
+        "value": "323232"
+      }
+    ],
+    "body": {
+      "form": [
+        {
+          "name": "id_log_materi_header",
+          "value": "1"
+        },
+        {
+          "name": "id_materi",
+          "value": "1"
+        },
+        {
+          "name": "user_id",
+          "value": "2"
+        }
+      ],
+      "files": [
+        {
+          "name": "voice_try",
+          "value": "/C:/xampp/htdocs/huixin/assets/filemateri/duibuqi.mp3"
+        }
+      ],
+      "type": "formdata"
+    }
+  },
+  {
+    "_id": "6c0c5465-0272-4736-8bdf-4e46e6a3ef28",
+    "colId": "90dac72c-d6bd-4b54-a0c3-f9d1b939443b",
+    "containerId": "cd57d623-62d5-400c-963b-b400acd2600b",
+    "name": "Finish Materi",
+    "url": "{{huxin}}finish_materi?token_api=323232",
+    "method": "POST",
+    "sortNum": 110000,
+    "created": "2023-04-04T15:15:39.794Z",
+    "modified": "2023-04-04T15:15:39.794Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "token_api",
+        "value": "323232"
+      }
+    ],
+    "body": {
+      "form": [
+        {
+          "name": "user_id",
+          "value": ""
+        },
+        {
+          "name": "id_level",
+          "value": ""
+        },
+        {
+          "name": "id_group_materi",
+          "value": ""
+        }
+      ],
+      "type": "formencoded"
+    }
+  },
+  {
+    "_id": "081d60aa-9330-4442-a0f3-88574918a69b",
+    "colId": "90dac72c-d6bd-4b54-a0c3-f9d1b939443b",
+    "containerId": "26d87893-f0a4-45f5-941c-03209c29bb25",
+    "name": "Latihan_header",
+    "url": "{{huxin}}latihan_header?token_api=323232",
+    "method": "POST",
+    "sortNum": 120000,
+    "created": "2023-04-04T15:15:39.795Z",
+    "modified": "2023-04-04T15:15:39.795Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "token_api",
+        "value": "323232"
+      }
+    ],
+    "body": {
+      "form": [
+        {
+          "name": "user_id",
+          "value": "2"
+        },
+        {
+          "name": "id_level",
+          "value": "1"
+        },
+        {
+          "name": "id_group_materi",
+          "value": "1"
+        }
+      ],
+      "type": "formencoded"
+    }
+  },
+  {
+    "_id": "b40851da-1d7f-4fa6-870e-0bcc73921a44",
+    "colId": "90dac72c-d6bd-4b54-a0c3-f9d1b939443b",
+    "containerId": "26d87893-f0a4-45f5-941c-03209c29bb25",
+    "name": "Latihan_lines",
+    "url": "{{huxin}}latihan_lines?token_api=323232",
+    "method": "POST",
+    "sortNum": 130000,
+    "created": "2023-04-04T15:15:39.796Z",
+    "modified": "2023-04-04T15:15:39.796Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "token_api",
+        "value": "323232"
+      }
+    ],
+    "body": {
+      "form": [
+        {
+          "name": "id_log_soal_header",
+          "value": "1"
+        },
+        {
+          "name": "id_soal",
+          "value": "3"
+        },
+        {
+          "name": "tipe",
+          "value": "voice_try_xxx"
+        },
+        {
+          "name": "pg_answer",
+          "value": ""
+        },
+        {
+          "name": "cocok_answer",
+          "value": "a,c,b,d,e"
+        },
+        {
+          "name": "status",
+          "value": "true"
+        },
+        {
+          "name": "user_id",
+          "value": "2"
+        }
+      ],
+      "files": [
+        {
+          "name": "voice_answer",
+          "value": []
+        }
+      ],
+      "type": "formdata"
+    }
+  },
+  {
+    "_id": "061c36a1-f269-45e1-be0c-9f299c7d556f",
+    "colId": "90dac72c-d6bd-4b54-a0c3-f9d1b939443b",
+    "containerId": "26d87893-f0a4-45f5-941c-03209c29bb25",
+    "name": "Finish Soal",
+    "url": "{{huxin}}finish_soal?token_api=323232",
+    "method": "POST",
+    "sortNum": 140000,
+    "created": "2023-04-04T15:15:39.797Z",
+    "modified": "2023-04-04T15:15:39.797Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "token_api",
+        "value": "323232"
+      }
+    ],
+    "body": {
+      "form": [
+        {
+          "name": "user_id",
+          "value": ""
+        },
+        {
+          "name": "id_level",
+          "value": ""
+        },
+        {
+          "name": "id_group_materi",
+          "value": ""
+        }
+      ],
+      "type": "formencoded"
+    }
+  },
+  {
+    "_id": "69ca5a53-7741-493e-b482-c6b09ac362f3",
+    "colId": "90dac72c-d6bd-4b54-a0c3-f9d1b939443b",
+    "containerId": "8750bab8-e5f2-4d5c-9113-aa29c8d18074",
+    "name": "Report List",
+    "url": "{{huxin}}report/?token_api=323232&user_id=2",
+    "method": "GET",
+    "sortNum": 150000,
+    "created": "2023-04-04T15:15:39.798Z",
+    "modified": "2023-04-04T15:15:39.798Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "token_api",
+        "value": "323232"
+      },
+      {
+        "name": "user_id",
+        "value": "2"
+      }
+    ]
+  },
+  {
+    "_id": "fbaad7a3-284b-480d-9496-64656e0f23b7",
+    "colId": "90dac72c-d6bd-4b54-a0c3-f9d1b939443b",
+    "containerId": "",
+    "name": "Get Info",
+    "url": "{{huxin}}api_info/?token_api=323232&user_id=2",
+    "method": "GET",
+    "sortNum": 160000,
+    "created": "2023-04-04T15:15:39.799Z",
+    "modified": "2023-04-04T15:16:11.385Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "token_api",
+        "value": "323232",
+        "isPath": false
+      },
+      {
+        "name": "user_id",
+        "value": "2",
+        "isPath": false
+      }
+    ],
+    "tests": []
+  },
+  {
+    "_id": "bf957d24-47f9-47b5-8163-a14a9a038f16",
+    "colId": "90dac72c-d6bd-4b54-a0c3-f9d1b939443b",
+    "containerId": "",
+    "name": "Get Active Student",
+    "url": "{{huxin}}api_active_student/?token_api=323232",
+    "method": "GET",
+    "sortNum": 170000,
+    "created": "2023-04-04T15:15:39.800Z",
+    "modified": "2023-04-04T15:15:39.800Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "token_api",
+        "value": "323232"
+      }
+    ]
+  },
+  {
+    "_id": "66fb98b3-ad57-47e3-8f52-f9a4f93a0a4e",
+    "colId": "90dac72c-d6bd-4b54-a0c3-f9d1b939443b",
+    "containerId": "",
+    "name": "Get Daily Activity",
+    "url": "{{huxin}}api_daily_activity/?token_api=323232&user_id=2",
+    "method": "GET",
+    "sortNum": 180000,
+    "created": "2023-04-04T15:15:39.801Z",
+    "modified": "2023-04-04T15:15:39.801Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "token_api",
+        "value": "323232"
+      },
+      {
+        "name": "user_id",
+        "value": "2"
+      }
+    ]
+  },
+  {
+    "_id": "2a8bf7b9-e224-4453-8a9b-0b7338238e83",
+    "colId": "90dac72c-d6bd-4b54-a0c3-f9d1b939443b",
+    "containerId": "",
+    "name": "Get XP",
+    "url": "{{huxin}}api_xp/?token_api=323232&user_id=2",
+    "method": "GET",
+    "sortNum": 190000,
+    "created": "2023-04-04T15:15:39.802Z",
+    "modified": "2023-04-04T15:15:39.802Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "token_api",
+        "value": "323232"
+      },
+      {
+        "name": "user_id",
+        "value": "2"
+      }
+    ]
+  },
+  {
+    "_id": "c671532c-1bd3-48ce-b06c-956556df034d",
+    "colId": "90dac72c-d6bd-4b54-a0c3-f9d1b939443b",
+    "containerId": "",
+    "name": "Test Push",
+    "url": "https://batok.co.id/api/cek_push",
+    "method": "GET",
+    "sortNum": 200000,
+    "created": "2023-04-04T15:15:39.803Z",
+    "modified": "2023-04-04T15:15:39.803Z",
+    "headers": []
+  }
+]
