@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:convert';
 import 'dart:io';
 
@@ -34,7 +36,6 @@ class UpdateProfileRequestModel {
     required this.no_member,
     required this.birth_date,
   });
-  
 
   Map<String, String> toMap() {
     return {
@@ -78,5 +79,6 @@ class UpdateProfileRequestModel {
 
   String toJson() => json.encode(toMap());
 
-  factory UpdateProfileRequestModel.fromJson(String source) => UpdateProfileRequestModel.fromMap(json.decode(source));
+  factory UpdateProfileRequestModel.fromJson(String source) =>
+      UpdateProfileRequestModel.fromMap(json.decode(source));
 }

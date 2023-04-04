@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:convert';
 import 'dart:io';
 
@@ -49,5 +51,6 @@ class LatihanLinesRequestModel {
 
   String toJson() => json.encode(toMap());
 
-  factory LatihanLinesRequestModel.fromJson(String source) => LatihanLinesRequestModel.fromMap(json.decode(source));
+  factory LatihanLinesRequestModel.fromJson(String source) =>
+      LatihanLinesRequestModel.fromMap(json.decode(source));
 }

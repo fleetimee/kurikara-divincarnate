@@ -1,4 +1,4 @@
-// ignore_for_file: override_on_non_overriding_member
+// ignore_for_file: override_on_non_overriding_member, non_constant_identifier_names
 
 import 'dart:io';
 
