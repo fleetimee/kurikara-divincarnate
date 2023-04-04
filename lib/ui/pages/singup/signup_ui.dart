@@ -3,6 +3,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 
 import 'package:image_picker/image_picker.dart';
 
@@ -18,9 +20,19 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  /// Initialize FormBuilder global key
+  /// that will be used to validate form
+  /// and store it in [_fbKey] variable
+
+  final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
+
+  /// Initialize File variable for image picker
   @override
   File? _image;
 
+  /// Initialize Image Picker
+  /// that will be used to pick image from gallery or camera
+  /// and store it in [_image] variable
   Future<void> _pickImage(ImageSource source) async {
     final pickedFile = await ImagePicker().pickImage(source: source);
 
@@ -34,79 +46,125 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       appBar: AppBarDefault(
         title: "Signup",
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          _imagePicker(),
-          const SizedBox(
-            height: 20.0,
-          ),
-          const RegisterForm(
-            name: 'username',
-            label: 'Username',
-            obscureTextEnabled: 'false',
-          ),
-          const SizedBox(
-            height: 10.0,
-          ),
-          const RegisterForm(
-            name: 'password',
-            label: 'Password',
-            obscureTextEnabled: 'true',
-            obscureToggle: true,
-          ),
-          const SizedBox(
-            height: 10.0,
-          ),
-          const RegisterForm(
-            name: 'noMember',
-            label: 'No Member',
-            obscureTextEnabled: 'false',
-          ),
-          const SizedBox(
-            height: 10.0,
-          ),
-          const RegisterForm(
-            name: 'fullName',
-            label: 'Full Name',
-            obscureTextEnabled: 'false',
-          ),
-          const SizedBox(
-            height: 10.0,
-          ),
-          const RegisterForm(
-            name: 'birthDate',
-            label: 'Birth Date',
-            obscureTextEnabled: 'false',
-          ),
-          const SizedBox(
-            height: 20.0,
-          ),
-          PrimaryButton(
-            text: 'SUBMIT',
-            onPressed: () {
-              Navigator.pushNamed(context, '/home');
-            },
-          ),
-          const SizedBox(
-            height: 20.0,
-          ),
-          const Text(
-            'Or Sign Up With',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 16,
+      body: FormBuilder(
+        key: _fbKey,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.1,
+                    ),
+                    _imagePicker(),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+                    RegisterForm(
+                        name: 'username',
+                        label: 'Username',
+                        obscureTextEnabled: 'false',
+                        validator: FormBuilderValidators.compose(
+                          [
+                            FormBuilderValidators.required(),
+                            FormBuilderValidators.minLength(
+                              6,
+                              allowEmpty: false,
+                              errorText:
+                                  'Username must be at least 6 characters',
+                            ),
+                          ],
+                        )),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
+                    RegisterForm(
+                      name: 'password',
+                      label: 'Password',
+                      obscureTextEnabled: 'true',
+                      obscureToggle: true,
+                      validator: FormBuilderValidators.compose(
+                        [
+                          FormBuilderValidators.required(
+                            errorText: 'Password is required',
+                          ),
+                          FormBuilderValidators.minLength(
+                            6,
+                            allowEmpty: false,
+                            errorText: 'Password must be at least 6 characters',
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
+                    RegisterForm(
+                      name: 'noMember',
+                      label: 'No Member',
+                      obscureTextEnabled: 'false',
+                      keyboardType: TextInputType.number,
+                      validator: FormBuilderValidators.compose([
+                        FormBuilderValidators.required(),
+                        FormBuilderValidators.numeric(),
+                      ]),
+                    ),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
+                    RegisterForm(
+                      name: 'fullName',
+                      label: 'Full Name',
+                      obscureTextEnabled: 'false',
+                      validator: FormBuilderValidators.required(),
+                    ),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
+                    const RegisterForm(
+                      name: 'birthDate',
+                      label: 'Birth Date',
+                      obscureTextEnabled: 'false',
+                    ),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+                    PrimaryButton(
+                      text: 'SUBMIT',
+                      onPressed: () {
+                        if (_fbKey.currentState?.saveAndValidate() ?? false) {
+                          debugPrint(_fbKey.currentState?.value.toString());
+                        } else {
+                          debugPrint(_fbKey.currentState?.value.toString());
+                          debugPrint('validation failed');
+                        }
+                      },
+                    ),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+                    const Text(
+                      'Or Sign Up With',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+                    _buildSocialIcon(),
+                  ],
+                ),
+              ),
             ),
-          ),
-          const SizedBox(
-            height: 20.0,
-          ),
-          _buildSocialIcon(),
-        ],
+          ],
+        ),
       ),
     );
   }

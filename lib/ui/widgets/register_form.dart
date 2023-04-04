@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../common/constants/color.dart';
@@ -10,6 +9,8 @@ class RegisterForm extends StatelessWidget {
   final String label;
   final String obscureTextEnabled;
   final bool obscureToggle;
+  final String? Function(String?)? validator;
+  final TextInputType? keyboardType;
 
   const RegisterForm({
     Key? key,
@@ -17,6 +18,8 @@ class RegisterForm extends StatelessWidget {
     required this.label,
     required this.obscureTextEnabled,
     this.obscureToggle = false,
+    this.validator,
+    this.keyboardType,
   }) : super(key: key);
 
   @override
@@ -70,11 +73,18 @@ class RegisterForm extends StatelessWidget {
           ),
         ),
         textInputAction: TextInputAction.next,
-        validator: FormBuilderValidators.compose([
-          FormBuilderValidators.required(),
-          if (label == 'Email') FormBuilderValidators.email(),
-        ]),
+        validator: validator,
+        keyboardType: keyboardType,
       ),
     );
+  }
+}
+
+class RegisterFormDate extends StatelessWidget {
+  const RegisterFormDate({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
   }
 }
