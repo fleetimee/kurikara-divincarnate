@@ -20,6 +20,10 @@ class AppSecureStorage {
     await _storage.write(key: _user, value: jsonEncode(user?.toJson()));
   }
 
+  static Future deleteAll() async {
+    await _storage.deleteAll();
+  }
+
   static Future<DataUser?> getUser() async {
     try {
       var jsonString = await _storage.read(key: _user);

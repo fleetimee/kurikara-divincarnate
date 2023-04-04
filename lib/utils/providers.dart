@@ -17,7 +17,6 @@ class AppProviders extends StatelessWidget {
             AuthDataSource(),
           ),
         ),
-        // Add more providers here
       ],
       child: child,
     );
