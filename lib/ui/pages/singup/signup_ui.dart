@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_huixin_app/cubit/auth/auth_cubit.dart';
-import 'package:flutter_huixin_app/data/datasources/auth_datasource.dart';
 import 'package:flutter_huixin_app/data/models/auth/requests/register_request_model.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
@@ -66,11 +65,34 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (context) => AuthCubit(
-              AuthDataSource(),
+    return BlocConsumer<AuthCubit, AuthState>(
+      listener: (context, state) {
+        state.when(
+          initial: () {},
+          loading: () {},
+          loaded: (user) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Register Success'),
+              ),
+            );
+            // Navigator.pushAndRemoveUntil(
+            //   context,
+            //   MaterialPageRoute(
+            //     builder: (context) => const LoginPage(),
+            //   ),
+            //   (route) => false,
+            // );
+          },
+          error: (error) => ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(error),
             ),
-        child: Scaffold(
+          ),
+        );
+      },
+      builder: (context, state) {
+        return Scaffold(
           appBar: AppBarDefault(
             title: "Signup",
           ),
@@ -166,7 +188,10 @@ class _SignUpPageState extends State<SignUpPage> {
                           height: 20.0,
                         ),
                         PrimaryButton(
-                          text: 'Sign Up',
+                          text: state.maybeWhen(
+                            loading: () => 'Loading...',
+                            orElse: () => 'Sign Up',
+                          ),
                           onPressed: () {
                             if (_fbKey.currentState?.saveAndValidate() ??
                                 false) {
@@ -210,7 +235,9 @@ class _SignUpPageState extends State<SignUpPage> {
               ],
             ),
           ),
-        ));
+        );
+      },
+    );
   }
 
   Widget _imagePicker() {
