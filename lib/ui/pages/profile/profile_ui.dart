@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_huixin_app/data/datasources/local/app_secure_storage.dart';
+import 'package:flutter_huixin_app/ui/pages/signin/signin_ui.dart';
+import 'package:flutter_huixin_app/ui/widgets/dialog_box.dart';
 
 import '../../../common/constants/color.dart';
 import '../../../cubit/entities/fren.dart';
 import '../../../cubit/entities/stats.dart';
 import '../../widgets/appbar/appbar_style.dart';
 import '../../widgets/navigator_style.dart';
-
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -442,29 +444,46 @@ class ProfilePage extends StatelessWidget {
   Widget logout(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(left: 20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          InkWell(
-            onTap: () {
-              Navigator.pushNamed(context, '/');
+      child: InkWell(
+        onTap: () {
+          PromptDialog(
+            context: context,
+            title: 'Keluar ?',
+            desc: 'Yakin ingin keluar ?',
+            btnOkText: 'Ya',
+            btnCancelText: 'Tidak',
+            btnCancelOnPress: () {},
+            btnOkOnPress: () {
+              AppSecureStorage.deleteAll().then(
+                (value) => Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const LoginPage(),
+                  ),
+                ),
+              );
             },
-            child: const Image(
+          ).show();
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: const [
+            Image(
               image: AssetImage('assets/images/door.png'),
               width: 30,
               height: 30,
             ),
-          ),
-          const SizedBox(width: 10),
-          const Text(
-            'Log Out',
-            style: TextStyle(
-              fontSize: 26,
-              color: Colors.black,
+            SizedBox(width: 10),
+            Text(
+              'Log Out',
+              style: TextStyle(
+                fontSize: 26,
+                color: Colors.black,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
