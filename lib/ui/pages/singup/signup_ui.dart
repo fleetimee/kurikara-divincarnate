@@ -65,6 +65,34 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _fullNameController = TextEditingController();
   final TextEditingController _birthDateController = TextEditingController();
 
+  void _showErrorDialog(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Error'),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  RegisterRequestModel _buildRegisterRequestModel() {
+    return RegisterRequestModel(
+      user_name: _usernameController.text,
+      user_password: _passwordController.text,
+      no_member: _noMemberController.text,
+      full_name: _fullNameController.text,
+      birth_date: _birthDateController.text,
+      token_device: '1234567890',
+      img_file: _image,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<RegisterCubit, RegisterState>(
@@ -197,21 +225,17 @@ class _SignUpPageState extends State<SignUpPage> {
                           onPressed: () {
                             if (_fbKey.currentState?.saveAndValidate() ??
                                 false) {
-                              debugPrint(_fbKey.currentState?.value.toString());
-
-                              context.read<RegisterCubit>().register(
-                                    RegisterRequestModel(
-                                      user_name: _usernameController.text,
-                                      user_password: _passwordController.text,
-                                      no_member: _noMemberController.text,
-                                      full_name: _fullNameController.text,
-                                      birth_date: _birthDateController.text,
-                                      token_device: '1234567890',
-                                      img_file: _image,
-                                    ),
-                                  );
+                              // Check if the image is not null
+                              // if null then show error dialog
+                              if (_image == null) {
+                                _showErrorDialog(
+                                    context, 'Pilih gambar terlebih dahulu');
+                              } else {
+                                context.read<RegisterCubit>().register(
+                                      _buildRegisterRequestModel(),
+                                    );
+                              }
                             } else {
-                              debugPrint(_fbKey.currentState?.value.toString());
                               debugPrint('validation failed');
                             }
                           },
