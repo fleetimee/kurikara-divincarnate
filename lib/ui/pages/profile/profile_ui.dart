@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_huixin_app/cubit/home/daily_activity/daily_activity_cubit.dart';
+import 'package:flutter_huixin_app/cubit/home/xp/xp_cubit.dart';
 import 'package:flutter_huixin_app/data/datasources/local/app_secure_storage.dart';
+import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
 import 'package:flutter_huixin_app/ui/pages/signin/signin_ui.dart';
 import 'package:flutter_huixin_app/ui/widgets/dialog_box.dart';
 
@@ -9,8 +13,31 @@ import '../../../cubit/entities/stats.dart';
 import '../../widgets/appbar/appbar_style.dart';
 import '../../widgets/navigator_style.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  DataUser? user;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _getUser();
+  }
+
+  void _getUser() async {
+    user = await AppSecureStorage.getUser();
+
+    setState(() {
+      context.read<XpCubit>().getXp(user?.userId ?? '');
+      context.read<DailyActivityCubit>().getDailyActivity(user?.userId ?? '');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,53 +100,79 @@ class ProfilePage extends StatelessWidget {
                         ),
                         itemCount: allStats.length,
                         itemBuilder: (context, index) {
-                          return Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(
-                                color: Colors.grey.shade300,
-                                width: 4,
+                          return Builder(builder: (context) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(
+                                  color: Colors.grey.shade300,
+                                  width: 4,
+                                ),
                               ),
-                            ),
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20),
-                              child: Row(
-                                children: [
-                                  Image.asset(
-                                    allStats[index].imageUrl,
-                                    fit: BoxFit.fill,
-                                  ),
-                                  const SizedBox(width: 20),
-                                  Expanded(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          allStats[index].value,
-                                          style: const TextStyle(
-                                            fontSize: 25,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                        Text(
-                                          allStats[index].title,
-                                          style: const TextStyle(
-                                            fontSize: 18,
-                                            color: Colors.black54,
-                                          ),
-                                        ),
-                                      ],
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 20),
+                                child: Row(
+                                  children: [
+                                    Image.asset(
+                                      allStats[index].imageUrl,
+                                      fit: BoxFit.fill,
                                     ),
-                                  ),
-                                ],
+                                    const SizedBox(width: 20),
+                                    Expanded(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            allStats[index].title == 'Activity'
+                                                ? context.select(
+                                                    (XpCubit xpCubit) =>
+                                                        xpCubit.state.maybeMap(
+                                                      orElse: () => '..',
+                                                      loaded: (state) =>
+                                                          state.data.data?.first
+                                                              .jmlXp
+                                                              .toString() ??
+                                                          '..',
+                                                    ),
+                                                  )
+                                                : context.select(
+                                                    (DailyActivityCubit
+                                                            dailyActivityCubit) =>
+                                                        dailyActivityCubit.state
+                                                            .maybeMap(
+                                                      orElse: () => '..',
+                                                      loaded: (state) =>
+                                                          state.data.data?.first
+                                                              .jmlDaily
+                                                              .toString() ??
+                                                          '..',
+                                                    ),
+                                                  ),
+                                            style: const TextStyle(
+                                              fontSize: 25,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                          Text(
+                                            allStats[index].title,
+                                            style: const TextStyle(
+                                              fontSize: 18,
+                                              color: Colors.black54,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          );
+                            );
+                          });
                         },
                       ),
                     ),
@@ -183,16 +236,19 @@ class ProfilePage extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Usada Pekora',
-                  style: TextStyle(
+                Text(
+                  user?.fullName ?? '..',
+                  style: const TextStyle(
                       fontSize: 36,
                       fontWeight: FontWeight.w500,
                       color: Colors.black),
                 ),
-                const Text(
-                  'peko-peko69',
-                  style: TextStyle(fontSize: 20, color: Colors.grey),
+                Text(
+                  user?.userName ?? '..',
+                  style: const TextStyle(
+                    fontSize: 20,
+                    color: Colors.grey,
+                  ),
                 ),
                 const SizedBox(height: 10),
                 Row(
@@ -265,96 +321,6 @@ class ProfilePage extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  Widget statistic() {
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: const BorderRadius.all(Radius.circular(20)),
-                  border: Border.all(
-                    color: AppColors.borderform,
-                    width: 3,
-                  ),
-                ),
-                height: 60,
-                width: 180,
-                padding: const EdgeInsets.only(left: 10),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const Icon(
-                      Icons.favorite,
-                      color: Colors.red,
-                      size: 40,
-                    ),
-                    const SizedBox(width: 15),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        Text('13',
-                            style:
-                                TextStyle(fontSize: 20, color: Colors.black)),
-                        Text('Daily Activity',
-                            style: TextStyle(fontSize: 15, color: Colors.grey)),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-              const SizedBox(width: 10),
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: const BorderRadius.all(Radius.circular(20)),
-                  border: Border.all(
-                    color: AppColors.borderform,
-                    width: 3,
-                  ),
-                ),
-                height: 60,
-                width: 180,
-                padding: const EdgeInsets.only(left: 10),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Image.asset(
-                      'assets/images/crown.png',
-                      width: 20,
-                      height: 20,
-                      fit: BoxFit.cover,
-                    ),
-                    const SizedBox(width: 15),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        Text('4',
-                            style:
-                                TextStyle(fontSize: 20, color: Colors.black)),
-                        Text('Total XP',
-                            style: TextStyle(fontSize: 15, color: Colors.grey)),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
     );
   }
 

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../../common/constants/color.dart';
 import '../../../common/constants/font.dart';
 
-
 class AppBarDefault extends AppBar {
   AppBarDefault({
     Key? key,
@@ -43,6 +42,8 @@ class AppBarHome extends AppBar {
     Color? appbarColor,
     double? elevation = 4.0, // Set a default value for the elevation property
     PreferredSizeWidget? bottom,
+    String? xp,
+    String? dailyActivity,
     borderRadius = const BorderRadius.only(
       bottomLeft: Radius.circular(50.0),
       bottomRight: Radius.circular(50.0),
@@ -75,9 +76,9 @@ class AppBarHome extends AppBar {
                       const SizedBox(
                         width: 10,
                       ),
-                      const Text(
-                        "4",
-                        style: TextStyle(
+                      Text(
+                        xp ?? "0",
+                        style: const TextStyle(
                           color: Colors.black,
                           fontSize: 20,
                           fontWeight: FontWeight.w400,
@@ -99,9 +100,9 @@ class AppBarHome extends AppBar {
                       const SizedBox(
                         width: 10,
                       ),
-                      const Text(
-                        "13",
-                        style: TextStyle(
+                      Text(
+                        dailyActivity ?? "0",
+                        style: const TextStyle(
                           color: Colors.black,
                           fontSize: 20,
                           fontWeight: FontWeight.w400,

@@ -9,6 +9,8 @@ import 'package:flutter_huixin_app/cubit/auth/auth_cubit.dart';
 import 'package:flutter_huixin_app/cubit/register/register_cubit.dart';
 import 'package:flutter_huixin_app/data/models/auth/requests/register_request_model.dart';
 import 'package:flutter_huixin_app/ui/pages/signin/signin_ui.dart';
+import 'package:flutter_huixin_app/ui/widgets/dialog_box.dart';
+import 'package:flutter_huixin_app/utils/uuid_gen.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
 import 'package:image_picker/image_picker.dart';
@@ -35,7 +37,18 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   File? _image;
 
-  // late String _uuid = '';
+  /// Dispose the controllers
+  /// to avoid memory leaks
+  /// when the widget is removed from the widget tree
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
+    _noMemberController.dispose();
+    _fullNameController.dispose();
+    _birthDateController.dispose();
+    super.dispose();
+  }
 
   /// Initialize Image Picker
   /// that will be used to pick image from gallery or camera
@@ -88,7 +101,7 @@ class _SignUpPageState extends State<SignUpPage> {
       no_member: _noMemberController.text,
       full_name: _fullNameController.text,
       birth_date: _birthDateController.text,
-      token_device: '1234567890',
+      token_device: UUIDGenerator.generateUUID(),
       img_file: _image,
     );
   }
@@ -101,18 +114,21 @@ class _SignUpPageState extends State<SignUpPage> {
           initial: () {},
           loading: () {},
           loaded: (user) {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const LoginPage(),
-              ),
-              (route) => false,
-            );
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Register Success'),
-              ),
-            );
+            SuccessDialog(
+              context: context,
+              title: 'Berhasil',
+              desc:
+                  'Registrasi berhasil, silahkan login untuk mengakses aplikasi',
+              btnOkOnPress: () {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const LoginPage(),
+                  ),
+                  (route) => false,
+                );
+              },
+            ).show();
           },
           error: (error) => ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
