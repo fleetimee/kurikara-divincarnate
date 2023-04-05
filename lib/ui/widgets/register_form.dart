@@ -16,6 +16,7 @@ class RegisterForm extends StatelessWidget {
   final String? Function(String?)? validator;
   final TextInputType? keyboardType;
   final TextEditingController? controller;
+  final String? initialValue;
 
   const RegisterForm({
     Key? key,
@@ -26,6 +27,7 @@ class RegisterForm extends StatelessWidget {
     this.validator,
     this.keyboardType,
     this.controller,
+    this.initialValue,
   }) : super(key: key);
 
   @override
@@ -36,6 +38,7 @@ class RegisterForm extends StatelessWidget {
         obscureText: obscureTextEnabled == 'true',
         name: name,
         controller: controller,
+        initialValue: initialValue,
         style: TextStyle(
           color: AppColors.darkOrange,
           fontSize: 20,

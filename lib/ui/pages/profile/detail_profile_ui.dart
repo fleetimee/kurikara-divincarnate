@@ -3,6 +3,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_huixin_app/data/datasources/local/app_secure_storage.dart';
+import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
 
 import 'package:image_picker/image_picker.dart';
 
@@ -20,6 +23,35 @@ class ProfileDetailPage extends StatefulWidget {
 class _ProfileDetailPageState extends State<ProfileDetailPage> {
   @override
   File? _image;
+
+  DataUser? user;
+
+  late String? username;
+  String? password;
+  String? noMember;
+  String? fullName;
+
+  TextEditingController? _usernameController;
+
+  /// Initialize Global Key
+  final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
+
+  @override
+  void initState() {
+    super.initState();
+
+    _getUser();
+  }
+
+  void _getUser() async {
+    user = await AppSecureStorage.getUser();
+
+    username = 'Loading...';
+
+    setState(() {
+      username = user?.userName;
+    });
+  }
 
   Future<void> _pickImage(ImageSource source) async {
     final pickedFile = await ImagePicker().pickImage(source: source);
@@ -45,44 +77,53 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
       ),
       body: Container(
         padding: const EdgeInsets.only(top: 50, bottom: 50),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _imagePicker(),
-            Space,
-            const ProfileForm(
-              label: 'UserX123',
-              obscureTextEnabled: 'false',
-            ),
-            Space,
-            const ProfileForm(
-              label: '12345678',
-              obscureTextEnabled: 'true',
-              obscureToggle: true,
-            ),
-            Space,
-            const ProfileForm(
-              label: 'H123456',
-              obscureTextEnabled: 'false',
-            ),
-            Space,
-            const ProfileForm(
-              label: 'Ahmad TaftaZani',
-              obscureTextEnabled: 'false',
-            ),
-            Space,
-            const ProfileForm(
-              label: 'Birth Date',
-              obscureTextEnabled: 'false',
-            ),
-            const Spacer(),
-            PrimaryButton(
-              text: 'SUBMIT',
-              onPressed: () {
-                Navigator.pushNamed(context, '/profile');
-              },
-            ),
-          ],
+        child: FormBuilder(
+          key: _fbKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _imagePicker(),
+              Space,
+              ProfileForm(
+                name: 'username',
+                obscureTextEnabled: 'false',
+                controller: _usernameController = TextEditingController(
+                  text: username,
+                ),
+              ),
+              Space,
+              const ProfileForm(
+                name: 'password',
+                obscureTextEnabled: 'true',
+                obscureToggle: true,
+                initialValue: '123456',
+              ),
+              Space,
+              const ProfileForm(
+                name: 'noMember',
+                obscureTextEnabled: 'false',
+                initialValue: '123456',
+              ),
+              Space,
+              const ProfileForm(
+                name: 'fullName',
+                obscureTextEnabled: 'false',
+                initialValue: 'Ahmad TaftaZani',
+              ),
+              Space,
+              const ProfileFormDate(
+                name: 'birth_date',
+                label: 'Birth date',
+              ),
+              const Spacer(),
+              PrimaryButton(
+                text: 'SUBMIT',
+                onPressed: () {
+                  Navigator.pushNamed(context, '/profile');
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

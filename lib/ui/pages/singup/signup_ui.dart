@@ -208,7 +208,6 @@ class _SignUpPageState extends State<SignUpPage> {
                           label: 'No Member',
                           controller: _noMemberController,
                           obscureTextEnabled: 'false',
-                          keyboardType: TextInputType.number,
                           validator: FormBuilderValidators.compose([
                             FormBuilderValidators.required(),
                           ]),
