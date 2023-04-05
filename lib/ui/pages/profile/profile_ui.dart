@@ -128,7 +128,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            allStats[index].title == 'Activity'
+                                            allStats[index].title != 'Activity'
                                                 ? context.select(
                                                     (XpCubit xpCubit) =>
                                                         xpCubit.state.maybeMap(
