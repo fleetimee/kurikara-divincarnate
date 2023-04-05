@@ -7,6 +7,7 @@ import 'package:flutter_huixin_app/data/datasources/local/app_secure_storage.dar
 import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
 import 'package:flutter_huixin_app/ui/pages/signin/signin_ui.dart';
 import 'package:flutter_huixin_app/ui/widgets/dialog_box.dart';
+import 'package:random_avatar/random_avatar.dart';
 
 import '../../../common/constants/color.dart';
 import '../../../cubit/entities/stats.dart';
@@ -395,9 +396,12 @@ class _ProfilePageState extends State<ProfilePage> {
                     contentPadding: EdgeInsets.zero,
                     horizontalTitleGap: 10,
                     minVerticalPadding: -15,
-                    leading: const CircleAvatar(
-                      backgroundImage:
-                          AssetImage('assets/images/usada-pekora.png'),
+                    leading: CircleAvatar(
+                      child: RandomAvatar(
+                        data.data![index].fullName ?? '..',
+                        height: 40,
+                        width: 40,
+                      ),
                     ),
                     title: Text(
                       data.data![index].fullName ?? '..',
