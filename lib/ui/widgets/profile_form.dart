@@ -110,6 +110,8 @@ class ProfileFormDate extends StatelessWidget {
           fontFamily: GoogleFonts.montserrat().fontFamily,
         ),
         inputType: InputType.date,
+        initialDate: DateTime.now(),
+        initialValue: DateTime.now(),
         currentDate: DateTime.now(),
         firstDate: DateTime(1900),
         lastDate: DateTime(2100),

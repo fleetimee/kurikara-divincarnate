@@ -63,7 +63,7 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
 
     setState(() {
       username = user?.userName;
-      password = user?.userPassword;
+      password = user?.passwordText;
       noMember = user?.noMember;
       fullName = user?.fullName;
 
