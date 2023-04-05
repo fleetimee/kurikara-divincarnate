@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1039944241527",
+    "project_id": "huixin-a468a",
+    "storage_bucket": "huixin-a468a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1039944241527:android:ff26507ccca0ee643d1172",
+        "android_client_info": {
+          "package_name": "id.huixin.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1039944241527-8ikm67qn2lrp7dh94gqa747vavjolh6l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC34cDPDFKgOCUd372rYvuARXELVOUv0Lw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1039944241527-8ikm67qn2lrp7dh94gqa747vavjolh6l.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1039944241527-a2rkltsqfhetpap82dn80ekn8vlfjg4o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "id.huixin.ios"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

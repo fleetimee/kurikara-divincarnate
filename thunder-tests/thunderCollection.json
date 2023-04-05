@@ -1,0 +1,45 @@
+[
+  {
+    "_id": "90dac72c-d6bd-4b54-a0c3-f9d1b939443b",
+    "colName": "huixin",
+    "created": "2023-04-04T15:15:39.772Z",
+    "sortNum": 10000,
+    "folders": [
+      {
+        "_id": "5ead1e40-68a4-4b2f-9261-d08a74ab339e",
+        "name": "Auth",
+        "containerId": "",
+        "created": "2023-04-04T15:15:39.782Z",
+        "sortNum": 10000
+      },
+      {
+        "_id": "909071d5-fd38-4cd6-b57b-0b92dae030b3",
+        "name": "Mastering",
+        "containerId": "",
+        "created": "2023-04-04T15:15:39.783Z",
+        "sortNum": 20000
+      },
+      {
+        "_id": "cd57d623-62d5-400c-963b-b400acd2600b",
+        "name": "Materi Pelajaran",
+        "containerId": "",
+        "created": "2023-04-04T15:15:39.784Z",
+        "sortNum": 30000
+      },
+      {
+        "_id": "26d87893-f0a4-45f5-941c-03209c29bb25",
+        "name": "Latihan Soal",
+        "containerId": "",
+        "created": "2023-04-04T15:15:39.785Z",
+        "sortNum": 40000
+      },
+      {
+        "_id": "8750bab8-e5f2-4d5c-9113-aa29c8d18074",
+        "name": "Report",
+        "containerId": "",
+        "created": "2023-04-04T15:15:39.786Z",
+        "sortNum": 50000
+      }
+    ]
+  }
+]

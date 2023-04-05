@@ -36,7 +36,7 @@ class DataUser {
     this.userName,
     this.fullName,
     this.noMember,
-    this.birthDate,
+    // this.birthDate,
     this.userPassword,
     this.passwordText,
     this.userRole,
@@ -62,7 +62,7 @@ class DataUser {
   String? userName;
   String? fullName;
   String? noMember;
-  DateTime? birthDate;
+  // DateTime? birthDate;
   String? userPassword;
   String? passwordText;
   String? userRole;
@@ -93,9 +93,9 @@ class DataUser {
         userName: json["user_name"],
         fullName: json["full_name"],
         noMember: json["no_member"],
-        birthDate: json["birth_date"] == null
-            ? null
-            : DateTime.parse(json["birth_date"]),
+        // birthDate: json["birth_date"] == null
+        //     ? null
+        //     : DateTime.parse(json["birth_date"]),
         userPassword: json["user_password"],
         passwordText: json["password_text"],
         userRole: json["user_role"],
@@ -124,8 +124,8 @@ class DataUser {
         "user_name": userName,
         "full_name": fullName,
         "no_member": noMember,
-        "birth_date":
-            "${birthDate!.year.toString().padLeft(4, '0')}-${birthDate!.month.toString().padLeft(2, '0')}-${birthDate!.day.toString().padLeft(2, '0')}",
+        // "birth_date":
+        //     "${birthDate!.year.toString().padLeft(4, '0')}-${birthDate!.month.toString().padLeft(2, '0')}-${birthDate!.day.toString().padLeft(2, '0')}",
         "user_password": userPassword,
         "password_text": passwordText,
         "user_role": userRole,

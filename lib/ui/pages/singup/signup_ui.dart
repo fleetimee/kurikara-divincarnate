@@ -3,6 +3,13 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_huixin_app/cubit/auth/auth_cubit.dart';
+import 'package:flutter_huixin_app/cubit/register/register_cubit.dart';
+import 'package:flutter_huixin_app/data/models/auth/requests/register_request_model.dart';
+import 'package:flutter_huixin_app/ui/pages/signin/signin_ui.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 
 import 'package:image_picker/image_picker.dart';
 
@@ -18,91 +25,244 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  /// Initialize FormBuilder global key
+  /// that will be used to validate form
+  /// and store it in [_fbKey] variable
+  final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
+
+  /// Initialize File variable for image picker
+  /// that will be used to store the image
   @override
   File? _image;
 
+  // late String _uuid = '';
+
+  /// Initialize Image Picker
+  /// that will be used to pick image from gallery or camera
+  /// and store it in [_image] variable
   Future<void> _pickImage(ImageSource source) async {
+    /// Pick image from gallery or camera
+    /// and store it in [pickedFile] variable
     final pickedFile = await ImagePicker().pickImage(source: source);
 
+    /// Check if the image is not null
+    /// and store it in [_image] variable
+    /// to display it in the UI
     if (pickedFile != null) {
       setState(() {
+        /// Store the image in [_image] variable
         _image = File(pickedFile.path);
       });
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBarDefault(
-        title: "Signup",
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          _imagePicker(),
-          const SizedBox(
-            height: 20.0,
+  /// Bunch of TextEditingControllers
+  /// that will be used to get the value of the text field
+  /// and pass it to the [AuthCubit]
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _noMemberController = TextEditingController();
+  final TextEditingController _fullNameController = TextEditingController();
+  final TextEditingController _birthDateController = TextEditingController();
+
+  void _showErrorDialog(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Error'),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('OK'),
           ),
-          const RegisterForm(
-            label: 'Username',
-            obscureTextEnabled: 'false',
-          ),
-          const SizedBox(
-            height: 10.0,
-          ),
-          const RegisterForm(
-            label: 'Password',
-            obscureTextEnabled: 'true',
-            obscureToggle: true,
-          ),
-          const SizedBox(
-            height: 10.0,
-          ),
-          const RegisterForm(
-            label: 'No Member',
-            obscureTextEnabled: 'false',
-          ),
-          const SizedBox(
-            height: 10.0,
-          ),
-          const RegisterForm(
-            label: 'Full Name',
-            obscureTextEnabled: 'false',
-          ),
-          const SizedBox(
-            height: 10.0,
-          ),
-          const RegisterForm(
-            label: 'Birth Date',
-            obscureTextEnabled: 'false',
-          ),
-          const SizedBox(
-            height: 20.0,
-          ),
-          PrimaryButton(
-            text: 'SUBMIT',
-            onPressed: () {
-              Navigator.pushNamed(context, '/home');
-            },
-          ),
-          const SizedBox(
-            height: 20.0,
-          ),
-          const Text(
-            'Or Sign Up With',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 16,
-            ),
-          ),
-          const SizedBox(
-            height: 20.0,
-          ),
-          _buildSocialIcon(),
         ],
       ),
+    );
+  }
+
+  RegisterRequestModel _buildRegisterRequestModel() {
+    return RegisterRequestModel(
+      user_name: _usernameController.text,
+      user_password: _passwordController.text,
+      no_member: _noMemberController.text,
+      full_name: _fullNameController.text,
+      birth_date: _birthDateController.text,
+      token_device: '1234567890',
+      img_file: _image,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<RegisterCubit, RegisterState>(
+      listener: (context, state) {
+        state.when(
+          initial: () {},
+          loading: () {},
+          loaded: (user) {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const LoginPage(),
+              ),
+              (route) => false,
+            );
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Register Success'),
+              ),
+            );
+          },
+          error: (error) => ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(error),
+            ),
+          ),
+        );
+      },
+      builder: (context, state) {
+        return Scaffold(
+          appBar: AppBarDefault(
+            title: "Signup",
+          ),
+          body: FormBuilder(
+            /// Initialize FormBuilder global
+            /// key to validate the form
+            key: _fbKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.07,
+                        ),
+                        _imagePicker(),
+                        const SizedBox(
+                          height: 20.0,
+                        ),
+                        RegisterForm(
+                            name: 'username',
+                            label: 'Username',
+                            controller: _usernameController,
+                            obscureTextEnabled: 'false',
+                            validator: FormBuilderValidators.compose(
+                              [
+                                FormBuilderValidators.required(),
+                                FormBuilderValidators.minLength(
+                                  6,
+                                  allowEmpty: false,
+                                  errorText:
+                                      'Username must be at least 6 characters',
+                                ),
+                              ],
+                            )),
+                        const SizedBox(
+                          height: 10.0,
+                        ),
+                        RegisterForm(
+                          name: 'password',
+                          label: 'Password',
+                          controller: _passwordController,
+                          obscureTextEnabled: 'true',
+                          obscureToggle: true,
+                          validator: FormBuilderValidators.compose(
+                            [
+                              FormBuilderValidators.required(
+                                errorText: 'Password is required',
+                              ),
+                              FormBuilderValidators.minLength(
+                                6,
+                                allowEmpty: false,
+                                errorText:
+                                    'Password must be at least 6 characters',
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10.0,
+                        ),
+                        RegisterForm(
+                          name: 'noMember',
+                          label: 'No Member',
+                          controller: _noMemberController,
+                          obscureTextEnabled: 'false',
+                          keyboardType: TextInputType.number,
+                          validator: FormBuilderValidators.compose([
+                            FormBuilderValidators.required(),
+                          ]),
+                        ),
+                        const SizedBox(
+                          height: 10.0,
+                        ),
+                        RegisterForm(
+                          name: 'fullName',
+                          label: 'Full Name',
+                          controller: _fullNameController,
+                          obscureTextEnabled: 'false',
+                          validator: FormBuilderValidators.required(),
+                        ),
+                        const SizedBox(
+                          height: 10.0,
+                        ),
+                        RegisterFormDate(
+                          name: 'birth_date',
+                          label: 'Birth Date',
+                          controller: _birthDateController,
+                        ),
+                        const SizedBox(
+                          height: 20.0,
+                        ),
+                        PrimaryButton(
+                          text: state.maybeWhen(
+                            loading: () => 'Loading...',
+                            orElse: () => 'Sign Up',
+                          ),
+                          onPressed: () {
+                            if (_fbKey.currentState?.saveAndValidate() ??
+                                false) {
+                              // Check if the image is not null
+                              // if null then show error dialog
+                              if (_image == null) {
+                                _showErrorDialog(
+                                    context, 'Pilih gambar terlebih dahulu');
+                              } else {
+                                context.read<RegisterCubit>().register(
+                                      _buildRegisterRequestModel(),
+                                    );
+                              }
+                            } else {
+                              debugPrint('validation failed');
+                            }
+                          },
+                        ),
+                        const SizedBox(
+                          height: 20.0,
+                        ),
+                        const Text(
+                          'Or Sign Up With',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20.0,
+                        ),
+                        _buildSocialIcon(),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 

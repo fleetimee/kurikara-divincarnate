@@ -1,10 +1,9 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter_huixin_app/data/models/auth/requests/login_request_model.dart';
-import 'package:flutter_huixin_app/data/models/auth/requests/register_request_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'package:flutter_huixin_app/data/datasources/auth_datasource.dart';
 import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
+import 'package:flutter_huixin_app/data/models/auth/requests/login_request_model.dart';
 
 import '../../data/models/auth/requests/update_fcm_request_model.dart';
 import '../../data/models/auth/requests/update_profile_request_model.dart';
@@ -21,15 +20,6 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> login(LoginRequestModel model) async {
     emit(const AuthState.loading());
     final result = await _authDataSource.login(model);
-    result.fold(
-      (l) => emit(AuthState.error(l)),
-      (r) => emit(AuthState.loaded(r)),
-    );
-  }
-
-  Future<void> register(RegisterRequestModel model) async {
-    emit(const AuthState.loading());
-    final result = await _authDataSource.register(model);
     result.fold(
       (l) => emit(AuthState.error(l)),
       (r) => emit(AuthState.loaded(r)),

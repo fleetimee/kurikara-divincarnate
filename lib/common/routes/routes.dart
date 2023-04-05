@@ -13,11 +13,9 @@ import '../../ui/pages/profile/profile_ui.dart';
 import '../../ui/pages/reading_section/reading_section_ui.dart';
 import '../../ui/pages/reporting/reporting_detail_ui.dart';
 import '../../ui/pages/reporting/reporting_ui.dart';
-import '../../ui/pages/signin/signin_ui.dart';
 import '../../ui/pages/singup/signup_ui.dart';
 
 final Map<String, WidgetBuilder> routes = {
-  '/': (context) => const LoginPage(),
   '/home': (context) => const HomePage(),
   '/course_selector': (context) => const CourseSelector(),
   '/course_initial': (context) => const CourseInitial(),
