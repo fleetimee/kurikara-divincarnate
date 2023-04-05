@@ -49,6 +49,15 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
     _getUser();
   }
 
+  @override
+  void dispose() {
+    _usernameController!.dispose();
+    _passwordController!.dispose();
+    _noMemberController!.dispose();
+    _fullNameController!.dispose();
+    super.dispose();
+  }
+
   void _getUser() async {
     user = await AppSecureStorage.getUser();
 
