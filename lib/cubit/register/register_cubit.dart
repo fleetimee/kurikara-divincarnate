@@ -1,7 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_huixin_app/cubit/register/registers_state.dart';
 import 'package:flutter_huixin_app/data/datasources/auth_datasource.dart';
+import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
 import 'package:flutter_huixin_app/data/models/auth/requests/register_request_model.dart';
+
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'register_cubit.freezed.dart';
+part 'register_state.dart';
 
 class AuthCubit extends Cubit<RegisterState> {
   final AuthDataSource _authDataSource;

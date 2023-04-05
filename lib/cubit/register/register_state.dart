@@ -1,7 +1,4 @@
-import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
-
-part 'registers_state.freezed.dart';
+part of 'register_cubit.dart';
 
 @freezed
 class RegisterState with _$RegisterState {
