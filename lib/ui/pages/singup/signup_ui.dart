@@ -10,6 +10,7 @@ import 'package:flutter_huixin_app/cubit/register/register_cubit.dart';
 import 'package:flutter_huixin_app/data/models/auth/requests/register_request_model.dart';
 import 'package:flutter_huixin_app/ui/pages/signin/signin_ui.dart';
 import 'package:flutter_huixin_app/ui/widgets/dialog_box.dart';
+import 'package:flutter_huixin_app/ui/widgets/social_icons_button.dart';
 import 'package:flutter_huixin_app/utils/uuid_gen.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
@@ -269,7 +270,11 @@ class _SignUpPageState extends State<SignUpPage> {
                         const SizedBox(
                           height: 20.0,
                         ),
-                        _buildSocialIcon(),
+                        SocialIcon(
+                          onTapApple: () {},
+                          onTapFacebook: () {},
+                          onTapGoogle: () {},
+                        ),
                       ],
                     ),
                   ),
@@ -338,35 +343,6 @@ class _SignUpPageState extends State<SignUpPage> {
               );
             },
           ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildSocialIcon() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Image.asset(
-          "assets/images/register-google.png",
-          width: 50,
-          height: 50,
-        ),
-        const SizedBox(
-          width: 40,
-        ),
-        Image.asset(
-          "assets/images/register-facebook.png",
-          width: 50,
-          height: 50,
-        ),
-        const SizedBox(
-          width: 40,
-        ),
-        Image.asset(
-          "assets/images/register-apple.png",
-          width: 50,
-          height: 50,
         ),
       ],
     );

@@ -6,6 +6,7 @@ import 'package:flutter_huixin_app/cubit/auth/auth_cubit.dart';
 import 'package:flutter_huixin_app/data/datasources/local/app_secure_storage.dart';
 import 'package:flutter_huixin_app/data/models/auth/requests/login_request_model.dart';
 import 'package:flutter_huixin_app/ui/widgets/dialog_box.dart';
+import 'package:flutter_huixin_app/ui/widgets/social_icons_button.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
 import '../../widgets/button.dart';
@@ -84,146 +85,169 @@ class _LoginPageState extends State<LoginPage> {
       builder: (context, state) {
         return SafeArea(
           child: Scaffold(
-            body: Center(
-              child: FormBuilder(
-                /// Pass the global key to the [FormBuilder] widget
-                /// to validate the form
-                key: _fbKeyAuth,
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        "assets/images/logo-login.png",
-                      ),
-                      const SizedBox(
-                        height: 20.0,
-                      ),
-                      LoginForm(
-                        name: 'username',
-                        label: 'Username',
+            body: FormBuilder(
+              /// Pass the global key to the [FormBuilder] widget
+              /// to validate the form
+              key: _fbKeyAuth,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      height: 25.0,
+                    ),
+                    Image.asset(
+                      "assets/images/logo-login.png",
+                    ),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+                    LoginForm(
+                      name: 'username',
+                      label: 'Username',
 
-                        /// Pass the controller to the [LoginForm] widget
-                        /// to get the value of the text field
-                        /// and pass it to the [AuthCubit]
-                        controller: _usernameController,
-                        obscureText: 'false',
+                      /// Pass the controller to the [LoginForm] widget
+                      /// to get the value of the text field
+                      /// and pass it to the [AuthCubit]
+                      controller: _usernameController,
+                      obscureText: 'false',
 
-                        /// Add [FormBuilderValidators] to validate the form
-                        /// and show the error message
-                        /// if the validation failed
-                        validator: FormBuilderValidators.required(),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      LoginForm(
-                        name: 'password',
-                        label: 'Password',
+                      /// Add [FormBuilderValidators] to validate the form
+                      /// and show the error message
+                      /// if the validation failed
+                      validator: FormBuilderValidators.required(),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    LoginForm(
+                      name: 'password',
+                      label: 'Password',
 
-                        /// Pass the controller to the [LoginForm] widget
-                        /// to get the value of the text field
-                        /// and pass it to the [AuthCubit]
-                        controller: _passwordController,
-                        obscureText: 'true',
+                      /// Pass the controller to the [LoginForm] widget
+                      /// to get the value of the text field
+                      /// and pass it to the [AuthCubit]
+                      controller: _passwordController,
+                      obscureText: 'true',
 
-                        /// Add [FormBuilderValidators] to validate the form
-                        /// and show the error message
-                        /// if the validation failed
-                        validator: FormBuilderValidators.required(),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      // Forgot Password
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 70),
-                        child: Align(
-                          alignment: Alignment.centerRight,
-                          child: TextButton(
-                            onPressed: () {},
-                            child: const Text(
-                              'Forgot Password?',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      PrimaryButton(
-                        /// Render whether state is loading or not
-                        /// to show the loading indicator
-                        /// or the login button
-                        text: state.maybeWhen(
-                          loading: () => 'Loading...',
-                          orElse: () => 'Login',
-                        ),
-                        onPressed: () {
-                          if (_fbKeyAuth.currentState?.saveAndValidate() ??
-                              false) {
-                            /// Initialize the login request model
-                            /// and pass it to the [AuthCubit]
-                            /// to validate the user
-                            context.read<AuthCubit>().login(
-                                  LoginRequestModel(
-                                    username: _usernameController.text,
-                                    password: _passwordController.text,
-                                  ),
-                                );
-
-                            debugPrint('validation success');
-                          } else {
-                            /// Else, show the error message
-                            /// And prompt user to re-enter the value
-                            /// of the text field
-                            debugPrint('validation failed');
-                          }
-                        },
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, '/signup');
-                        },
-                        child: const Text.rich(
-                          TextSpan(
-                            text: 'Don\'t have an account yet? ',
+                      /// Add [FormBuilderValidators] to validate the form
+                      /// and show the error message
+                      /// if the validation failed
+                      validator: FormBuilderValidators.required(),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    // Forgot Password
+                    Padding(
+                      padding: EdgeInsets.only(
+                          right: MediaQuery.of(context).size.width * 0.2),
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          onPressed: () {},
+                          child: const Text(
+                            'Forgot Password?',
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
-                            children: [
-                              TextSpan(
-                                text: 'Sign Up',
-                                style: TextStyle(
-                                  color: Colors.red,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
                           ),
                         ),
-                      )
-                    ],
-                  ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    PrimaryButton(
+                      /// Render whether state is loading or not
+                      /// to show the loading indicator
+                      /// or the login button
+                      text: state.maybeWhen(
+                        loading: () => 'Loading...',
+                        orElse: () => 'GO',
+                      ),
+                      onPressed: () {
+                        if (_fbKeyAuth.currentState?.saveAndValidate() ??
+                            false) {
+                          /// Initialize the login request model
+                          /// and pass it to the [AuthCubit]
+                          /// to validate the user
+                          context.read<AuthCubit>().login(
+                                LoginRequestModel(
+                                  username: _usernameController.text,
+                                  password: _passwordController.text,
+                                ),
+                              );
+
+                          debugPrint('validation success');
+                        } else {
+                          /// Else, show the error message
+                          /// And prompt user to re-enter the value
+                          /// of the text field
+                          debugPrint('validation failed');
+                        }
+                      },
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, '/signup');
+                      },
+                      child: const Text.rich(
+                        TextSpan(
+                          text: 'Don\'t have an account yet? ',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          children: [
+                            TextSpan(
+                              text: 'Sign Up',
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 40,
+                    ),
+                    const Text(
+                      'Or Login With',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    SocialIcon(
+                      onTapGoogle: () {},
+                      onTapFacebook: () {},
+                      onTapApple: () {},
+                    )
+                  ],
                 ),
               ),
             ),
-            bottomNavigationBar: Animate(
-              effects: const [FadeEffect(), ScaleEffect()],
-              child: Image.asset(
-                "assets/images/illust-login.png",
-                height: 400,
-                fit: BoxFit.contain,
+            bottomNavigationBar: Container(
+              color: Colors.transparent,
+              child: Animate(
+                effects: const [FadeEffect(), ScaleEffect()],
+                child: Image.asset(
+                  "assets/images/illust-login.png",
+                  height: 325,
+                  fit: BoxFit.contain,
+                ),
               ),
             ),
           ),

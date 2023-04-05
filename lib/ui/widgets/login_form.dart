@@ -21,7 +21,7 @@ class LoginForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 70),
+      padding: const EdgeInsets.symmetric(horizontal: 100),
       child: FormBuilderTextField(
         name: name,
         controller: controller,
@@ -40,7 +40,7 @@ class LoginForm extends StatelessWidget {
           isDense: true,
           contentPadding: const EdgeInsets.symmetric(
             vertical: 15, // reduce the vertical padding
-            horizontal: 50, // add horizontal padding
+            horizontal: 15, // reduce the horizontal padding
           ),
           focusColor: Colors.red,
           fillColor: Colors.white,
