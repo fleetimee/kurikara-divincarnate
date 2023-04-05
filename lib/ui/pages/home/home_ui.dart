@@ -27,14 +27,17 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+
     _getUser();
-    context.read<XpCubit>().getXp(user?.userId ?? '');
-    context.read<DailyActivityCubit>().getDailyActivity(user?.userId ?? '');
   }
 
   void _getUser() async {
     user = await AppSecureStorage.getUser();
-    setState(() {});
+
+    setState(() {
+      context.read<XpCubit>().getXp(user?.userId ?? '');
+      context.read<DailyActivityCubit>().getDailyActivity(user?.userId ?? '');
+    });
   }
 
   @override
