@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_huixin_app/cubit/auth/auth_cubit.dart';
+import 'package:flutter_huixin_app/cubit/register/register_cubit.dart';
 import 'package:flutter_huixin_app/data/models/auth/requests/register_request_model.dart';
+import 'package:flutter_huixin_app/ui/pages/signin/signin_ui.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
 import 'package:image_picker/image_picker.dart';
@@ -65,24 +67,24 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AuthCubit, AuthState>(
+    return BlocConsumer<RegisterCubit, RegisterState>(
       listener: (context, state) {
         state.when(
           initial: () {},
           loading: () {},
           loaded: (user) {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const LoginPage(),
+              ),
+              (route) => false,
+            );
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                 content: Text('Register Success'),
               ),
             );
-            // Navigator.pushAndRemoveUntil(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (context) => const LoginPage(),
-            //   ),
-            //   (route) => false,
-            // );
           },
           error: (error) => ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -197,7 +199,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 false) {
                               debugPrint(_fbKey.currentState?.value.toString());
 
-                              context.read<AuthCubit>().register(
+                              context.read<RegisterCubit>().register(
                                     RegisterRequestModel(
                                       user_name: _usernameController.text,
                                       user_password: _passwordController.text,

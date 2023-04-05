@@ -8,9 +8,9 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'register_cubit.freezed.dart';
 part 'register_state.dart';
 
-class AuthCubit extends Cubit<RegisterState> {
+class RegisterCubit extends Cubit<RegisterState> {
   final AuthDataSource _authDataSource;
-  AuthCubit(
+  RegisterCubit(
     this._authDataSource,
   ) : super(const RegisterState.initial());
 

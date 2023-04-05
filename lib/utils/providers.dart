@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_huixin_app/cubit/auth/auth_cubit.dart';
+import 'package:flutter_huixin_app/cubit/register/register_cubit.dart';
 import 'package:flutter_huixin_app/data/datasources/auth_datasource.dart';
 
 class AppProviders extends StatelessWidget {
@@ -17,6 +18,11 @@ class AppProviders extends StatelessWidget {
             AuthDataSource(),
           ),
         ),
+        BlocProvider(
+          create: (_) => RegisterCubit(
+            AuthDataSource(),
+          ),
+        )
       ],
       child: child,
     );
