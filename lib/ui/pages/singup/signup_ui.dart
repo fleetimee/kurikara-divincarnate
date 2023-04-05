@@ -49,8 +49,6 @@ class _SignUpPageState extends State<SignUpPage> {
     super.dispose();
   }
 
-  // late String _uuid = '';
-
   /// Initialize Image Picker
   /// that will be used to pick image from gallery or camera
   /// and store it in [_image] variable

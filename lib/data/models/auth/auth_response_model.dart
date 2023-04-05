@@ -32,6 +32,7 @@ class AuthResponseModel {
 
 class DataUser {
   DataUser({
+    this.userId,
     this.userNpp,
     this.userName,
     this.fullName,
@@ -58,6 +59,7 @@ class DataUser {
     this.imgFile,
   });
 
+  String? userId;
   String? userNpp;
   String? userName;
   String? fullName;
@@ -89,6 +91,7 @@ class DataUser {
   String toRawJson() => json.encode(toJson());
 
   factory DataUser.fromJson(Map<String, dynamic> json) => DataUser(
+        userId: json["user_id"],
         userNpp: json["user_npp"],
         userName: json["user_name"],
         fullName: json["full_name"],
@@ -120,6 +123,7 @@ class DataUser {
       );
 
   Map<String, dynamic> toJson() => {
+        "user_id": userId,
         "user_npp": userNpp,
         "user_name": userName,
         "full_name": fullName,

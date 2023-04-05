@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_huixin_app/cubit/home/daily_activity/daily_activity_cubit.dart';
+import 'package:flutter_huixin_app/cubit/home/xp/xp_cubit.dart';
 import 'package:flutter_huixin_app/data/datasources/local/app_secure_storage.dart';
 import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
 
@@ -25,6 +28,8 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _getUser();
+    context.read<XpCubit>().getXp(user?.userId ?? '');
+    context.read<DailyActivityCubit>().getDailyActivity(user?.userId ?? '');
   }
 
   void _getUser() async {
@@ -38,6 +43,17 @@ class _HomePageState extends State<HomePage> {
       extendBody: true,
       appBar: AppBarHome(
         title: user?.fullName ?? 'Loading...',
+        xp: context.select(
+          (XpCubit xpCubit) => xpCubit.state.maybeMap(
+            orElse: () => '..',
+            loaded: (state) => state.data.data?.first.jmlXp.toString(),
+          ),
+        ),
+        dailyActivity: context.select((DailyActivityCubit dailyActivityCubit) =>
+            dailyActivityCubit.state.maybeMap(
+              orElse: () => '..',
+              loaded: (state) => state.data.data?.first.jmlDaily.toString(),
+            )),
       ),
       body: const HomeItems(),
       bottomNavigationBar: const Padding(
