@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_huixin_app/cubit/home/active_student/active_student_cubit.dart';
 import 'package:flutter_huixin_app/cubit/home/daily_activity/daily_activity_cubit.dart';
 import 'package:flutter_huixin_app/cubit/home/xp/xp_cubit.dart';
 import 'package:flutter_huixin_app/data/datasources/local/app_secure_storage.dart';
@@ -8,7 +9,6 @@ import 'package:flutter_huixin_app/ui/pages/signin/signin_ui.dart';
 import 'package:flutter_huixin_app/ui/widgets/dialog_box.dart';
 
 import '../../../common/constants/color.dart';
-import '../../../cubit/entities/fren.dart';
 import '../../../cubit/entities/stats.dart';
 import '../../widgets/appbar/appbar_style.dart';
 import '../../widgets/navigator_style.dart';
@@ -28,6 +28,7 @@ class _ProfilePageState extends State<ProfilePage> {
     super.initState();
 
     _getUser();
+    context.read<ActiveStudentCubit>().getActiveStudent();
   }
 
   void _getUser() async {
@@ -372,38 +373,56 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget listfriend() {
-    return SizedBox(
-      width: 330,
-      height: 120,
-      child: ListView.builder(
-        itemCount: allMyFren.length,
-        scrollDirection: Axis.vertical,
-        itemBuilder: (context, index) {
-          return ListTile(
-            dense: true,
-            contentPadding: EdgeInsets.zero,
-            horizontalTitleGap: 10,
-            minVerticalPadding: -15,
-            leading: CircleAvatar(
-              backgroundImage: AssetImage(allMyFren[index].imageUrl),
-            ),
-            title: Text(
-              allMyFren[index].name,
-              style: const TextStyle(
-                fontSize: 20,
-                color: Colors.black,
+    return BlocBuilder<ActiveStudentCubit, ActiveStudentState>(
+      builder: (context, state) {
+        return state.when(
+          initial: () => const Center(
+            child: SizedBox.shrink(),
+          ),
+          loading: () => const Center(
+            child: CircularProgressIndicator(),
+          ),
+          loaded: (data) {
+            return SizedBox(
+              height: 120,
+              width: 330,
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: data.data!.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    dense: true,
+                    contentPadding: EdgeInsets.zero,
+                    horizontalTitleGap: 10,
+                    minVerticalPadding: -15,
+                    leading: const CircleAvatar(
+                      backgroundImage:
+                          AssetImage('assets/images/usada-pekora.png'),
+                    ),
+                    title: Text(
+                      data.data![index].fullName ?? '..',
+                      style: const TextStyle(
+                        fontSize: 20,
+                        color: Colors.black,
+                      ),
+                    ),
+                    subtitle: Text(
+                      '${data.data![index].jmlAktivitas} XP',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.black54,
+                      ),
+                    ),
+                  );
+                },
               ),
-            ),
-            subtitle: Text(
-              '${allMyFren[index].xp} XP',
-              style: const TextStyle(
-                fontSize: 16,
-                color: Colors.black54,
-              ),
-            ),
-          );
-        },
-      ),
+            );
+          },
+          error: (message) => Center(
+            child: Text(message),
+          ),
+        );
+      },
     );
   }
 

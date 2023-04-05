@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_huixin_app/cubit/auth/auth_cubit.dart';
+import 'package:flutter_huixin_app/cubit/home/active_student/active_student_cubit.dart';
 import 'package:flutter_huixin_app/cubit/home/daily_activity/daily_activity_cubit.dart';
 import 'package:flutter_huixin_app/cubit/home/xp/xp_cubit.dart';
 import 'package:flutter_huixin_app/cubit/register/register_cubit.dart';
@@ -33,6 +34,11 @@ class AppProviders extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => DailyActivityCubit(
+            HomeDatasource(),
+          ),
+        ),
+        BlocProvider(
+          create: (_) => ActiveStudentCubit(
             HomeDatasource(),
           ),
         ),
