@@ -9,6 +9,7 @@ import 'package:flutter_huixin_app/cubit/auth/auth_cubit.dart';
 import 'package:flutter_huixin_app/cubit/register/register_cubit.dart';
 import 'package:flutter_huixin_app/data/models/auth/requests/register_request_model.dart';
 import 'package:flutter_huixin_app/ui/pages/signin/signin_ui.dart';
+import 'package:flutter_huixin_app/ui/widgets/dialog_box.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
 import 'package:image_picker/image_picker.dart';
@@ -34,6 +35,19 @@ class _SignUpPageState extends State<SignUpPage> {
   /// that will be used to store the image
   @override
   File? _image;
+
+  /// Dispose the controllers
+  /// to avoid memory leaks
+  /// when the widget is removed from the widget tree
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
+    _noMemberController.dispose();
+    _fullNameController.dispose();
+    _birthDateController.dispose();
+    super.dispose();
+  }
 
   // late String _uuid = '';
 
@@ -101,18 +115,21 @@ class _SignUpPageState extends State<SignUpPage> {
           initial: () {},
           loading: () {},
           loaded: (user) {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const LoginPage(),
-              ),
-              (route) => false,
-            );
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Register Success'),
-              ),
-            );
+            SuccessDialog(
+              context: context,
+              title: 'Berhasil',
+              desc:
+                  'Registrasi berhasil, silahkan login untuk mengakses aplikasi',
+              btnOkOnPress: () {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const LoginPage(),
+                  ),
+                  (route) => false,
+                );
+              },
+            ).show();
           },
           error: (error) => ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(

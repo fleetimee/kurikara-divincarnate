@@ -87,3 +87,47 @@ class PromptDialog extends AwesomeDialog {
           dialogBackgroundColor: AppColors.yellowColor,
         );
 }
+
+class SuccessDialog extends AwesomeDialog {
+  final BuildContext context;
+  final String title;
+  final String desc;
+  final String? btnOkText;
+  final String? btnCancelText;
+
+  final void Function()? btnOkOnPress;
+  final void Function()? btnCancelOnPress;
+
+  SuccessDialog({
+    required this.context,
+    required this.title,
+    required this.desc,
+    this.btnOkText,
+    this.btnCancelText,
+    this.btnOkOnPress,
+    this.btnCancelOnPress,
+  }) : super(
+          context: context,
+          animType: AnimType.bottomSlide,
+          dialogType: DialogType.success,
+          title: title,
+          titleTextStyle: const TextStyle(
+            color: Colors.white,
+            fontSize: 25,
+            fontWeight: FontWeight.w500,
+          ),
+          descTextStyle: const TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.w400,
+          ),
+          desc: desc,
+          btnOkText: btnOkText,
+          btnCancelText: btnCancelText,
+          btnOkOnPress: btnOkOnPress,
+          btnCancelOnPress: btnCancelOnPress,
+          dialogBackgroundColor: AppColors.greenColor,
+          dismissOnBackKeyPress: false,
+          dismissOnTouchOutside: false,
+        );
+}
