@@ -26,12 +26,15 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
 
   DataUser? user;
 
-  late String? username;
-  String? password;
-  String? noMember;
-  String? fullName;
+  late String? username = '';
+  late String? password = '';
+  late String? noMember = '';
+  late String? fullName = '';
 
   TextEditingController? _usernameController;
+  TextEditingController? _passwordController;
+  TextEditingController? _noMemberController;
+  TextEditingController? _fullNameController;
 
   /// Initialize Global Key
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
@@ -39,17 +42,26 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
   @override
   void initState() {
     super.initState();
-
+    _usernameController = TextEditingController();
+    _passwordController = TextEditingController();
+    _noMemberController = TextEditingController();
+    _fullNameController = TextEditingController();
     _getUser();
   }
 
   void _getUser() async {
     user = await AppSecureStorage.getUser();
 
-    username = 'Loading...';
-
     setState(() {
       username = user?.userName;
+      password = user?.userPassword;
+      noMember = user?.noMember;
+      fullName = user?.fullName;
+
+      _usernameController!.text = username ?? '';
+      _passwordController!.text = password ?? '';
+      _noMemberController!.text = noMember ?? '';
+      _fullNameController!.text = fullName ?? '';
     });
   }
 
@@ -87,28 +99,25 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
               ProfileForm(
                 name: 'username',
                 obscureTextEnabled: 'false',
-                controller: _usernameController = TextEditingController(
-                  text: username,
-                ),
+                controller: _usernameController,
               ),
               Space,
-              const ProfileForm(
+              ProfileForm(
                 name: 'password',
-                obscureTextEnabled: 'true',
-                obscureToggle: true,
-                initialValue: '123456',
+                obscureTextEnabled: 'false',
+                controller: _passwordController,
               ),
               Space,
-              const ProfileForm(
+              ProfileForm(
                 name: 'noMember',
                 obscureTextEnabled: 'false',
-                initialValue: '123456',
+                controller: _noMemberController,
               ),
               Space,
-              const ProfileForm(
+              ProfileForm(
                 name: 'fullName',
                 obscureTextEnabled: 'false',
-                initialValue: 'Ahmad TaftaZani',
+                controller: _fullNameController,
               ),
               Space,
               const ProfileFormDate(
