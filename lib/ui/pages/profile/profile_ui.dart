@@ -387,7 +387,13 @@ class _ProfilePageState extends State<ProfilePage> {
             child: SizedBox.shrink(),
           ),
           loading: () => const Center(
-            child: CircularProgressIndicator(),
+            child: SizedBox(
+              height: 120,
+              width: 330,
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
           ),
           loaded: (data) {
             return SizedBox(

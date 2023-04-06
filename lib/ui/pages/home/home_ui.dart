@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_huixin_app/cubit/home/active_student/active_student_cubit.dart';
 import 'package:flutter_huixin_app/cubit/home/daily_activity/daily_activity_cubit.dart';
 import 'package:flutter_huixin_app/cubit/home/xp/xp_cubit.dart';
 import 'package:flutter_huixin_app/data/datasources/local/app_secure_storage.dart';
 import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
+import 'package:flutter_huixin_app/data/models/get_active_student_response_model.dart';
+import 'package:random_avatar/random_avatar.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../common/constants/color.dart';
 import '../../../cubit/entities/active_students.dart';
@@ -37,6 +41,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       context.read<XpCubit>().getXp(user?.userId ?? '');
       context.read<DailyActivityCubit>().getDailyActivity(user?.userId ?? '');
+      context.read<ActiveStudentCubit>().getActiveStudent();
     });
   }
 
@@ -94,28 +99,38 @@ class HomeItems extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  width: 330,
-                  height: 100,
-                  child: ListView.separated(
-                    separatorBuilder: (context, index) =>
-                        const SizedBox(width: 8),
-                    itemCount: studentsData.length,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return Column(
-                        children: [
-                          CircleAvatar(
-                            radius: 30,
-                            backgroundImage:
-                                AssetImage(studentsData[index].imageUrl),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(studentsData[index].studentName),
-                        ],
-                      );
-                    },
-                  ),
+                BlocBuilder<ActiveStudentCubit, ActiveStudentState>(
+                  builder: (context, state) {
+                    return SizedBox(
+                      width: 330,
+                      height: 100,
+                      child: ListView.separated(
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(width: 8),
+                        itemCount: studentsData.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return state.when(
+                            initial: () {
+                              return const AvatarLoading();
+                            },
+                            loading: () {
+                              return const AvatarLoading();
+                            },
+                            loaded: (data) {
+                              return AvatarLoader(
+                                data: data,
+                                index: index,
+                              );
+                            },
+                            error: (message) {
+                              return Text(message);
+                            },
+                          );
+                        },
+                      ),
+                    );
+                  },
                 ),
                 GestureDetector(
                   onTap: () {},
@@ -239,6 +254,57 @@ class HomeItems extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+}
+
+class AvatarLoading extends StatelessWidget {
+  const AvatarLoading({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Shimmer.fromColors(
+          baseColor: Colors.grey[300]!,
+          highlightColor: Colors.grey[100]!,
+          child: CircleAvatar(
+            radius: 30,
+            child: RandomAvatar('fleetime'),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class AvatarLoader extends StatelessWidget {
+  final int index;
+  final GetActiveStudentResponseModel data;
+
+  const AvatarLoader({
+    super.key,
+    required this.index,
+    required this.data,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        CircleAvatar(
+          radius: 30,
+          child: RandomAvatar(
+            data.data![index].fullName ?? '..',
+          ),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          data.data![index].fullName ?? '..',
+        ),
+      ],
     );
   }
 }
