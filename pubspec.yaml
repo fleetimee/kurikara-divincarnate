@@ -34,6 +34,7 @@ dependencies:
   image_picker: ^0.8.7
   intl: ^0.18.0
   just_audio: ^0.9.32
+  modal_bottom_sheet: ^3.0.0-pre
   permission_handler: ^10.2.0
   random_avatar: ^0.0.8
   responsive_framework: ^0.2.0

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_huixin_app/cubit/auth/auth_cubit.dart';
 import 'package:flutter_huixin_app/cubit/home/active_student/active_student_cubit.dart';
 import 'package:flutter_huixin_app/cubit/home/daily_activity/daily_activity_cubit.dart';
+import 'package:flutter_huixin_app/cubit/home/info/info_cubit.dart';
 import 'package:flutter_huixin_app/cubit/home/xp/xp_cubit.dart';
 import 'package:flutter_huixin_app/cubit/register/register_cubit.dart';
 import 'package:flutter_huixin_app/data/datasources/auth_datasource.dart';
@@ -39,6 +40,11 @@ class AppProviders extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => ActiveStudentCubit(
+            HomeDatasource(),
+          ),
+        ),
+        BlocProvider(
+          create: (_) => InfoCubit(
             HomeDatasource(),
           ),
         ),
