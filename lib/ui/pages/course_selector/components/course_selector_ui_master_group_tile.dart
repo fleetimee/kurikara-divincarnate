@@ -30,6 +30,7 @@ class MasterGroupMateriTile extends StatelessWidget {
                 arguments: {
                   'level_id': state.data.data![index].idLevel,
                   'level_id_materi': state.data.data![index].idGroupMateri,
+                  'level_name': state.data.data![index].name,
                 },
               );
             }

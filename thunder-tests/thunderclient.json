@@ -178,7 +178,7 @@
     "method": "POST",
     "sortNum": 30000,
     "created": "2023-04-04T15:15:39.785Z",
-    "modified": "2023-04-04T16:47:55.668Z",
+    "modified": "2023-04-06T11:44:48.657Z",
     "headers": [],
     "params": [],
     "body": {
@@ -191,7 +191,7 @@
         },
         {
           "name": "password",
-          "value": "123456"
+          "value": "1"
         },
         {
           "name": "id_google",
@@ -291,26 +291,31 @@
     "method": "GET",
     "sortNum": 70000,
     "created": "2023-04-04T15:15:39.789Z",
-    "modified": "2023-04-04T15:15:39.789Z",
+    "modified": "2023-04-06T11:28:21.407Z",
     "headers": [],
     "params": [
       {
         "name": "token_api",
-        "value": "323232"
+        "value": "323232",
+        "isPath": false
       },
       {
         "name": "id_level",
-        "value": "1"
+        "value": "1",
+        "isPath": false
       },
       {
         "name": "id_group_materi",
-        "value": "1"
+        "value": "1",
+        "isPath": false
       },
       {
         "name": "user_id",
-        "value": "2"
+        "value": "2",
+        "isPath": false
       }
-    ]
+    ],
+    "tests": []
   },
   {
     "_id": "0ab4be37-a26f-44a8-beba-4e4490227a93",
@@ -321,26 +326,31 @@
     "method": "GET",
     "sortNum": 80000,
     "created": "2023-04-04T15:15:39.790Z",
-    "modified": "2023-04-04T15:15:39.790Z",
+    "modified": "2023-04-06T11:28:52.820Z",
     "headers": [],
     "params": [
       {
         "name": "token_api",
-        "value": "323232"
+        "value": "323232",
+        "isPath": false
       },
       {
         "name": "id_level",
-        "value": "1"
+        "value": "1",
+        "isPath": false
       },
       {
         "name": "id_group_materi",
-        "value": "1"
+        "value": "1",
+        "isPath": false
       },
       {
         "name": "user_id",
-        "value": "2"
+        "value": "2",
+        "isPath": false
       }
-    ]
+    ],
+    "tests": []
   },
   {
     "_id": "3af063f5-943c-4e16-b3b0-1eca372394f8",

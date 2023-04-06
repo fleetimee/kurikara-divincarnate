@@ -7,6 +7,7 @@ import 'package:flutter_huixin_app/cubit/home/info/info_cubit.dart';
 import 'package:flutter_huixin_app/cubit/home/xp/xp_cubit.dart';
 import 'package:flutter_huixin_app/cubit/mastering/master_group_materi/master_group_materi_cubit.dart';
 import 'package:flutter_huixin_app/cubit/mastering/master_level/master_level_cubit.dart';
+import 'package:flutter_huixin_app/cubit/mastering/master_materi/master_materi_cubit.dart';
 import 'package:flutter_huixin_app/cubit/register/register_cubit.dart';
 import 'package:flutter_huixin_app/cubit/report/report_cubit.dart';
 import 'package:flutter_huixin_app/data/datasources/auth_datasource.dart';
@@ -65,6 +66,11 @@ class AppProviders extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => MasterGroupMateriCubit(
+            MasteringDatasource(),
+          ),
+        ),
+        BlocProvider(
+          create: (_) => MasterMateriCubit(
             MasteringDatasource(),
           ),
         ),
