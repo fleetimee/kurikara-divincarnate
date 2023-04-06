@@ -18,11 +18,10 @@ class CourseSelector extends StatefulWidget {
 }
 
 class _CourseSelectorState extends State<CourseSelector> {
-  Map? args; // Declare args as an instance variable
+  Map? args;
   DataUser? user;
 
   Future<void> _getArgs() async {
-    // Access context and get arguments from previous page asynchronously
     args = (await Future.delayed(Duration.zero, () {
       return ModalRoute.of(context)?.settings.arguments as Map?;
     }))!;
