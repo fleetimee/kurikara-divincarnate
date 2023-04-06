@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_huixin_app/cubit/home/info/info_cubit.dart';
 import 'package:flutter_huixin_app/data/datasources/local/app_secure_storage.dart';
 import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
+import 'package:random_avatar/random_avatar.dart';
 
 import '../../widgets/appbar/appbar_style.dart';
 
@@ -42,31 +43,33 @@ class _InformationPageState extends State<InformationPage> {
         child: Column(
           children: [
             Container(
-                padding: const EdgeInsets.only(
-                    top: 40, bottom: 30, left: 30, right: 30),
-                height: 400,
-                child: BlocBuilder<InfoCubit, InfoState>(
-                  builder: (context, state) {
-                    return state.maybeMap(
-                      orElse: () => const Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                      loaded: (state) {
-                        return ListView.builder(
-                          itemCount: state.data.data?.length,
-                          itemBuilder: (context, index) {
-                            return CardInfo(
-                              title: state.data.data?[index].title ?? '',
-                              contentStriped:
-                                  state.data.data?[index].title ?? '',
-                              date: state.data.data?[index].createdBy ?? '',
-                            );
-                          },
-                        );
-                      },
-                    );
-                  },
-                )),
+              padding: const EdgeInsets.only(
+                  top: 40, bottom: 30, left: 30, right: 30),
+              height: 600,
+              child: BlocBuilder<InfoCubit, InfoState>(
+                builder: (context, state) {
+                  return state.maybeMap(
+                    orElse: () => const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                    loaded: (state) {
+                      return ListView.builder(
+                        itemCount: state.data.data?.length,
+                        itemBuilder: (context, index) {
+                          return CardInfo(
+                            title: state.data.data?[index].title ?? '',
+                            contentStriped:
+                                state.data.data?[index].content ?? '',
+                            date: state.data.data?[index].createdBy ?? '',
+                            author: state.data.data?[index].createdBy ?? '',
+                          );
+                        },
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
             Container(
               padding: const EdgeInsets.only(
                   top: 40, bottom: 30, left: 30, right: 30),
@@ -118,12 +121,14 @@ class CardInfo extends StatelessWidget {
   final String title;
   final String contentStriped;
   final String date;
+  final String author;
 
   const CardInfo({
     super.key,
     required this.title,
     required this.contentStriped,
     required this.date,
+    required this.author,
   });
 
   @override
@@ -154,7 +159,7 @@ class CardInfo extends StatelessWidget {
                   Row(
                     children: [
                       const Text(
-                        "PRODUCTIVITY",
+                        "",
                         style: TextStyle(
                           fontSize: 12.0,
                         ),
@@ -169,58 +174,63 @@ class CardInfo extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(
-                    height: 10.0,
+                    height: 5.0,
                   ),
                   Text(
                     title,
                     style: const TextStyle(
-                      fontSize: 12.0,
+                      fontSize: 23,
                       fontWeight: FontWeight.bold,
+                      color: Colors.black,
                     ),
                   ),
                   const SizedBox(
                     height: 6.0,
                   ),
                   Text(
-                    contentStriped,
+                    '${contentStriped.substring(0, 140)}...',
+                    textAlign: TextAlign.justify,
                     maxLines: 4,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
-                      fontSize: 12.0,
-                    ),
+                        fontSize: 18,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500,
+                        height: 1.5),
                   ),
                   const SizedBox(
-                    height: 6.0,
+                    height: 12.0,
                   ),
                   Row(
                     children: [
                       CircleAvatar(
-                        radius: 12.0,
+                        radius: 17.0,
                         backgroundColor: Colors.grey[200],
-                        backgroundImage: const NetworkImage(
-                          "https://i.ibb.co/sqRTGfL/photo-1514543250559-83867827ecce-ixlib-rb-1-2.jpg",
-                        ),
+                        child: RandomAvatar(author),
                       ),
                       const SizedBox(
                         width: 8.0,
                       ),
-                      const Expanded(
+                      Expanded(
                         child: Text(
-                          "Ryan Blink",
-                          style: TextStyle(
-                            fontSize: 12.0,
+                          author,
+                          style: const TextStyle(
+                            fontSize: 16.0,
                             fontWeight: FontWeight.bold,
                             color: Colors.orange,
                           ),
                         ),
                       ),
-                      const Text(
-                        "Read more",
-                        style: TextStyle(
-                          fontSize: 10.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.orange,
+                      TextButton(
+                        child: const Text(
+                          'Read More',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.orange,
+                          ),
                         ),
+                        onPressed: () {},
                       ),
                     ],
                   ),
