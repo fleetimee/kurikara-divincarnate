@@ -50,7 +50,14 @@ class _CourseSelectorState extends State<CourseSelector> {
     return Scaffold(
       appBar: AppBarCourse(
         title: args?['level_name'] ?? '..',
-        progression: '5/12',
+        progression: context.select<MasterGroupMateriCubit, String>(
+          (cubit) => cubit.state.maybeMap(
+            orElse: () => '../..',
+            loaded: (value) {
+              return '${value.data.data?.length ?? 0}/${value.data.data?.length ?? 0}';
+            },
+          ),
+        ),
         context: context,
       ),
       body: Padding(
