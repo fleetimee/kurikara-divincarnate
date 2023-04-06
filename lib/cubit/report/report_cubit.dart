@@ -8,7 +8,7 @@ part 'report_cubit.freezed.dart';
 part 'report_state.dart';
 
 class ReportCubit extends Cubit<ReportState> {
-  final ReportDatasource _reportDatasource;
+  final ReportDataSource _reportDatasource;
   ReportCubit(
     this._reportDatasource,
   ) : super(const ReportState.initial());
