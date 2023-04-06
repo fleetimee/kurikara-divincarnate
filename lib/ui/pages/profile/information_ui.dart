@@ -122,6 +122,7 @@ class CardInfo extends StatelessWidget {
   final String contentStriped;
   final String date;
   final String author;
+  final void Function()? onPressed;
 
   const CardInfo({
     super.key,
@@ -129,6 +130,7 @@ class CardInfo extends StatelessWidget {
     required this.contentStriped,
     required this.date,
     required this.author,
+    this.onPressed,
   });
 
   @override
@@ -222,6 +224,7 @@ class CardInfo extends StatelessWidget {
                         ),
                       ),
                       TextButton(
+                        onPressed: onPressed,
                         child: const Text(
                           'Read More',
                           style: TextStyle(
@@ -230,7 +233,6 @@ class CardInfo extends StatelessWidget {
                             color: Colors.orange,
                           ),
                         ),
-                        onPressed: () {},
                       ),
                     ],
                   ),
