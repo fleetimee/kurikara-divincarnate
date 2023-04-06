@@ -295,7 +295,13 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
         child: GestureDetector(
           onTap: () {
-            Navigator.pushNamed(context, '/profile/information');
+            Navigator.pushNamed(
+              context,
+              '/profile/information',
+              arguments: {
+                'user': user?.userId,
+              },
+            );
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

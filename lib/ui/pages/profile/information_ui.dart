@@ -1,10 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_huixin_app/cubit/home/info/info_cubit.dart';
+import 'package:flutter_huixin_app/data/datasources/local/app_secure_storage.dart';
+import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
 
 import '../../widgets/appbar/appbar_style.dart';
 
-
-class InformationPage extends StatelessWidget {
+class InformationPage extends StatefulWidget {
   const InformationPage({super.key});
+
+  @override
+  State<InformationPage> createState() => _InformationPageState();
+}
+
+class _InformationPageState extends State<InformationPage> {
+  DataUser? user;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _getUser();
+  }
+
+  void _getUser() async {
+    user = await AppSecureStorage.getUser();
+
+    setState(() {
+      context.read<InfoCubit>().getInfo(user?.userId ?? '');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +41,32 @@ class InformationPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            Container(
+                padding: const EdgeInsets.only(
+                    top: 40, bottom: 30, left: 30, right: 30),
+                height: 400,
+                child: BlocBuilder<InfoCubit, InfoState>(
+                  builder: (context, state) {
+                    return state.maybeMap(
+                      orElse: () => const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                      loaded: (state) {
+                        return ListView.builder(
+                          itemCount: state.data.data?.length,
+                          itemBuilder: (context, index) {
+                            return CardInfo(
+                              title: state.data.data?[index].title ?? '',
+                              contentStriped:
+                                  state.data.data?[index].title ?? '',
+                              date: state.data.data?[index].createdBy ?? '',
+                            );
+                          },
+                        );
+                      },
+                    );
+                  },
+                )),
             Container(
               padding: const EdgeInsets.only(
                   top: 40, bottom: 30, left: 30, right: 30),
@@ -56,6 +107,126 @@ class InformationPage extends StatelessWidget {
                 ],
               ),
             )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class CardInfo extends StatelessWidget {
+  final String title;
+  final String contentStriped;
+  final String date;
+
+  const CardInfo({
+    super.key,
+    required this.title,
+    required this.contentStriped,
+    required this.date,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: 160.0,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(
+                    "https://i.ibb.co/dGcQ5bw/photo-1549692520-acc6669e2f0c-ixlib-rb-1-2.jpg",
+                  ),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const Text(
+                        "PRODUCTIVITY",
+                        style: TextStyle(
+                          fontSize: 12.0,
+                        ),
+                      ),
+                      const Spacer(),
+                      Text(
+                        date,
+                        style: const TextStyle(
+                          fontSize: 10.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10.0,
+                  ),
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 12.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 6.0,
+                  ),
+                  Text(
+                    contentStriped,
+                    maxLines: 4,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 12.0,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 6.0,
+                  ),
+                  Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 12.0,
+                        backgroundColor: Colors.grey[200],
+                        backgroundImage: const NetworkImage(
+                          "https://i.ibb.co/sqRTGfL/photo-1514543250559-83867827ecce-ixlib-rb-1-2.jpg",
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 8.0,
+                      ),
+                      const Expanded(
+                        child: Text(
+                          "Ryan Blink",
+                          style: TextStyle(
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.orange,
+                          ),
+                        ),
+                      ),
+                      const Text(
+                        "Read more",
+                        style: TextStyle(
+                          fontSize: 10.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.orange,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
