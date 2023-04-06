@@ -1,68 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_huixin_app/common/constants/color.dart';
-import 'package:flutter_huixin_app/cubit/mastering/master_level/master_level_cubit.dart';
+import 'package:flutter_huixin_app/cubit/mastering/master_group_materi/master_group_materi_cubit.dart';
 
-class TileMasterLevel extends StatelessWidget {
+class MasterGroupMateriTile extends StatelessWidget {
   final int index;
-  final String levelName;
-  final String levelImageUrl;
-  final String levelImage;
-  final MasterLevelState state;
+  final MasterGroupMateriState state;
+  final String dayName;
+  final String imageUrl;
 
-  const TileMasterLevel({
-    super.key,
+  const MasterGroupMateriTile({
     required this.index,
-    required this.levelName,
-    required this.levelImage,
-    required this.levelImageUrl,
+    super.key,
     required this.state,
+    required this.dayName,
+    required this.imageUrl,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        state.maybeMap(
-          orElse: () => null,
-          loaded: (state) {
-            if (index == 0) {
-              Navigator.pushNamed(context, '/course_selector', arguments: {
-                'level_id': state.data.data![index].idLevel,
-                'level_name': levelName,
-              });
-            }
-          },
-        );
+        // allCourseSelector[index].routeName != ''
+        //     ? Navigator.pushNamed(context, allCourseSelector[index].routeName)
+        //     : null;
       },
       child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
         color: AppColors.whiteColor,
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(right: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Image.asset(
-                    "assets/images/crown.png",
-                    height: 10,
-                    fit: BoxFit.fill,
-                  ),
-                  const SizedBox(
-                    width: 4,
-                  ),
-                  const Text(
-                    '1/2',
-                    style: TextStyle(
-                      color: Colors.black45,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  )
-                ],
-              ),
-            ),
             Expanded(
               child: Card(
                 shape: RoundedRectangleBorder(
@@ -81,17 +50,17 @@ class TileMasterLevel extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  levelName,
+                                  dayName,
                                   style: const TextStyle(
-                                    color: Colors.white,
+                                    color: AppColors.whiteColor,
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
                                 const SizedBox(height: 8),
                                 Image.network(
-                                  'https://huixin.id/assets/level/$levelImage',
-                                  height: 80,
+                                  'https://huixin.id/assets/group_materi/$imageUrl',
+                                  height: 50,
                                   fit: BoxFit.fill,
                                 ),
                                 const SizedBox(height: 8),
@@ -118,17 +87,17 @@ class TileMasterLevel extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                        levelName,
+                                        dayName,
                                         style: const TextStyle(
-                                          color: Colors.white,
+                                          color: AppColors.whiteColor,
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
                                       const SizedBox(height: 8),
                                       Image.network(
-                                        'https://huixin.id/assets/level/$levelImage',
-                                        height: 80,
+                                        'https://huixin.id/assets/group_materi/$imageUrl',
+                                        height: 50,
                                         fit: BoxFit.fill,
                                       ),
                                       const SizedBox(height: 8),
@@ -155,7 +124,7 @@ class TileMasterLevel extends StatelessWidget {
                   },
                 ),
               ),
-            )
+            ),
           ]
               .animate(interval: 100.ms)
               .fadeIn(duration: 200.ms, delay: 400.ms)
