@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import '../../common/constants/api.dart';
 import 'local/app_secure_storage.dart';
 
-class ReportDatasource {
+class ReportDataSource {
   Future<String> getToken() async {
     final token = await AppSecureStorage.getAccessToken();
     return 'token_api=$token';
