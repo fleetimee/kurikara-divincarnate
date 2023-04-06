@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:random_avatar/random_avatar.dart';
+
 import 'package:flutter_huixin_app/cubit/home/info/info_cubit.dart';
 import 'package:flutter_huixin_app/data/datasources/local/app_secure_storage.dart';
 import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
-import 'package:random_avatar/random_avatar.dart';
 
 import '../../widgets/appbar/appbar_style.dart';
 
@@ -62,6 +64,31 @@ class _InformationPageState extends State<InformationPage> {
                                 state.data.data?[index].content ?? '',
                             date: state.data.data?[index].createdBy ?? '',
                             author: state.data.data?[index].createdBy ?? '',
+                            onPressed: () {
+                              showMaterialModalBottomSheet(
+                                context: context,
+                                builder: (context) {
+                                  return Scaffold(
+                                    appBar: AppBarReading(
+                                        title: 'Test', context: context),
+                                    body: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        CardDetail(
+                                          title:
+                                              state.data.data?[index].title ??
+                                                  '',
+                                          content:
+                                              state.data.data?[index].content ??
+                                                  '',
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              );
+                            },
                           );
                         },
                       );
@@ -70,48 +97,62 @@ class _InformationPageState extends State<InformationPage> {
                 },
               ),
             ),
-            Container(
-              padding: const EdgeInsets.only(
-                  top: 40, bottom: 30, left: 30, right: 30),
-              child: const Image(
-                image: AssetImage('assets/images/information.png'),
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 50),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Text(
-                    'Catat, Kalender Pendidikan Tahun Ajaran 2021/2022 Terbaru!',
-                    style: TextStyle(
-                      fontSize: 23,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                    textAlign: TextAlign.justify,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  ItalicizedWordText(
-                    wordToItalicize: 'Kalender Pendidikan',
-                    italicStyle: TextStyle(
-                      decoration: TextDecoration.underline,
-                      decorationColor: Colors.black,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                    ),
-                    fullText:
-                        'Mau tahu jadwal libur dan ujian di tahun ajaran kali ini? Agar tidak ada jadwal terlewat, penting banget nih untuk kamu mengetahui Kalender Pendidikan tahun ajaran 2021/2022. Walaupun kita masih berada di tengah-tengah pandemi, kegiatan belajar kamu tidak boleh sampai terganggu.\n\n'
-                        'Nah, bagi kamu yang ingin tahu mengenai info kegiatan dan momen-momen penting di sekolah selama satu tahun ke depan, kalender pendidikan ini harus kamu simak sebaik-baiknya. Di sini, kamu bisa melihat periode ujian, hari libur nasional, jadwal tahun ajaran baru, hingga jadwal pelaksanaan SNMPTN dan UTBK SBMPTN 2022.\n\n'
-                        'Yuk, cek jadwal kalender pendidikan tahun ajaran 2021/2022 berikut ini. ',
-                  ),
-                ],
-              ),
-            )
           ],
         ),
+      ),
+    );
+  }
+}
+
+class CardDetail extends StatelessWidget {
+  final String title;
+  final String content;
+
+  const CardDetail({
+    super.key,
+    required this.title,
+    required this.content,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 50),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            padding:
+                const EdgeInsets.only(top: 40, bottom: 30, left: 30, right: 30),
+            child: const Image(
+                image: NetworkImage(
+                    'https://i.ibb.co/dGcQ5bw/photo-1549692520-acc6669e2f0c-ixlib-rb-1-2.jpg')),
+          ),
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 23,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+            textAlign: TextAlign.justify,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Text(
+            content,
+            textAlign: TextAlign.justify,
+            maxLines: 4,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+                fontSize: 18,
+                color: Colors.black,
+                fontWeight: FontWeight.w500,
+                height: 1.5),
+          ),
+        ],
       ),
     );
   }
