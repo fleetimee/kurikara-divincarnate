@@ -1,20 +1,65 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_huixin_app/cubit/mastering/master_group_materi/master_group_materi_cubit.dart';
+import 'package:flutter_huixin_app/data/datasources/local/app_secure_storage.dart';
+import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
 
 import '../../../common/constants/color.dart';
 import '../../../cubit/entities/course_selector.dart';
 import '../../widgets/appbar/appbar_style.dart';
 import '../../widgets/bottom_appbar_note.dart';
 
-
-class CourseSelector extends StatelessWidget {
+class CourseSelector extends StatefulWidget {
   const CourseSelector({super.key});
 
   @override
+  State<CourseSelector> createState() => _CourseSelectorState();
+}
+
+class _CourseSelectorState extends State<CourseSelector> {
+  Map? args; // Declare args as an instance variable
+  DataUser? user;
+
+  Future<void> _getArgs() async {
+    // Access context and get arguments from previous page asynchronously
+    args = (await Future.delayed(Duration.zero, () {
+      return ModalRoute.of(context)?.settings.arguments as Map?;
+    }))!;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _getUser();
+  }
+
+  void _getUser() async {
+    _getArgs();
+    user = await AppSecureStorage.getUser();
+
+    setState(() {
+      context.read<MasterGroupMateriCubit>().getMasterGroupMateri(
+            user?.userId ?? '',
+            args?['level_id'] ?? '',
+          );
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    /// Get arguments from previous page
+
     return Scaffold(
       appBar: AppBarCourse(
-        title: '1A',
+        title: context.select(
+          (MasterGroupMateriCubit masterMateriCubit) =>
+              masterMateriCubit.state.maybeMap(
+            orElse: () => '..',
+            loaded: (state) => state.data.data?.first.name ?? '..',
+          ),
+        ),
         progression: '5/12',
         context: context,
       ),

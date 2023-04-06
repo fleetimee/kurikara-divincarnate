@@ -23,16 +23,16 @@ class TileMasterLevel extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // allHomeCourse[index].isUnlocked == true
-        //     ? Navigator.push(
-        //         context,
-        //         FadePageRoute(
-        //           builder: (context) {
-        //             return const CourseSelector();
-        //           },
-        //         ),
-        //       )
-        //     : null;
+        state.maybeMap(
+          orElse: () => null,
+          loaded: (state) {
+            if (index == 0) {
+              Navigator.pushNamed(context, '/course_selector', arguments: {
+                'level_id': state.data.data![index].idLevel,
+              });
+            }
+          },
+        );
       },
       child: Card(
         color: AppColors.whiteColor,
