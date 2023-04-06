@@ -5,9 +5,11 @@ import 'package:flutter_huixin_app/cubit/home/active_student/active_student_cubi
 import 'package:flutter_huixin_app/cubit/home/daily_activity/daily_activity_cubit.dart';
 import 'package:flutter_huixin_app/cubit/home/info/info_cubit.dart';
 import 'package:flutter_huixin_app/cubit/home/xp/xp_cubit.dart';
+import 'package:flutter_huixin_app/cubit/mastering/master_level/master_level_cubit.dart';
 import 'package:flutter_huixin_app/cubit/register/register_cubit.dart';
 import 'package:flutter_huixin_app/data/datasources/auth_datasource.dart';
 import 'package:flutter_huixin_app/data/datasources/home_datasource.dart';
+import 'package:flutter_huixin_app/data/datasources/mastering_datasource.dart';
 
 class AppProviders extends StatelessWidget {
   const AppProviders({Key? key, required this.child}) : super(key: key);
@@ -46,6 +48,11 @@ class AppProviders extends StatelessWidget {
         BlocProvider(
           create: (_) => InfoCubit(
             HomeDatasource(),
+          ),
+        ),
+        BlocProvider(
+          create: (_) => MasterLevelCubit(
+            MasteringDatasource(),
           ),
         ),
       ],

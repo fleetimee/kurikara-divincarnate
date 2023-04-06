@@ -180,6 +180,7 @@ class CardInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 5,
       clipBehavior: Clip.antiAlias,
       child: SizedBox(
         width: MediaQuery.of(context).size.width,
