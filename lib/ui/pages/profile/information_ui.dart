@@ -70,7 +70,10 @@ class _InformationPageState extends State<InformationPage> {
                                 builder: (context) {
                                   return Scaffold(
                                     appBar: AppBarReading(
-                                        title: 'Test', context: context),
+                                        title: state.data.data?[index].title
+                                                ?.substring(0, 5) ??
+                                            '',
+                                        context: context),
                                     body: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
