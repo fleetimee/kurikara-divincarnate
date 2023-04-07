@@ -270,9 +270,10 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ],
             ),
-            const CircleAvatar(
+            CircleAvatar(
               radius: 50,
-              backgroundImage: AssetImage('assets/images/usada-pekora.png'),
+              backgroundImage: NetworkImage(
+                  'https://huixin.id/assets/fileuser/${user?.imgFile ?? '..'}'),
               backgroundColor: Colors.grey,
             )
           ],

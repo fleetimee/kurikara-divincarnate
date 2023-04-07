@@ -39,6 +39,7 @@ class ErrorDialog extends AwesomeDialog {
           ),
           desc: desc,
           btnOkText: btnOkText,
+          btnOkColor: AppColors.yellowColor,
           btnCancelText: btnCancelText,
           btnOkOnPress: btnOkOnPress,
           btnCancelOnPress: btnCancelOnPress,
