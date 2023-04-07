@@ -265,22 +265,26 @@
     "method": "GET",
     "sortNum": 60000,
     "created": "2023-04-04T15:15:39.788Z",
-    "modified": "2023-04-04T15:15:39.788Z",
+    "modified": "2023-04-06T12:39:50.436Z",
     "headers": [],
     "params": [
       {
         "name": "token_api",
-        "value": "323232"
+        "value": "323232",
+        "isPath": false
       },
       {
         "name": "id_level",
-        "value": "1"
+        "value": "1",
+        "isPath": false
       },
       {
         "name": "user_id",
-        "value": "2"
+        "value": "2",
+        "isPath": false
       }
-    ]
+    ],
+    "tests": []
   },
   {
     "_id": "4230709a-239e-4d92-a978-8632b2ac38d1",

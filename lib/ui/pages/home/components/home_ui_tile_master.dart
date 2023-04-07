@@ -20,20 +20,59 @@ class TileMasterLevel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        state.maybeMap(
-          orElse: () => null,
-          loaded: (state) {
-            if (index == 0) {
-              Navigator.pushNamed(context, '/course_selector', arguments: {
+    /// This function is used to select the level
+    /// and navigate to the course selector page
+    /// if the level is unlocked
+    /// or show a dialog if the level is locked
+    void selectLevel() {
+      state.maybeMap(
+        orElse: () => null,
+        loaded: (state) {
+          if (index == 0) {
+            Navigator.pushNamed(
+              context,
+              '/course_selector',
+              arguments: {
                 'level_id': state.data.data![index].idLevel,
                 'level_name': levelName,
-              });
-            }
-          },
-        );
-      },
+              },
+            );
+          } else {
+            return (state.data.data![index].reportReading!.isNotEmpty ||
+                    state.data.data![index].reportSpeaking!.isNotEmpty)
+                ? Navigator.pushNamed(
+                    context,
+                    '/course_selector',
+                    arguments: {
+                      'level_id': state.data.data![index].idLevel,
+                      'level_name': levelName,
+                    },
+                  )
+                : showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: const Text('Level Locked'),
+                        content:
+                            const Text('Please complete the previous level'),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+          }
+        },
+      );
+    }
+
+    return InkWell(
+      onTap: selectLevel,
       child: Card(
         color: AppColors.whiteColor,
         child: Column(children: [

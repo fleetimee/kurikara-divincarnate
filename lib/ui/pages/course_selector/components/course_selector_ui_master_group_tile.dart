@@ -33,6 +33,37 @@ class MasterGroupMateriTile extends StatelessWidget {
                   'level_name': state.data.data![index].name,
                 },
               );
+            } else {
+              return (state.data.data![index].reportReading!.isNotEmpty ||
+                      state.data.data![index].reportSpeaking!.isNotEmpty)
+                  ? Navigator.pushNamed(
+                      context,
+                      '/course_initial',
+                      arguments: {
+                        'level_id': state.data.data![index].idLevel,
+                        'level_id_materi':
+                            state.data.data![index].idGroupMateri,
+                        'level_name': state.data.data![index].name,
+                      },
+                    )
+                  : showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: const Text('Day Locked'),
+                          content:
+                              const Text('Please complete the previous day'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
             }
           },
         );
