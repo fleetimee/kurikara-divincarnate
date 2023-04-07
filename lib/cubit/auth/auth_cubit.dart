@@ -37,6 +37,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> updateFcm(UpdateFcmRequestModel model) async {
     // emit(const AuthState.loading());
+    // ignore: unused_local_variable
     final result = await _authDataSource.updateFcm(model);
     // result.fold(
     //   (l) => emit(AuthState.error(l)),

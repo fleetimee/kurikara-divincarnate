@@ -1,7 +1,8 @@
+// ignore_for_file: unused_field, unused_element
+
 import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:flutter/material.dart';
 
 class DeviceInfo {
   static final DeviceInfoPlugin _deviceInfoPlugin = DeviceInfoPlugin();
