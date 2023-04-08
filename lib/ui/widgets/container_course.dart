@@ -9,8 +9,8 @@ class ContainerCourse extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 350,
-      width: 350,
+      height: 300,
+      width: 300,
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(10)),
         color: color,

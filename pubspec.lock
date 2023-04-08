@@ -50,7 +50,7 @@ packages:
     source: hosted
     version: "2.10.0"
   audio_session:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: audio_session
       sha256: e4acc4e9eaa32436dfc5d7aed7f0a370f2d7bb27ee27de30d6c4f220c2a05c73
@@ -580,7 +580,7 @@ packages:
     source: hosted
     version: "9.2.13"
   flutter_sound_platform_interface:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_sound_platform_interface
       sha256: "4537eaeb58a32748c42b621ad6116f7f4c6ee0a8d6ffaa501b165fe1c9df4753"

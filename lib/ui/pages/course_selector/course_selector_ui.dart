@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_huixin_app/cubit/mastering/master_group_materi/master_group_materi_cubit.dart';
 import 'package:flutter_huixin_app/data/datasources/local/app_secure_storage.dart';
 import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
+import 'package:flutter_huixin_app/data/models/mastering/master_level_response_model.dart';
 import 'package:flutter_huixin_app/ui/pages/course_selector/components/course_selector_ui_master_group_tile.dart';
 import 'package:flutter_huixin_app/ui/pages/course_selector/components/course_selector_ui_master_group_tile_loading.dart';
 
@@ -18,14 +19,14 @@ class CourseSelector extends StatefulWidget {
 }
 
 class _CourseSelectorState extends State<CourseSelector> {
-  Map? args;
+  MasterLevel? masterLevel;
   DataUser? user;
 
-  Future<void> _getArgs() async {
-    args = (await Future.delayed(Duration.zero, () {
-      return ModalRoute.of(context)?.settings.arguments as Map?;
-    }))!;
-  }
+  // Future<void> _getArgs() async {
+  //   args = (await Future.delayed(Duration.zero, () {
+  //     return ModalRoute.of(context)?.settings.arguments as Map?;
+  //   }))!;
+  // }
 
   @override
   void initState() {
@@ -35,22 +36,23 @@ class _CourseSelectorState extends State<CourseSelector> {
   }
 
   void _getUser() async {
-    _getArgs();
+    // _getArgs();
     user = await AppSecureStorage.getUser();
 
-    setState(() {
-      context.read<MasterGroupMateriCubit>().getMasterGroupMateri(
-            user?.userId ?? '',
-            args?['level_id'] ?? '',
-          );
-    });
+    // setState(() {
+    //   context.read<MasterGroupMateriCubit>().getMasterGroupMateri(
+    //         user?.userId ?? '',
+    //         args?['level_id'] ?? '',
+    //       );
+    // });
   }
 
   @override
   Widget build(BuildContext context) {
+    masterLevel = ModalRoute.of(context)!.settings.arguments as MasterLevel;
     return Scaffold(
       appBar: AppBarCourse(
-        title: args?['level_name'] ?? '..',
+        title: masterLevel?.name ?? '..',
         progression: context.select<MasterGroupMateriCubit, String>(
           (cubit) => cubit.state.maybeMap(
             orElse: () => '../..',
@@ -82,6 +84,12 @@ class _CourseSelectorState extends State<CourseSelector> {
                     itemBuilder: (context, index) {
                       return state.when(
                         initial: () {
+                          context
+                              .read<MasterGroupMateriCubit>()
+                              .getMasterGroupMateri(
+                                user?.userId ?? '',
+                                masterLevel?.idLevel ?? '',
+                              );
                           return null;
                         },
                         loading: () {
@@ -91,8 +99,7 @@ class _CourseSelectorState extends State<CourseSelector> {
                           return MasterGroupMateriTile(
                             index: index,
                             state: state,
-                            dayName: data.data![index].name ?? '',
-                            imageUrl: data.data![index].imgFile ?? '',
+                            masterGroupMateri: data.data![index],
                           );
                         },
                         error: (message) {

@@ -22,4 +22,8 @@ class LogingHeaderCubit extends Cubit<LogingHeaderState> {
       (r) => emit(LogingHeaderState.loaded(r)),
     );
   }
+
+  setInitial() {
+    emit(const LogingHeaderState.initial());
+  }
 }

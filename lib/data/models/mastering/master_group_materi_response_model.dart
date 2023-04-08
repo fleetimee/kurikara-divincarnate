@@ -11,7 +11,7 @@ class MasterGroupMateriResponseModel {
 
   String? status;
   String? message;
-  List<Datum>? data;
+  List<MasterGroupMateri>? data;
 
   factory MasterGroupMateriResponseModel.fromRawJson(String str) =>
       MasterGroupMateriResponseModel.fromJson(json.decode(str));
@@ -24,7 +24,8 @@ class MasterGroupMateriResponseModel {
         message: json["message"],
         data: json["data"] == null
             ? []
-            : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
+            : List<MasterGroupMateri>.from(
+                json["data"]!.map((x) => MasterGroupMateri.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -36,8 +37,17 @@ class MasterGroupMateriResponseModel {
       };
 }
 
-class Datum {
-  Datum({
+class ReadingMateri {
+  MasterGroupMateri masterGroupMateri;
+  String logingHeaderId;
+  ReadingMateri({
+    required this.masterGroupMateri,
+    required this.logingHeaderId,
+  });
+}
+
+class MasterGroupMateri {
+  MasterGroupMateri({
     this.idGroupMateri,
     this.idLevel,
     this.name,
@@ -50,6 +60,8 @@ class Datum {
     this.groupMateriIsDelete,
     this.reportReading,
     this.reportSpeaking,
+    this.statusExercise,
+    this.open = false,
   });
 
   String? idGroupMateri;
@@ -64,12 +76,16 @@ class Datum {
   String? groupMateriIsDelete;
   List<ReportIng>? reportReading;
   List<ReportIng>? reportSpeaking;
+  String? statusExercise;
+  bool open;
 
-  factory Datum.fromRawJson(String str) => Datum.fromJson(json.decode(str));
+  factory MasterGroupMateri.fromRawJson(String str) =>
+      MasterGroupMateri.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+  factory MasterGroupMateri.fromJson(Map<String, dynamic> json) =>
+      MasterGroupMateri(
         idGroupMateri: json["id_group_materi"],
         idLevel: json["id_level"],
         name: json["name"],
@@ -92,6 +108,8 @@ class Datum {
             ? []
             : List<ReportIng>.from(
                 json["report_speaking"]!.map((x) => ReportIng.fromJson(x))),
+        statusExercise: json["status_exercise"],
+        open: json["open"] ?? false,
       );
 
   Map<String, dynamic> toJson() => {
