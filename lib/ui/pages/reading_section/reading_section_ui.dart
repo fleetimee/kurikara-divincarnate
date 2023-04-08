@@ -8,6 +8,7 @@ import '../../widgets/bottom_appbar_button.dart';
 import '../../widgets/container_course.dart';
 
 class ReadingSection extends StatefulWidget {
+  static const String routeName = '/reading_section';
   const ReadingSection({super.key});
 
   @override

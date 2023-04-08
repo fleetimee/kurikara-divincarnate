@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_huixin_app/common/constants/color.dart';
 import 'package:flutter_huixin_app/cubit/mastering/master_level/master_level_cubit.dart';
+import 'package:flutter_huixin_app/ui/pages/course_selector/course_selector_ui.dart';
 
 class TileMasterLevel extends StatelessWidget {
   final int index;
@@ -31,7 +32,7 @@ class TileMasterLevel extends StatelessWidget {
           if (index == 0) {
             Navigator.pushNamed(
               context,
-              '/course_selector',
+              CourseSelector.routeName,
               arguments: {
                 'level_id': state.data.data![index].idLevel,
                 'level_name': levelName,
@@ -42,7 +43,7 @@ class TileMasterLevel extends StatelessWidget {
                     state.data.data![index].reportSpeaking!.isNotEmpty)
                 ? Navigator.pushNamed(
                     context,
-                    '/course_selector',
+                    CourseSelector.routeName,
                     arguments: {
                       'level_id': state.data.data![index].idLevel,
                       'level_name': levelName,

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_huixin_app/data/datasources/local/app_secure_storage.dart';
 import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
+import 'package:flutter_huixin_app/ui/pages/profile/profile_ui.dart';
 
 import 'package:image_picker/image_picker.dart';
 import 'package:shimmer/shimmer.dart';
@@ -16,6 +17,7 @@ import '../../widgets/button.dart';
 import '../../widgets/profile_form.dart';
 
 class ProfileDetailPage extends StatefulWidget {
+  static const String routeName = '/profile_detail';
   const ProfileDetailPage({super.key});
 
   @override
@@ -139,7 +141,7 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
               PrimaryButton(
                 text: 'SUBMIT',
                 onPressed: () {
-                  Navigator.pushNamed(context, '/profile');
+                  Navigator.pushNamed(context, ProfilePage.routeName);
                 },
               ),
             ],

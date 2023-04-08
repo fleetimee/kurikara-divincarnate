@@ -6,6 +6,7 @@ import '../../widgets/appbar/appbar_style.dart';
 
 
 class ReportingDetailPage extends StatelessWidget {
+  static const String routeName = '/reporting_detail';
   const ReportingDetailPage({super.key});
 
   @override

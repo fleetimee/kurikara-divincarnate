@@ -11,6 +11,7 @@ import '../../widgets/appbar/appbar_style.dart';
 import '../../widgets/navigator_style.dart';
 
 class ReportingPage extends StatefulWidget {
+  static const String routeName = '/reporting';
   const ReportingPage({super.key});
 
   @override

@@ -15,6 +15,7 @@ import '../../widgets/appbar/appbar_style.dart';
 import '../../widgets/navigator_style.dart';
 
 class HomePage extends StatefulWidget {
+  static const String routeName = '/home';
   const HomePage({super.key});
 
   @override

@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_huixin_app/ui/pages/exercise_section.dart/exercise_number_three.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 
 
@@ -22,6 +23,7 @@ typedef Fn = void Function();
 const theSource = AudioSource.microphone;
 
 class ExerciseTwo extends StatefulWidget {
+  static const String routeName = '/exercise_two';
   const ExerciseTwo({super.key});
 
   @override
@@ -250,7 +252,7 @@ class _ExerciseTwoState extends State<ExerciseTwo> {
         name: 'NEXT',
         color: AppColors.bottom,
         onTap: () {
-          Navigator.pushNamed(context, '/exercise_three');
+          Navigator.pushNamed(context, ExerciseThree.routeName);
         },
       ),
     );

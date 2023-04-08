@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_huixin_app/ui/pages/exercise_section.dart/exercise_number_two_ui.dart';
 
 import '../../../common/constants/color.dart';
 import '../../../cubit/entities/question_data.dart';
@@ -7,6 +8,7 @@ import '../../widgets/bottom_appbar_button.dart';
 
 
 class ExerciseOne extends StatefulWidget {
+  static const String routeName = '/exercise_one';
   const ExerciseOne({super.key});
 
   @override
@@ -103,7 +105,7 @@ class _ExerciseOneState extends State<ExerciseOne> {
         name: 'NEXT',
         color: AppColors.bottom,
         onTap: () {
-          Navigator.pushNamed(context, '/exercise_two');
+          Navigator.pushNamed(context, ExerciseTwo.routeName);
         },
       ),
     );
