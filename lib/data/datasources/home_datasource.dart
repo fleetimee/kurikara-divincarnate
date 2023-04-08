@@ -7,10 +7,15 @@ import 'package:flutter_huixin_app/data/models/get_daily_activity_response_model
 import 'package:flutter_huixin_app/data/models/get_info_response_model.dart';
 import 'package:flutter_huixin_app/data/models/get_xp_response_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:pretty_http_logger/pretty_http_logger.dart';
 
 import '../../common/constants/api.dart';
 
 class HomeDatasource {
+  HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
+    HttpLogger(logLevel: LogLevel.BODY),
+  ]);
+  
   Future<String> getToken() async {
     final token = await AppSecureStorage.getAccessToken();
     return 'token_api=$token';
