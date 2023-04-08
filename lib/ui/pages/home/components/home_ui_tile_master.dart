@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_huixin_app/common/constants/color.dart';
 import 'package:flutter_huixin_app/cubit/mastering/master_level/master_level_cubit.dart';
@@ -127,8 +128,19 @@ class TileMasterLevel extends StatelessWidget {
                                 ),
                               ),
                               const SizedBox(height: 8),
-                              Image.network(
-                                'https://huixin.id/assets/level/$levelImage',
+                              CachedNetworkImage(
+                                imageUrl:
+                                    'https://huixin.id/assets/level/$levelImage',
+                                placeholder: (context, url) => const Center(
+                                  child: CircularProgressIndicator(
+                                    color: AppColors.yellowColor,
+                                  ),
+                                ),
+                                errorWidget: (context, url, error) =>
+                                    const Icon(
+                                  Icons.error,
+                                  color: AppColors.yellowColor,
+                                ),
                                 height: 80,
                                 fit: BoxFit.fill,
                               ),
@@ -162,8 +174,20 @@ class TileMasterLevel extends StatelessWidget {
                                       ),
                                     ),
                                     const SizedBox(height: 8),
-                                    Image.network(
-                                      'https://huixin.id/assets/level/$levelImage',
+                                    CachedNetworkImage(
+                                      imageUrl:
+                                          'https://huixin.id/assets/level/$levelImage',
+                                      placeholder: (context, url) =>
+                                          const Center(
+                                        child: CircularProgressIndicator(
+                                          color: AppColors.yellowColor,
+                                        ),
+                                      ),
+                                      errorWidget: (context, url, error) =>
+                                          const Icon(
+                                        Icons.error,
+                                        color: AppColors.yellowColor,
+                                      ),
                                       height: 80,
                                       fit: BoxFit.fill,
                                     ),
