@@ -243,18 +243,21 @@
     "method": "GET",
     "sortNum": 50000,
     "created": "2023-04-04T15:15:39.787Z",
-    "modified": "2023-04-04T15:15:39.787Z",
+    "modified": "2023-04-08T04:55:37.263Z",
     "headers": [],
     "params": [
       {
         "name": "token_api",
-        "value": "323232"
+        "value": "323232",
+        "isPath": false
       },
       {
         "name": "user_id",
-        "value": "2"
+        "value": "2",
+        "isPath": false
       }
-    ]
+    ],
+    "tests": []
   },
   {
     "_id": "423efff3-29f8-43ae-a028-8e627efcba7b",
@@ -603,18 +606,21 @@
     "method": "GET",
     "sortNum": 150000,
     "created": "2023-04-04T15:15:39.798Z",
-    "modified": "2023-04-04T15:15:39.798Z",
+    "modified": "2023-04-08T04:57:21.545Z",
     "headers": [],
     "params": [
       {
         "name": "token_api",
-        "value": "323232"
+        "value": "323232",
+        "isPath": false
       },
       {
         "name": "user_id",
-        "value": "2"
+        "value": "2",
+        "isPath": false
       }
-    ]
+    ],
+    "tests": []
   },
   {
     "_id": "fbaad7a3-284b-480d-9496-64656e0f23b7",
