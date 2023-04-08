@@ -47,7 +47,8 @@ class ReportTile extends StatelessWidget {
                 context,
                 ReportingDetailPage.routeName,
                 arguments: {
-                  state.data.data![index],
+                  'name': state.data.data![index].name,
+                  'index': index,
                 },
               );
             } else {

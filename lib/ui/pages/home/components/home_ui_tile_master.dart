@@ -54,9 +54,12 @@ class TileMasterLevel extends StatelessWidget {
                     context: context,
                     builder: (context) {
                       return AlertDialog(
-                        title: const Text('Level Locked'),
-                        content:
-                            const Text('Please complete the previous level'),
+                        title: const Text(
+                          'Level Locked',
+                        ),
+                        content: const Text(
+                          'Please complete the previous level',
+                        ),
                         actions: [
                           TextButton(
                             onPressed: () {

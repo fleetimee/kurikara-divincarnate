@@ -4,16 +4,45 @@ import '../../../common/constants/color.dart';
 import '../../../cubit/entities/stats.dart';
 import '../../widgets/appbar/appbar_style.dart';
 
-
-class ReportingDetailPage extends StatelessWidget {
+class ReportingDetailPage extends StatefulWidget {
   static const String routeName = '/reporting_detail';
   const ReportingDetailPage({super.key});
 
   @override
+  State<ReportingDetailPage> createState() => _ReportingDetailPageState();
+}
+
+class _ReportingDetailPageState extends State<ReportingDetailPage> {
+  Map? args;
+  bool _argsLoaded = false;
+
+  Future<void> _getArgs() async {
+    args = (await Future.delayed(Duration.zero, () {
+      return ModalRoute.of(context)?.settings.arguments as Map?;
+    }))!;
+    setState(() {
+      _argsLoaded = true;
+    });
+    debugPrint('$args');
+  }
+
+  @override
+  void initState() {
+    _getArgs();
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    String title = _argsLoaded ? (args?['name'] ?? '..') : 'Loading...';
+    int index = _argsLoaded ? (args?['index'] ?? 0) : 0;
+
+    print('index: $index');
+
     return Scaffold(
       appBar: AppBarReading(
-        title: 'Reporting 1A',
+        title: title,
         context: context,
       ),
       body: Container(
@@ -70,17 +99,59 @@ class ReportingDetailPage extends StatelessWidget {
                               child: SizedBox(
                                 width: 300,
                                 height: 40,
-                                child: ClipRRect(
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(10)),
-                                  child: LinearProgressIndicator(
-                                    value: allEducations[index].percentage,
-                                    backgroundColor: Colors.grey.shade200,
-                                    valueColor:
-                                        const AlwaysStoppedAnimation<Color>(
-                                      AppColors.greenColor,
-                                    ),
-                                  ),
+                                child: TweenAnimationBuilder(
+                                  tween: Tween<double>(
+                                      begin: 0,
+                                      end: allEducations[index].percentage),
+                                  duration: const Duration(seconds: 1),
+                                  curve: Curves.easeInOut,
+                                  builder: (context, value, child) {
+                                    // return ClipRRect(
+                                    //   borderRadius: const BorderRadius.all(
+                                    //       Radius.circular(10)),
+                                    //   child: LinearProgressIndicator(
+                                    //     value: allEducations[index].percentage,
+                                    //     backgroundColor: Colors.grey.shade200,
+                                    //     valueColor:
+                                    //         const AlwaysStoppedAnimation<Color>(
+                                    //       AppColors.greenColor,
+                                    //     ),
+                                    //   ),
+                                    // );
+                                    return Stack(
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            color: Colors.grey.shade300,
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                        ),
+                                        FractionallySizedBox(
+                                          widthFactor: value,
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: AppColors.greenColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                  // child: ClipRRect(
+                                  //   borderRadius: const BorderRadius.all(
+                                  //       Radius.circular(10)),
+                                  //   child: LinearProgressIndicator(
+                                  //     value: allEducations[index].percentage,
+                                  //     backgroundColor: Colors.grey.shade200,
+                                  //     valueColor:
+                                  //         const AlwaysStoppedAnimation<Color>(
+                                  //       AppColors.greenColor,
+                                  //     ),
+                                  //   ),
+                                  // ),
                                 ),
                               ),
                             ),
