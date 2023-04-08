@@ -16,12 +16,15 @@ dependencies:
   dartz: ^0.10.1
   device_info_plus: ^8.1.0
   dot_navigation_bar: ^1.0.1+4
+  firebase_auth: ^4.4.0
   firebase_core: ^2.9.0
+  firebase_messaging: ^14.4.0
   flex_color_scheme: ^6.1.2
   flutter:
     sdk: flutter
   flutter_animate: ^4.1.1+1
   flutter_bloc: ^8.1.2
+  flutter_facebook_auth: ^5.0.8
   flutter_form_builder: ^7.8.0
   flutter_localizations:
     sdk: flutter
@@ -31,6 +34,7 @@ dependencies:
   form_builder_validators: ^8.5.0
   freezed_annotation: ^2.2.0
   google_fonts: ^4.0.3
+  google_sign_in: ^6.1.0
   http: ^0.13.5
   image_picker: ^0.8.7+1
   intl: ^0.18.0
@@ -40,6 +44,7 @@ dependencies:
   random_avatar: ^0.0.8
   responsive_framework: ^0.2.0
   shimmer: ^2.0.0
+  sign_in_with_apple: ^4.3.0
   uuid: ^3.0.7
 
 dev_dependencies:
