@@ -9,7 +9,7 @@ class MasterLevelResponseModel {
 
   String? status;
   String? message;
-  List<Datum>? data;
+  List<MasterLevel>? data;
 
   factory MasterLevelResponseModel.fromRawJson(String str) =>
       MasterLevelResponseModel.fromJson(json.decode(str));
@@ -22,7 +22,8 @@ class MasterLevelResponseModel {
         message: json["message"],
         data: json["data"] == null
             ? []
-            : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
+            : List<MasterLevel>.from(
+                json["data"]!.map((x) => MasterLevel.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -34,8 +35,8 @@ class MasterLevelResponseModel {
       };
 }
 
-class Datum {
-  Datum({
+class MasterLevel {
+  MasterLevel({
     this.idLevel,
     this.name,
     this.levelCreateBy,
@@ -47,6 +48,8 @@ class Datum {
     this.levelIsDelete,
     this.reportReading,
     this.reportSpeaking,
+    this.jmlSisaSoal,
+    this.open = false,
   });
 
   String? idLevel;
@@ -60,12 +63,15 @@ class Datum {
   String? levelIsDelete;
   List<ReportIng>? reportReading;
   List<ReportIng>? reportSpeaking;
+  String? jmlSisaSoal;
+  bool open;
 
-  factory Datum.fromRawJson(String str) => Datum.fromJson(json.decode(str));
+  factory MasterLevel.fromRawJson(String str) =>
+      MasterLevel.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+  factory MasterLevel.fromJson(Map<String, dynamic> json) => MasterLevel(
         idLevel: json["id_level"],
         name: json["name"],
         levelCreateBy: json["level_create_by"],
@@ -87,6 +93,8 @@ class Datum {
             ? []
             : List<ReportIng>.from(
                 json["report_speaking"]!.map((x) => ReportIng.fromJson(x))),
+        jmlSisaSoal: json["jml_sisa_soal"],
+        open: json["open"],
       );
 
   Map<String, dynamic> toJson() => {

@@ -22,4 +22,8 @@ class LogingLinesCubit extends Cubit<LogingLinesState> {
       (r) => emit(LogingLinesState.loaded(r)),
     );
   }
+
+  setInitial() {
+    emit(const LogingLinesState.initial());
+  }
 }

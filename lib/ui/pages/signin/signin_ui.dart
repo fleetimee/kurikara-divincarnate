@@ -5,6 +5,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_huixin_app/cubit/auth/auth_cubit.dart';
 import 'package:flutter_huixin_app/data/datasources/local/app_secure_storage.dart';
 import 'package:flutter_huixin_app/data/models/auth/requests/login_request_model.dart';
+import 'package:flutter_huixin_app/ui/pages/home/home_ui.dart';
 import 'package:flutter_huixin_app/ui/pages/singup/signup_ui.dart';
 import 'package:flutter_huixin_app/ui/widgets/dialog_box.dart';
 import 'package:flutter_huixin_app/ui/widgets/social_icons_button.dart';
@@ -42,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
           loaded: (user) async {
             if (user.data != null) {
               /// Save the token to the secure storage
-              await AppSecureStorage.setAccessToken('323232');
+              await AppSecureStorage.setAccessToken( user.data?.tokenApi ?? '323232');
 
               // Save the user to the secure storage
               await AppSecureStorage.setUser(user.data);
@@ -53,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
               if (context.mounted) {
                 Navigator.pushNamedAndRemoveUntil(
                   context,
-                  '/home',
+                  HomePage.routeName,
                   (route) => false,
                 );
               }

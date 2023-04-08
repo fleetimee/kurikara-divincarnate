@@ -1,24 +1,22 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter_huixin_app/common/constants/color.dart';
 import 'package:flutter_huixin_app/cubit/mastering/master_level/master_level_cubit.dart';
+import 'package:flutter_huixin_app/data/models/mastering/master_level_response_model.dart';
 import 'package:flutter_huixin_app/ui/pages/course_selector/course_selector_ui.dart';
 
 class TileMasterLevel extends StatelessWidget {
   final int index;
-  final String levelName;
-  final String levelImageUrl;
-  final String levelImage;
+  final MasterLevel masterLevel;
   final MasterLevelState state;
 
   const TileMasterLevel({
-    super.key,
+    Key? key,
     required this.index,
-    required this.levelName,
-    required this.levelImage,
-    required this.levelImageUrl,
+    required this.masterLevel,
     required this.state,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,14 +28,11 @@ class TileMasterLevel extends StatelessWidget {
       state.maybeMap(
         orElse: () => null,
         loaded: (state) {
-          if (index == 0) {
+          if (masterLevel.open) {
             Navigator.pushNamed(
               context,
               CourseSelector.routeName,
-              arguments: {
-                'level_id': state.data.data![index].idLevel,
-                'level_name': levelName,
-              },
+              arguments: masterLevel,
             );
           } else {
             return (state.data.data![index].reportReading!.isNotEmpty ||
@@ -123,7 +118,7 @@ class TileMasterLevel extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                levelName,
+                                masterLevel.name ?? '',
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 20,
@@ -169,7 +164,7 @@ class TileMasterLevel extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      levelName,
+                                      masterLevel.name ?? '',
                                       style: const TextStyle(
                                         color: Colors.white,
                                         fontSize: 20,

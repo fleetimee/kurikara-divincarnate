@@ -1,22 +1,22 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter_huixin_app/common/constants/color.dart';
 import 'package:flutter_huixin_app/cubit/mastering/master_group_materi/master_group_materi_cubit.dart';
+import 'package:flutter_huixin_app/data/models/mastering/master_group_materi_response_model.dart';
 import 'package:flutter_huixin_app/ui/pages/course_initial/course_initial_ui.dart';
 
 class MasterGroupMateriTile extends StatelessWidget {
   final int index;
   final MasterGroupMateriState state;
-  final String dayName;
-  final String imageUrl;
+  final MasterGroupMateri masterGroupMateri;
 
   const MasterGroupMateriTile({
+    Key? key,
     required this.index,
-    super.key,
     required this.state,
-    required this.dayName,
-    required this.imageUrl,
-  });
+    required this.masterGroupMateri,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,47 +25,30 @@ class MasterGroupMateriTile extends StatelessWidget {
         state.maybeMap(
           orElse: () => null,
           loaded: (state) {
-            if (index == 0) {
+            if (masterGroupMateri.open) {
               Navigator.pushNamed(
                 context,
                 CourseInitial.routeName,
-                arguments: {
-                  'level_id': state.data.data![index].idLevel,
-                  'level_id_materi': state.data.data![index].idGroupMateri,
-                  'level_name': state.data.data![index].name,
-                },
+                arguments: masterGroupMateri,
               );
             } else {
-              return (state.data.data![index].reportReading!.isNotEmpty ||
-                      state.data.data![index].reportSpeaking!.isNotEmpty)
-                  ? Navigator.pushNamed(
-                      context,
-                      CourseInitial.routeName,
-                      arguments: {
-                        'level_id': state.data.data![index].idLevel,
-                        'level_id_materi':
-                            state.data.data![index].idGroupMateri,
-                        'level_name': state.data.data![index].name,
-                      },
-                    )
-                  : showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: const Text('Day Locked'),
-                          content:
-                              const Text('Please complete the previous day'),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: const Text('OK'),
-                            ),
-                          ],
-                        );
-                      },
-                    );
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: const Text('Day Locked'),
+                    content: const Text('Please complete the previous day'),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text('OK'),
+                      ),
+                    ],
+                  );
+                },
+              );
             }
           },
         );
@@ -84,7 +67,7 @@ class MasterGroupMateriTile extends StatelessWidget {
               child: state.maybeMap(
                 orElse: () => null,
                 loaded: (state) {
-                  if (index == 0) {
+                  if (masterGroupMateri.open) {
                     return Container(
                       color: AppColors.bottom,
                       child: Padding(
@@ -94,7 +77,7 @@ class MasterGroupMateriTile extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                dayName,
+                                masterGroupMateri.name ?? '',
                                 style: const TextStyle(
                                   color: AppColors.whiteColor,
                                   fontSize: 20,

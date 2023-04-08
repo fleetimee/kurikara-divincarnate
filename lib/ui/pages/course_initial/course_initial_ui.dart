@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:flutter_huixin_app/cubit/auth/user/user_cubit.dart';
 import 'package:flutter_huixin_app/cubit/mastering/master_materi/master_materi_cubit.dart';
+import 'package:flutter_huixin_app/cubit/materi/loging_header/loging_header_cubit.dart';
 import 'package:flutter_huixin_app/data/datasources/local/app_secure_storage.dart';
 import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
+import 'package:flutter_huixin_app/data/models/mastering/master_group_materi_response_model.dart';
 import 'package:flutter_huixin_app/ui/pages/reading_section/reading_section_ui.dart';
 
+import '../../../data/models/materi_pelajaran/requests/loging_header_request_model.dart';
 import '../../widgets/appbar/appbar_style.dart';
 import '../../widgets/bottom_appbar_note.dart';
 
 class CourseInitial extends StatefulWidget {
   static const String routeName = '/course_initial';
+
   const CourseInitial({super.key});
 
   @override
@@ -17,40 +23,25 @@ class CourseInitial extends StatefulWidget {
 }
 
 class _CourseInitialState extends State<CourseInitial> {
-  Map? args;
   DataUser? user;
-
-  Future<void> _getArgs() async {
-    args = (await Future.delayed(Duration.zero, () {
-      return ModalRoute.of(context)?.settings.arguments as Map?;
-    }))!;
-  }
+  MasterGroupMateri? masterGroupMateri;
 
   @override
   void initState() {
     super.initState();
-
-    _getUser();
-  }
-
-  void _getUser() async {
-    _getArgs();
-    user = await AppSecureStorage.getUser();
-
-    setState(() {
-      context.read<MasterMateriCubit>().getMasterMateri(
-            user?.userId ?? '',
-            args?['level_id'] ?? '',
-            args?['level_id_materi'] ?? '',
-          );
-    });
+    user = context.read<UserCubit>().state.maybeMap(
+          orElse: () => null,
+          loaded: (value) => value.data,
+        );
   }
 
   @override
   Widget build(BuildContext context) {
+    masterGroupMateri =
+        ModalRoute.of(context)!.settings.arguments as MasterGroupMateri;
     return Scaffold(
       appBar: AppBarCourse(
-        title: args?['level_name'] ?? '..',
+        title: masterGroupMateri?.name ?? '..',
         progression: '0/14',
         context: context,
       ),
@@ -58,7 +49,8 @@ class _CourseInitialState extends State<CourseInitial> {
         padding: const EdgeInsets.all(32),
         child: Center(
           child: MateriSelector(
-            args: args,
+            masterGroupMateri: masterGroupMateri!,
+            dataUser: user!,
           ),
         ),
       ),
@@ -68,15 +60,33 @@ class _CourseInitialState extends State<CourseInitial> {
 }
 
 class MateriSelector extends StatelessWidget {
-  final Map? args;
+  final MasterGroupMateri masterGroupMateri;
+  final DataUser dataUser;
 
   const MateriSelector({
-    super.key,
-    this.args,
-  });
+    Key? key,
+    required this.masterGroupMateri,
+    required this.dataUser,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    // final state = context.watch<LogingHeaderCubit>().state;
+    // state.maybeMap(
+    //   orElse: () {},
+    //   loading: (value) {},
+    //   loaded: (value) {
+    //     final readingMateri = ReadingMateri(
+    //         masterGroupMateri: masterGroupMateri,
+    //         logingHeaderId: value.data.data!.idLogMateriHeader.toString());
+    //     Navigator.pushNamed(
+    //       context,
+    //       ReadingSection.routeName,
+    //       arguments: readingMateri,
+    //     );
+    //   },
+    //   error: (value) {},
+    // );
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -99,9 +109,10 @@ class MateriSelector extends StatelessWidget {
             ),
             Positioned(
               bottom: MediaQuery.of(context).size.height / 30,
-              right: MediaQuery.of(context).size.width / 17,
+              right: MediaQuery.of(context).size.width / 11,
               child: Text(
-                'Lesson ${args?['level_name'] ?? '..'}',
+                '${masterGroupMateri.name}',
+                textAlign: TextAlign.center,
                 style: const TextStyle(
                   fontSize: 25,
                   color: Colors.black,
@@ -121,19 +132,60 @@ class MateriSelector extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 16),
-        GestureDetector(
-          onTap: () {
-            Navigator.pushNamed(context, ReadingSection.routeName);
+        BlocConsumer<LogingHeaderCubit, LogingHeaderState>(
+          listener: (context, state) {
+            state.maybeMap(
+                orElse: () {},
+                loaded: (value) {
+                  final readingMateri = ReadingMateri(
+                      masterGroupMateri: masterGroupMateri,
+                      logingHeaderId:
+                          value.data.data!.idLogMateriHeader.toString());
+                  Navigator.pushNamed(
+                    context,
+                    ReadingSection.routeName,
+                    arguments: readingMateri,
+                  );
+                });
           },
-          child: Image.asset(
-            "assets/images/reading.png",
-            fit: BoxFit.fill,
-          ),
+          builder: (context, state) {
+            state.maybeMap(
+              orElse: () {},
+              loading: (value) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
+            );
+            return GestureDetector(
+              onTap: () {
+                context
+                    .read<LogingHeaderCubit>()
+                    .postLogingHeader(LogingHeaderRequestModel(
+                      user_id: dataUser.userId!,
+                      id_level: masterGroupMateri.idLevel!,
+                      id_group_materi: masterGroupMateri.idGroupMateri!,
+                    ));
+              },
+              child: Image.asset(
+                "assets/images/reading.png",
+                fit: BoxFit.fill,
+              ),
+            );
+          },
         ),
         const SizedBox(height: 16),
-        Image.asset(
-          "assets/images/exercise.png",
-          fit: BoxFit.fill,
+        InkWell(
+          onTap: () {},
+          child: masterGroupMateri.statusExercise == 'finish'
+              ? Image.asset(
+                  "assets/images/exercise_remedial.png",
+                  fit: BoxFit.fill,
+                )
+              : Image.asset(
+                  "assets/images/exercise.png",
+                  fit: BoxFit.fill,
+                ),
         ),
       ],
     );

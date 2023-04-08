@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_huixin_app/cubit/auth/user/user_cubit.dart';
 import 'package:flutter_huixin_app/cubit/home/active_student/active_student_cubit.dart';
 import 'package:flutter_huixin_app/cubit/home/daily_activity/daily_activity_cubit.dart';
 import 'package:flutter_huixin_app/cubit/home/xp/xp_cubit.dart';
@@ -40,6 +41,7 @@ class _HomePageState extends State<HomePage> {
       context.read<DailyActivityCubit>().getDailyActivity(user?.userId ?? '');
       context.read<ActiveStudentCubit>().getActiveStudent();
       context.read<MasterLevelCubit>().getMasterLevel(user?.userId ?? '');
+      context.read<UserCubit>().setUser(user!, user!.tokenApi ?? '323232');
     });
   }
 
@@ -170,9 +172,7 @@ class HomeItems extends StatelessWidget {
                       loaded: (data) {
                         return TileMasterLevel(
                           index: index,
-                          levelName: data.data![index].name ?? '',
-                          levelImageUrl: data.data![index].imgUrl ?? '',
-                          levelImage: data.data![index].imgFile ?? '',
+                          masterLevel: data.data![index],
                           state: state,
                         );
                       },
