@@ -656,14 +656,16 @@
     "method": "GET",
     "sortNum": 170000,
     "created": "2023-04-04T15:15:39.800Z",
-    "modified": "2023-04-04T15:15:39.800Z",
+    "modified": "2023-04-08T06:11:07.707Z",
     "headers": [],
     "params": [
       {
         "name": "token_api",
-        "value": "323232"
+        "value": "323232",
+        "isPath": false
       }
-    ]
+    ],
+    "tests": []
   },
   {
     "_id": "66fb98b3-ad57-47e3-8f52-f9a4f93a0a4e",
