@@ -51,7 +51,7 @@ class AvatarLoader extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Text(
-          data.data![index].fullName ?? '..',
+          data.data![index].fullName?.split(' ')[0] ?? '..',
         ),
       ],
     );
