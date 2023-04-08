@@ -218,6 +218,7 @@ class AppBarCourse extends AppBar {
 class AppBarReading extends AppBar {
   AppBarReading({
     Key? key,
+    bool? disabledRoute,
     Function()? onPressed,
     required String title,
     Color? appbarColor,
@@ -251,7 +252,23 @@ class AppBarReading extends AppBar {
             padding: const EdgeInsets.only(left: 40.0),
             child: InkWell(
               onTap: () {
-                Navigator.pop(context);
+                disabledRoute == true
+                    ? showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                              title: const Text("Sorry"),
+                              content: const Text(
+                                  "Tidak bisa kembali ke halaman sebelumnya, disaat sedang mengerjakan soal"),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text("Ok"),
+                                ),
+                              ],
+                            ))
+                    : Navigator.pop(context);
               },
               child: const Image(
                 image: AssetImage("assets/images/back-button.png"),

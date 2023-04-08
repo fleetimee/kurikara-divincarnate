@@ -128,7 +128,7 @@ class TileMasterLevel extends StatelessWidget {
                               const SizedBox(height: 8),
                               CachedNetworkImage(
                                 imageUrl:
-                                    'https://huixin.id/assets/level/${masterLevel.imgFile}}',
+                                    'https://huixin.id/assets/level/${masterLevel.imgFile}',
                                 placeholder: (context, url) => const Center(
                                   child: CircularProgressIndicator(
                                     color: AppColors.yellowColor,

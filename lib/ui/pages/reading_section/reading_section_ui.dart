@@ -200,212 +200,227 @@ class _ReadingSectionState extends State<ReadingSection> {
     readingMateri = ModalRoute.of(context)!.settings.arguments as ReadingMateri;
 
     final state = context.watch<MasterMateriCubit>().state;
-    return Scaffold(
-        appBar: AppBarReading(
-          title: 'Reading & Speaking',
-          context: context,
-        ),
-        body: state.maybeMap(
-            orElse: () => const Center(
-                  child: CircularProgressIndicator(),
-                ),
-            initial: (value) {
-              context.read<MasterMateriCubit>().getMasterMateri(
-                    user!.userId!,
-                    readingMateri!.masterGroupMateri.idGroupMateri!,
-                    readingMateri!.masterGroupMateri.idLevel!,
-                  );
-              return null;
-            },
-            loaded: (value) {
-              final materi = value.data.data![_currentContent];
-              masterMateri = materi;
-              totalContent = value.data.data!.length;
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(32.0),
-                            child: Stack(
-                              clipBehavior: Clip.none,
-                              children: [
-                                Center(
-                                  child: ContainerCourse(
-                                    text: materi.latihanTitle!,
-                                    color: _isMicrophoneClicked == true
-                                        ? AppColors.whiteColor4
-                                        : Colors.white,
-                                  ),
-                                ),
-                                Positioned(
-                                  top: 260,
-                                  left: 323,
-                                  child: InkWell(
-                                    onTap: () => setState(() {
-                                      _isVolumeClicked = true;
-                                    }),
-                                    child: Image.asset(
-                                      "assets/images/volume_reading.png",
-                                      fit: BoxFit.fill,
+    return WillPopScope(
+      onWillPop: () async {
+        return false;
+      },
+      child: Scaffold(
+          appBar: AppBarReading(
+            title: 'Reading & Speaking',
+            context: context,
+            disabledRoute: true,
+          ),
+          body: state.maybeMap(
+              orElse: () => const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+              initial: (value) {
+                context.read<MasterMateriCubit>().getMasterMateri(
+                      user!.userId!,
+                      readingMateri!.masterGroupMateri.idGroupMateri!,
+                      readingMateri!.masterGroupMateri.idLevel!,
+                    );
+                return null;
+              },
+              loaded: (value) {
+                final materi = value.data.data![_currentContent];
+                masterMateri = materi;
+                totalContent = value.data.data!.length;
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(32.0),
+                              child: Stack(
+                                clipBehavior: Clip.none,
+                                children: [
+                                  Center(
+                                    child: ContainerCourse(
+                                      text: materi.latihanTitle!,
+                                      color: _isMicrophoneClicked == true
+                                          ? AppColors.whiteColor4
+                                          : Colors.white,
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Visibility(
-                            visible: _isVolumeClicked,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Column(
-                                  children: [
-                                    Text(
-                                      materi.latihanCina!,
-                                      style: const TextStyle(
-                                        fontSize: 36,
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.red,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                _isMicrophoneClicked
-                                    ? InkWell(
-                                        onTap: () => _playAudio(
-                                            '${materi.latihanUrlFile}${materi.latihanVoice}'),
-                                        child: Column(
-                                          children: [
-                                            const SizedBox(
-                                              height: 20,
-                                            ),
-                                            Center(
-                                              child: Container(
-                                                height: 90,
-                                                width: 350,
-                                                decoration: const BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(10)),
-                                                  color: AppColors.lightGreen,
-                                                ),
-                                                child: Center(
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      const Text(
-                                                        "Correct \nAnswer",
-                                                        style: TextStyle(
-                                                          fontSize: 28,
-                                                          color: Colors.black,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
-                                                      ),
-                                                      const SizedBox(
-                                                        width: 25,
-                                                      ),
-                                                      Image.asset(
-                                                        "assets/images/volume_ok.png",
-                                                        fit: BoxFit.fill,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 20,
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                    : const SizedBox(
-                                        height: 100,
-                                      ),
-                                Column(
-                                  children: [
-                                    GestureDetector(
-                                      onTap: getRecorderFn(),
+                                  Positioned(
+                                    top: 260,
+                                    left: 323,
+                                    child: InkWell(
+                                      onTap: () => setState(() {
+                                        _isVolumeClicked = true;
+                                      }),
                                       child: Image.asset(
-                                        "assets/images/microphone.png",
+                                        "assets/images/volume_reading.png",
                                         fit: BoxFit.fill,
                                       ),
                                     ),
-                                    const SizedBox(
-                                      height: 10.0,
-                                    ),
-                                    Text(
-                                      _mRecorder.isRecording
-                                          ? 'Stop'
-                                          : 'Record',
-                                      style: const TextStyle(
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppColors.yellowColor,
-                                      ),
-                                    ),
-                                    ElevatedButton(
-                                      onPressed: getPlaybackFn(),
-                                      child: Text(
-                                        _mPlayer.isPlaying ? 'Stop' : 'Play',
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                            Visibility(
+                              visible: _isVolumeClicked,
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Column(
+                                    children: [
+                                      Text(
+                                        materi.latihanCina!,
+                                        style: const TextStyle(
+                                          fontSize: 36,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.red,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  _isMicrophoneClicked
+                                      ? InkWell(
+                                          onTap: () => _playAudio(
+                                              '${materi.latihanUrlFile}${materi.latihanVoice}'),
+                                          child: Column(
+                                            children: [
+                                              const SizedBox(
+                                                height: 20,
+                                              ),
+                                              Center(
+                                                child: Container(
+                                                  height: 90,
+                                                  width: 350,
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                10)),
+                                                    color: AppColors.lightGreen,
+                                                  ),
+                                                  child: Center(
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        const Text(
+                                                          "Correct \nAnswer",
+                                                          style: TextStyle(
+                                                            fontSize: 28,
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                          width: 25,
+                                                        ),
+                                                        Image.asset(
+                                                          "assets/images/volume_ok.png",
+                                                          fit: BoxFit.fill,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                height: 20,
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      : const SizedBox(
+                                          height: 100,
+                                        ),
+                                  Column(
+                                    children: [
+                                      GestureDetector(
+                                        onTap: getRecorderFn(),
+                                        child: Image.asset(
+                                          "assets/images/microphone.png",
+                                          fit: BoxFit.fill,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      Text(
+                                        _mRecorder.isRecording
+                                            ? 'Stop'
+                                            : 'Record',
+                                        style: const TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold,
+                                          color: AppColors.yellowColor,
+                                        ),
+                                      ),
+                                      ElevatedButton(
+                                        onPressed: getPlaybackFn(),
+                                        child: Text(
+                                          _mPlayer.isPlaying ? 'Stop' : 'Play',
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              );
-            }),
-        bottomNavigationBar: BottomNavigationBarButton(
-          name: totalContent == _currentContent + 2 ? 'FINISH' : 'NEXT',
-          color:
-              _isMicrophoneClicked ? AppColors.greenColor : AppColors.greyWhite,
-          onTap: totalContent == _currentContent + 2
-              ? () {
-                  context.read<FinishMateriCubit>().finishMateri(
-                        FinishMateriRequestModel(
-                          user_id: dataUser!.userId!,
-                          id_level: masterMateri!.idLevel!,
-                          id_group_materi:
-                              readingMateri!.masterGroupMateri.idGroupMateri!,
-                        ),
-                      );
-                  context.read<LogingHeaderCubit>().setInitial();
-                  context.read<LogingLinesCubit>().setInitial();
-                  final newMasterGroupMateri = readingMateri!.masterGroupMateri;
-                  newMasterGroupMateri.statusExercise = 'finish';
-                  Navigator.pushNamed(context, CourseInitial.routeName,
-                      arguments: newMasterGroupMateri);
-                }
-              : () {
-                  context.read<LogingLinesCubit>().postLogingLines(
-                        LogingLinesRequestModel(
-                          id_log_materi_header: readingMateri!.logingHeaderId,
-                          id_materi: masterMateri!.idMateri!,
-                          user_id: dataUser!.userId!,
-                          voice_try: File(_mPath),
-                        ),
-                      );
-                  setState(() {
-                    ++_currentContent;
-                    _isVolumeClicked = false;
-                    _isMicrophoneClicked = false;
-                  });
-                },
-        ));
+                  ],
+                );
+              }),
+          bottomNavigationBar: BottomNavigationBarButton(
+            name: totalContent == _currentContent + 2 ? 'FINISH' : 'NEXT',
+            color: _isMicrophoneClicked
+                ? AppColors.greenColor
+                : AppColors.greyWhite,
+            onTap: totalContent == _currentContent + 2
+                ? () {
+                    context.read<FinishMateriCubit>().finishMateri(
+                          FinishMateriRequestModel(
+                            user_id: dataUser!.userId!,
+                            id_level: masterMateri!.idLevel!,
+                            id_group_materi:
+                                readingMateri!.masterGroupMateri.idGroupMateri!,
+                          ),
+                        );
+                    context.read<LogingHeaderCubit>().setInitial();
+                    context.read<LogingLinesCubit>().setInitial();
+                    final newMasterGroupMateri =
+                        readingMateri!.masterGroupMateri;
+                    newMasterGroupMateri.statusExercise = 'finish';
+                    Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        CourseInitial.routeName,
+                        (route) =>
+                            route.settings.name == CourseInitial.routeName,
+                        arguments: newMasterGroupMateri);
+                  }
+                : () {
+                    context.read<LogingLinesCubit>().postLogingLines(
+                          LogingLinesRequestModel(
+                            id_log_materi_header: readingMateri!.logingHeaderId,
+                            id_materi: masterMateri!.idMateri!,
+                            user_id: dataUser!.userId!,
+                            voice_try: File(_mPath),
+                          ),
+                        );
+                    setState(() {
+                      ++_currentContent;
+                      _isVolumeClicked = false;
+                      _isMicrophoneClicked = false;
+                    });
+                  },
+          )),
+    );
   }
 }
