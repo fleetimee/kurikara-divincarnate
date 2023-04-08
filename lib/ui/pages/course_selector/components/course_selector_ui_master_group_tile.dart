@@ -153,8 +153,20 @@ class MasterGroupMateriTile extends StatelessWidget {
                                       ),
                                     ),
                                     const SizedBox(height: 8),
-                                    Image.network(
-                                      'https://huixin.id/assets/group_materi/$imageUrl',
+                                    CachedNetworkImage(
+                                      imageUrl:
+                                          'https://huixin.id/assets/group_materi/$imageUrl',
+                                      placeholder: (context, url) =>
+                                          const Center(
+                                        child: CircularProgressIndicator(
+                                          color: AppColors.yellowColor,
+                                        ),
+                                      ),
+                                      errorWidget: (context, url, error) =>
+                                          const Icon(
+                                        Icons.error,
+                                        color: AppColors.yellowColor,
+                                      ),
                                       height: 50,
                                       fit: BoxFit.fill,
                                     ),

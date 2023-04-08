@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_huixin_app/common/constants/color.dart';
 import 'package:flutter_huixin_app/cubit/report/report_cubit.dart';
+import 'package:flutter_huixin_app/ui/pages/reporting/reporting_detail_ui.dart';
 
 class ReportTile extends StatelessWidget {
   final int index;
@@ -26,6 +28,49 @@ class ReportTile extends StatelessWidget {
         //     reportingData[index].routeName,
         //   );
         // }
+
+        state.maybeMap(
+          orElse: () => null,
+          loaded: (state) {
+            if (state.data.data![index].reportReading!.isNotEmpty &&
+                state.data.data![index].reportSpeaking!.isNotEmpty) {
+              // Navigator.pushNamed(
+              //   context,
+              //   state.data.data![index].routeName,
+              //   arguments: {
+              //     'level_id': state.data.data![index].idLevel,
+              //     'level_id_materi': state.data.data![index].idGroupMateri,
+              //     'level_name': state.data.data![index].name,
+              //   },
+              // );
+              Navigator.pushNamed(
+                context,
+                ReportingDetailPage.routeName,
+                arguments: {
+                  state.data.data![index],
+                },
+              );
+            } else {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: const Text('Reporting Locked'),
+                    content: const Text('Please complete the course first'),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text('OK'),
+                      ),
+                    ],
+                  );
+                },
+              );
+            }
+          },
+        );
       },
       child: Container(
         decoration: BoxDecoration(
@@ -40,15 +85,29 @@ class ReportTile extends StatelessWidget {
           child: state.maybeMap(
             orElse: () => null,
             loaded: (state) {
-              if (state.data.data![index].reportReading!.isNotEmpty ||
+              if (state.data.data![index].reportReading!.isNotEmpty &&
                   state.data.data![index].reportSpeaking!.isNotEmpty) {
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.network(
-                      'https://huixin.id/assets/level/$reportImage',
-                      width: 50,
-                      height: 50,
+                    // Image.network(
+                    //   'https://huixin.id/assets/level/$reportImage',
+                    //   width: 50,
+                    //   height: 50,
+                    // ),
+                    CachedNetworkImage(
+                      imageUrl: 'https://huixin.id/assets/level/$reportImage',
+                      placeholder: (context, url) => const Center(
+                        child: CircularProgressIndicator(
+                          color: AppColors.yellowColor,
+                        ),
+                      ),
+                      errorWidget: (context, url, error) => const Icon(
+                        Icons.error,
+                        color: AppColors.yellowColor,
+                      ),
+                      height: 40,
+                      width: 40,
                     ),
                     Text(
                       reportName,
