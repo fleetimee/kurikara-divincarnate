@@ -92,7 +92,7 @@ class MasterGroupMateriTile extends StatelessWidget {
                               // ),
                               CachedNetworkImage(
                                 imageUrl:
-                                    'https://huixin.id/assets/group_materi/$imageUrl',
+                                    'https://huixin.id/assets/group_materi/${masterGroupMateri.imgFile}',
                                 placeholder: (context, url) => const Center(
                                   child: CircularProgressIndicator(
                                     color: AppColors.yellowColor,
@@ -128,7 +128,7 @@ class MasterGroupMateriTile extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      dayName,
+                                      masterGroupMateri.name ?? '',
                                       style: const TextStyle(
                                         color: AppColors.whiteColor,
                                         fontSize: 20,
@@ -138,7 +138,7 @@ class MasterGroupMateriTile extends StatelessWidget {
                                     const SizedBox(height: 8),
                                     CachedNetworkImage(
                                       imageUrl:
-                                          'https://huixin.id/assets/group_materi/$imageUrl',
+                                          'https://huixin.id/assets/group_materi/${masterGroupMateri.imgFile}',
                                       placeholder: (context, url) =>
                                           const Center(
                                         child: CircularProgressIndicator(

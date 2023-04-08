@@ -42,7 +42,7 @@ class TileMasterLevel extends StatelessWidget {
                     CourseSelector.routeName,
                     arguments: {
                       'level_id': state.data.data![index].idLevel,
-                      'level_name': levelName,
+                      'level_name': masterLevel.name,
                     },
                   )
                 : showDialog(
@@ -128,7 +128,7 @@ class TileMasterLevel extends StatelessWidget {
                               const SizedBox(height: 8),
                               CachedNetworkImage(
                                 imageUrl:
-                                    'https://huixin.id/assets/level/$levelImage',
+                                    'https://huixin.id/assets/level/${masterLevel.imgFile}}',
                                 placeholder: (context, url) => const Center(
                                   child: CircularProgressIndicator(
                                     color: AppColors.yellowColor,
@@ -174,7 +174,7 @@ class TileMasterLevel extends StatelessWidget {
                                     const SizedBox(height: 8),
                                     CachedNetworkImage(
                                       imageUrl:
-                                          'https://huixin.id/assets/level/$levelImage',
+                                          'https://huixin.id/assets/level/${masterLevel.imgFile}',
                                       placeholder: (context, url) =>
                                           const Center(
                                         child: CircularProgressIndicator(
