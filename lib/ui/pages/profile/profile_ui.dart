@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_huixin_app/cubit/home/active_student/active_student_cubit.dart';
@@ -8,6 +9,7 @@ import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
 import 'package:flutter_huixin_app/ui/pages/signin/signin_ui.dart';
 import 'package:flutter_huixin_app/ui/widgets/dialog_box.dart';
 import 'package:random_avatar/random_avatar.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../common/constants/color.dart';
 import '../../../cubit/entities/stats.dart';
@@ -221,63 +223,101 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget profileUser() {
     return Container(
-        padding: const EdgeInsets.all(20),
-        decoration: const BoxDecoration(
-          border: Border(
-            bottom: BorderSide(
-              color: AppColors.borderform,
-              width: 1,
-              style: BorderStyle.solid,
-            ),
+      padding: const EdgeInsets.all(20),
+      decoration: const BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: AppColors.borderform,
+            width: 1,
+            style: BorderStyle.solid,
           ),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment
-              .spaceBetween, // Add the mainAxisAlignment property
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  user?.fullName ?? '..',
-                  style: const TextStyle(
-                      fontSize: 36,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment
+            .spaceBetween, // Add the mainAxisAlignment property
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                user?.fullName ?? '..',
+                style: const TextStyle(
+                    fontSize: 36,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black),
+              ),
+              Text(
+                user?.userName ?? '..',
+                style: const TextStyle(
+                  fontSize: 20,
+                  color: Colors.grey,
                 ),
-                Text(
-                  user?.userName ?? '..',
-                  style: const TextStyle(
-                    fontSize: 20,
-                    color: Colors.grey,
+              ),
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  Image.asset(
+                    'assets/images/clock.png',
+                    width: 20,
+                    height: 20,
+                    fit: BoxFit.cover,
                   ),
+                  const SizedBox(width: 10),
+                  const Text(
+                    'Joined March 2023',
+                    style: TextStyle(fontSize: 20, color: Colors.black),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          // CircleAvatar(
+          //   radius: 50,
+          //   backgroundImage: NetworkImage(
+          //       'https://huixin.id/assets/fileuser/${user?.imgFile ?? 'https://pwco.com.sg/wp-content/uploads/2020/05/Generic-Profile-Placeholder-v3-1536x1536.png'}'),
+          //   backgroundColor: Colors.grey,
+          // )
+          CachedNetworkImage(
+            imageUrl: user?.imgFile == null
+                ? 'https://pwco.com.sg/wp-content/uploads/2020/05/Generic-Profile-Placeholder-v3-1536x1536.png'
+                : 'https://huixin.id/assets/fileuser/${user?.imgFile}',
+            imageBuilder: (context, imageProvider) => Container(
+              width: 100.0,
+              height: 100.0,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                  image: imageProvider,
+                  fit: BoxFit.cover,
                 ),
-                const SizedBox(height: 10),
-                Row(
-                  children: [
-                    Image.asset(
-                      'assets/images/clock.png',
-                      width: 20,
-                      height: 20,
-                      fit: BoxFit.cover,
-                    ),
-                    const SizedBox(width: 10),
-                    const Text(
-                      'Joined March 2023',
-                      style: TextStyle(fontSize: 20, color: Colors.black),
-                    ),
-                  ],
-                ),
-              ],
+              ),
             ),
-            CircleAvatar(
-              radius: 50,
-              backgroundImage: NetworkImage(
-                  'https://huixin.id/assets/fileuser/${user?.imgFile ?? 'https://pwco.com.sg/wp-content/uploads/2020/05/Generic-Profile-Placeholder-v3-1536x1536.png'}'),
-              backgroundColor: Colors.grey,
-            )
-          ],
-        ));
+            placeholder: (context, url) => Shimmer.fromColors(
+              baseColor: Colors.grey[300]!,
+              highlightColor: Colors.grey[100]!,
+              child: Container(
+                width: 100.0,
+                height: 100.0,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.grey,
+                ),
+              ),
+            ),
+            errorWidget: (context, url, error) => Container(
+              width: 100.0,
+              height: 100.0,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.grey,
+              ),
+              child: const Icon(Icons.error),
+            ),
+          )
+        ],
+      ),
+    );
   }
 
   Widget information(BuildContext context) {
