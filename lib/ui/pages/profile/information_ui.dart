@@ -7,6 +7,7 @@ import 'package:random_avatar/random_avatar.dart';
 import 'package:flutter_huixin_app/cubit/home/info/info_cubit.dart';
 import 'package:flutter_huixin_app/data/datasources/local/app_secure_storage.dart';
 import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../widgets/appbar/appbar_style.dart';
 
@@ -134,15 +135,6 @@ class CardDetail extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // Container(
-          //   padding:
-          //       const EdgeInsets.only(top: 40, bottom: 30, left: 30, right: 30),
-          //   child: const Image(
-          //     image: NetworkImage(
-          //       'https://i.ibb.co/dGcQ5bw/photo-1549692520-acc6669e2f0c-ixlib-rb-1-2.jpg',
-          //     ),
-          //   ),
-          // ),
           CachedNetworkImage(
             imageUrl: user?.imgFile == null || user?.imgFile == ''
                 ? 'https://https://pwco.com.sg/wp-content/uploads/2020/05/Generic-Profile-Placeholder-v3-1536x1536.png'
@@ -157,7 +149,25 @@ class CardDetail extends StatelessWidget {
               );
             },
             placeholder: (context, url) {
-              return const CircularProgressIndicator();
+              return Shimmer.fromColors(
+                baseColor: Colors.grey[300]!,
+                highlightColor: Colors.grey[100]!,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 40,
+                  ),
+                ),
+              );
+            },
+            errorWidget: (context, url, error) {
+              return Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 40,
+                ),
+                child: const Icon(Icons.error),
+              );
             },
           ),
           Text(
