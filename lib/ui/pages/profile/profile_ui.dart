@@ -8,7 +8,6 @@ import 'package:flutter_huixin_app/data/datasources/local/app_secure_storage.dar
 import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
 import 'package:flutter_huixin_app/ui/pages/signin/signin_ui.dart';
 import 'package:flutter_huixin_app/ui/widgets/dialog_box.dart';
-import 'package:random_avatar/random_avatar.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../common/constants/color.dart';
@@ -449,11 +448,48 @@ class _ProfilePageState extends State<ProfilePage> {
                     contentPadding: EdgeInsets.zero,
                     horizontalTitleGap: 10,
                     minVerticalPadding: -15,
-                    leading: CircleAvatar(
-                      child: RandomAvatar(
-                        data.data![index].fullName ?? '..',
-                        height: 40,
-                        width: 40,
+                    // leading: CircleAvatar(
+                    //   child: RandomAvatar(
+                    //     data.data![index].fullName ?? '..',
+                    //     height: 40,
+                    //     width: 40,
+                    //   ),
+                    // ),
+                    leading: CachedNetworkImage(
+                      imageUrl: data.data![index].imgFile == null
+                          ? 'https://pwco.com.sg/wp-content/uploads/2020/05/Generic-Profile-Placeholder-v3-1536x1536.png'
+                          : 'https://huixin.id/assets/fileuser/${data.data![index].imgFile}',
+                      imageBuilder: (context, imageProvider) => Container(
+                        width: 40.0,
+                        height: 40.0,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            image: imageProvider,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      placeholder: (context, url) => Shimmer.fromColors(
+                        baseColor: Colors.grey[300]!,
+                        highlightColor: Colors.grey[100]!,
+                        child: Container(
+                          width: 40.0,
+                          height: 40.0,
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ),
+                      errorWidget: (context, url, error) => Container(
+                        width: 40.0,
+                        height: 40.0,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.grey,
+                        ),
+                        child: const Icon(Icons.error),
                       ),
                     ),
                     title: Text(
