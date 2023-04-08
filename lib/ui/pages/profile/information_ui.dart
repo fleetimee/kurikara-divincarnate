@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -85,6 +86,10 @@ class _InformationPageState extends State<InformationPage> {
                                           content:
                                               state.data.data?[index].content ??
                                                   '',
+                                          user: user,
+                                          imgUrl:
+                                              state.data.data?[index].imgFile ??
+                                                  '',
                                         ),
                                       ],
                                     ),
@@ -110,12 +115,15 @@ class _InformationPageState extends State<InformationPage> {
 class CardDetail extends StatelessWidget {
   final String title;
   final String content;
+  final String imgUrl;
+  final DataUser? user;
 
-  const CardDetail({
-    super.key,
-    required this.title,
-    required this.content,
-  });
+  const CardDetail(
+      {super.key,
+      required this.title,
+      required this.content,
+      required this.imgUrl,
+      this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -125,12 +133,31 @@ class CardDetail extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            padding:
-                const EdgeInsets.only(top: 40, bottom: 30, left: 30, right: 30),
-            child: const Image(
-                image: NetworkImage(
-                    'https://i.ibb.co/dGcQ5bw/photo-1549692520-acc6669e2f0c-ixlib-rb-1-2.jpg')),
+          // Container(
+          //   padding:
+          //       const EdgeInsets.only(top: 40, bottom: 30, left: 30, right: 30),
+          //   child: const Image(
+          //     image: NetworkImage(
+          //       'https://i.ibb.co/dGcQ5bw/photo-1549692520-acc6669e2f0c-ixlib-rb-1-2.jpg',
+          //     ),
+          //   ),
+          // ),
+          CachedNetworkImage(
+            imageUrl: user?.imgFile == null || user?.imgFile == ''
+                ? 'https://https://pwco.com.sg/wp-content/uploads/2020/05/Generic-Profile-Placeholder-v3-1536x1536.png'
+                : 'https://huixin.id/assets/info/$imgUrl',
+            imageBuilder: (context, imageProvider) {
+              return Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 40,
+                ),
+                child: Image(image: imageProvider),
+              );
+            },
+            placeholder: (context, url) {
+              return const CircularProgressIndicator();
+            },
           ),
           Text(
             title,
