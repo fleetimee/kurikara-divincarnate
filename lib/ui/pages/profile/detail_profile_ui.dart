@@ -2,12 +2,14 @@
 
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_huixin_app/data/datasources/local/app_secure_storage.dart';
 import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
 
 import 'package:image_picker/image_picker.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../widgets/appbar/appbar_style.dart';
 import '../../widgets/button.dart';
@@ -153,11 +155,42 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
         Align(
           alignment: Alignment.center,
           child: _image == null
-              ? CircleAvatar(
-                  radius: 80,
-                  child: Image.asset(
-                    "assets/images/user.png",
-                    fit: BoxFit.fill,
+              ? CachedNetworkImage(
+                  imageUrl: user?.imgFile == null
+                      ? 'https://pwco.com.sg/wp-content/uploads/2020/05/Generic-Profile-Placeholder-v3-1536x1536.png'
+                      : 'https://huixin.id/assets/fileuser/${user?.imgFile}',
+                  imageBuilder: (context, imageProvider) => Container(
+                    width: 160.0,
+                    height: 160.0,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                          image: imageProvider, fit: BoxFit.cover),
+                    ),
+                  ),
+                  placeholder: (context, url) => Shimmer.fromColors(
+                    baseColor: Colors.grey[300]!,
+                    highlightColor: Colors.grey[100]!,
+                    child: Container(
+                      width: 160.0,
+                      height: 160.0,
+                      decoration: const BoxDecoration(
+                        color: Colors.grey,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                  ),
+                  errorWidget: (context, url, error) => Container(
+                    width: 160.0,
+                    height: 160.0,
+                    decoration: const BoxDecoration(
+                      color: Colors.grey,
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.error,
+                      color: Colors.red,
+                    ),
                   ),
                 )
               : CircleAvatar(
