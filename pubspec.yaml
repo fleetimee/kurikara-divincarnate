@@ -41,6 +41,7 @@ dependencies:
   just_audio: ^0.9.32
   modal_bottom_sheet: ^3.0.0-pre
   permission_handler: ^10.2.0
+  pretty_http_logger: ^0.2.1
   random_avatar: ^0.0.8
   responsive_framework: ^0.2.0
   shimmer: ^2.0.0

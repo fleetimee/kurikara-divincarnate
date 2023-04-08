@@ -6,21 +6,25 @@ import 'package:flutter_huixin_app/data/models/auth/requests/login_request_model
 import 'package:flutter_huixin_app/data/models/auth/requests/register_request_model.dart';
 import 'package:flutter_huixin_app/data/models/auth/requests/update_fcm_request_model.dart';
 import 'package:flutter_huixin_app/data/models/auth/requests/update_profile_request_model.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as http_plus;
+import 'package:pretty_http_logger/pretty_http_logger.dart';
 
 import '../../common/constants/api.dart';
 
 class AuthDataSource {
+  HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
+    HttpLogger(logLevel: LogLevel.BODY),
+  ]);
   Future<Either<String, AuthResponseModel>> register(
       RegisterRequestModel model) async {
     try {
-      var request = http.MultipartRequest(
+      var request = http_plus.MultipartRequest(
           'POST', Uri.parse('${AppApi.baseUrl}/api_register'));
       request.fields.addAll(model.toMap());
-      request.files.add(
-          await http.MultipartFile.fromPath('img_file', model.img_file!.path));
+      request.files.add(await http_plus.MultipartFile.fromPath(
+          'img_file', model.img_file!.path));
 
-      http.StreamedResponse response = await request.send();
+      http_plus.StreamedResponse response = await request.send();
 
       return Right(
         AuthResponseModel.fromJson(
@@ -38,16 +42,13 @@ class AuthDataSource {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Cookie': 'ci_session=ouvp29be2csimiohsjvhpt90oo3ejgcs'
       };
-      var request =
-          http.Request('POST', Uri.parse('${AppApi.baseUrl}/api_login'));
-      request.bodyFields = model.toMap();
-      request.headers.addAll(headers);
+      var response = await http.post(Uri.parse('${AppApi.baseUrl}/api_login'),
+          headers: headers, body: model.toMap());
 
-      http.StreamedResponse response = await request.send();
+      // http_plus.StreamedResponse response = await request.send();
 
       return Right(
-        AuthResponseModel.fromJson(
-            jsonDecode(await response.stream.bytesToString())),
+        AuthResponseModel.fromJson(jsonDecode(response.body)),
       );
     } catch (e) {
       return Left(e.toString());
@@ -58,14 +59,14 @@ class AuthDataSource {
       UpdateProfileRequestModel model) async {
     try {
       var headers = {'Cookie': 'ci_session=ouvp29be2csimiohsjvhpt90oo3ejgcs'};
-      var request = http.MultipartRequest('POST',
+      var request = http_plus.MultipartRequest('POST',
           Uri.parse('${AppApi.baseUrl}/api_update_profile/?token_api=323232'));
       request.fields.addAll(model.toMap());
-      request.files.add(
-          await http.MultipartFile.fromPath('img_file', model.img_file!.path));
+      request.files.add(await http_plus.MultipartFile.fromPath(
+          'img_file', model.img_file!.path));
       request.headers.addAll(headers);
 
-      http.StreamedResponse response = await request.send();
+      http_plus.StreamedResponse response = await request.send();
 
       return Right(
         AuthResponseModel.fromJson(
@@ -82,12 +83,10 @@ class AuthDataSource {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Cookie': 'ci_session=ouvp29be2csimiohsjvhpt90oo3ejgcs'
       };
-      var request =
-          http.Request('POST', Uri.parse('${AppApi.baseUrl}/api_update_fcm'));
-      request.bodyFields = model.toMap();
-      request.headers.addAll(headers);
-
-      http.StreamedResponse response = await request.send();
+      var response = await http.post(
+          Uri.parse('${AppApi.baseUrl}/api_update_fcm'),
+          body: model.toMap(),
+          headers: headers);
 
       if (response.statusCode == 200) {
         return const Right(true);

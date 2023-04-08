@@ -6,12 +6,16 @@ import 'package:flutter_huixin_app/data/models/latihan_soal/latihan_lines_respon
 import 'package:flutter_huixin_app/data/models/latihan_soal/requests/finish_soal_request_model.dart';
 import 'package:flutter_huixin_app/data/models/latihan_soal/requests/latihan_header_request_model.dart';
 import 'package:flutter_huixin_app/data/models/latihan_soal/requests/latihan_lines_request_model.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as http_plus;
+import 'package:pretty_http_logger/pretty_http_logger.dart';
 
 import '../../common/constants/api.dart';
 import 'local/app_secure_storage.dart';
 
 class SoalDatasource {
+  HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
+    HttpLogger(logLevel: LogLevel.BODY),
+  ]);
   Future<String> getToken() async {
     final token = await AppSecureStorage.getAccessToken();
     return 'token_api=$token';
@@ -37,13 +41,13 @@ class SoalDatasource {
   Future<Either<String, LatihanLinesResponseModel>> postLatihanSoalLines(
       LatihanLinesRequestModel model) async {
     try {
-      var request = http.MultipartRequest(
-          'POST', Uri.parse('${AppApi.baseUrl}/latihan_lines?${await getToken()}'));
+      var request = http_plus.MultipartRequest('POST',
+          Uri.parse('${AppApi.baseUrl}/latihan_lines?${await getToken()}'));
       request.fields.addAll(model.toMap());
-      request.files.add(await http.MultipartFile.fromPath(
+      request.files.add(await http_plus.MultipartFile.fromPath(
           'voice_answer', model.voice_answer!.path));
 
-      http.StreamedResponse response = await request.send();
+      http_plus.StreamedResponse response = await request.send();
       return Right(
         LatihanLinesResponseModel.fromJson(
             jsonDecode(await response.stream.bytesToString())),

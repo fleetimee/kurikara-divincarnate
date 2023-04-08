@@ -6,11 +6,15 @@ import 'package:flutter_huixin_app/data/models/mastering/master_level_response_m
 import 'package:flutter_huixin_app/data/models/mastering/master_materi_response_model.dart';
 import 'package:flutter_huixin_app/data/models/mastering/master_soal_response_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:pretty_http_logger/pretty_http_logger.dart';
 
 import '../../common/constants/api.dart';
 import 'local/app_secure_storage.dart';
 
 class MasteringDatasource {
+  HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
+    HttpLogger(logLevel: LogLevel.BODY),
+  ]);
   Future<String> getToken() async {
     final token = await AppSecureStorage.getAccessToken();
     return 'token_api=$token';

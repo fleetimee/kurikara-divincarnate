@@ -6,12 +6,16 @@ import 'package:flutter_huixin_app/data/models/materi_pelajaran/loging_lines_res
 import 'package:flutter_huixin_app/data/models/materi_pelajaran/requests/finish_materi_request_model.dart';
 import 'package:flutter_huixin_app/data/models/materi_pelajaran/requests/loging_header_request_model.dart';
 import 'package:flutter_huixin_app/data/models/materi_pelajaran/requests/loging_lines_request_model.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as http_plus;
+import 'package:pretty_http_logger/pretty_http_logger.dart';
 
 import '../../common/constants/api.dart';
 import 'local/app_secure_storage.dart';
 
 class MateriDatasource {
+  HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
+    HttpLogger(logLevel: LogLevel.BODY),
+]);
   Future<String> getToken() async {
     final token = await AppSecureStorage.getAccessToken();
     return 'token_api=$token';
@@ -37,14 +41,14 @@ class MateriDatasource {
   Future<Either<String, LogingLinesResponseModel>> postLogingLines(
       LogingLinesRequestModel model) async {
     try {
-      var request = http.MultipartRequest(
+      var request = http_plus.MultipartRequest(
           'POST', Uri.parse('${AppApi.baseUrl}/loging_lines?${await getToken()}'));
       request.fields.addAll(model.toMap());
       request.files.add(
-        await http.MultipartFile.fromPath('voice_try', model.voice_try!.path),
+        await http_plus.MultipartFile.fromPath('voice_try', model.voice_try!.path),
       );
 
-      http.StreamedResponse response = await request.send();
+      http_plus.StreamedResponse response = await request.send();
 
       return Right(
         LogingLinesResponseModel.fromJson(
