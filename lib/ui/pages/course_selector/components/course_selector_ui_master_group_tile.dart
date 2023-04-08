@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_huixin_app/common/constants/color.dart';
 import 'package:flutter_huixin_app/cubit/mastering/master_group_materi/master_group_materi_cubit.dart';
@@ -101,8 +102,24 @@ class MasterGroupMateriTile extends StatelessWidget {
                                 ),
                               ),
                               const SizedBox(height: 8),
-                              Image.network(
-                                'https://huixin.id/assets/group_materi/$imageUrl',
+                              // Image.network(
+                              //   'https://huixin.id/assets/group_materi/$imageUrl',
+                              //   height: 50,
+                              //   fit: BoxFit.fill,
+                              // ),
+                              CachedNetworkImage(
+                                imageUrl:
+                                    'https://huixin.id/assets/group_materi/$imageUrl',
+                                placeholder: (context, url) => const Center(
+                                  child: CircularProgressIndicator(
+                                    color: AppColors.yellowColor,
+                                  ),
+                                ),
+                                errorWidget: (context, url, error) =>
+                                    const Icon(
+                                  Icons.error,
+                                  color: AppColors.yellowColor,
+                                ),
                                 height: 50,
                                 fit: BoxFit.fill,
                               ),
