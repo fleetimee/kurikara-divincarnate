@@ -273,7 +273,7 @@ class _ProfilePageState extends State<ProfilePage> {
             CircleAvatar(
               radius: 50,
               backgroundImage: NetworkImage(
-                  'https://huixin.id/assets/fileuser/${user?.imgFile ?? '..'}'),
+                  'https://huixin.id/assets/fileuser/${user?.imgFile ?? 'https://pwco.com.sg/wp-content/uploads/2020/05/Generic-Profile-Placeholder-v3-1536x1536.png'}'),
               backgroundColor: Colors.grey,
             )
           ],

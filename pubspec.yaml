@@ -11,6 +11,7 @@ dependencies:
   avatar_glow: ^2.0.2
   awesome_dialog: ^3.0.2
   bloc: ^8.1.1
+  cached_network_image: ^3.2.3
   cupertino_icons: ^1.0.5
   dartz: ^0.10.1
   device_info_plus: ^8.1.0
