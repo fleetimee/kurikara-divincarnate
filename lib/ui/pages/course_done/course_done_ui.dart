@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_huixin_app/ui/pages/exercise_section.dart/exercise_number_one_ui.dart';
+import 'package:flutter_huixin_app/ui/pages/reading_section/reading_section_ui.dart';
 
 import '../../widgets/appbar/appbar_style.dart';
 import '../../widgets/bottom_appbar_note.dart';
 
 
 class CourseDone extends StatelessWidget {
+  static const String routeName = '/course_done';
   const CourseDone({super.key});
 
   @override
@@ -91,7 +94,7 @@ class CourseDone extends StatelessWidget {
                     const SizedBox(height: 8),
                     GestureDetector(
                       onTap: () {
-                        Navigator.pushNamed(context, '/reading_section');
+                        Navigator.pushNamed(context, ReadingSection.routeName);
                       },
                       child: Image.asset(
                         "assets/images/reading.png",
@@ -126,7 +129,7 @@ class CourseDone extends StatelessWidget {
                     const SizedBox(height: 8),
                     GestureDetector(
                       onTap: () {
-                        Navigator.pushNamed(context, '/exercise_one');
+                        Navigator.pushNamed(context, ExerciseOne.routeName);
                       },
                       child: Image.asset(
                         "assets/images/exercise_remedial.png",

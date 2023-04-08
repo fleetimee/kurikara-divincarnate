@@ -10,6 +10,7 @@ import '../../widgets/appbar/appbar_style.dart';
 import '../../widgets/bottom_appbar_note.dart';
 
 class CourseSelector extends StatefulWidget {
+  static const String routeName = '/course_selector';
   const CourseSelector({super.key});
 
   @override

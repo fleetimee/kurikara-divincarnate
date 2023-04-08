@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_huixin_app/common/constants/color.dart';
 import 'package:flutter_huixin_app/cubit/mastering/master_group_materi/master_group_materi_cubit.dart';
+import 'package:flutter_huixin_app/ui/pages/course_initial/course_initial_ui.dart';
 
 class MasterGroupMateriTile extends StatelessWidget {
   final int index;
@@ -26,7 +27,7 @@ class MasterGroupMateriTile extends StatelessWidget {
             if (index == 0) {
               Navigator.pushNamed(
                 context,
-                '/course_initial',
+                CourseInitial.routeName,
                 arguments: {
                   'level_id': state.data.data![index].idLevel,
                   'level_id_materi': state.data.data![index].idGroupMateri,
@@ -38,7 +39,7 @@ class MasterGroupMateriTile extends StatelessWidget {
                       state.data.data![index].reportSpeaking!.isNotEmpty)
                   ? Navigator.pushNamed(
                       context,
-                      '/course_initial',
+                      CourseInitial.routeName,
                       arguments: {
                         'level_id': state.data.data![index].idLevel,
                         'level_id_materi':

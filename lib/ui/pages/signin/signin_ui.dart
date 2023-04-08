@@ -5,6 +5,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_huixin_app/cubit/auth/auth_cubit.dart';
 import 'package:flutter_huixin_app/data/datasources/local/app_secure_storage.dart';
 import 'package:flutter_huixin_app/data/models/auth/requests/login_request_model.dart';
+import 'package:flutter_huixin_app/ui/pages/singup/signup_ui.dart';
 import 'package:flutter_huixin_app/ui/widgets/dialog_box.dart';
 import 'package:flutter_huixin_app/ui/widgets/social_icons_button.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -195,7 +196,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.pushNamed(context, '/signup');
+                        Navigator.pushNamed(context, SignUpPage.routeName);
                       },
                       child: const Text.rich(
                         TextSpan(

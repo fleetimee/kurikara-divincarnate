@@ -6,6 +6,8 @@ import 'package:flutter_huixin_app/cubit/home/daily_activity/daily_activity_cubi
 import 'package:flutter_huixin_app/cubit/home/xp/xp_cubit.dart';
 import 'package:flutter_huixin_app/data/datasources/local/app_secure_storage.dart';
 import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
+import 'package:flutter_huixin_app/ui/pages/profile/detail_profile_ui.dart';
+import 'package:flutter_huixin_app/ui/pages/profile/information_ui.dart';
 import 'package:flutter_huixin_app/ui/pages/signin/signin_ui.dart';
 import 'package:flutter_huixin_app/ui/widgets/dialog_box.dart';
 import 'package:shimmer/shimmer.dart';
@@ -16,6 +18,7 @@ import '../../widgets/appbar/appbar_style.dart';
 import '../../widgets/navigator_style.dart';
 
 class ProfilePage extends StatefulWidget {
+  static const String routeName = '/profile';
   const ProfilePage({super.key});
 
   @override
@@ -61,7 +64,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: InkWell(
                       child: profileUser(),
                       onTap: () {
-                        Navigator.pushNamed(context, '/profile/profiledetail');
+                        Navigator.pushNamed(context, ProfileDetailPage.routeName);
                       },
                     ),
                   ),
@@ -337,7 +340,7 @@ class _ProfilePageState extends State<ProfilePage> {
           onTap: () {
             Navigator.pushNamed(
               context,
-              '/profile/information',
+              InformationPage.routeName,
               arguments: {
                 'user': user?.userId,
               },

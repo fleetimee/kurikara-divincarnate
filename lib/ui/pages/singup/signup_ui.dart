@@ -21,6 +21,7 @@ import '../../widgets/button.dart';
 import '../../widgets/register_form.dart';
 
 class SignUpPage extends StatefulWidget {
+  static const String routeName = '/signup';
   const SignUpPage({super.key});
 
   @override

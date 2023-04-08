@@ -7,6 +7,7 @@ import '../../widgets/bottom_appbar_button.dart';
 
 
 class ExerciseThree extends StatefulWidget {
+  static const String routeName = '/exercise_three';
   const ExerciseThree({super.key});
 
   @override

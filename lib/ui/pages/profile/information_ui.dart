@@ -11,6 +11,7 @@ import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
 import '../../widgets/appbar/appbar_style.dart';
 
 class InformationPage extends StatefulWidget {
+  static const String routeName = '/information';
   const InformationPage({super.key});
 
   @override
