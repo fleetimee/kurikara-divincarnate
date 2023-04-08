@@ -9,7 +9,7 @@ class MasterSoalResponseModel {
 
   String? status;
   String? message;
-  List<Datum>? data;
+  List<MasterSoal>? data;
 
   factory MasterSoalResponseModel.fromRawJson(String str) =>
       MasterSoalResponseModel.fromJson(json.decode(str));
@@ -22,7 +22,8 @@ class MasterSoalResponseModel {
         message: json["message"],
         data: json["data"] == null
             ? []
-            : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
+            : List<MasterSoal>.from(
+                json["data"]!.map((x) => MasterSoal.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -34,8 +35,8 @@ class MasterSoalResponseModel {
       };
 }
 
-class Datum {
-  Datum({
+class MasterSoal {
+  MasterSoal({
     this.idSoal,
     this.idLevel,
     this.idGroupMateri,
@@ -95,11 +96,12 @@ class Datum {
   String? updatedBy;
   DateTime? updatedDate;
 
-  factory Datum.fromRawJson(String str) => Datum.fromJson(json.decode(str));
+  factory MasterSoal.fromRawJson(String str) =>
+      MasterSoal.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+  factory MasterSoal.fromJson(Map<String, dynamic> json) => MasterSoal(
         idSoal: json["id_soal"],
         idLevel: json["id_level"],
         idGroupMateri: json["id_group_materi"],

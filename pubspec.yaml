@@ -8,6 +8,7 @@ environment:
   sdk: ">=2.19.4 <3.0.0"
 
 dependencies:
+  audio_session: ^0.1.13
   avatar_glow: ^2.0.2
   awesome_dialog: ^3.0.2
   bloc: ^8.1.1
@@ -30,6 +31,7 @@ dependencies:
     sdk: flutter
   flutter_secure_storage: ^8.0.0
   flutter_sound: ^9.2.13
+  flutter_sound_platform_interface:
   font_awesome_flutter: ^10.4.0
   form_builder_validators: ^8.5.0
   freezed_annotation: ^2.2.0

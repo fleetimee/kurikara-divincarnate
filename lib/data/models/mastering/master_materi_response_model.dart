@@ -9,7 +9,7 @@ class MasterMateriResponseModel {
 
   String? status;
   String? message;
-  List<Datum>? data;
+  List<MasterMateri>? data;
 
   factory MasterMateriResponseModel.fromRawJson(String str) =>
       MasterMateriResponseModel.fromJson(json.decode(str));
@@ -22,7 +22,8 @@ class MasterMateriResponseModel {
         message: json["message"],
         data: json["data"] == null
             ? []
-            : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
+            : List<MasterMateri>.from(
+                json["data"]!.map((x) => MasterMateri.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -34,8 +35,8 @@ class MasterMateriResponseModel {
       };
 }
 
-class Datum {
-  Datum({
+class MasterMateri {
+  MasterMateri({
     this.idMateri,
     this.idLevel,
     this.idGroupMateri,
@@ -69,11 +70,12 @@ class Datum {
   DateTime? materiUpdateDate;
   String? materiIsDelete;
 
-  factory Datum.fromRawJson(String str) => Datum.fromJson(json.decode(str));
+  factory MasterMateri.fromRawJson(String str) =>
+      MasterMateri.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+  factory MasterMateri.fromJson(Map<String, dynamic> json) => MasterMateri(
         idMateri: json["id_materi"],
         idLevel: json["id_level"],
         idGroupMateri: json["id_group_materi"],

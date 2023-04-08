@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_huixin_app/cubit/auth/user/user_cubit.dart';
 import 'package:flutter_huixin_app/cubit/home/active_student/active_student_cubit.dart';
 import 'package:flutter_huixin_app/cubit/home/daily_activity/daily_activity_cubit.dart';
 import 'package:flutter_huixin_app/cubit/home/xp/xp_cubit.dart';
@@ -64,7 +65,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: InkWell(
                       child: profileUser(),
                       onTap: () {
-                        Navigator.pushNamed(context, ProfileDetailPage.routeName);
+                        Navigator.pushNamed(
+                            context, ProfileDetailPage.routeName);
                       },
                     ),
                   ),
@@ -535,14 +537,15 @@ class _ProfilePageState extends State<ProfilePage> {
             btnCancelText: 'Tidak',
             btnCancelOnPress: () {},
             btnOkOnPress: () {
-              AppSecureStorage.deleteAll().then(
-                (value) => Navigator.pushReplacement(
+              AppSecureStorage.deleteAll().then((value) {
+                context.read<UserCubit>().clearUser();
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) => const LoginPage(),
                   ),
-                ),
-              );
+                );
+              });
             },
           ).show();
         },

@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_huixin_app/common/constants/color.dart';
 import 'package:flutter_huixin_app/cubit/mastering/master_level/master_level_cubit.dart';
+import 'package:flutter_huixin_app/data/models/mastering/master_level_response_model.dart';
 import 'package:flutter_huixin_app/ui/pages/course_selector/course_selector_ui.dart';
 
 class TileMasterLevel extends StatelessWidget {
   final int index;
-  final String levelName;
-  final String levelImageUrl;
-  final String levelImage;
+  final MasterLevel masterLevel;
   final MasterLevelState state;
 
   const TileMasterLevel({
-    super.key,
+    Key? key,
     required this.index,
-    required this.levelName,
-    required this.levelImage,
-    required this.levelImageUrl,
+    required this.masterLevel,
     required this.state,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,44 +27,30 @@ class TileMasterLevel extends StatelessWidget {
       state.maybeMap(
         orElse: () => null,
         loaded: (state) {
-          if (index == 0) {
+          if (masterLevel.open) {
             Navigator.pushNamed(
               context,
               CourseSelector.routeName,
-              arguments: {
-                'level_id': state.data.data![index].idLevel,
-                'level_name': levelName,
-              },
+              arguments: masterLevel,
             );
           } else {
-            return (state.data.data![index].reportReading!.isNotEmpty ||
-                    state.data.data![index].reportSpeaking!.isNotEmpty)
-                ? Navigator.pushNamed(
-                    context,
-                    CourseSelector.routeName,
-                    arguments: {
-                      'level_id': state.data.data![index].idLevel,
-                      'level_name': levelName,
-                    },
-                  )
-                : showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: const Text('Level Locked'),
-                        content:
-                            const Text('Please complete the previous level'),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: const Text('OK'),
-                          ),
-                        ],
-                      );
-                    },
-                  );
+            showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: const Text('Level Locked'),
+                  content: const Text('Please complete the previous level'),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text('OK'),
+                    ),
+                  ],
+                );
+              },
+            );
           }
         },
       );
@@ -119,7 +103,7 @@ class TileMasterLevel extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                levelName,
+                                masterLevel.name ?? '',
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 20,
@@ -128,7 +112,7 @@ class TileMasterLevel extends StatelessWidget {
                               ),
                               const SizedBox(height: 8),
                               Image.network(
-                                'https://huixin.id/assets/level/$levelImage',
+                                'https://huixin.id/assets/level/${masterLevel.imgFile}',
                                 height: 80,
                                 fit: BoxFit.fill,
                               ),
@@ -154,7 +138,7 @@ class TileMasterLevel extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      levelName,
+                                      masterLevel.name ?? '',
                                       style: const TextStyle(
                                         color: Colors.white,
                                         fontSize: 20,
@@ -163,7 +147,7 @@ class TileMasterLevel extends StatelessWidget {
                                     ),
                                     const SizedBox(height: 8),
                                     Image.network(
-                                      'https://huixin.id/assets/level/$levelImage',
+                                      'https://huixin.id/assets/level/${masterLevel.imgFile}',
                                       height: 80,
                                       fit: BoxFit.fill,
                                     ),
