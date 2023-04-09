@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_huixin_app/cubit/home/daily_activity/daily_activity_cubit.dart';
+import 'package:flutter_huixin_app/cubit/home/xp/xp_cubit.dart';
+import 'package:flutter_huixin_app/cubit/report/report_cubit.dart';
+import 'package:flutter_huixin_app/data/datasources/local/app_secure_storage.dart';
+import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
 
 import '../../../common/constants/color.dart';
 import '../../../cubit/entities/stats.dart';
@@ -14,31 +20,27 @@ class ReportingDetailPage extends StatefulWidget {
 
 class _ReportingDetailPageState extends State<ReportingDetailPage> {
   Map? args;
-  bool _argsLoaded = false;
-
-  Future<void> _getArgs() async {
-    args = (await Future.delayed(Duration.zero, () {
-      return ModalRoute.of(context)?.settings.arguments as Map?;
-    }))!;
-    setState(() {
-      _argsLoaded = true;
-    });
-    debugPrint('$args');
-  }
+  DataUser? user;
 
   @override
   void initState() {
-    _getArgs();
-
     super.initState();
+
+    _getUser();
+  }
+
+  void _getUser() async {
+    user = await AppSecureStorage.getUser();
+
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    String title = _argsLoaded ? (args?['name'] ?? '..') : 'Loading...';
-    int index = _argsLoaded ? (args?['index'] ?? 0) : 0;
+    args = ModalRoute.of(context)?.settings.arguments as Map?;
 
-    print('index: $index');
+    String title = args?['name'] ?? '..';
+    int indexFromRoute = args?['index'] ?? 0;
 
     return Scaffold(
       appBar: AppBarReading(
@@ -82,119 +84,89 @@ class _ReportingDetailPageState extends State<ReportingDetailPage> {
               ),
               const SizedBox(height: 20),
               Expanded(
-                child: ListView.separated(
-                  separatorBuilder: (context, index) => const SizedBox(
-                    height: 100,
-                  ),
-                  itemCount: allEducations.length,
-                  itemBuilder: (context, index) {
-                    return Row(
-                      children: [
-                        Stack(
-                          clipBehavior: Clip.none,
-                          children: [
-                            Positioned(
-                              bottom: 30,
-                              left: 90,
-                              child: SizedBox(
-                                width: 300,
-                                height: 40,
-                                child: TweenAnimationBuilder(
-                                  tween: Tween<double>(
-                                      begin: 0,
-                                      end: allEducations[index].percentage),
-                                  duration: const Duration(seconds: 1),
-                                  curve: Curves.easeInOut,
-                                  builder: (context, value, child) {
-                                    // return ClipRRect(
-                                    //   borderRadius: const BorderRadius.all(
-                                    //       Radius.circular(10)),
-                                    //   child: LinearProgressIndicator(
-                                    //     value: allEducations[index].percentage,
-                                    //     backgroundColor: Colors.grey.shade200,
-                                    //     valueColor:
-                                    //         const AlwaysStoppedAnimation<Color>(
-                                    //       AppColors.greenColor,
-                                    //     ),
-                                    //   ),
-                                    // );
-                                    return Stack(
-                                      children: [
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            color: Colors.grey.shade300,
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
+                child: BlocBuilder<ReportCubit, ReportState>(
+                  builder: (context, state) {
+                    return state.maybeMap(
+                      orElse: () => const CircularProgressIndicator(),
+                      initial: (value) {
+                        context.read<ReportCubit>().getReportList(
+                              user?.userId.toString() ?? '0',
+                            );
+
+                        return const CircularProgressIndicator();
+                      },
+                      loaded: (value) {
+                        return ListView.separated(
+                          separatorBuilder: (context, index) => const SizedBox(
+                            height: 100,
+                          ),
+                          itemCount: allEducations.length,
+                          itemBuilder: (context, index) {
+                            return Row(
+                              children: [
+                                Stack(
+                                  clipBehavior: Clip.none,
+                                  children: [
+                                    Positioned(
+                                      bottom: 30,
+                                      left: 90,
+                                      child: SizedBox(
+                                        width: 300,
+                                        height: 40,
+                                        child: ProgressBar(
+                                          indexFromRoute: indexFromRoute,
+                                          index: index,
+                                          value: value,
                                         ),
-                                        FractionallySizedBox(
-                                          widthFactor: value,
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              color: AppColors.greenColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                            ),
-                                          ),
+                                      ),
+                                    ),
+                                    Image.asset(
+                                      allEducations[index].imageUrl,
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(width: 10),
+                                Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(
+                                      width: 20,
+                                    ),
+                                    Text(
+                                      allEducations[index].title,
+                                      style: const TextStyle(
+                                        fontSize: 28,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 50,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                        left: 160,
+                                      ),
+                                      child: Text(
+                                        allEducations[index].value == '80/100'
+                                            ? '${value.data.data![indexFromRoute].reportReading!.first.nilai!}/100'
+                                            : '${value.data.data![indexFromRoute].reportSpeaking!.first.nilai!}/100',
+                                        style: const TextStyle(
+                                          fontSize: 30,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
                                         ),
-                                      ],
-                                    );
-                                  },
-                                  // child: ClipRRect(
-                                  //   borderRadius: const BorderRadius.all(
-                                  //       Radius.circular(10)),
-                                  //   child: LinearProgressIndicator(
-                                  //     value: allEducations[index].percentage,
-                                  //     backgroundColor: Colors.grey.shade200,
-                                  //     valueColor:
-                                  //         const AlwaysStoppedAnimation<Color>(
-                                  //       AppColors.greenColor,
-                                  //     ),
-                                  //   ),
-                                  // ),
-                                ),
-                              ),
-                            ),
-                            Image.asset(
-                              allEducations[index].imageUrl,
-                              fit: BoxFit.fill,
-                            ),
-                          ],
-                        ),
-                        const SizedBox(width: 10),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(
-                              width: 20,
-                            ),
-                            Text(
-                              allEducations[index].title,
-                              style: const TextStyle(
-                                fontSize: 28,
-                                color: Colors.black,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 50,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                left: 160,
-                              ),
-                              child: Text(
-                                allEducations[index].value,
-                                style: const TextStyle(
-                                  fontSize: 30,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            );
+                          },
+                        );
+                      },
                     );
                   },
                 ),
@@ -203,6 +175,59 @@ class _ReportingDetailPageState extends State<ReportingDetailPage> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class ProgressBar extends StatelessWidget {
+  final int index;
+  final dynamic value;
+
+  const ProgressBar({
+    super.key,
+    required this.indexFromRoute,
+    required this.index,
+    required this.value,
+  });
+
+  final int indexFromRoute;
+
+  @override
+  Widget build(BuildContext context) {
+    return TweenAnimationBuilder(
+      tween: Tween<double>(
+        begin: 0,
+        end: allEducations[index].percentage == 0.8
+            ? int.parse(value
+                    .data.data![indexFromRoute].reportReading!.first.nilai!) /
+                100
+            : int.parse(value
+                    .data.data![indexFromRoute].reportSpeaking!.first.nilai!) /
+                100,
+      ),
+      duration: const Duration(seconds: 1),
+      curve: Curves.easeInOut,
+      builder: (context, value, child) {
+        return Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.grey.shade300,
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            FractionallySizedBox(
+              widthFactor: value,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: AppColors.greenColor,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }
@@ -225,51 +250,78 @@ class Statistics extends StatelessWidget {
         ),
         itemCount: allStats.length,
         itemBuilder: (context, index) {
-          return Container(
-            decoration: BoxDecoration(
-              color: AppColors.whiteColor,
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(
-                color: Colors.grey.shade300,
-                width: 4,
-              ),
+          return StatCard(stat: allStats[index]);
+        },
+      ),
+    );
+  }
+}
+
+class StatCard extends StatelessWidget {
+  final dynamic stat;
+
+  const StatCard({super.key, required this.stat});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.whiteColor,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: Colors.grey.shade300,
+          width: 4,
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Row(
+          children: [
+            Image.asset(
+              stat.imageUrl,
+              fit: BoxFit.fill,
             ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
+            const SizedBox(width: 20),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Image.asset(
-                    allStats[index].imageUrl,
-                    fit: BoxFit.fill,
+                  Text(
+                    stat.value != '13'
+                        ? context.select(
+                            (XpCubit xpCubit) => xpCubit.state.maybeMap(
+                              orElse: () => '..',
+                              loaded: (state) =>
+                                  state.data.data?.first.jmlXp ?? '0',
+                            ),
+                          )
+                        : context.select(
+                            (DailyActivityCubit dailyActivityCubit) =>
+                                dailyActivityCubit.state.maybeMap(
+                              orElse: () => '..',
+                              loaded: (state) =>
+                                  state.data.data?.first.jmlDaily.toString() ??
+                                  '..',
+                            ),
+                          ),
+                    style: const TextStyle(
+                      fontSize: 25,
+                      color: Colors.black,
+                    ),
                   ),
-                  const SizedBox(width: 20),
-                  Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          allStats[index].value,
-                          style: const TextStyle(
-                            fontSize: 25,
-                            color: Colors.black,
-                          ),
-                        ),
-                        Text(
-                          allStats[index].title,
-                          style: const TextStyle(
-                            fontSize: 18,
-                            color: Colors.black54,
-                          ),
-                        ),
-                      ],
+                  Text(
+                    stat.title,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      color: Colors.black54,
                     ),
                   ),
                 ],
               ),
             ),
-          );
-        },
+          ],
+        ),
       ),
     );
   }
