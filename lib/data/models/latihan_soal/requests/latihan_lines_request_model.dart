@@ -10,7 +10,7 @@ class LatihanLinesRequestModel {
   final String pg_answer;
   final String cocok_answer;
   File? voice_answer;
-  final String status;
+  final bool status;
   final String user_id;
   LatihanLinesRequestModel({
     required this.id_log_soal_header,
@@ -31,7 +31,7 @@ class LatihanLinesRequestModel {
       'pg_answer': pg_answer,
       'cocok_answer': cocok_answer,
       // 'voice_answer': voice_answer?.toMap(),
-      'status': status,
+      'status': status ? 'true' : 'false',
       'user_id': user_id,
     };
   }

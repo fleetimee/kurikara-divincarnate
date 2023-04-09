@@ -1,11 +1,12 @@
 // ignore_for_file: unused_field, prefer_final_fields, depend_on_referenced_packages
 
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_huixin_app/ui/pages/exercise_section.dart/exercise_number_three.dart';
 import 'package:flutter_sound/flutter_sound.dart';
-
 
 import 'package:audio_session/audio_session.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -14,9 +15,18 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_sound_platform_interface/flutter_sound_recorder_platform_interface.dart';
 
 import '../../../common/constants/color.dart';
+import '../../../cubit/auth/user/user_cubit.dart';
+import '../../../cubit/mastering/master_soal/master_soal_cubit.dart';
+import '../../../cubit/soal/finish_latihan_soal/finish_latihan_soal_cubit.dart';
+import '../../../cubit/soal/latihan_soal_header/latihan_soal_header_cubit.dart';
+import '../../../cubit/soal/latihan_soal_lines/latihan_soal_lines_cubit.dart';
+import '../../../data/models/auth/auth_response_model.dart';
+import '../../../data/models/latihan_soal/requests/finish_soal_request_model.dart';
+import '../../../data/models/latihan_soal/requests/latihan_lines_request_model.dart';
 import '../../widgets/appbar/appbar_style.dart';
 import '../../widgets/bottom_appbar_button.dart';
 import '../../widgets/container_course.dart';
+import '../home/home_ui.dart';
 
 typedef Fn = void Function();
 
@@ -39,8 +49,14 @@ class _ExerciseTwoState extends State<ExerciseTwo> {
   bool _mRecorderIsInited = false;
   bool _mplaybackReady = false;
 
+  DataUser? dataUser;
+
   @override
   void initState() {
+    dataUser = context.read<UserCubit>().state.maybeMap(
+          orElse: () => null,
+          loaded: (value) => value.data,
+        );
     _mPlayer.openPlayer().then((value) {
       setState(() {
         _mPlayerIsInited = true;
@@ -116,7 +132,7 @@ class _ExerciseTwoState extends State<ExerciseTwo> {
   void stopRecorder() async {
     await _mRecorder.stopRecorder().then((value) {
       setState(() {
-        //var url = value;
+        isAnswer = true;
         _mplaybackReady = true;
       });
     });
@@ -159,12 +175,19 @@ class _ExerciseTwoState extends State<ExerciseTwo> {
     return _mPlayer.isStopped ? play : stopPlayer;
   }
 
+  bool isAnswer = false;
+
   @override
   Widget build(BuildContext context) {
+    final state = context.watch<MasterSoalCubit>().state;
+    final latihanHeaderState = context.watch<LatihanSoalHeaderCubit>().state;
     return Scaffold(
-      appBar: const CustomAppBar(
+      appBar: CustomAppBar(
         title: 'Exercise',
-        numberOfExercises: '2',
+        numberOfExercises: state.maybeMap(
+          orElse: () => '0',
+          loaded: (state) => '${state.index + 1}',
+        ),
       ),
       body: Center(
         child: Column(
@@ -173,10 +196,45 @@ class _ExerciseTwoState extends State<ExerciseTwo> {
             const SizedBox(
               height: 60,
             ),
-            const ContainerCourse(
-              text: '你好',
-              color: Colors.white,
-            ),
+            state.maybeWhen(
+                orElse: () => const SizedBox(),
+                loaded: (data, index, isNext) {
+                  final currentSoal = data.data![index];
+                  return Container(
+                    height: 250,
+                    width: 300,
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          blurRadius: 5,
+                          offset: const Offset(0, 2),
+                          spreadRadius: 0,
+                        ),
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          blurRadius: 10,
+                          offset: const Offset(0, 8),
+                          spreadRadius: -3,
+                        ),
+                      ],
+                    ),
+                    child: Center(
+                      child: Text(
+                        currentSoal.soalTitle!,
+                        textAlign: TextAlign.center,
+                        style:
+                            const TextStyle(fontSize: 32, color: Colors.black),
+                      ),
+                    ),
+                  );
+                }),
+            // const ContainerCourse(
+            //   text: '你好',
+            //   color: Colors.white,
+            // ),
             const SizedBox(
               height: 30,
             ),
@@ -220,40 +278,69 @@ class _ExerciseTwoState extends State<ExerciseTwo> {
                     _mPlayer.isPlaying ? 'Stop' : 'Play',
                   ),
                 ),
-                // Text(
-                //   'Pos: $pos  dbLevel: ${((dbLevel * 100.0).floor()) / 100}',
-                // ),
-                // Slider(
-                //   value: _mSubscriptionDuration,
-                //   min: 0.0,
-                //   max: 2000.0,
-                //   onChanged: setSubscriptionDuration,
-                //   //divisions: 100
-                // ),
-
-                // const Text(
-                //   'Preview Suaramu',
-                // ),
-                // Align(
-                //   alignment: Alignment.bottomCenter,
-                //   child: ElevatedButton(
-                //     onPressed: () {
-                //       getPlayButton();
-                //     },
-                //     child: Text(_mPlayer!.isPlaying ? 'Stop' : 'Play'),
-                //   ),
-                // ),
               ],
             ),
           ],
         ),
       ),
       bottomNavigationBar: BottomNavigationBarButton(
-        name: 'NEXT',
-        color: AppColors.bottom,
-        onTap: () {
-          Navigator.pushNamed(context, ExerciseThree.routeName);
-        },
+        name: state.maybeMap(
+          orElse: () => 'NEXT',
+          loading: (state) => 'LOADING',
+          loaded: (state) => state.isNext ? 'NEXT' : 'FINISH',
+        ),
+        color: isAnswer
+            ? state.maybeMap(
+                orElse: () => AppColors.bottom,
+                loaded: (state) =>
+                    state.isNext ? AppColors.bottom : AppColors.greenColor,
+              )
+            : AppColors.greyWhite,
+        onTap: isAnswer
+            ? () {
+                state.maybeMap(
+                  orElse: () {},
+                  loaded: (state) {
+                    context
+                        .read<LatihanSoalLinesCubit>()
+                        .postLatihanSoalLines(LatihanLinesRequestModel(
+                          id_log_soal_header: latihanHeaderState.maybeMap(
+                            orElse: () => '',
+                            loaded: (state) =>
+                                state.data.data!.idLogSoalHeader.toString(),
+                          ),
+                          id_soal: state.data.data![state.index].idSoal!,
+                          tipe: state.data.data![state.index].tipe!,
+                          pg_answer: '',
+                          cocok_answer: '',
+                          voice_answer: File(_mPath),
+                          status: true,
+                          user_id: dataUser!.userId!,
+                        ));
+                    if (state.isNext) {
+                      context.read<MasterSoalCubit>().nextContent();
+                    } else {
+                      context.read<FinishLatihanSoalCubit>().finishLatihanSoal(
+                            FinishSoalRequestModel(
+                              user_id: dataUser!.userId!,
+                              id_level: latihanHeaderState.maybeMap(
+                                orElse: () => '',
+                                loaded: (state) =>
+                                    state.data.data!.idLevel.toString(),
+                              ),
+                              id_group_materi: latihanHeaderState.maybeMap(
+                                orElse: () => '',
+                                loaded: (state) =>
+                                    state.data.data!.idGroupMateri.toString(),
+                              ),
+                            ),
+                          );
+                      Navigator.pushNamed(context, HomePage.routeName);
+                    }
+                  },
+                );
+              }
+            : () {},
       ),
     );
   }

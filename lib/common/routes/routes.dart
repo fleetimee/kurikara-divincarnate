@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_huixin_app/ui/pages/exercise_section.dart/exercise_page.dart';
 
 import '../../ui/pages/course_done/course_done_ui.dart';
 import '../../ui/pages/course_initial/course_initial_ui.dart';
@@ -30,4 +31,5 @@ final Map<String, WidgetBuilder> routes = {
   SignUpPage.routeName: (context) => const SignUpPage(),
   ReportingPage.routeName: (context) => const ReportingPage(),
   ReportingDetailPage.routeName: (context) => const ReportingDetailPage(),
+  ExercisePage.routeName: (context) => const ExercisePage(),
 };

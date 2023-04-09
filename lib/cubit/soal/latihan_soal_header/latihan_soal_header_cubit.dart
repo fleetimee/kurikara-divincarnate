@@ -14,7 +14,7 @@ class LatihanSoalHeaderCubit extends Cubit<LatihanSoalHeaderState> {
     this._soalDatasource,
   ) : super(const LatihanSoalHeaderState.initial());
 
-  Future<void> getLatihanSoalHeader(LatihanHeaderRequestModel model) async {
+  Future<void> postLatihanSoalHeader(LatihanHeaderRequestModel model) async {
     emit(const LatihanSoalHeaderState.loading());
     final result = await _soalDatasource.postLatihanSoalHeader(model);
     result.fold(

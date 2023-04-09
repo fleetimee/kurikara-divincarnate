@@ -62,6 +62,7 @@ class MasterGroupMateri {
     this.reportSpeaking,
     this.statusExercise,
     this.open = false,
+    this.statusReading,
   });
 
   String? idGroupMateri;
@@ -77,6 +78,7 @@ class MasterGroupMateri {
   List<ReportIng>? reportReading;
   List<ReportIng>? reportSpeaking;
   String? statusExercise;
+  String? statusReading;
   bool open;
 
   factory MasterGroupMateri.fromRawJson(String str) =>
@@ -110,6 +112,7 @@ class MasterGroupMateri {
                 json["report_speaking"]!.map((x) => ReportIng.fromJson(x))),
         statusExercise: json["status_exercise"],
         open: json["open"] ?? false,
+        statusReading: json["status_reading"],
       );
 
   Map<String, dynamic> toJson() => {
