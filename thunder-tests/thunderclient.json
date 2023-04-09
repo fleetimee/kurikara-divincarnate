@@ -178,7 +178,7 @@
     "method": "POST",
     "sortNum": 30000,
     "created": "2023-04-04T15:15:39.785Z",
-    "modified": "2023-04-06T11:44:48.657Z",
+    "modified": "2023-04-09T08:38:39.175Z",
     "headers": [],
     "params": [],
     "body": {
@@ -187,11 +187,11 @@
       "form": [
         {
           "name": "username",
-          "value": "staf001"
+          "value": "soniaekap"
         },
         {
           "name": "password",
-          "value": "1"
+          "value": "soniaekap"
         },
         {
           "name": "id_google",
@@ -239,21 +239,21 @@
     "colId": "90dac72c-d6bd-4b54-a0c3-f9d1b939443b",
     "containerId": "909071d5-fd38-4cd6-b57b-0b92dae030b3",
     "name": "1. Master Level",
-    "url": "{{huxin}}api_level/?token_api=323232&user_id=2",
+    "url": "{{huxin}}api_level/?token_api=62a9e870-64e7-4416-a461-bc39cf9f30f0&user_id=7",
     "method": "GET",
     "sortNum": 50000,
     "created": "2023-04-04T15:15:39.787Z",
-    "modified": "2023-04-08T04:55:37.263Z",
+    "modified": "2023-04-09T08:38:57.150Z",
     "headers": [],
     "params": [
       {
         "name": "token_api",
-        "value": "323232",
+        "value": "62a9e870-64e7-4416-a461-bc39cf9f30f0",
         "isPath": false
       },
       {
         "name": "user_id",
-        "value": "2",
+        "value": "7",
         "isPath": false
       }
     ],
@@ -264,16 +264,16 @@
     "colId": "90dac72c-d6bd-4b54-a0c3-f9d1b939443b",
     "containerId": "909071d5-fd38-4cd6-b57b-0b92dae030b3",
     "name": "2. Master Group Materi",
-    "url": "{{huxin}}api_group_materi/?token_api=323232&id_level=1&user_id=2",
+    "url": "{{huxin}}api_group_materi/?token_api=62a9e870-64e7-4416-a461-bc39cf9f30f0&id_level=1&user_id=7",
     "method": "GET",
     "sortNum": 60000,
     "created": "2023-04-04T15:15:39.788Z",
-    "modified": "2023-04-06T12:39:50.436Z",
+    "modified": "2023-04-09T08:39:25.774Z",
     "headers": [],
     "params": [
       {
         "name": "token_api",
-        "value": "323232",
+        "value": "62a9e870-64e7-4416-a461-bc39cf9f30f0",
         "isPath": false
       },
       {
@@ -283,7 +283,7 @@
       },
       {
         "name": "user_id",
-        "value": "2",
+        "value": "7",
         "isPath": false
       }
     ],
@@ -368,15 +368,18 @@
     "method": "POST",
     "sortNum": 90000,
     "created": "2023-04-04T15:15:39.791Z",
-    "modified": "2023-04-04T15:15:39.791Z",
+    "modified": "2023-04-09T05:38:36.174Z",
     "headers": [],
     "params": [
       {
         "name": "token_api",
-        "value": "323232"
+        "value": "323232",
+        "isPath": false
       }
     ],
     "body": {
+      "type": "formencoded",
+      "raw": "",
       "form": [
         {
           "name": "user_id",
@@ -384,15 +387,15 @@
         },
         {
           "name": "id_level",
-          "value": "1"
+          "value": "3"
         },
         {
           "name": "id_group_materi",
-          "value": "1"
+          "value": "3"
         }
-      ],
-      "type": "formencoded"
-    }
+      ]
+    },
+    "tests": []
   },
   {
     "_id": "75af483f-3bea-4080-8d10-47f6e8a4033c",
@@ -444,31 +447,34 @@
     "method": "POST",
     "sortNum": 110000,
     "created": "2023-04-04T15:15:39.794Z",
-    "modified": "2023-04-04T15:15:39.794Z",
+    "modified": "2023-04-09T05:38:50.659Z",
     "headers": [],
     "params": [
       {
         "name": "token_api",
-        "value": "323232"
+        "value": "323232",
+        "isPath": false
       }
     ],
     "body": {
+      "type": "formencoded",
+      "raw": "",
       "form": [
         {
           "name": "user_id",
-          "value": ""
+          "value": "2"
         },
         {
           "name": "id_level",
-          "value": ""
+          "value": "3"
         },
         {
           "name": "id_group_materi",
-          "value": ""
+          "value": "3"
         }
-      ],
-      "type": "formencoded"
-    }
+      ]
+    },
+    "tests": []
   },
   {
     "_id": "081d60aa-9330-4442-a0f3-88574918a69b",
