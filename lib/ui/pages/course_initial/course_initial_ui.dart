@@ -4,14 +4,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_huixin_app/cubit/auth/user/user_cubit.dart';
 import 'package:flutter_huixin_app/cubit/mastering/master_materi/master_materi_cubit.dart';
 import 'package:flutter_huixin_app/cubit/materi/loging_header/loging_header_cubit.dart';
+import 'package:flutter_huixin_app/cubit/soal/latihan_soal_header/latihan_soal_header_cubit.dart';
 import 'package:flutter_huixin_app/data/datasources/local/app_secure_storage.dart';
 import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
 import 'package:flutter_huixin_app/data/models/mastering/master_group_materi_response_model.dart';
+import 'package:flutter_huixin_app/ui/pages/exercise_section.dart/exercise_number_one_ui.dart';
 import 'package:flutter_huixin_app/ui/pages/reading_section/reading_section_ui.dart';
 
+import '../../../data/models/latihan_soal/requests/latihan_header_request_model.dart';
 import '../../../data/models/materi_pelajaran/requests/loging_header_request_model.dart';
 import '../../widgets/appbar/appbar_style.dart';
 import '../../widgets/bottom_appbar_note.dart';
+import '../exercise_section.dart/exercise_page.dart';
 
 class CourseInitial extends StatefulWidget {
   static const String routeName = '/course_initial';
@@ -175,17 +179,54 @@ class MateriSelector extends StatelessWidget {
           },
         ),
         const SizedBox(height: 16),
-        InkWell(
-          onTap: () {},
-          child: masterGroupMateri.statusExercise == 'finish'
-              ? Image.asset(
-                  "assets/images/exercise_remedial.png",
-                  fit: BoxFit.fill,
-                )
-              : Image.asset(
-                  "assets/images/exercise.png",
-                  fit: BoxFit.fill,
-                ),
+        BlocConsumer<LatihanSoalHeaderCubit, LatihanSoalHeaderState>(
+          listener: (context, state) {
+            state.maybeMap(
+                orElse: () {},
+                loaded: (value) {
+                  final readingMateri = ReadingMateri(
+                      masterGroupMateri: masterGroupMateri,
+                      logingHeaderId:
+                          value.data.data!.idLogSoalHeader.toString());
+                  Navigator.pushNamed(
+                    context,
+                    ExercisePage.routeName,
+                    arguments: readingMateri,
+                  );
+                });
+          },
+          builder: (context, state) {
+            state.maybeMap(
+              orElse: () {},
+              loading: (value) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
+            );
+            return InkWell(
+              onTap: () {
+                if (masterGroupMateri.statusReading == 'finish') {
+                  context
+                      .read<LatihanSoalHeaderCubit>()
+                      .postLatihanSoalHeader(LatihanHeaderRequestModel(
+                        user_id: dataUser.userId!,
+                        id_level: masterGroupMateri.idLevel!,
+                        id_group_materi: masterGroupMateri.idGroupMateri!,
+                      ));
+                }
+              },
+              child: masterGroupMateri.statusReading == 'finish'
+                  ? Image.asset(
+                      "assets/images/exercise_remedial.png",
+                      fit: BoxFit.fill,
+                    )
+                  : Image.asset(
+                      "assets/images/exercise.png",
+                      fit: BoxFit.fill,
+                    ),
+            );
+          },
         ),
       ],
     );

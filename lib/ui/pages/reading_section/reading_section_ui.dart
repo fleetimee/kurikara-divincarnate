@@ -208,7 +208,7 @@ class _ReadingSectionState extends State<ReadingSection> {
           appBar: AppBarReading(
             title: 'Reading & Speaking',
             context: context,
-            disabledRoute: true,
+            disabledRoute: false,
           ),
           body: state.maybeMap(
               orElse: () => const Center(
@@ -223,6 +223,11 @@ class _ReadingSectionState extends State<ReadingSection> {
                 return null;
               },
               loaded: (value) {
+                if (value.data.data == null || value.data.data!.isEmpty) {
+                  return const Center(
+                    child: Text("Data tidak ditemukan"),
+                  );
+                }
                 final materi = value.data.data![_currentContent];
                 masterMateri = materi;
                 totalContent = value.data.data!.length;
