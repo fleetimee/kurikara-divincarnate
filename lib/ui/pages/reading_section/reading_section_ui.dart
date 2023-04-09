@@ -11,13 +11,16 @@ import 'package:flutter_huixin_app/cubit/materi/loging_lines/loging_lines_cubit.
 import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
 import 'package:flutter_huixin_app/data/models/mastering/master_materi_response_model.dart';
 import 'package:flutter_huixin_app/data/models/materi_pelajaran/requests/loging_lines_request_model.dart';
-import 'package:flutter_huixin_app/ui/pages/course_initial/course_initial_ui.dart';
+import 'package:flutter_huixin_app/ui/pages/home/home_ui.dart';
+import 'package:flutter_huixin_app/ui/widgets/not_found.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 
 import 'package:just_audio/just_audio.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_sound_platform_interface/flutter_sound_recorder_platform_interface.dart'
     as fsr;
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../common/constants/color.dart';
 import '../../../cubit/auth/user/user_cubit.dart';
@@ -222,8 +225,8 @@ class _ReadingSectionState extends State<ReadingSection> {
               },
               loaded: (value) {
                 if (value.data.data == null || value.data.data!.isEmpty) {
-                  return const Center(
-                    child: Text("Data tidak ditemukan"),
+                  return const NotFound(
+                    text: 'Materi belum tersedia',
                   );
                 }
                 final materi = value.data.data![_currentContent];
@@ -408,12 +411,19 @@ class _ReadingSectionState extends State<ReadingSection> {
                     final newMasterGroupMateri =
                         readingMateri!.masterGroupMateri;
                     newMasterGroupMateri.statusReading = 'finish';
-                    Navigator.pushNamedAndRemoveUntil(
-                        context,
-                        CourseInitial.routeName,
-                        (route) =>
-                            route.settings.name == CourseInitial.routeName,
-                        arguments: newMasterGroupMateri);
+
+                    Navigator.pushReplacementNamed(
+                      context,
+                      HomePage.routeName,
+                    );
+
+                    showTopSnackBar(
+                      Overlay.of(context),
+                      CustomSnackBar.success(
+                        message:
+                            "Materi ${readingMateri!.masterGroupMateri.name} telah diselesaikan",
+                      ),
+                    );
                   }
                 : () {
                     context.read<LogingLinesCubit>().postLogingLines(

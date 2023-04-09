@@ -126,6 +126,7 @@ class SuccessDialog extends AwesomeDialog {
           btnOkText: btnOkText,
           btnCancelText: btnCancelText,
           btnOkOnPress: btnOkOnPress,
+          btnOkColor: AppColors.yellowColor,
           btnCancelOnPress: btnCancelOnPress,
           dialogBackgroundColor: AppColors.greenColor,
           dismissOnBackKeyPress: false,

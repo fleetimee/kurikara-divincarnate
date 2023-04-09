@@ -5,6 +5,8 @@ import 'package:flutter_huixin_app/common/constants/color.dart';
 import 'package:flutter_huixin_app/cubit/mastering/master_level/master_level_cubit.dart';
 import 'package:flutter_huixin_app/data/models/mastering/master_level_response_model.dart';
 import 'package:flutter_huixin_app/ui/pages/course_selector/course_selector_ui.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class TileMasterLevel extends StatelessWidget {
   final int index;
@@ -45,26 +47,12 @@ class TileMasterLevel extends StatelessWidget {
                       'level_name': masterLevel.name,
                     },
                   )
-                : showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: const Text(
-                          'Level Locked',
-                        ),
-                        content: const Text(
-                          'Please complete the previous level',
-                        ),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: const Text('OK'),
-                          ),
-                        ],
-                      );
-                    },
+                : showTopSnackBar(
+                    Overlay.of(context),
+                    CustomSnackBar.error(
+                      message:
+                          "Level ${masterLevel.name} belum terbuka, silahkan selesaikan level sebelumnya terlebih dahulu",
+                    ),
                   );
           }
         },

@@ -5,6 +5,8 @@ import 'package:flutter_huixin_app/common/constants/color.dart';
 import 'package:flutter_huixin_app/cubit/mastering/master_group_materi/master_group_materi_cubit.dart';
 import 'package:flutter_huixin_app/data/models/mastering/master_group_materi_response_model.dart';
 import 'package:flutter_huixin_app/ui/pages/course_initial/course_initial_ui.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class MasterGroupMateriTile extends StatelessWidget {
   final int index;
@@ -32,22 +34,12 @@ class MasterGroupMateriTile extends StatelessWidget {
                 arguments: masterGroupMateri,
               );
             } else {
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    title: const Text('Day Locked'),
-                    content: const Text('Please complete the previous day'),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Text('OK'),
-                      ),
-                    ],
-                  );
-                },
+              showTopSnackBar(
+                Overlay.of(context),
+                const CustomSnackBar.error(
+                  message:
+                      "Anda belum bisa mengakses materi ini, silahkan belajar materi sebelumnya terlebih dahulu",
+                ),
               );
             }
           },

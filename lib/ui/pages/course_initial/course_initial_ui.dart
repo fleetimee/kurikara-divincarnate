@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -8,6 +9,8 @@ import 'package:flutter_huixin_app/cubit/soal/latihan_soal_header/latihan_soal_h
 import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
 import 'package:flutter_huixin_app/data/models/mastering/master_group_materi_response_model.dart';
 import 'package:flutter_huixin_app/ui/pages/reading_section/reading_section_ui.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../cubit/mastering/master_materi/master_materi_cubit.dart';
 import '../../../data/models/latihan_soal/requests/latihan_header_request_model.dart';
@@ -87,16 +90,34 @@ class MateriSelector extends StatelessWidget {
             ),
             Positioned(
               bottom: MediaQuery.of(context).size.height / 15,
-              left: MediaQuery.of(context).size.width / 12,
-              child: Image.asset(
-                "assets/images/tree.png",
-                height: 100,
-                fit: BoxFit.fill,
+              left: MediaQuery.of(context).size.width * 0.11,
+              // child: Image.asset(
+              //   "assets/images/tree.png",
+              //   height: 100,
+              //   fit: BoxFit.fill,
+              // ),
+              child: CachedNetworkImage(
+                imageUrl:
+                    'https://huixin.id/assets/group_materi/${masterGroupMateri.imgFile}',
+                imageBuilder: (context, imageProvider) => Container(
+                  width: 100.0,
+                  height: 100.0,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      image: imageProvider,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                placeholder: (context, url) =>
+                    const CircularProgressIndicator(),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
               ),
             ),
             Positioned(
               bottom: MediaQuery.of(context).size.height / 30,
-              right: MediaQuery.of(context).size.width / 11,
+              right: MediaQuery.of(context).size.width * 0.12,
               child: Text(
                 '${masterGroupMateri.name}',
                 textAlign: TextAlign.center,
@@ -199,6 +220,14 @@ class MateriSelector extends StatelessWidget {
                         id_level: masterGroupMateri.idLevel!,
                         id_group_materi: masterGroupMateri.idGroupMateri!,
                       ));
+                } else {
+                  showTopSnackBar(
+                    Overlay.of(context),
+                    const CustomSnackBar.error(
+                      message:
+                          "Selesaikan materi terlebih dahulu untuk mengakses latihan soal ini",
+                    ),
+                  );
                 }
               },
               child: masterGroupMateri.statusReading == 'finish'

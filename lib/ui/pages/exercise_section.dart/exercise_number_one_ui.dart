@@ -7,6 +7,8 @@ import 'package:flutter_huixin_app/cubit/soal/latihan_soal_lines/latihan_soal_li
 import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
 import 'package:flutter_huixin_app/ui/pages/exercise_section.dart/exercise_number_two_ui.dart';
 import 'package:flutter_huixin_app/ui/pages/home/home_ui.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../common/constants/color.dart';
 import '../../../cubit/entities/question_data.dart';
@@ -307,7 +309,16 @@ class _ExerciseOneState extends State<ExerciseOne> {
                       context.read<MasterSoalCubit>().setInitial();
                       context.read<LatihanSoalHeaderCubit>().setInitial();
                       context.read<LatihanSoalLinesCubit>().setInitial();
-                      Navigator.pushNamed(context, HomePage.routeName);
+                      Navigator.pushReplacementNamed(
+                          context, HomePage.routeName);
+
+                      showTopSnackBar(
+                        Overlay.of(context),
+                        const CustomSnackBar.success(
+                          message:
+                              "Latihan berhasil diselesaikan, silahkan cek hasil latihan kamu di menu reporting",
+                        ),
+                      );
                     }
                   },
                 );
