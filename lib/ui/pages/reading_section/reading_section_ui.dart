@@ -358,12 +358,15 @@ class _ReadingSectionState extends State<ReadingSection> {
                                       Text(
                                         _mRecorder.isRecording
                                             ? 'Stop'
-                                            : 'Record',
+                                            : 'Speak',
                                         style: const TextStyle(
                                           fontSize: 24,
                                           fontWeight: FontWeight.bold,
                                           color: AppColors.yellowColor,
                                         ),
+                                      ),
+                                      const SizedBox(
+                                        height: 8,
                                       ),
                                       ElevatedButton(
                                         onPressed: getPlaybackFn(),

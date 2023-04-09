@@ -3,6 +3,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_huixin_app/ui/pages/exercise_section.dart/exercise_number_three.dart';
@@ -222,11 +223,31 @@ class _ExerciseTwoState extends State<ExerciseTwo> {
                       ],
                     ),
                     child: Center(
-                      child: Text(
-                        currentSoal.soalTitle!,
-                        textAlign: TextAlign.center,
-                        style:
-                            const TextStyle(fontSize: 32, color: Colors.black),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          if (currentSoal.soalImage != 'default.png')
+                            CachedNetworkImage(
+                              imageUrl:
+                                  '${currentSoal.fileUrl}${currentSoal.soalImage}',
+                              height: 140,
+                              errorWidget: (context, url, error) {
+                                return const Icon(Icons.error);
+                              },
+                            ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Text(
+                            currentSoal.soalTitle!,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: currentSoal.soalImage == 'default.png'
+                                    ? 32
+                                    : 16,
+                                color: Colors.black),
+                          ),
+                        ],
                       ),
                     ),
                   );
@@ -263,12 +284,15 @@ class _ExerciseTwoState extends State<ExerciseTwo> {
                   height: 10.0,
                 ),
                 Text(
-                  _mRecorder.isRecording ? 'Stop' : 'Record',
+                  _mRecorder.isRecording ? 'Stop' : 'Speak',
                   style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                     color: AppColors.yellowColor,
                   ),
+                ),
+                const SizedBox(
+                  height: 8,
                 ),
                 ElevatedButton(
                   onPressed: getPlaybackFn(),
