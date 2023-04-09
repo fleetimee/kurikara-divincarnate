@@ -23,4 +23,8 @@ class LatihanSoalLinesCubit extends Cubit<LatihanSoalLinesState> {
       (r) => emit(LatihanSoalLinesState.loaded(r)),
     );
   }
+
+  setInitial() {
+    emit(const LatihanSoalLinesState.initial());
+  }
 }

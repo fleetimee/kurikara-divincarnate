@@ -43,7 +43,7 @@ class _ReadingSectionState extends State<ReadingSection> {
   bool _isMicrophoneClicked = false;
   int _currentContent = 0;
   int totalContent = 0;
-  // MasterGroupMateri? masterGroupMateri;
+
   ReadingMateri? readingMateri;
   DataUser? user;
   late AudioPlayer player;
@@ -146,10 +146,8 @@ class _ReadingSectionState extends State<ReadingSection> {
   void stopRecorder() async {
     await _mRecorder.stopRecorder().then((value) {
       setState(() {
-        //var url = value;
         _mplaybackReady = true;
         _isMicrophoneClicked = true;
-        // _isReadyForNextContent = true;
       });
     });
   }
@@ -217,8 +215,8 @@ class _ReadingSectionState extends State<ReadingSection> {
               initial: (value) {
                 context.read<MasterMateriCubit>().getMasterMateri(
                       user!.userId!,
-                      readingMateri!.masterGroupMateri.idGroupMateri!,
                       readingMateri!.masterGroupMateri.idLevel!,
+                      readingMateri!.masterGroupMateri.idGroupMateri!,
                     );
                 return null;
               },
@@ -288,8 +286,10 @@ class _ReadingSectionState extends State<ReadingSection> {
                                   ),
                                   _isMicrophoneClicked
                                       ? InkWell(
-                                          onTap: () => _playAudio(
-                                              '${materi.latihanUrlFile}${materi.latihanVoice}'),
+                                          onTap: () {
+                                            _playAudio(
+                                                '${materi.latihanUrlFile!.replaceAll('/level', '')}${materi.latihanVoice}');
+                                          },
                                           child: Column(
                                             children: [
                                               const SizedBox(
@@ -297,8 +297,8 @@ class _ReadingSectionState extends State<ReadingSection> {
                                               ),
                                               Center(
                                                 child: Container(
-                                                  height: 90,
-                                                  width: 350,
+                                                  height: 80,
+                                                  width: 300,
                                                   decoration:
                                                       const BoxDecoration(
                                                     borderRadius:
@@ -316,7 +316,7 @@ class _ReadingSectionState extends State<ReadingSection> {
                                                         const Text(
                                                           "Correct \nAnswer",
                                                           style: TextStyle(
-                                                            fontSize: 28,
+                                                            fontSize: 24,
                                                             color: Colors.black,
                                                             fontWeight:
                                                                 FontWeight.bold,
@@ -328,6 +328,7 @@ class _ReadingSectionState extends State<ReadingSection> {
                                                         Image.asset(
                                                           "assets/images/volume_ok.png",
                                                           fit: BoxFit.fill,
+                                                          height: 40,
                                                         ),
                                                       ],
                                                     ),
@@ -403,9 +404,10 @@ class _ReadingSectionState extends State<ReadingSection> {
                         );
                     context.read<LogingHeaderCubit>().setInitial();
                     context.read<LogingLinesCubit>().setInitial();
+                    context.read<MasterMateriCubit>().setInitial();
                     final newMasterGroupMateri =
                         readingMateri!.masterGroupMateri;
-                    newMasterGroupMateri.statusExercise = 'finish';
+                    newMasterGroupMateri.statusReading = 'finish';
                     Navigator.pushNamedAndRemoveUntil(
                         context,
                         CourseInitial.routeName,

@@ -534,7 +534,10 @@ class _ExerciseThreeState extends State<ExerciseThree> {
                               ),
                             ),
                           );
-                          Navigator.pushNamed(context, HomePage.routeName);
+                      context.read<MasterSoalCubit>().setInitial();
+                      context.read<LatihanSoalHeaderCubit>().setInitial();
+                      context.read<LatihanSoalLinesCubit>().setInitial();
+                      Navigator.pushNamed(context, HomePage.routeName);
                     }
                   },
                 );

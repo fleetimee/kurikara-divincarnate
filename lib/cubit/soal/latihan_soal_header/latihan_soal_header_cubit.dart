@@ -22,4 +22,8 @@ class LatihanSoalHeaderCubit extends Cubit<LatihanSoalHeaderState> {
       (r) => emit(LatihanSoalHeaderState.loaded(r)),
     );
   }
+
+  setInitial() {
+    emit(const LatihanSoalHeaderState.initial());
+  }
 }

@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter_huixin_app/cubit/auth/user/user_cubit.dart';
-import 'package:flutter_huixin_app/cubit/mastering/master_materi/master_materi_cubit.dart';
+import 'package:flutter_huixin_app/cubit/mastering/master_soal/master_soal_cubit.dart';
 import 'package:flutter_huixin_app/cubit/materi/loging_header/loging_header_cubit.dart';
 import 'package:flutter_huixin_app/cubit/soal/latihan_soal_header/latihan_soal_header_cubit.dart';
-import 'package:flutter_huixin_app/data/datasources/local/app_secure_storage.dart';
 import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
 import 'package:flutter_huixin_app/data/models/mastering/master_group_materi_response_model.dart';
-import 'package:flutter_huixin_app/ui/pages/exercise_section.dart/exercise_number_one_ui.dart';
 import 'package:flutter_huixin_app/ui/pages/reading_section/reading_section_ui.dart';
 
+import '../../../cubit/mastering/master_materi/master_materi_cubit.dart';
 import '../../../data/models/latihan_soal/requests/latihan_header_request_model.dart';
 import '../../../data/models/materi_pelajaran/requests/loging_header_request_model.dart';
 import '../../widgets/appbar/appbar_style.dart';
@@ -75,22 +74,6 @@ class MateriSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final state = context.watch<LogingHeaderCubit>().state;
-    // state.maybeMap(
-    //   orElse: () {},
-    //   loading: (value) {},
-    //   loaded: (value) {
-    //     final readingMateri = ReadingMateri(
-    //         masterGroupMateri: masterGroupMateri,
-    //         logingHeaderId: value.data.data!.idLogMateriHeader.toString());
-    //     Navigator.pushNamed(
-    //       context,
-    //       ReadingSection.routeName,
-    //       arguments: readingMateri,
-    //     );
-    //   },
-    //   error: (value) {},
-    // );
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -141,6 +124,7 @@ class MateriSelector extends StatelessWidget {
             state.maybeMap(
                 orElse: () {},
                 loaded: (value) {
+                  context.read<MasterMateriCubit>().setInitial();
                   final readingMateri = ReadingMateri(
                       masterGroupMateri: masterGroupMateri,
                       logingHeaderId:
@@ -184,6 +168,7 @@ class MateriSelector extends StatelessWidget {
             state.maybeMap(
                 orElse: () {},
                 loaded: (value) {
+                  context.read<MasterSoalCubit>().setInitial();
                   final readingMateri = ReadingMateri(
                       masterGroupMateri: masterGroupMateri,
                       logingHeaderId:

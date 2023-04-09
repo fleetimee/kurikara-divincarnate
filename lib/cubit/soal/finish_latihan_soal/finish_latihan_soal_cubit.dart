@@ -22,4 +22,8 @@ class FinishLatihanSoalCubit extends Cubit<FinishLatihanSoalState> {
       (r) => emit(FinishLatihanSoalState.loaded(r)),
     );
   }
+
+  setInitial() {
+    emit(const FinishLatihanSoalState.initial());
+  }
 }

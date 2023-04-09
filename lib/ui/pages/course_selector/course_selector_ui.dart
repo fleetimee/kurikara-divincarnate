@@ -22,12 +22,6 @@ class _CourseSelectorState extends State<CourseSelector> {
   MasterLevel? masterLevel;
   DataUser? user;
 
-  // Future<void> _getArgs() async {
-  //   args = (await Future.delayed(Duration.zero, () {
-  //     return ModalRoute.of(context)?.settings.arguments as Map?;
-  //   }))!;
-  // }
-
   @override
   void initState() {
     super.initState();
@@ -36,15 +30,7 @@ class _CourseSelectorState extends State<CourseSelector> {
   }
 
   void _getUser() async {
-    // _getArgs();
     user = await AppSecureStorage.getUser();
-
-    // setState(() {
-    //   context.read<MasterGroupMateriCubit>().getMasterGroupMateri(
-    //         user?.userId ?? '',
-    //         args?['level_id'] ?? '',
-    //       );
-    // });
   }
 
   @override
