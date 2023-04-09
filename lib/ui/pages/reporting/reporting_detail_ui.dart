@@ -158,6 +158,7 @@ class _ReportingDetailPageState extends State<ReportingDetailPage> {
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
                                         ),
+                                        textAlign: TextAlign.right,
                                       ),
                                     ),
                                   ],

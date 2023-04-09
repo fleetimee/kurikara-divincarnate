@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_huixin_app/common/constants/color.dart';
 import 'package:flutter_huixin_app/cubit/report/report_cubit.dart';
 import 'package:flutter_huixin_app/ui/pages/reporting/reporting_detail_ui.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class ReportTile extends StatelessWidget {
   final int index;
@@ -52,22 +54,12 @@ class ReportTile extends StatelessWidget {
                 },
               );
             } else {
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    title: const Text('Reporting Locked'),
-                    content: const Text('Please complete the course first'),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Text('OK'),
-                      ),
-                    ],
-                  );
-                },
+              showTopSnackBar(
+                Overlay.of(context),
+                CustomSnackBar.error(
+                  message:
+                      "Laporan untuk Level ${state.data.data![index].name} belum siap",
+                ),
               );
             }
           },
