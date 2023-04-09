@@ -147,7 +147,7 @@ class _ReportingDetailPageState extends State<ReportingDetailPage> {
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(
-                                        left: 160,
+                                        left: 140,
                                       ),
                                       child: Text(
                                         allEducations[index].value == '80/100'
