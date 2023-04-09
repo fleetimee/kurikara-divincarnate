@@ -31,4 +31,8 @@ class MasterSoalCubit extends Cubit<MasterSoalState> {
         index: currentState.index + 1,
         isNext: currentState.data.data!.length > currentState.index + 2));
   }
+
+  setInitial() {
+    emit(const MasterSoalState.initial());
+  }
 }

@@ -83,7 +83,7 @@ class MasterMateri {
         latihanUrlFile: json["latihan_url_file"],
         latihanTitle: json["latihan_title"],
         latihanImage: json["latihan_image"],
-        latihanVoice: json["latihan _voice"],
+        latihanVoice: json["latihan_voice"],
         latihanCina: json["latihan_cina"],
         latihanIndonesia: json["latihan_indonesia"],
         materiCreateBy: json["materi_create_by"],

@@ -359,6 +359,9 @@ class _ExerciseTwoState extends State<ExerciseTwo> {
                               ),
                             ),
                           );
+                      context.read<MasterSoalCubit>().setInitial();
+                      context.read<LatihanSoalHeaderCubit>().setInitial();
+                      context.read<LatihanSoalLinesCubit>().setInitial();
                       Navigator.pushNamed(context, HomePage.routeName);
                     }
                   },
