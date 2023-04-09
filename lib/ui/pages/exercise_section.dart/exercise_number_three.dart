@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_huixin_app/cubit/soal/finish_latihan_soal/finish_latihan_soal_cubit.dart';
 import 'package:flutter_huixin_app/data/models/latihan_soal/requests/finish_soal_request_model.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../common/constants/color.dart';
 import '../../../cubit/auth/user/user_cubit.dart';
@@ -537,7 +539,16 @@ class _ExerciseThreeState extends State<ExerciseThree> {
                       context.read<MasterSoalCubit>().setInitial();
                       context.read<LatihanSoalHeaderCubit>().setInitial();
                       context.read<LatihanSoalLinesCubit>().setInitial();
-                      Navigator.pushNamed(context, HomePage.routeName);
+                      Navigator.pushReplacementNamed(
+                          context, HomePage.routeName);
+
+                      showTopSnackBar(
+                        Overlay.of(context),
+                        const CustomSnackBar.success(
+                          message:
+                              "Latihan berhasil diselesaikan, silahkan cek hasil latihan kamu di menu reporting",
+                        ),
+                      );
                     }
                   },
                 );
