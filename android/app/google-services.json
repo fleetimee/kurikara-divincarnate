@@ -14,7 +14,23 @@
       },
       "oauth_client": [
         {
-          "client_id": "1039944241527-8ikm67qn2lrp7dh94gqa747vavjolh6l.apps.googleusercontent.com",
+          "client_id": "1039944241527-07h73c0urq79cqvbtufmlsl0qcb8q74s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "id.huixin.android",
+            "certificate_hash": "66dd6406fc0b5224c9e6e137634ccb64ff6c927d"
+          }
+        },
+        {
+          "client_id": "1039944241527-09fpje9f3o9o09che4bti0k1ej8k4blg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "id.huixin.android",
+            "certificate_hash": "1d770cb9d2682386aea343996378067856321a35"
+          }
+        },
+        {
+          "client_id": "1039944241527-rgff9jms8f4g00vji8o6ra6uq3a8cq65.apps.googleusercontent.com",
           "client_type": 3
         }
       ],

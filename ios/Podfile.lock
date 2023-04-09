@@ -71,6 +71,9 @@ PODS:
     - Flutter
     - flutter_sound_core (= 9.2.13)
   - flutter_sound_core (9.2.13)
+  - FMDB (2.7.5):
+    - FMDB/standard (= 2.7.5)
+  - FMDB/standard (2.7.5)
   - google_sign_in_ios (0.0.1):
     - Flutter
     - GoogleSignIn (~> 6.2)
@@ -120,6 +123,9 @@ PODS:
   - PromisesObjC (2.2.0)
   - sign_in_with_apple (0.0.1):
     - Flutter
+  - sqflite (0.0.2):
+    - Flutter
+    - FMDB (>= 2.7.5)
 
 DEPENDENCIES:
   - audio_session (from `.symlinks/plugins/audio_session/ios`)
@@ -137,6 +143,7 @@ DEPENDENCIES:
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/ios`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - sign_in_with_apple (from `.symlinks/plugins/sign_in_with_apple/ios`)
+  - sqflite (from `.symlinks/plugins/sqflite/ios`)
 
 SPEC REPOS:
   trunk:
@@ -152,6 +159,7 @@ SPEC REPOS:
     - FirebaseInstallations
     - FirebaseMessaging
     - flutter_sound_core
+    - FMDB
     - GoogleDataTransport
     - GoogleSignIn
     - GoogleUtilities
@@ -191,6 +199,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/permission_handler_apple/ios"
   sign_in_with_apple:
     :path: ".symlinks/plugins/sign_in_with_apple/ios"
+  sqflite:
+    :path: ".symlinks/plugins/sqflite/ios"
 
 SPEC CHECKSUMS:
   AppAuth: 8fca6b5563a5baef2c04bee27538025e4ceb2add
@@ -214,6 +224,7 @@ SPEC CHECKSUMS:
   flutter_secure_storage: 23fc622d89d073675f2eaa109381aefbcf5a49be
   flutter_sound: c60effa2a350fb977885f0db2fbc4c1ad5160900
   flutter_sound_core: 26c10e5832e76aaacfae252d8925232281c486ae
+  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   google_sign_in_ios: 1256ff9d941db546373826966720b0c24804bcdd
   GoogleDataTransport: 8378d1fa8ac49753ea6ce70d65a7cb70ce5f66e6
   GoogleSignIn: 5651ce3a61e56ca864160e79b484cd9ed3f49b7a
@@ -227,6 +238,7 @@ SPEC CHECKSUMS:
   permission_handler_apple: 44366e37eaf29454a1e7b1b7d736c2cceaeb17ce
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
   sign_in_with_apple: f3bf75217ea4c2c8b91823f225d70230119b8440
+  sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
 
 PODFILE CHECKSUM: 4e8f8b2be68aeea4c0d5beb6ff1e79fface1d048
 

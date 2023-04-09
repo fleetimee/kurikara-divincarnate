@@ -5,7 +5,6 @@ import 'package:flutter_huixin_app/data/models/latihan_soal/requests/finish_soal
 
 import '../../../common/constants/color.dart';
 import '../../../cubit/auth/user/user_cubit.dart';
-import '../../../cubit/entities/exercise_three.dart';
 import '../../../cubit/mastering/master_soal/master_soal_cubit.dart';
 import '../../../cubit/soal/latihan_soal_header/latihan_soal_header_cubit.dart';
 import '../../../cubit/soal/latihan_soal_lines/latihan_soal_lines_cubit.dart';

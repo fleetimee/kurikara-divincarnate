@@ -13,6 +13,7 @@ dependencies:
   awesome_dialog: ^3.0.2
   bloc: ^8.1.1
   cached_network_image: ^3.2.3
+  crypto: ^3.0.2
   cupertino_icons: ^1.0.5
   dartz: ^0.10.1
   device_info_plus: ^8.1.0
@@ -31,7 +32,7 @@ dependencies:
     sdk: flutter
   flutter_secure_storage: ^8.0.0
   flutter_sound: ^9.2.13
-  flutter_sound_platform_interface:
+  flutter_sound_platform_interface: null
   font_awesome_flutter: ^10.4.0
   form_builder_validators: ^8.5.0
   freezed_annotation: ^2.2.0

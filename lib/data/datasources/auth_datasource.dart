@@ -35,6 +35,27 @@ class AuthDataSource {
     }
   }
 
+  Future<Either<String, AuthResponseModel>> registerSosmed(
+      RegisterRequestModel model) async {
+    try {
+      final headers = {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Cookie': 'ci_session=ouvp29be2csimiohsjvhpt90oo3ejgcs'
+      };
+      final response = await http.post(
+        Uri.parse('${AppApi.baseUrl}/api_register'),
+        body: model.toMap(),
+        headers: headers,
+      );
+
+      return Right(
+        AuthResponseModel.fromJson(jsonDecode(response.body)),
+      );
+    } catch (e) {
+      return Left(e.toString());
+    }
+  }
+
   Future<Either<String, AuthResponseModel>> login(
       LoginRequestModel model) async {
     try {
@@ -44,8 +65,6 @@ class AuthDataSource {
       };
       var response = await http.post(Uri.parse('${AppApi.baseUrl}/api_login'),
           headers: headers, body: model.toMap());
-
-      // http_plus.StreamedResponse response = await request.send();
 
       return Right(
         AuthResponseModel.fromJson(jsonDecode(response.body)),

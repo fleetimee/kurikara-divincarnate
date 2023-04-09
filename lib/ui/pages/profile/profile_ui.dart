@@ -241,40 +241,44 @@ class _ProfilePageState extends State<ProfilePage> {
         mainAxisAlignment: MainAxisAlignment
             .spaceBetween, // Add the mainAxisAlignment property
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                user?.fullName ?? '..',
-                style: const TextStyle(
-                    fontSize: 36,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black),
-              ),
-              Text(
-                user?.userName ?? '..',
-                style: const TextStyle(
-                  fontSize: 20,
-                  color: Colors.grey,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  user?.fullName ?? '..',
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                      fontSize: 36,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black),
                 ),
-              ),
-              const SizedBox(height: 10),
-              Row(
-                children: [
-                  Image.asset(
-                    'assets/images/clock.png',
-                    width: 20,
-                    height: 20,
-                    fit: BoxFit.cover,
+                Text(
+                  user?.userName ?? '..',
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    color: Colors.grey,
                   ),
-                  const SizedBox(width: 10),
-                  const Text(
-                    'Joined March 2023',
-                    style: TextStyle(fontSize: 20, color: Colors.black),
-                  ),
-                ],
-              ),
-            ],
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    Image.asset(
+                      'assets/images/clock.png',
+                      width: 20,
+                      height: 20,
+                      fit: BoxFit.cover,
+                    ),
+                    const SizedBox(width: 10),
+                    const Text(
+                      'Joined March 2023',
+                      style: TextStyle(fontSize: 20, color: Colors.black),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
           // CircleAvatar(
           //   radius: 50,
