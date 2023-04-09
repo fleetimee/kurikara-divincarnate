@@ -4,6 +4,7 @@ import 'package:flutter_huixin_app/cubit/mastering/master_soal/master_soal_cubit
 import 'package:flutter_huixin_app/ui/pages/exercise_section.dart/exercise_number_one_ui.dart';
 import 'package:flutter_huixin_app/ui/pages/exercise_section.dart/exercise_number_three.dart';
 import 'package:flutter_huixin_app/ui/pages/exercise_section.dart/exercise_number_two_ui.dart';
+import 'package:flutter_huixin_app/ui/widgets/not_found.dart';
 
 import '../../../cubit/auth/user/user_cubit.dart';
 import '../../../data/models/auth/auth_response_model.dart';
@@ -48,8 +49,8 @@ class _ExercisePageState extends State<ExercisePage> {
       },
       loaded: ((value) {
         if (value.data.data == null || value.data.data!.isEmpty) {
-          return const Center(
-            child: Text('Belum ada soal'),
+          return const NotFound(
+            text: 'Soal belum tersedia',
           );
         }
         final listSoal = value.data.data!;
