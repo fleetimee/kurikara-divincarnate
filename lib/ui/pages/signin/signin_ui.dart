@@ -149,37 +149,39 @@ class _LoginPageState extends State<LoginPage> {
           },
         ),
       ],
-      child: BlocBuilder<AuthCubit, AuthState>(builder: (context, state) {
-        return SafeArea(
-          child: Scaffold(
-            resizeToAvoidBottomInset: false,
-            body: Stack(
-              children: [
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    color: Colors.transparent,
-                    child: Animate(
-                      effects: const [FadeEffect(), ScaleEffect()],
-                      child: Image.asset(
-                        "assets/images/illust-login.png",
-                        height: 400,
-                        fit: BoxFit.contain,
+      child: BlocBuilder<AuthCubit, AuthState>(
+        builder: (context, state) {
+          return SafeArea(
+            child: Scaffold(
+              resizeToAvoidBottomInset: false,
+              body: Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      color: Colors.transparent,
+                      child: Animate(
+                        effects: const [FadeEffect(), ScaleEffect()],
+                        child: Image.asset(
+                          "assets/images/illust-login.png",
+                          height: 400,
+                          fit: BoxFit.contain,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                BodyLogin(
-                  fbKeyAuth: _fbKeyAuth,
-                  usernameController: _usernameController,
-                  passwordController: _passwordController,
-                  state: state,
-                ),
-              ],
+                  BodyLogin(
+                    fbKeyAuth: _fbKeyAuth,
+                    usernameController: _usernameController,
+                    passwordController: _passwordController,
+                    state: state,
+                  ),
+                ],
+              ),
             ),
-          ),
-        );
-      }),
+          );
+        },
+      ),
     );
   }
 }

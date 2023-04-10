@@ -112,255 +112,256 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return MultiBlocListener(
-        listeners: [
-          BlocListener<RegisterCubit, RegisterState>(
-            listener: (context, state) {
-              state.when(
-                initial: () {},
-                loading: () {},
-                loaded: (user) {
-                  SuccessDialog(
-                    context: context,
-                    title: 'Success',
-                    desc:
-                        'Your registration is successfull, please login to access the application',
-                    btnOkOnPress: () {
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const LoginPage(),
-                        ),
-                        (route) => false,
-                      );
-                    },
-                  ).show();
-                },
-                error: (error) => ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(error),
-                  ),
-                ),
-              );
-            },
-          ),
-          BlocListener<RegisterGoogleCubit, RegisterGoogleState>(
-            listener: (context, state) {
-              state.when(
-                initial: () {},
-                loading: () {},
-                loaded: (user) {
-                  SuccessDialog(
-                    context: context,
-                    title: 'Success',
-                    desc:
-                        'Your registration with Google Account is successfull, please login to access the application, and don\'t forget to change your details in the profile page',
-                    btnOkOnPress: () {
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const LoginPage(),
-                        ),
-                        (route) => false,
-                      );
-                    },
-                  ).show();
-                },
-                error: (error) => ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Register with Google Account failed'),
-                  ),
-                ),
-              );
-            },
-          ),
-          BlocListener<RegisterAppleCubit, RegisterAppleState>(
-            listener: (context, state) {
-              state.when(
-                initial: () {},
-                loading: () {},
-                loaded: (user) {
-                  SuccessDialog(
-                    context: context,
-                    title: 'Success',
-                    desc:
-                        'Your registration with Apple ID is successfull, please login to access the application, and don\'t forget to change your details in the profile page',
-                    btnOkOnPress: () {
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const LoginPage(),
-                        ),
-                        (route) => false,
-                      );
-                    },
-                  ).show();
-                },
-                error: (error) => ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Register with Apple ID failed'),
-                  ),
-                ),
-              );
-            },
-          ),
-        ],
-        child: BlocBuilder<RegisterCubit, RegisterState>(
-          builder: (context, state) {
-            return Scaffold(
-              appBar: AppBarDefault(
-                title: "Signup",
-              ),
-              body: FormBuilder(
-                /// Initialize FormBuilder global
-                /// key to validate the form
-                key: _fbKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.07,
-                            ),
-                            _imagePicker(),
-                            const SizedBox(
-                              height: 20.0,
-                            ),
-                            RegisterForm(
-                                name: 'username',
-                                label: 'Username',
-                                controller: _usernameController,
-                                obscureTextEnabled: 'false',
-                                validator: FormBuilderValidators.compose(
-                                  [
-                                    FormBuilderValidators.required(),
-                                    FormBuilderValidators.minLength(
-                                      6,
-                                      allowEmpty: false,
-                                      errorText:
-                                          'Username must be at least 6 characters',
-                                    ),
-                                  ],
-                                )),
-                            const SizedBox(
-                              height: 10.0,
-                            ),
-                            RegisterForm(
-                              name: 'password',
-                              label: 'Password',
-                              controller: _passwordController,
-                              obscureTextEnabled: 'true',
-                              obscureToggle: true,
-                              validator: FormBuilderValidators.compose(
-                                [
-                                  FormBuilderValidators.required(
-                                    errorText: 'Password is required',
-                                  ),
-                                  FormBuilderValidators.minLength(
-                                    6,
-                                    allowEmpty: false,
-                                    errorText:
-                                        'Password must be at least 6 characters',
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 10.0,
-                            ),
-                            RegisterForm(
-                              name: 'noMember',
-                              label: 'No Member',
-                              controller: _noMemberController,
-                              obscureTextEnabled: 'false',
-                              validator: FormBuilderValidators.compose([
-                                FormBuilderValidators.required(),
-                              ]),
-                            ),
-                            const SizedBox(
-                              height: 10.0,
-                            ),
-                            RegisterForm(
-                              name: 'fullName',
-                              label: 'Full Name',
-                              controller: _fullNameController,
-                              obscureTextEnabled: 'false',
-                              validator: FormBuilderValidators.required(),
-                            ),
-                            const SizedBox(
-                              height: 10.0,
-                            ),
-                            RegisterFormDate(
-                              name: 'birth_date',
-                              label: 'Birth Date',
-                              controller: _birthDateController,
-                            ),
-                            const SizedBox(
-                              height: 20.0,
-                            ),
-                            PrimaryButton(
-                              text: state.maybeWhen(
-                                loading: () => 'Loading...',
-                                orElse: () => 'Sign Up',
-                              ),
-                              onPressed: () {
-                                if (_fbKey.currentState?.saveAndValidate() ??
-                                    false) {
-                                  // Check if the image is not null
-                                  // if null then show error dialog
-                                  if (_image == null) {
-                                    _showErrorDialog(context,
-                                        'Pilih gambar terlebih dahulu');
-                                  } else {
-                                    context.read<RegisterCubit>().register(
-                                          _buildRegisterRequestModel(),
-                                        );
-                                  }
-                                } else {
-                                  debugPrint('validation failed');
-                                }
-                              },
-                            ),
-                            const SizedBox(
-                              height: 20.0,
-                            ),
-                            const Text(
-                              'Or Sign Up With',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 20.0,
-                            ),
-                            SocialIcon(
-                              onTapApple: () {
-                                context
-                                    .read<RegisterAppleCubit>()
-                                    .registerWithApple();
-                              },
-                              onTapFacebook: () {
-                                // context.read<LoginFbCubit>().registerWithFb();
-                              },
-                              onTapGoogle: () {
-                                context
-                                    .read<RegisterGoogleCubit>()
-                                    .registerWithGoogle();
-                              },
-                            ),
-                          ],
-                        ),
+      listeners: [
+        BlocListener<RegisterCubit, RegisterState>(
+          listener: (context, state) {
+            state.when(
+              initial: () {},
+              loading: () {},
+              loaded: (user) {
+                SuccessDialog(
+                  context: context,
+                  title: 'Success',
+                  desc:
+                      'Your registration is successfull, please login to access the application',
+                  btnOkOnPress: () {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LoginPage(),
                       ),
-                    ),
-                  ],
+                      (route) => false,
+                    );
+                  },
+                ).show();
+              },
+              error: (error) => ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(error),
                 ),
               ),
             );
           },
-        ));
+        ),
+        BlocListener<RegisterGoogleCubit, RegisterGoogleState>(
+          listener: (context, state) {
+            state.when(
+              initial: () {},
+              loading: () {},
+              loaded: (user) {
+                SuccessDialog(
+                  context: context,
+                  title: 'Success',
+                  desc:
+                      'Your registration with Google Account is successfull, please login to access the application, and don\'t forget to change your details in the profile page',
+                  btnOkOnPress: () {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LoginPage(),
+                      ),
+                      (route) => false,
+                    );
+                  },
+                ).show();
+              },
+              error: (error) => ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Register with Google Account failed'),
+                ),
+              ),
+            );
+          },
+        ),
+        BlocListener<RegisterAppleCubit, RegisterAppleState>(
+          listener: (context, state) {
+            state.when(
+              initial: () {},
+              loading: () {},
+              loaded: (user) {
+                SuccessDialog(
+                  context: context,
+                  title: 'Success',
+                  desc:
+                      'Your registration with Apple ID is successfull, please login to access the application, and don\'t forget to change your details in the profile page',
+                  btnOkOnPress: () {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LoginPage(),
+                      ),
+                      (route) => false,
+                    );
+                  },
+                ).show();
+              },
+              error: (error) => ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Register with Apple ID failed'),
+                ),
+              ),
+            );
+          },
+        ),
+      ],
+      child: BlocBuilder<RegisterCubit, RegisterState>(
+        builder: (context, state) {
+          return Scaffold(
+            appBar: AppBarDefault(
+              title: "Signup",
+            ),
+            body: FormBuilder(
+              /// Initialize FormBuilder global
+              /// key to validate the form
+              key: _fbKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.07,
+                          ),
+                          _imagePicker(),
+                          const SizedBox(
+                            height: 20.0,
+                          ),
+                          RegisterForm(
+                              name: 'username',
+                              label: 'Username',
+                              controller: _usernameController,
+                              obscureTextEnabled: 'false',
+                              validator: FormBuilderValidators.compose(
+                                [
+                                  FormBuilderValidators.required(),
+                                  FormBuilderValidators.minLength(
+                                    6,
+                                    allowEmpty: false,
+                                    errorText:
+                                        'Username must be at least 6 characters',
+                                  ),
+                                ],
+                              )),
+                          const SizedBox(
+                            height: 10.0,
+                          ),
+                          RegisterForm(
+                            name: 'password',
+                            label: 'Password',
+                            controller: _passwordController,
+                            obscureTextEnabled: 'true',
+                            obscureToggle: true,
+                            validator: FormBuilderValidators.compose(
+                              [
+                                FormBuilderValidators.required(
+                                  errorText: 'Password is required',
+                                ),
+                                FormBuilderValidators.minLength(
+                                  6,
+                                  allowEmpty: false,
+                                  errorText:
+                                      'Password must be at least 6 characters',
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10.0,
+                          ),
+                          RegisterForm(
+                            name: 'noMember',
+                            label: 'No Member',
+                            controller: _noMemberController,
+                            obscureTextEnabled: 'false',
+                            validator: FormBuilderValidators.compose([
+                              FormBuilderValidators.required(),
+                            ]),
+                          ),
+                          const SizedBox(
+                            height: 10.0,
+                          ),
+                          RegisterForm(
+                            name: 'fullName',
+                            label: 'Full Name',
+                            controller: _fullNameController,
+                            obscureTextEnabled: 'false',
+                            validator: FormBuilderValidators.required(),
+                          ),
+                          const SizedBox(
+                            height: 10.0,
+                          ),
+                          RegisterFormDate(
+                            name: 'birth_date',
+                            label: 'Birth Date',
+                            controller: _birthDateController,
+                          ),
+                          const SizedBox(
+                            height: 20.0,
+                          ),
+                          PrimaryButton(
+                            text: state.maybeWhen(
+                              loading: () => 'Loading...',
+                              orElse: () => 'Sign Up',
+                            ),
+                            onPressed: () {
+                              if (_fbKey.currentState?.saveAndValidate() ??
+                                  false) {
+                                // Check if the image is not null
+                                // if null then show error dialog
+                                if (_image == null) {
+                                  _showErrorDialog(
+                                      context, 'Pilih gambar terlebih dahulu');
+                                } else {
+                                  context.read<RegisterCubit>().register(
+                                        _buildRegisterRequestModel(),
+                                      );
+                                }
+                              } else {
+                                debugPrint('validation failed');
+                              }
+                            },
+                          ),
+                          const SizedBox(
+                            height: 20.0,
+                          ),
+                          const Text(
+                            'Or Sign Up With',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 20.0,
+                          ),
+                          SocialIcon(
+                            onTapApple: () {
+                              context
+                                  .read<RegisterAppleCubit>()
+                                  .registerWithApple();
+                            },
+                            onTapFacebook: () {
+                              // context.read<LoginFbCubit>().registerWithFb();
+                            },
+                            onTapGoogle: () {
+                              context
+                                  .read<RegisterGoogleCubit>()
+                                  .registerWithGoogle();
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
   }
 
   Widget _imagePicker() {

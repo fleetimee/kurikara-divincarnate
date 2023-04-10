@@ -7,6 +7,7 @@ import '../../common/constants/color.dart';
 
 class ProfileForm extends StatelessWidget {
   final String name;
+  final String hintText;
   final String obscureTextEnabled;
   final bool obscureToggle;
   final String? Function(String?)? validator;
@@ -23,6 +24,7 @@ class ProfileForm extends StatelessWidget {
     this.keyboardType,
     this.controller,
     this.initialValue,
+    required this.hintText,
   }) : super(key: key);
 
   @override
@@ -53,6 +55,7 @@ class ProfileForm extends StatelessWidget {
           fillColor: Colors.white,
           hoverColor: Colors.red,
           filled: true,
+          hintText: hintText,
           focusedBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: AppColors.darkOrange),
             borderRadius: BorderRadius.circular(20.0),
