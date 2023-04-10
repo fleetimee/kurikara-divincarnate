@@ -313,13 +313,13 @@ class _SignUpPageState extends State<SignUpPage> {
                               onPressed: () {
                                 if (_fbKey.currentState?.saveAndValidate() ??
                                     false) {
-                                  context.loaderOverlay.show();
+                                  // context.loaderOverlay.show();
 
                                   // Check if the image is not null
                                   // if null then show error dialog
                                   if (_image == null) {
-                                    _showErrorDialog(context,
-                                        'Pilih gambar terlebih dahulu');
+                                    _showErrorDialog(
+                                        context, 'Please choose picture');
                                   } else {
                                     context
                                         .read<RegisterCubit>()

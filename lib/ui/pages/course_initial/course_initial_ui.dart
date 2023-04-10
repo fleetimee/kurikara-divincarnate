@@ -210,7 +210,7 @@ class MateriSelector extends StatelessWidget {
                 );
               },
             );
-            return InkWell(
+            return GestureDetector(
               onTap: () {
                 if (masterGroupMateri.statusReading == 'finish') {
                   context

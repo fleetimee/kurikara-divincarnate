@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_huixin_app/data/models/latihan_soal/latihan_header_response_model.dart';
 import 'package:flutter_huixin_app/data/models/latihan_soal/latihan_lines_response_model.dart';
 import 'package:flutter_huixin_app/data/models/latihan_soal/requests/finish_soal_request_model.dart';
@@ -41,6 +42,7 @@ class SoalDatasource {
   Future<Either<String, LatihanLinesResponseModel>> postLatihanSoalLines(
       LatihanLinesRequestModel model) async {
     try {
+      debugPrint(model.toString());
       var request = http_plus.MultipartRequest('POST',
           Uri.parse('${AppApi.baseUrl}/latihan_lines?${await getToken()}'));
       request.fields.addAll(model.toMap());

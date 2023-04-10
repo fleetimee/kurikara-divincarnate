@@ -286,11 +286,17 @@ class _ProfilePageState extends State<ProfilePage> {
                                 },
                               ).show();
                             },
+                            style: TextButton.styleFrom(
+                              backgroundColor: AppColors.greyWhite,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
                             child: const Text(
-                              'Delete Account',
+                              'Remove Account',
                               style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
                                 color: Colors.black,
                               ),
                             ),

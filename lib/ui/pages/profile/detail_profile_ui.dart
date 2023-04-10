@@ -14,6 +14,7 @@ import 'package:flutter_huixin_app/ui/widgets/dialog_box.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../../data/models/auth/requests/update_profile_request_model.dart';
 import '../../widgets/appbar/appbar_style.dart';
 import '../../widgets/button.dart';
 import '../../widgets/profile_form.dart';
@@ -74,7 +75,7 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
       fullName = user?.fullName;
 
       _usernameController!.text = username ?? '';
-      _passwordController!.text = password ?? '';
+      _passwordController!.text = '';
       _noMemberController!.text = noMember ?? '';
       _fullNameController!.text = fullName ?? '';
     });
@@ -183,24 +184,19 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
                         orElse: () => 'Update',
                       ),
                       onPressed: () {
-                        // context.read<UpdateUserCubit>().updateUser(
-                        //       UpdateProfileRequestModel(
-                        //         user_id: user?.userId ?? '',
-                        //         full_name: _fullNameController!.text,
-                        //         user_name: _usernameController!.text,
-                        //         user_password: _passwordController!.text,
-                        //         no_member: _noMemberController!.text,
-                        //         birth_date: '2012-02-02',
-                        //         token_device: user?.tokenDevice ?? '',
-                        //         email: null,
-                        //         fcm_id: null,
-                        //         id_apple: null,
-                        //         id_google: null,
-                        //         id_fb: null,
-                        //         no_telpon: null,
-                        //         user_npp: null,
-                        //       ),
-                        //     );
+                        context.read<UpdateUserCubit>().updateUser(
+                              UpdateProfileRequestModel(
+                                user_id: user?.userId ?? '',
+                                full_name: _fullNameController!.text,
+                                user_name: _usernameController!.text,
+                                user_password: _passwordController!.text.isEmpty
+                                    ? password!
+                                    : _passwordController!.text,
+                                no_member: _noMemberController!.text,
+                                birth_date: '2012-02-02',
+                                token_device: user?.tokenDevice ?? '',
+                              ),
+                            );
                       },
                     ),
                   ],

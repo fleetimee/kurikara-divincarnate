@@ -58,115 +58,117 @@ class _ExerciseThreeState extends State<ExerciseThree> {
   }
 
   void setAnswer(int index, String answer) {
-    currentAnswer += answer;
-    currentAnswerNo = index + 1;
-    if (index == 1) {
-      isAnswer1 = true;
-      switch (answer) {
-        case 'a':
-          colorAnswer1 = AppColors.yellowColor2;
-          break;
-        case 'b':
-          colorAnswer2 = AppColors.yellowColor2;
-          break;
-        case 'c':
-          colorAnswer3 = AppColors.yellowColor2;
-          break;
-        case 'd':
-          colorAnswer4 = AppColors.yellowColor2;
-          break;
-        case 'e':
-          colorAnswer5 = AppColors.yellowColor2;
-          break;
-        default:
+    if (!currentAnswer.contains(answer)) {
+      currentAnswer += answer;
+      currentAnswerNo = index + 1;
+      if (index == 1) {
+        isAnswer1 = true;
+        switch (answer) {
+          case 'a':
+            colorAnswer1 = AppColors.yellowColor2;
+            break;
+          case 'b':
+            colorAnswer2 = AppColors.yellowColor2;
+            break;
+          case 'c':
+            colorAnswer3 = AppColors.yellowColor2;
+            break;
+          case 'd':
+            colorAnswer4 = AppColors.yellowColor2;
+            break;
+          case 'e':
+            colorAnswer5 = AppColors.yellowColor2;
+            break;
+          default:
+        }
       }
-    }
-    if (index == 2) {
-      isAnswer2 = true;
-      switch (answer) {
-        case 'a':
-          colorAnswer1 = AppColors.greenColor1;
-          break;
-        case 'b':
-          colorAnswer2 = AppColors.greenColor1;
-          break;
-        case 'c':
-          colorAnswer3 = AppColors.greenColor1;
-          break;
-        case 'd':
-          colorAnswer4 = AppColors.greenColor1;
-          break;
-        case 'e':
-          colorAnswer5 = AppColors.greenColor1;
-          break;
-        default:
+      if (index == 2) {
+        isAnswer2 = true;
+        switch (answer) {
+          case 'a':
+            colorAnswer1 = AppColors.greenColor1;
+            break;
+          case 'b':
+            colorAnswer2 = AppColors.greenColor1;
+            break;
+          case 'c':
+            colorAnswer3 = AppColors.greenColor1;
+            break;
+          case 'd':
+            colorAnswer4 = AppColors.greenColor1;
+            break;
+          case 'e':
+            colorAnswer5 = AppColors.greenColor1;
+            break;
+          default:
+        }
       }
-    }
-    if (index == 3) {
-      isAnswer3 = true;
-      switch (answer) {
-        case 'a':
-          colorAnswer1 = AppColors.purpleColor;
-          break;
-        case 'b':
-          colorAnswer2 = AppColors.purpleColor;
-          break;
-        case 'c':
-          colorAnswer3 = AppColors.purpleColor;
-          break;
-        case 'd':
-          colorAnswer4 = AppColors.purpleColor;
-          break;
-        case 'e':
-          colorAnswer5 = AppColors.purpleColor;
-          break;
-        default:
+      if (index == 3) {
+        isAnswer3 = true;
+        switch (answer) {
+          case 'a':
+            colorAnswer1 = AppColors.purpleColor;
+            break;
+          case 'b':
+            colorAnswer2 = AppColors.purpleColor;
+            break;
+          case 'c':
+            colorAnswer3 = AppColors.purpleColor;
+            break;
+          case 'd':
+            colorAnswer4 = AppColors.purpleColor;
+            break;
+          case 'e':
+            colorAnswer5 = AppColors.purpleColor;
+            break;
+          default:
+        }
       }
-    }
-    if (index == 4) {
-      isAnswer4 = true;
-      switch (answer) {
-        case 'a':
-          colorAnswer1 = AppColors.blueColor;
-          break;
-        case 'b':
-          colorAnswer2 = AppColors.blueColor;
-          break;
-        case 'c':
-          colorAnswer3 = AppColors.blueColor;
-          break;
-        case 'd':
-          colorAnswer4 = AppColors.blueColor;
-          break;
-        case 'e':
-          colorAnswer5 = AppColors.blueColor;
-          break;
-        default:
+      if (index == 4) {
+        isAnswer4 = true;
+        switch (answer) {
+          case 'a':
+            colorAnswer1 = AppColors.blueColor;
+            break;
+          case 'b':
+            colorAnswer2 = AppColors.blueColor;
+            break;
+          case 'c':
+            colorAnswer3 = AppColors.blueColor;
+            break;
+          case 'd':
+            colorAnswer4 = AppColors.blueColor;
+            break;
+          case 'e':
+            colorAnswer5 = AppColors.blueColor;
+            break;
+          default:
+        }
       }
-    }
-    if (index == 5) {
-      isAnswer5 = true;
-      switch (answer) {
-        case 'a':
-          colorAnswer1 = AppColors.orangeColor;
-          break;
-        case 'b':
-          colorAnswer2 = AppColors.orangeColor;
-          break;
-        case 'c':
-          colorAnswer3 = AppColors.orangeColor;
-          break;
-        case 'd':
-          colorAnswer4 = AppColors.orangeColor;
-          break;
-        case 'e':
-          colorAnswer5 = AppColors.orangeColor;
-          break;
-        default:
+      if (index == 5) {
+        isAnswer5 = true;
+        switch (answer) {
+          case 'a':
+            colorAnswer1 = AppColors.orangeColor;
+            break;
+          case 'b':
+            colorAnswer2 = AppColors.orangeColor;
+            break;
+          case 'c':
+            colorAnswer3 = AppColors.orangeColor;
+            break;
+          case 'd':
+            colorAnswer4 = AppColors.orangeColor;
+            break;
+          case 'e':
+            colorAnswer5 = AppColors.orangeColor;
+            break;
+          default:
+        }
       }
-    }
 
-    setState(() {});
+      setState(() {});
+    }
   }
 
   @override
@@ -512,9 +514,9 @@ class _ExerciseThreeState extends State<ExerciseThree> {
                           id_soal: state.data.data![state.index].idSoal!,
                           tipe: state.data.data![state.index].tipe!,
                           pg_answer: '',
-                          cocok_answer: currentAnswer,
-                          status: state.data.data![state.index].pgResult! ==
-                              currentAnswer,
+                          cocok_answer: concatenateCharacters(currentAnswer),
+                          status: state.data.data![state.index].cocokResult! ==
+                              concatenateCharacters(currentAnswer),
                           user_id: dataUser!.userId!,
                         ));
                     if (state.isNext) {
@@ -538,18 +540,14 @@ class _ExerciseThreeState extends State<ExerciseThree> {
                       context.read<MasterSoalCubit>().setInitial();
                       context.read<LatihanSoalHeaderCubit>().setInitial();
                       context.read<LatihanSoalLinesCubit>().setInitial();
-
-                      Navigator.pushNamedAndRemoveUntil(
-                        context,
-                        HomePage.routeName,
-                        (route) => false,
-                      );
+                      Navigator.pushReplacementNamed(
+                          context, HomePage.routeName);
 
                       showTopSnackBar(
                         Overlay.of(context),
                         const CustomSnackBar.success(
                           message:
-                              "Exercise has been completed, please check your score in the reporting menu",
+                              "Latihan berhasil diselesaikan, silahkan cek hasil latihan kamu di menu reporting",
                         ),
                       );
                     }
@@ -559,5 +557,16 @@ class _ExerciseThreeState extends State<ExerciseThree> {
             : () {},
       ),
     );
+  }
+
+  String concatenateCharacters(String input) {
+    String output = "";
+    for (int i = 0; i < input.length; i++) {
+      output += input[i];
+      if (i < input.length - 1) {
+        output += ",";
+      }
+    }
+    return output;
   }
 }
