@@ -4,10 +4,12 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_huixin_app/cubit/auth/update_user/update_user_cubit.dart';
 import 'package:flutter_huixin_app/data/datasources/local/app_secure_storage.dart';
 import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
-import 'package:flutter_huixin_app/ui/pages/profile/profile_ui.dart';
+import 'package:flutter_huixin_app/ui/widgets/dialog_box.dart';
 
 import 'package:image_picker/image_picker.dart';
 import 'package:shimmer/shimmer.dart';
@@ -94,59 +96,119 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBarReading(
-        title: 'Profile',
-        context: context,
-      ),
-      body: Container(
-        padding: const EdgeInsets.only(top: 50, bottom: 50),
-        child: FormBuilder(
-          key: _fbKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _imagePicker(),
-              Space,
-              ProfileForm(
-                name: 'username',
-                obscureTextEnabled: 'false',
-                controller: _usernameController,
-              ),
-              Space,
-              ProfileForm(
-                name: 'password',
-                obscureTextEnabled: 'false',
-                controller: _passwordController,
-              ),
-              Space,
-              ProfileForm(
-                name: 'noMember',
-                obscureTextEnabled: 'false',
-                controller: _noMemberController,
-              ),
-              Space,
-              ProfileForm(
-                name: 'fullName',
-                obscureTextEnabled: 'false',
-                controller: _fullNameController,
-              ),
-              Space,
-              const ProfileFormDate(
-                name: 'birth_date',
-                label: 'Birth date',
-              ),
-              const Spacer(),
-              PrimaryButton(
-                text: 'SUBMIT',
-                onPressed: () {
-                  Navigator.pushNamed(context, ProfilePage.routeName);
+    return BlocListener<UpdateUserCubit, UpdateUserState>(
+      listener: (context, state) {
+        state.when(
+          initial: () {},
+          loading: () {},
+          error: (error) {
+            ErrorDialog(
+              context: context,
+              desc: error,
+              title: 'Error',
+              btnOkOnPress: () {},
+              btnOkText: 'OK',
+            ).show();
+          },
+          loaded: (user) async {
+            await AppSecureStorage.setUser(user.data);
+
+            if (context.mounted) {
+              SuccessDialog(
+                context: context,
+                desc: 'Update Profile Success',
+                title: 'Success',
+                btnOkOnPress: () {
+                  // Navigator.pop(context);
                 },
+                btnOkText: 'OK',
+              ).show();
+            }
+          },
+        );
+      },
+      child: BlocBuilder<UpdateUserCubit, UpdateUserState>(
+        builder: (context, state) {
+          return Scaffold(
+            resizeToAvoidBottomInset: false,
+            appBar: AppBarReading(
+              title: 'Profile',
+              context: context,
+            ),
+            body: Container(
+              padding: const EdgeInsets.only(top: 50, bottom: 50),
+              child: FormBuilder(
+                key: _fbKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _imagePicker(),
+                    Space,
+                    ProfileForm(
+                      name: 'username',
+                      obscureTextEnabled: 'false',
+                      controller: _usernameController,
+                      hintText: 'Username',
+                    ),
+                    Space,
+                    ProfileForm(
+                      name: 'password',
+                      obscureTextEnabled: 'false',
+                      controller: _passwordController,
+                      hintText: 'Password',
+                    ),
+                    Space,
+                    ProfileForm(
+                      name: 'noMember',
+                      obscureTextEnabled: 'false',
+                      controller: _noMemberController,
+                      hintText: 'No Member',
+                    ),
+                    Space,
+                    ProfileForm(
+                      name: 'fullName',
+                      obscureTextEnabled: 'false',
+                      controller: _fullNameController,
+                      hintText: 'Full Name',
+                    ),
+                    Space,
+                    const ProfileFormDate(
+                      name: 'birth_date',
+                      label: 'Birth date',
+                    ),
+                    const Spacer(),
+                    PrimaryButton(
+                      text: state.maybeMap(
+                        loading: (_) => 'Loading',
+                        orElse: () => 'Update',
+                      ),
+                      onPressed: () {
+                        // context.read<UpdateUserCubit>().updateUser(
+                        //       UpdateProfileRequestModel(
+                        //         user_id: user?.userId ?? '',
+                        //         full_name: _fullNameController!.text,
+                        //         user_name: _usernameController!.text,
+                        //         user_password: _passwordController!.text,
+                        //         no_member: _noMemberController!.text,
+                        //         birth_date: '2012-02-02',
+                        //         token_device: user?.tokenDevice ?? '',
+                        //         email: null,
+                        //         fcm_id: null,
+                        //         id_apple: null,
+                        //         id_google: null,
+                        //         id_fb: null,
+                        //         no_telpon: null,
+                        //         user_npp: null,
+                        //       ),
+                        //     );
+                      },
+                    ),
+                  ],
+                ),
               ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }

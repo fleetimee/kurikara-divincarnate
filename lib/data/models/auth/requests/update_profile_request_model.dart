@@ -5,33 +5,33 @@ import 'dart:io';
 
 class UpdateProfileRequestModel {
   final String user_id;
-  final String user_npp;
+  final String? user_npp;
   final String full_name;
   final String user_name;
   final String user_password;
-  final String id_google;
-  final String id_fb;
-  final String id_apple;
-  final String fcm_id;
+  final String? id_google;
+  final String? id_fb;
+  final String? id_apple;
+  final String? fcm_id;
   final String token_device;
-  final String email;
-  final String no_telpon;
+  final String? email;
+  final String? no_telpon;
   File? img_file;
   final String no_member;
   final String birth_date;
   UpdateProfileRequestModel({
     required this.user_id,
-    required this.user_npp,
+    this.user_npp,
     required this.full_name,
     required this.user_name,
     required this.user_password,
-    required this.id_google,
-    required this.id_fb,
-    required this.id_apple,
-    required this.fcm_id,
+    this.id_google,
+    this.id_fb,
+    this.id_apple,
+    this.fcm_id,
     required this.token_device,
-    required this.email,
-    required this.no_telpon,
+    this.email,
+    this.no_telpon,
     this.img_file,
     required this.no_member,
     required this.birth_date,
@@ -40,17 +40,17 @@ class UpdateProfileRequestModel {
   Map<String, String> toMap() {
     return {
       'user_id': user_id,
-      'user_npp': user_npp,
+      'user_npp': user_npp ?? '',
       'full_name': full_name,
       'user_name': user_name,
       'user_password': user_password,
-      'id_google': id_google,
-      'id_fb': id_fb,
-      'id_apple': id_apple,
-      'fcm_id': fcm_id,
+      'id_google': id_google ?? '',
+      'id_fb': id_fb ?? '',
+      'id_apple': id_apple ?? '',
+      'fcm_id': fcm_id ?? '',
       'token_device': token_device,
-      'email': email,
-      'no_telpon': no_telpon,
+      'email': email ?? '',
+      'no_telpon': no_telpon ?? '',
       // 'img_file': img_file?.toMap(),
       'no_member': no_member,
       'birth_date': birth_date,

@@ -51,10 +51,14 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    String fullName = user?.fullName ?? 'Loading...';
+    String truncatedTitle =
+        fullName.length <= 16 ? fullName : '${fullName.substring(0, 14)}...';
+
     return Scaffold(
       extendBody: true,
       appBar: AppBarHome(
-        title: user?.fullName ?? 'Loading...',
+        title: truncatedTitle,
         xp: context.select(
           (XpCubit xpCubit) => xpCubit.state.maybeMap(
             orElse: () => '..',
