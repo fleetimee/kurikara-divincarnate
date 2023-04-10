@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
 import 'package:flutter_huixin_app/data/models/report/report_list_response_model.dart';
-import 'package:http/http.dart' as http;
 import 'package:pretty_http_logger/pretty_http_logger.dart';
 
 import '../../common/constants/api.dart';

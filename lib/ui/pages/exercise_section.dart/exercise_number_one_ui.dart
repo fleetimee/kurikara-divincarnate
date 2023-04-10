@@ -5,13 +5,11 @@ import 'package:flutter_huixin_app/cubit/mastering/master_soal/master_soal_cubit
 import 'package:flutter_huixin_app/cubit/soal/latihan_soal_header/latihan_soal_header_cubit.dart';
 import 'package:flutter_huixin_app/cubit/soal/latihan_soal_lines/latihan_soal_lines_cubit.dart';
 import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
-import 'package:flutter_huixin_app/ui/pages/exercise_section.dart/exercise_number_two_ui.dart';
 import 'package:flutter_huixin_app/ui/pages/home/home_ui.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../common/constants/color.dart';
-import '../../../cubit/entities/question_data.dart';
 import '../../../cubit/soal/finish_latihan_soal/finish_latihan_soal_cubit.dart';
 import '../../../data/models/latihan_soal/requests/finish_soal_request_model.dart';
 import '../../../data/models/latihan_soal/requests/latihan_lines_request_model.dart';

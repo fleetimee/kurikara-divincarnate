@@ -6,7 +6,6 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_huixin_app/ui/pages/exercise_section.dart/exercise_number_three.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 
 import 'package:audio_session/audio_session.dart';
@@ -28,7 +27,6 @@ import '../../../data/models/latihan_soal/requests/finish_soal_request_model.dar
 import '../../../data/models/latihan_soal/requests/latihan_lines_request_model.dart';
 import '../../widgets/appbar/appbar_style.dart';
 import '../../widgets/bottom_appbar_button.dart';
-import '../../widgets/container_course.dart';
 import '../home/home_ui.dart';
 
 typedef Fn = void Function();

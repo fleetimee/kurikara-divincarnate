@@ -6,7 +6,6 @@ import 'package:flutter_huixin_app/data/models/get_active_student_response_model
 import 'package:flutter_huixin_app/data/models/get_daily_activity_response_model.dart';
 import 'package:flutter_huixin_app/data/models/get_info_response_model.dart';
 import 'package:flutter_huixin_app/data/models/get_xp_response_model.dart';
-import 'package:http/http.dart' as http;
 import 'package:pretty_http_logger/pretty_http_logger.dart';
 
 import '../../common/constants/api.dart';
