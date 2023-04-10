@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_huixin_app/cubit/auth/delete_user/delete_user_cubit.dart';
 import 'package:flutter_huixin_app/cubit/auth/login_apple/login_apple_cubit.dart';
 import 'package:flutter_huixin_app/cubit/auth/login_google/login_google_cubit.dart';
 import 'package:flutter_huixin_app/cubit/auth/login_huixin/auth_cubit.dart';
@@ -163,7 +164,12 @@ class AppProviders extends StatelessWidget {
           create: (_) => UpdateUserCubit(
             AuthDataSource(),
           ),
-        )
+        ),
+        BlocProvider(
+          create: (_) => DeleteUserCubit(
+            AuthDataSource(),
+          ),
+        ),
       ],
       child: child,
     );

@@ -134,7 +134,7 @@ class AuthDataSource {
       };
 
       final response = await http.post(
-        Uri.parse('${AppApi.baseUrl}/api_delete_user?${await getToken()}}'),
+        Uri.parse('${AppApi.baseUrl}/api_delete_profile?${await getToken()}'),
         body: model.toMap(),
         headers: headers,
       );

@@ -1,17 +1,22 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_huixin_app/cubit/auth/delete_user/delete_user_cubit.dart';
 import 'package:flutter_huixin_app/cubit/auth/user/user_cubit.dart';
 import 'package:flutter_huixin_app/cubit/home/active_student/active_student_cubit.dart';
 import 'package:flutter_huixin_app/cubit/home/daily_activity/daily_activity_cubit.dart';
 import 'package:flutter_huixin_app/cubit/home/xp/xp_cubit.dart';
 import 'package:flutter_huixin_app/data/datasources/local/app_secure_storage.dart';
 import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
+import 'package:flutter_huixin_app/data/models/auth/requests/delete_user_request_model.dart';
 import 'package:flutter_huixin_app/ui/pages/profile/detail_profile_ui.dart';
 import 'package:flutter_huixin_app/ui/pages/profile/information_ui.dart';
 import 'package:flutter_huixin_app/ui/pages/signin/signin_ui.dart';
 import 'package:flutter_huixin_app/ui/widgets/dialog_box.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../common/constants/color.dart';
 import '../../../cubit/entities/stats.dart';
@@ -48,221 +53,261 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBarDefault(
-        title: "Profile",
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                    ),
-                    child: InkWell(
-                      child: profileUser(),
-                      onTap: () {
-                        Navigator.pushNamed(
-                            context, ProfileDetailPage.routeName);
-                      },
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  information(context),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Container(
-                      alignment: Alignment.centerLeft,
-                      padding: const EdgeInsets.only(left: 20),
-                      child: const Text(
-                        'Statistics',
-                        style: TextStyle(
-                          fontSize: 36,
-                          color: Colors.black,
-                        ),
+    return BlocListener<DeleteUserCubit, DeleteUserState>(
+      listener: (context, state) {
+        state.maybeMap(
+          orElse: () {},
+          loaded: (value) {
+            AppSecureStorage.deleteAll();
+
+            GoogleSignIn().signOut();
+
+            GoogleSignIn().disconnect();
+
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const LoginPage(),
+              ),
+            );
+
+            showTopSnackBar(
+              Overlay.of(context),
+              const CustomSnackBar.success(
+                message: 'User deleted successfully',
+              ),
+            );
+          },
+        );
+      },
+      child: Scaffold(
+        appBar: AppBarDefault(
+          title: "Profile",
+        ),
+        body: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
                       ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: SizedBox(
-                      height: 125,
-                      child: GridView.builder(
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: 2.5,
-                          crossAxisSpacing: 12,
-                          mainAxisSpacing: 20,
-                        ),
-                        itemCount: allStats.length,
-                        itemBuilder: (context, index) {
-                          return Builder(
-                            builder: (context) {
-                              return Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20),
-                                  border: Border.all(
-                                    color: Colors.grey.shade300,
-                                    width: 4,
-                                  ),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 20),
-                                  child: Row(
-                                    children: [
-                                      Image.asset(
-                                        allStats[index].imageUrl,
-                                        fit: BoxFit.fill,
-                                      ),
-                                      const SizedBox(width: 20),
-                                      Expanded(
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              allStats[index].title !=
-                                                      'Activity'
-                                                  ? context.select(
-                                                      (XpCubit xpCubit) =>
-                                                          xpCubit.state
-                                                              .maybeMap(
-                                                        orElse: () => '..',
-                                                        loaded: (state) =>
-                                                            state.data.data
-                                                                ?.first.jmlXp
-                                                                .toString() ??
-                                                            '..',
-                                                      ),
-                                                    )
-                                                  : context.select(
-                                                      (DailyActivityCubit
-                                                              dailyActivityCubit) =>
-                                                          dailyActivityCubit
-                                                              .state
-                                                              .maybeMap(
-                                                        orElse: () => '..',
-                                                        loaded: (state) =>
-                                                            state.data.data
-                                                                ?.first.jmlDaily
-                                                                .toString() ??
-                                                            '..',
-                                                      ),
-                                                    ),
-                                              style: const TextStyle(
-                                                fontSize: 25,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                            Text(
-                                              allStats[index].title,
-                                              style: const TextStyle(
-                                                fontSize: 18,
-                                                color: Colors.black54,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
-                          );
+                      child: InkWell(
+                        child: profileUser(),
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, ProfileDetailPage.routeName);
                         },
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Container(
-                      alignment: Alignment.centerLeft,
-                      padding: const EdgeInsets.only(left: 20),
-                      child: const Text(
-                        'Friends',
-                        style: TextStyle(
-                          fontSize: 36,
-                          color: Colors.black,
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    information(context),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Container(
+                        alignment: Alignment.centerLeft,
+                        padding: const EdgeInsets.only(left: 20),
+                        child: const Text(
+                          'Statistics',
+                          style: TextStyle(
+                            fontSize: 36,
+                            color: Colors.black,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: friend(context),
-                  ),
-                  const SizedBox(
-                    height: 40,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 40),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        logout(context),
-                        TextButton(
-                          onPressed: () {
-                            PromptDialog(
-                              context: context,
-                              title: 'Delete Account',
-                              desc: 'Are you sure want to delete your account?',
-                              btnCancelOnPress: () {},
-                              btnOkOnPress: () async {
-                                // await AppSecureStorage.deleteUser();
-                                // Navigator.pushNamedAndRemoveUntil(
-                                //     context, LoginPage.routeName, (route) => false);
-
-                                ErrorDialog(
-                                  context: context,
-                                  title: 'LAST WARNING',
-                                  desc: 'ARE YOU SURE ?',
-                                  btnOkOnPress: () {},
-                                  btnOkText:
-                                      'I hereby confirm that I want to delete my account',
-                                ).show();
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: SizedBox(
+                        height: 125,
+                        child: GridView.builder(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 2.5,
+                            crossAxisSpacing: 12,
+                            mainAxisSpacing: 20,
+                          ),
+                          itemCount: allStats.length,
+                          itemBuilder: (context, index) {
+                            return Builder(
+                              builder: (context) {
+                                return Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20),
+                                    border: Border.all(
+                                      color: Colors.grey.shade300,
+                                      width: 4,
+                                    ),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20),
+                                    child: Row(
+                                      children: [
+                                        Image.asset(
+                                          allStats[index].imageUrl,
+                                          fit: BoxFit.fill,
+                                        ),
+                                        const SizedBox(width: 20),
+                                        Expanded(
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                allStats[index].title !=
+                                                        'Activity'
+                                                    ? context.select(
+                                                        (XpCubit xpCubit) =>
+                                                            xpCubit.state
+                                                                .maybeMap(
+                                                          orElse: () => '..',
+                                                          loaded: (state) =>
+                                                              state.data.data
+                                                                  ?.first.jmlXp
+                                                                  .toString() ??
+                                                              '..',
+                                                        ),
+                                                      )
+                                                    : context.select(
+                                                        (DailyActivityCubit
+                                                                dailyActivityCubit) =>
+                                                            dailyActivityCubit
+                                                                .state
+                                                                .maybeMap(
+                                                          orElse: () => '..',
+                                                          loaded: (state) =>
+                                                              state
+                                                                  .data
+                                                                  .data
+                                                                  ?.first
+                                                                  .jmlDaily
+                                                                  .toString() ??
+                                                              '..',
+                                                        ),
+                                                      ),
+                                                style: const TextStyle(
+                                                  fontSize: 25,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                              Text(
+                                                allStats[index].title,
+                                                style: const TextStyle(
+                                                  fontSize: 18,
+                                                  color: Colors.black54,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
                               },
-                            ).show();
+                            );
                           },
-                          child: const Text(
-                            'Delete Account',
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black,
-                            ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Container(
+                        alignment: Alignment.centerLeft,
+                        padding: const EdgeInsets.only(left: 20),
+                        child: const Text(
+                          'Friends',
+                          style: TextStyle(
+                            fontSize: 36,
+                            color: Colors.black,
                           ),
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                ],
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: friend(context),
+                    ),
+                    const SizedBox(
+                      height: 40,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 40),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          logout(context),
+                          TextButton(
+                            onPressed: () {
+                              PromptDialog(
+                                context: context,
+                                title: 'Delete Account',
+                                desc:
+                                    'Are you sure want to delete your account?',
+                                btnCancelOnPress: () {},
+                                btnOkOnPress: () async {
+                                  // await AppSecureStorage.deleteUser();
+                                  // Navigator.pushNamedAndRemoveUntil(
+                                  //     context, LoginPage.routeName, (route) => false);
+
+                                  ErrorDialog(
+                                    context: context,
+                                    title: 'LAST WARNING',
+                                    desc: 'ARE YOU SURE ?',
+                                    btnOkOnPress: () {
+                                      context
+                                          .read<DeleteUserCubit>()
+                                          .deleteUser(
+                                            DeleteUserRequestModel(
+                                              userId: user?.userId ?? '',
+                                            ),
+                                          );
+                                    },
+                                    btnOkText:
+                                        'I hereby confirm that I want to delete my account',
+                                  ).show();
+                                },
+                              ).show();
+                            },
+                            child: const Text(
+                              'Delete Account',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
-      ),
-      bottomNavigationBar: const NavigatorBar(
-        currentIndex: 2,
+          ],
+        ),
+        bottomNavigationBar: const NavigatorBar(
+          currentIndex: 2,
+        ),
       ),
     );
   }
@@ -583,15 +628,20 @@ class _ProfilePageState extends State<ProfilePage> {
             btnCancelText: 'NO',
             btnCancelOnPress: () {},
             btnOkOnPress: () {
-              AppSecureStorage.deleteAll().then((value) {
-                context.read<UserCubit>().clearUser();
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const LoginPage(),
-                  ),
-                );
-              });
+              AppSecureStorage.deleteAll().then(
+                (value) {
+                  context.read<UserCubit>().clearUser();
+
+                  GoogleSignIn().disconnect();
+
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const LoginPage(),
+                    ),
+                  );
+                },
+              );
             },
           ).show();
         },
