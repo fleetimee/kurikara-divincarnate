@@ -18,7 +18,7 @@ class RegisterAppleCubit extends Cubit<RegisterAppleState> {
   RegisterAppleCubit(
     this.authDataSource,
     this.firebaseDataSource,
-  ) : super(RegisterAppleState.initial());
+  ) : super(const RegisterAppleState.initial());
 
   Future<void> registerWithApple() async {
     emit(const RegisterAppleState.loading());
