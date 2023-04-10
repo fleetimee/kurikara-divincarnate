@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
+import 'package:flutter_huixin_app/data/datasources/local/app_secure_storage.dart';
 import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
+import 'package:flutter_huixin_app/data/models/auth/requests/delete_user_request_model.dart';
 import 'package:flutter_huixin_app/data/models/auth/requests/login_request_model.dart';
 import 'package:flutter_huixin_app/data/models/auth/requests/register_request_model.dart';
 import 'package:flutter_huixin_app/data/models/auth/requests/update_fcm_request_model.dart';
@@ -15,6 +17,12 @@ class AuthDataSource {
   HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
     HttpLogger(logLevel: LogLevel.BODY),
   ]);
+
+  Future<String> getToken() async {
+    final token = await AppSecureStorage.getAccessToken();
+    return 'token_api=$token';
+  }
+
   Future<Either<String, AuthResponseModel>> register(
       RegisterRequestModel model) async {
     try {
@@ -112,6 +120,30 @@ class AuthDataSource {
       } else {
         return const Right(false);
       }
+    } catch (e) {
+      return Left(e.toString());
+    }
+  }
+
+  Future<Either<String, AuthResponseModel>> deleteUser(
+      DeleteUserRequestModel model) async {
+    try {
+      final headers = {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Cookie': 'ci_session=ouvp29be2csimiohsjvhpt90oo3ejgcs'
+      };
+
+      final response = await http.post(
+        Uri.parse('${AppApi.baseUrl}/api_delete_user?${await getToken()}}'),
+        body: model.toMap(),
+        headers: headers,
+      );
+
+      return Right(
+        AuthResponseModel.fromJson(
+          jsonDecode(response.body),
+        ),
+      );
     } catch (e) {
       return Left(e.toString());
     }
