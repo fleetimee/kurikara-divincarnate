@@ -81,14 +81,14 @@ class HomeItems extends StatelessWidget {
                         appBar: AppBarDefault(
                           title: 'Active Students',
                         ),
-                        body: SingleChildScrollView(
-                          controller: ModalScrollController.of(context),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: BlocBuilder<ActiveStudentCubit,
-                                ActiveStudentState>(
-                              builder: (context, state) {
-                                return ListView.separated(
+                        body: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: BlocBuilder<ActiveStudentCubit,
+                              ActiveStudentState>(
+                            builder: (context, state) {
+                              return Scrollbar(
+                                child: ListView.separated(
+                                  controller: ModalScrollController.of(context),
                                   separatorBuilder: (context, index) {
                                     return const Divider(
                                       height: 1,
@@ -163,9 +163,9 @@ class HomeItems extends StatelessWidget {
                                       },
                                     );
                                   },
-                                );
-                              },
-                            ),
+                                ),
+                              );
+                            },
                           ),
                         ),
                       ),
