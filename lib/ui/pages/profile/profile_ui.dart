@@ -364,7 +364,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               // const SizedBox(width: 10),
               const Text(
-                'Pengumuman untuk Peserta ...',
+                'Announcement and Information',
                 style: TextStyle(
                   fontSize: 20,
                   color: Colors.black,
