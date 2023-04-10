@@ -535,10 +535,10 @@ class _ProfilePageState extends State<ProfilePage> {
         onTap: () {
           PromptDialog(
             context: context,
-            title: 'Keluar ?',
-            desc: 'Yakin ingin keluar ?',
-            btnOkText: 'Ya',
-            btnCancelText: 'Tidak',
+            title: 'Logout',
+            desc: 'Are you sure want to logout?',
+            btnOkText: 'YES',
+            btnCancelText: 'NO',
             btnCancelOnPress: () {},
             btnOkOnPress: () {
               AppSecureStorage.deleteAll().then((value) {

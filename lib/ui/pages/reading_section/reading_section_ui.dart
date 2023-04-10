@@ -226,7 +226,8 @@ class _ReadingSectionState extends State<ReadingSection> {
               loaded: (value) {
                 if (value.data.data == null || value.data.data!.isEmpty) {
                   return const NotFound(
-                    text: 'Materi belum tersedia',
+                    text:
+                        'This course is currently empty, please wait until the course is ready',
                   );
                 }
                 final materi = value.data.data![_currentContent];
@@ -421,7 +422,7 @@ class _ReadingSectionState extends State<ReadingSection> {
                       Overlay.of(context),
                       CustomSnackBar.success(
                         message:
-                            "Materi ${readingMateri!.masterGroupMateri.name} telah diselesaikan",
+                            "Reading ${readingMateri!.masterGroupMateri.name} has been finished, you can proceed to the exercise section",
                       ),
                     );
                   }

@@ -49,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
                   ErrorDialog(
                     title: 'Invalid Credentials',
                     context: context,
-                    desc: 'Username atau Password salah',
+                    desc: 'Your username or password is incorrect',
                     btnOkText: 'OK',
                     btnOkOnPress: () {},
                   ).show();
@@ -89,7 +89,7 @@ class _LoginPageState extends State<LoginPage> {
                   ErrorDialog(
                     title: 'Invalid Credentials',
                     context: context,
-                    desc: 'Login Google Gagal',
+                    desc: 'Login with Google failed',
                     btnOkText: 'OK',
                     btnOkOnPress: () {},
                   ).show();
@@ -129,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                   ErrorDialog(
                     title: 'Invalid Credentials',
                     context: context,
-                    desc: 'Login Apple Gagal',
+                    desc: 'Login with Apple failed',
                     btnOkText: 'OK',
                     btnOkOnPress: () {},
                   ).show();

@@ -25,12 +25,17 @@ class NotFound extends StatelessWidget {
             height: 250,
           ),
           const SizedBox(height: 10),
-          Text(
-            text,
-            style: const TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.w500,
-              color: AppColors.blackColor,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 50),
+            child: Text(
+              text,
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.w500,
+                color: AppColors.blackColor,
+                height: 1.5,
+              ),
+              textAlign: TextAlign.center,
             ),
           ),
         ],

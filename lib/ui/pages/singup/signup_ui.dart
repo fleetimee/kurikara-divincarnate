@@ -121,9 +121,9 @@ class _SignUpPageState extends State<SignUpPage> {
                 loaded: (user) {
                   SuccessDialog(
                     context: context,
-                    title: 'Berhasil',
+                    title: 'Success',
                     desc:
-                        'Registrasi berhasil, silahkan login untuk mengakses aplikasi',
+                        'Your registration is successfull, please login to access the application',
                     btnOkOnPress: () {
                       Navigator.pushAndRemoveUntil(
                         context,
@@ -151,9 +151,9 @@ class _SignUpPageState extends State<SignUpPage> {
                 loaded: (user) {
                   SuccessDialog(
                     context: context,
-                    title: 'Berhasil',
+                    title: 'Success',
                     desc:
-                        'Registrasi dengan google berhasil, silahkan login untuk mengakses aplikasi',
+                        'Your registration with Google Account is successfull, please login to access the application, and don\'t forget to change your details in the profile page',
                     btnOkOnPress: () {
                       Navigator.pushAndRemoveUntil(
                         context,
@@ -167,7 +167,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 },
                 error: (error) => ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
-                    content: Text('Register dengan Google gagal'),
+                    content: Text('Register with Google Account failed'),
                   ),
                 ),
               );
@@ -181,9 +181,9 @@ class _SignUpPageState extends State<SignUpPage> {
                 loaded: (user) {
                   SuccessDialog(
                     context: context,
-                    title: 'Berhasil',
+                    title: 'Success',
                     desc:
-                        'Registrasi dengan appleid berhasil, silahkan login untuk mengakses aplikasi',
+                        'Your registration with Apple ID is successfull, please login to access the application, and don\'t forget to change your details in the profile page',
                     btnOkOnPress: () {
                       Navigator.pushAndRemoveUntil(
                         context,
@@ -197,7 +197,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 },
                 error: (error) => ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
-                    content: Text('Register dengan appleid gagal'),
+                    content: Text('Register with Apple ID failed'),
                   ),
                 ),
               );
