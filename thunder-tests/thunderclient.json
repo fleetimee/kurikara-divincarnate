@@ -93,27 +93,30 @@
     "method": "POST",
     "sortNum": 20000,
     "created": "2023-04-04T15:15:39.784Z",
-    "modified": "2023-04-04T15:15:39.784Z",
+    "modified": "2023-04-10T07:06:13.633Z",
     "headers": [],
     "params": [
       {
         "name": "token_api",
-        "value": "323232"
+        "value": "323232",
+        "isPath": false
       }
     ],
     "body": {
+      "type": "formdata",
+      "raw": "",
       "form": [
         {
           "name": "user_id",
-          "value": "30"
+          "value": "6"
         },
         {
           "name": "user_npp",
-          "value": "1234"
+          "value": ""
         },
         {
           "name": "user_name",
-          "value": "aaa123"
+          "value": "bahribahri"
         },
         {
           "name": "user_password",
@@ -141,11 +144,13 @@
         },
         {
           "name": "email",
-          "value": "aaa123@email.com"
+          "value": "",
+          "isDisabled": true
         },
         {
           "name": "no_telpon",
-          "value": "0812345678"
+          "value": "",
+          "isDisabled": true
         },
         {
           "name": "birth_date",
@@ -153,21 +158,22 @@
         },
         {
           "name": "no_member",
-          "value": "H0001"
+          "value": "HM00011123"
         },
         {
           "name": "full_name",
-          "value": "Denies"
+          "value": "Bahrieeee"
         }
       ],
       "files": [
         {
           "name": "img_file",
-          "value": []
+          "value": "c:\\Users\\DEV-MAGANG-01\\Desktop\\1680248545597881.jpg",
+          "isDisabled": true
         }
-      ],
-      "type": "formdata"
-    }
+      ]
+    },
+    "tests": []
   },
   {
     "_id": "39bce6db-54bd-449b-80e5-1999b6df0b87",
