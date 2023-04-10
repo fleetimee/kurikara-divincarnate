@@ -15,7 +15,7 @@ class DeleteUserRequestModel {
     required this.userId,
   });
 
-  int userId;
+  String userId;
 
   factory DeleteUserRequestModel.fromJson(Map<String, dynamic> json) =>
       DeleteUserRequestModel(
@@ -26,7 +26,7 @@ class DeleteUserRequestModel {
         "user_id": userId,
       };
 
-  Map<String, int> toMap() {
+  Map<String, String> toMap() {
     return {
       'user_id': userId,
     };
