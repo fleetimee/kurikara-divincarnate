@@ -21,32 +21,6 @@ class LoginAppleCubit extends Cubit<LoginAppleState> {
     this.firebaseDataSource,
   ) : super(const LoginAppleState.initial());
 
-  Future<void> registerWithApple() async {
-    emit(const LoginAppleState.loading());
-    final result = await firebaseDataSource.loginWithAppleId();
-    result.fold(
-      (l) => emit(LoginAppleState.error(l)),
-      (uid) async {
-        final request = RegisterRequestModel(
-          full_name: uid,
-          user_name: uid,
-          user_password: '123456',
-          token_device: UUIDGenerator.generateUUID(),
-          no_member: uid,
-          birth_date: DateFormat('yyyy-MM-dd', 'id').format(DateTime.now()),
-          id_apple: uid,
-          email: uid,
-          no_telpon: uid,
-        );
-        final authResponse = await authDataSource.registerSosmed(request);
-        authResponse.fold(
-          (l) => emit(LoginAppleState.error(l)),
-          (r) => emit(LoginAppleState.loaded(r)),
-        );
-      },
-    );
-  }
-
   Future<void> loginWithApple() async {
     emit(const LoginAppleState.loading());
     final result = await firebaseDataSource.loginWithAppleId();

@@ -21,49 +21,49 @@ class LoginFbCubit extends Cubit<LoginFbState> {
     this.firebaseDataSource,
   ) : super(const LoginFbState.initial());
 
-  Future<void> registerWithFb() async {
-    emit(const LoginFbState.loading());
-    final result = await firebaseDataSource.loginWithFacebook();
-    result.fold(
-      (l) => emit(LoginFbState.error(l)),
-      (uid) async {
-        final request = RegisterRequestModel(
-          full_name: uid,
-          user_name: uid,
-          user_password: '123456',
-          token_device: UUIDGenerator.generateUUID(),
-          no_member: uid,
-          birth_date: DateFormat('yyyy-MM-dd', 'id').format(DateTime.now()),
-          id_fb: uid,
-          email: uid,
-          no_telpon: uid,
-        );
-        final authResponse = await authDataSource.registerSosmed(request);
-        authResponse.fold(
-          (l) => emit(LoginFbState.error(l)),
-          (r) => emit(LoginFbState.loaded(r)),
-        );
-      },
-    );
-  }
+  // Future<void> registerWithFb() async {
+  //   emit(const LoginFbState.loading());
+  //   final result = await firebaseDataSource.loginWithFacebook();
+  //   result.fold(
+  //     (l) => emit(LoginFbState.error(l)),
+  //     (uid) async {
+  //       final request = RegisterRequestModel(
+  //         full_name: uid,
+  //         user_name: uid,
+  //         user_password: '123456',
+  //         token_device: UUIDGenerator.generateUUID(),
+  //         no_member: uid,
+  //         birth_date: DateFormat('yyyy-MM-dd', 'id').format(DateTime.now()),
+  //         id_fb: uid,
+  //         email: uid,
+  //         no_telpon: uid,
+  //       );
+  //       final authResponse = await authDataSource.registerSosmed(request);
+  //       authResponse.fold(
+  //         (l) => emit(LoginFbState.error(l)),
+  //         (r) => emit(LoginFbState.loaded(r)),
+  //       );
+  //     },
+  //   );
+  // }
 
-  Future<void> loginWithFb() async {
-    emit(const LoginFbState.loading());
-    final result = await firebaseDataSource.loginWithFacebook();
-    result.fold(
-      (l) => emit(LoginFbState.error(l)),
-      (uid) async {
-        final request = LoginRequestModel(
-          username: uid,
-          password: '123456',
-          id_fb: uid,
-        );
-        final authResponse = await authDataSource.login(request);
-        authResponse.fold(
-          (l) => emit(LoginFbState.error(l)),
-          (r) => emit(LoginFbState.loaded(r)),
-        );
-      },
-    );
-  }
+  // Future<void> loginWithFb() async {
+  //   emit(const LoginFbState.loading());
+  //   final result = await firebaseDataSource.loginWithFacebook();
+  //   result.fold(
+  //     (l) => emit(LoginFbState.error(l)),
+  //     (uid) async {
+  //       final request = LoginRequestModel(
+  //         username: uid,
+  //         password: '123456',
+  //         id_fb: uid,
+  //       );
+  //       final authResponse = await authDataSource.login(request);
+  //       authResponse.fold(
+  //         (l) => emit(LoginFbState.error(l)),
+  //         (r) => emit(LoginFbState.loaded(r)),
+  //       );
+  //     },
+  //   );
+  // }
 }

@@ -109,46 +109,6 @@ class _LoginPageState extends State<LoginPage> {
             );
           },
         ),
-        BlocListener<LoginFbCubit, LoginFbState>(
-          listener: (context, state) {
-            state.maybeWhen(
-              loaded: (user) async {
-                if (user.data != null) {
-                  await AppSecureStorage.setAccessToken(
-                      user.data?.tokenApi ?? '323232');
-
-                  await AppSecureStorage.setUser(user.data);
-
-                  if (context.mounted) {
-                    Navigator.pushNamedAndRemoveUntil(
-                      context,
-                      HomePage.routeName,
-                      (route) => false,
-                    );
-                  }
-                } else {
-                  ErrorDialog(
-                    title: 'Invalid Credentials',
-                    context: context,
-                    desc: 'Login Facebook Gagal',
-                    btnOkText: 'OK',
-                    btnOkOnPress: () {},
-                  ).show();
-                }
-              },
-              error: (error) {
-                ErrorDialog(
-                  title: 'Error',
-                  context: context,
-                  desc: error,
-                  btnOkText: 'OK',
-                  btnOkOnPress: () {},
-                ).show();
-              },
-              orElse: () {},
-            );
-          },
-        ),
         BlocListener<LoginAppleCubit, LoginAppleState>(
           listener: (context, state) {
             state.maybeWhen(

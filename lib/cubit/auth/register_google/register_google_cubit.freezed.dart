@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'login_google_cubit.dart';
+part of 'register_google_cubit.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$LoginGoogleState {
+mixin _$RegisterGoogleState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
@@ -69,16 +69,16 @@ mixin _$LoginGoogleState {
 }
 
 /// @nodoc
-abstract class $LoginGoogleStateCopyWith<$Res> {
-  factory $LoginGoogleStateCopyWith(
-          LoginGoogleState value, $Res Function(LoginGoogleState) then) =
-      _$LoginGoogleStateCopyWithImpl<$Res, LoginGoogleState>;
+abstract class $RegisterGoogleStateCopyWith<$Res> {
+  factory $RegisterGoogleStateCopyWith(
+          RegisterGoogleState value, $Res Function(RegisterGoogleState) then) =
+      _$RegisterGoogleStateCopyWithImpl<$Res, RegisterGoogleState>;
 }
 
 /// @nodoc
-class _$LoginGoogleStateCopyWithImpl<$Res, $Val extends LoginGoogleState>
-    implements $LoginGoogleStateCopyWith<$Res> {
-  _$LoginGoogleStateCopyWithImpl(this._value, this._then);
+class _$RegisterGoogleStateCopyWithImpl<$Res, $Val extends RegisterGoogleState>
+    implements $RegisterGoogleStateCopyWith<$Res> {
+  _$RegisterGoogleStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -95,7 +95,7 @@ abstract class _$$_InitialCopyWith<$Res> {
 
 /// @nodoc
 class __$$_InitialCopyWithImpl<$Res>
-    extends _$LoginGoogleStateCopyWithImpl<$Res, _$_Initial>
+    extends _$RegisterGoogleStateCopyWithImpl<$Res, _$_Initial>
     implements _$$_InitialCopyWith<$Res> {
   __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
       : super(_value, _then);
@@ -108,7 +108,7 @@ class _$_Initial implements _Initial {
 
   @override
   String toString() {
-    return 'LoginGoogleState.initial()';
+    return 'RegisterGoogleState.initial()';
   }
 
   @override
@@ -195,7 +195,7 @@ class _$_Initial implements _Initial {
   }
 }
 
-abstract class _Initial implements LoginGoogleState {
+abstract class _Initial implements RegisterGoogleState {
   const factory _Initial() = _$_Initial;
 }
 
@@ -208,7 +208,7 @@ abstract class _$$_LoadingCopyWith<$Res> {
 
 /// @nodoc
 class __$$_LoadingCopyWithImpl<$Res>
-    extends _$LoginGoogleStateCopyWithImpl<$Res, _$_Loading>
+    extends _$RegisterGoogleStateCopyWithImpl<$Res, _$_Loading>
     implements _$$_LoadingCopyWith<$Res> {
   __$$_LoadingCopyWithImpl(_$_Loading _value, $Res Function(_$_Loading) _then)
       : super(_value, _then);
@@ -221,7 +221,7 @@ class _$_Loading implements _Loading {
 
   @override
   String toString() {
-    return 'LoginGoogleState.loading()';
+    return 'RegisterGoogleState.loading()';
   }
 
   @override
@@ -308,7 +308,7 @@ class _$_Loading implements _Loading {
   }
 }
 
-abstract class _Loading implements LoginGoogleState {
+abstract class _Loading implements RegisterGoogleState {
   const factory _Loading() = _$_Loading;
 }
 
@@ -322,7 +322,7 @@ abstract class _$$_LoadedCopyWith<$Res> {
 
 /// @nodoc
 class __$$_LoadedCopyWithImpl<$Res>
-    extends _$LoginGoogleStateCopyWithImpl<$Res, _$_Loaded>
+    extends _$RegisterGoogleStateCopyWithImpl<$Res, _$_Loaded>
     implements _$$_LoadedCopyWith<$Res> {
   __$$_LoadedCopyWithImpl(_$_Loaded _value, $Res Function(_$_Loaded) _then)
       : super(_value, _then);
@@ -351,7 +351,7 @@ class _$_Loaded implements _Loaded {
 
   @override
   String toString() {
-    return 'LoginGoogleState.loaded(data: $data)';
+    return 'RegisterGoogleState.loaded(data: $data)';
   }
 
   @override
@@ -446,7 +446,7 @@ class _$_Loaded implements _Loaded {
   }
 }
 
-abstract class _Loaded implements LoginGoogleState {
+abstract class _Loaded implements RegisterGoogleState {
   const factory _Loaded(final AuthResponseModel data) = _$_Loaded;
 
   AuthResponseModel get data;
@@ -465,7 +465,7 @@ abstract class _$$_ErrorCopyWith<$Res> {
 
 /// @nodoc
 class __$$_ErrorCopyWithImpl<$Res>
-    extends _$LoginGoogleStateCopyWithImpl<$Res, _$_Error>
+    extends _$RegisterGoogleStateCopyWithImpl<$Res, _$_Error>
     implements _$$_ErrorCopyWith<$Res> {
   __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
       : super(_value, _then);
@@ -494,7 +494,7 @@ class _$_Error implements _Error {
 
   @override
   String toString() {
-    return 'LoginGoogleState.error(message: $message)';
+    return 'RegisterGoogleState.error(message: $message)';
   }
 
   @override
@@ -589,7 +589,7 @@ class _$_Error implements _Error {
   }
 }
 
-abstract class _Error implements LoginGoogleState {
+abstract class _Error implements RegisterGoogleState {
   const factory _Error(final String message) = _$_Error;
 
   String get message;

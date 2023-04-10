@@ -5,6 +5,8 @@ import 'package:flutter_huixin_app/cubit/auth/login_apple/login_apple_cubit.dart
 import 'package:flutter_huixin_app/cubit/auth/login_fb/login_fb_cubit.dart';
 import 'package:flutter_huixin_app/cubit/auth/login_google/login_google_cubit.dart';
 import 'package:flutter_huixin_app/cubit/auth/login_huixin/auth_cubit.dart';
+import 'package:flutter_huixin_app/cubit/auth/register_apple/register_apple_cubit.dart';
+import 'package:flutter_huixin_app/cubit/auth/register_google/register_google_cubit.dart';
 import 'package:flutter_huixin_app/cubit/auth/user/user_cubit.dart';
 import 'package:flutter_huixin_app/cubit/home/active_student/active_student_cubit.dart';
 import 'package:flutter_huixin_app/cubit/home/daily_activity/daily_activity_cubit.dart';
@@ -134,14 +136,21 @@ class AppProviders extends StatelessWidget {
               )),
         ),
         BlocProvider(
-          create: (_) => LoginFbCubit(
+          create: (_) => LoginAppleCubit(
               AuthDataSource(),
               FirebaseDataSource(
                 auth: FirebaseAuth.instance,
               )),
         ),
         BlocProvider(
-          create: (_) => LoginAppleCubit(
+          create: (_) => RegisterAppleCubit(
+              AuthDataSource(),
+              FirebaseDataSource(
+                auth: FirebaseAuth.instance,
+              )),
+        ),
+        BlocProvider(
+          create: (_) => RegisterGoogleCubit(
               AuthDataSource(),
               FirebaseDataSource(
                 auth: FirebaseAuth.instance,

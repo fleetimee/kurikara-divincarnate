@@ -30,17 +30,17 @@ class SocialIcon extends StatelessWidget {
             height: 50,
           ),
         ),
-        const SizedBox(
-          width: 40,
-        ),
-        GestureDetector(
-          onTap: onTapFacebook,
-          child: Image.asset(
-            "assets/images/register-facebook.png",
-            width: 50,
-            height: 50,
-          ),
-        ),
+        // const SizedBox(
+        //   width: 40,
+        // ),
+        // GestureDetector(
+        //   onTap: onTapFacebook,
+        //   child: Image.asset(
+        //     "assets/images/register-facebook.png",
+        //     width: 50,
+        //     height: 50,
+        //   ),
+        // ),
         if (Platform.isIOS)
           const SizedBox(
             width: 40,
