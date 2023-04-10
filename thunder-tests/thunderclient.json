@@ -734,5 +734,30 @@
     "created": "2023-04-04T15:15:39.803Z",
     "modified": "2023-04-04T15:15:39.803Z",
     "headers": []
+  },
+  {
+    "_id": "bf8ae836-f05a-4bc6-8d89-6406ac823819",
+    "colId": "90dac72c-d6bd-4b54-a0c3-f9d1b939443b",
+    "containerId": "5ead1e40-68a4-4b2f-9261-d08a74ab339e",
+    "name": "Delete User",
+    "url": "{{huxin}}api_delete_profile/?token_api=323232",
+    "method": "POST",
+    "sortNum": 210000,
+    "created": "2023-04-10T07:57:11.149Z",
+    "modified": "2023-04-10T07:59:10.967Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "token_api",
+        "value": "323232",
+        "isPath": false
+      }
+    ],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"user_id\": 16\n}",
+      "form": []
+    },
+    "tests": []
   }
 ]

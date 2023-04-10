@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'update_user_cubit.dart';
+part of 'delete_user_cubit.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$UpdateUserState {
+mixin _$DeleteUserState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
@@ -69,16 +69,16 @@ mixin _$UpdateUserState {
 }
 
 /// @nodoc
-abstract class $UpdateUserStateCopyWith<$Res> {
-  factory $UpdateUserStateCopyWith(
-          UpdateUserState value, $Res Function(UpdateUserState) then) =
-      _$UpdateUserStateCopyWithImpl<$Res, UpdateUserState>;
+abstract class $DeleteUserStateCopyWith<$Res> {
+  factory $DeleteUserStateCopyWith(
+          DeleteUserState value, $Res Function(DeleteUserState) then) =
+      _$DeleteUserStateCopyWithImpl<$Res, DeleteUserState>;
 }
 
 /// @nodoc
-class _$UpdateUserStateCopyWithImpl<$Res, $Val extends UpdateUserState>
-    implements $UpdateUserStateCopyWith<$Res> {
-  _$UpdateUserStateCopyWithImpl(this._value, this._then);
+class _$DeleteUserStateCopyWithImpl<$Res, $Val extends DeleteUserState>
+    implements $DeleteUserStateCopyWith<$Res> {
+  _$DeleteUserStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -95,7 +95,7 @@ abstract class _$$_InitialCopyWith<$Res> {
 
 /// @nodoc
 class __$$_InitialCopyWithImpl<$Res>
-    extends _$UpdateUserStateCopyWithImpl<$Res, _$_Initial>
+    extends _$DeleteUserStateCopyWithImpl<$Res, _$_Initial>
     implements _$$_InitialCopyWith<$Res> {
   __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
       : super(_value, _then);
@@ -108,7 +108,7 @@ class _$_Initial implements _Initial {
 
   @override
   String toString() {
-    return 'UpdateUserState.initial()';
+    return 'DeleteUserState.initial()';
   }
 
   @override
@@ -195,7 +195,7 @@ class _$_Initial implements _Initial {
   }
 }
 
-abstract class _Initial implements UpdateUserState {
+abstract class _Initial implements DeleteUserState {
   const factory _Initial() = _$_Initial;
 }
 
@@ -208,7 +208,7 @@ abstract class _$$_LoadingCopyWith<$Res> {
 
 /// @nodoc
 class __$$_LoadingCopyWithImpl<$Res>
-    extends _$UpdateUserStateCopyWithImpl<$Res, _$_Loading>
+    extends _$DeleteUserStateCopyWithImpl<$Res, _$_Loading>
     implements _$$_LoadingCopyWith<$Res> {
   __$$_LoadingCopyWithImpl(_$_Loading _value, $Res Function(_$_Loading) _then)
       : super(_value, _then);
@@ -221,7 +221,7 @@ class _$_Loading implements _Loading {
 
   @override
   String toString() {
-    return 'UpdateUserState.loading()';
+    return 'DeleteUserState.loading()';
   }
 
   @override
@@ -308,7 +308,7 @@ class _$_Loading implements _Loading {
   }
 }
 
-abstract class _Loading implements UpdateUserState {
+abstract class _Loading implements DeleteUserState {
   const factory _Loading() = _$_Loading;
 }
 
@@ -322,7 +322,7 @@ abstract class _$$_LoadedCopyWith<$Res> {
 
 /// @nodoc
 class __$$_LoadedCopyWithImpl<$Res>
-    extends _$UpdateUserStateCopyWithImpl<$Res, _$_Loaded>
+    extends _$DeleteUserStateCopyWithImpl<$Res, _$_Loaded>
     implements _$$_LoadedCopyWith<$Res> {
   __$$_LoadedCopyWithImpl(_$_Loaded _value, $Res Function(_$_Loaded) _then)
       : super(_value, _then);
@@ -330,10 +330,10 @@ class __$$_LoadedCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? response = null,
+    Object? response = freezed,
   }) {
     return _then(_$_Loaded(
-      null == response
+      freezed == response
           ? _value.response
           : response // ignore: cast_nullable_to_non_nullable
               as AuthResponseModel,
@@ -351,7 +351,7 @@ class _$_Loaded implements _Loaded {
 
   @override
   String toString() {
-    return 'UpdateUserState.loaded(response: $response)';
+    return 'DeleteUserState.loaded(response: $response)';
   }
 
   @override
@@ -359,12 +359,12 @@ class _$_Loaded implements _Loaded {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Loaded &&
-            (identical(other.response, response) ||
-                other.response == response));
+            const DeepCollectionEquality().equals(other.response, response));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, response);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(response));
 
   @JsonKey(ignore: true)
   @override
@@ -447,7 +447,7 @@ class _$_Loaded implements _Loaded {
   }
 }
 
-abstract class _Loaded implements UpdateUserState {
+abstract class _Loaded implements DeleteUserState {
   const factory _Loaded(final AuthResponseModel response) = _$_Loaded;
 
   AuthResponseModel get response;
@@ -466,7 +466,7 @@ abstract class _$$_ErrorCopyWith<$Res> {
 
 /// @nodoc
 class __$$_ErrorCopyWithImpl<$Res>
-    extends _$UpdateUserStateCopyWithImpl<$Res, _$_Error>
+    extends _$DeleteUserStateCopyWithImpl<$Res, _$_Error>
     implements _$$_ErrorCopyWith<$Res> {
   __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
       : super(_value, _then);
@@ -495,7 +495,7 @@ class _$_Error implements _Error {
 
   @override
   String toString() {
-    return 'UpdateUserState.error(message: $message)';
+    return 'DeleteUserState.error(message: $message)';
   }
 
   @override
@@ -590,7 +590,7 @@ class _$_Error implements _Error {
   }
 }
 
-abstract class _Error implements UpdateUserState {
+abstract class _Error implements DeleteUserState {
   const factory _Error(final String message) = _$_Error;
 
   String get message;
