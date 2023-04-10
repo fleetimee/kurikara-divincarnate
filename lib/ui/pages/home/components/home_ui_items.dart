@@ -46,7 +46,9 @@ class HomeItems extends StatelessWidget {
                             const SizedBox(width: 8),
                         itemCount: state.maybeMap(
                           orElse: () => 6,
-                          loaded: (state) => state.data.data?.length ?? 0,
+                          loaded: (state) => (state.data.data?.length ?? 0) > 5
+                              ? 5
+                              : state.data.data?.length ?? 0,
                         ),
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {

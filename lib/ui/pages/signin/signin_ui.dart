@@ -12,6 +12,9 @@ import 'package:flutter_huixin_app/data/datasources/local/app_secure_storage.dar
 import 'package:flutter_huixin_app/ui/pages/home/home_ui.dart';
 import 'package:flutter_huixin_app/ui/pages/signin/components/signin_ui_body_login.dart';
 import 'package:flutter_huixin_app/ui/widgets/dialog_box.dart';
+import 'package:loader_overlay/loader_overlay.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class LoginPage extends StatefulWidget {
   static const String routeName = '/login-page';
@@ -60,13 +63,12 @@ class _LoginPageState extends State<LoginPage> {
                 }
               },
               error: (error) {
-                ErrorDialog(
-                  title: 'Error',
-                  context: context,
-                  desc: error,
-                  btnOkText: 'OK',
-                  btnOkOnPress: () {},
-                ).show();
+                showTopSnackBar(
+                  Overlay.of(context),
+                  const CustomSnackBar.error(
+                    message: 'Something went wrong',
+                  ),
+                );
               },
               orElse: () {},
             );
@@ -93,20 +95,20 @@ class _LoginPageState extends State<LoginPage> {
                   ErrorDialog(
                     title: 'Invalid Credentials',
                     context: context,
-                    desc: 'Login with Google failed',
+                    desc:
+                        'This google account doesn\'t associated with Huixin, please register with this google account first',
                     btnOkText: 'OK',
                     btnOkOnPress: () {},
                   ).show();
                 }
               },
               error: (error) {
-                ErrorDialog(
-                  title: 'Error',
-                  context: context,
-                  desc: error,
-                  btnOkText: 'OK',
-                  btnOkOnPress: () {},
-                ).show();
+                showTopSnackBar(
+                  Overlay.of(context),
+                  const CustomSnackBar.error(
+                    message: 'Cancelled',
+                  ),
+                );
               },
               orElse: () {},
             );
@@ -133,20 +135,20 @@ class _LoginPageState extends State<LoginPage> {
                   ErrorDialog(
                     title: 'Invalid Credentials',
                     context: context,
-                    desc: 'Login with Apple failed',
+                    desc:
+                        'This apple account doesn\'t associated with Huixin, please register with this apple account first',
                     btnOkText: 'OK',
                     btnOkOnPress: () {},
                   ).show();
                 }
               },
               error: (error) {
-                ErrorDialog(
-                  title: 'Error',
-                  context: context,
-                  desc: error,
-                  btnOkText: 'OK',
-                  btnOkOnPress: () {},
-                ).show();
+                showTopSnackBar(
+                  Overlay.of(context),
+                  const CustomSnackBar.error(
+                    message: 'Cancelled',
+                  ),
+                );
               },
               orElse: () {},
             );
@@ -155,46 +157,48 @@ class _LoginPageState extends State<LoginPage> {
       ],
       child: BlocBuilder<AuthCubit, AuthState>(
         builder: (context, state) {
-          return SafeArea(
-            child: Scaffold(
-              resizeToAvoidBottomInset: false,
-              body: DoubleBackToCloseApp(
-                snackBar: const SnackBar(
-                  content: Text(
-                    'Press back again to exit the app',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500,
+          return LoaderOverlay(
+            child: SafeArea(
+              child: Scaffold(
+                resizeToAvoidBottomInset: false,
+                body: DoubleBackToCloseApp(
+                  snackBar: const SnackBar(
+                    content: Text(
+                      'Press back again to exit the app',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
+                    closeIconColor: Colors.white,
+                    backgroundColor: AppColors.yellowColor,
+                    showCloseIcon: true,
                   ),
-                  closeIconColor: Colors.white,
-                  backgroundColor: AppColors.yellowColor,
-                  showCloseIcon: true,
-                ),
-                child: Stack(
-                  children: [
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                        color: Colors.transparent,
-                        child: Animate(
-                          effects: const [FadeEffect(), ScaleEffect()],
-                          child: Image.asset(
-                            "assets/images/illust-login.png",
-                            height: 400,
-                            fit: BoxFit.contain,
+                  child: Stack(
+                    children: [
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Container(
+                          color: Colors.transparent,
+                          child: Animate(
+                            effects: const [FadeEffect(), ScaleEffect()],
+                            child: Image.asset(
+                              "assets/images/illust-login.png",
+                              height: 400,
+                              fit: BoxFit.contain,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    BodyLogin(
-                      fbKeyAuth: _fbKeyAuth,
-                      usernameController: _usernameController,
-                      passwordController: _passwordController,
-                      state: state,
-                    ),
-                  ],
+                      BodyLogin(
+                        fbKeyAuth: _fbKeyAuth,
+                        usernameController: _usernameController,
+                        passwordController: _passwordController,
+                        state: state,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
