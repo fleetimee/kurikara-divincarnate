@@ -53,4 +53,9 @@ class LatihanLinesRequestModel {
 
   factory LatihanLinesRequestModel.fromJson(String source) =>
       LatihanLinesRequestModel.fromMap(json.decode(source));
+
+  @override
+  String toString() {
+    return 'LatihanLinesRequestModel(id_log_soal_header: $id_log_soal_header, id_soal: $id_soal, tipe: $tipe, pg_answer: $pg_answer, cocok_answer: $cocok_answer, voice_answer: $voice_answer, status: $status, user_id: $user_id)';
+  }
 }

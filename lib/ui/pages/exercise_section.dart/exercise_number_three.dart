@@ -58,12 +58,11 @@ class _ExerciseThreeState extends State<ExerciseThree> {
   }
 
   void setAnswer(int index, String answer) {
-    if (index == 1) {
-      if (!isAnswer1) {
+    if (!currentAnswer.contains(answer)) {
+      currentAnswer += answer;
+      currentAnswerNo = index + 1;
+      if (index == 1) {
         isAnswer1 = true;
-        currentAnswer += answer;
-        currentAnswerNo = index + 1;
-
         switch (answer) {
           case 'a':
             colorAnswer1 = AppColors.yellowColor2;
@@ -83,11 +82,7 @@ class _ExerciseThreeState extends State<ExerciseThree> {
           default:
         }
       }
-    }
-    if (index == 2) {
-      if (!isAnswer2) {
-        currentAnswer += answer;
-        currentAnswerNo = index + 1;
+      if (index == 2) {
         isAnswer2 = true;
         switch (answer) {
           case 'a':
@@ -108,11 +103,7 @@ class _ExerciseThreeState extends State<ExerciseThree> {
           default:
         }
       }
-    }
-    if (index == 3) {
-      if (!isAnswer3) {
-        currentAnswer += answer;
-        currentAnswerNo = index + 1;
+      if (index == 3) {
         isAnswer3 = true;
         switch (answer) {
           case 'a':
@@ -133,11 +124,7 @@ class _ExerciseThreeState extends State<ExerciseThree> {
           default:
         }
       }
-    }
-    if (index == 4) {
-      if (isAnswer4) {
-        currentAnswer += answer;
-        currentAnswerNo = index + 1;
+      if (index == 4) {
         isAnswer4 = true;
         switch (answer) {
           case 'a':
@@ -158,11 +145,7 @@ class _ExerciseThreeState extends State<ExerciseThree> {
           default:
         }
       }
-    }
-    if (index == 5) {
-      if (isAnswer5) {
-        currentAnswer += answer;
-        currentAnswerNo = index + 1;
+      if (index == 5) {
         isAnswer5 = true;
         switch (answer) {
           case 'a':
@@ -183,9 +166,9 @@ class _ExerciseThreeState extends State<ExerciseThree> {
           default:
         }
       }
-    }
 
-    setState(() {});
+      setState(() {});
+    }
   }
 
   @override
@@ -531,9 +514,9 @@ class _ExerciseThreeState extends State<ExerciseThree> {
                           id_soal: state.data.data![state.index].idSoal!,
                           tipe: state.data.data![state.index].tipe!,
                           pg_answer: '',
-                          cocok_answer: currentAnswer,
+                          cocok_answer: concatenateCharacters(currentAnswer),
                           status: state.data.data![state.index].cocokResult! ==
-                              currentAnswer,
+                              concatenateCharacters(currentAnswer),
                           user_id: dataUser!.userId!,
                         ));
                     if (state.isNext) {
@@ -557,18 +540,14 @@ class _ExerciseThreeState extends State<ExerciseThree> {
                       context.read<MasterSoalCubit>().setInitial();
                       context.read<LatihanSoalHeaderCubit>().setInitial();
                       context.read<LatihanSoalLinesCubit>().setInitial();
-
-                      Navigator.pushNamedAndRemoveUntil(
-                        context,
-                        HomePage.routeName,
-                        (route) => false,
-                      );
+                      Navigator.pushReplacementNamed(
+                          context, HomePage.routeName);
 
                       showTopSnackBar(
                         Overlay.of(context),
                         const CustomSnackBar.success(
                           message:
-                              "Exercise has been completed, please check your score in the reporting menu",
+                              "Latihan berhasil diselesaikan, silahkan cek hasil latihan kamu di menu reporting",
                         ),
                       );
                     }
@@ -578,5 +557,16 @@ class _ExerciseThreeState extends State<ExerciseThree> {
             : () {},
       ),
     );
+  }
+
+  String concatenateCharacters(String input) {
+    String output = "";
+    for (int i = 0; i < input.length; i++) {
+      output += input[i];
+      if (i < input.length - 1) {
+        output += ",";
+      }
+    }
+    return output;
   }
 }
