@@ -413,9 +413,10 @@ class _ReadingSectionState extends State<ReadingSection> {
                         readingMateri!.masterGroupMateri;
                     newMasterGroupMateri.statusReading = 'finish';
 
-                    Navigator.pushReplacementNamed(
+                    Navigator.pushNamedAndRemoveUntil(
                       context,
                       HomePage.routeName,
+                      (route) => false,
                     );
 
                     showTopSnackBar(

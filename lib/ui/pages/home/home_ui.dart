@@ -1,6 +1,8 @@
+import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_huixin_app/common/constants/color.dart';
 import 'package:flutter_huixin_app/cubit/auth/login_huixin/auth_cubit.dart';
 import 'package:flutter_huixin_app/cubit/auth/user/user_cubit.dart';
 import 'package:flutter_huixin_app/cubit/home/active_student/active_student_cubit.dart';
@@ -73,7 +75,22 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      body: const HomeItems(),
+      body: const DoubleBackToCloseApp(
+        snackBar: SnackBar(
+          content: Text(
+            'Press back again to exit the app',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          closeIconColor: Colors.white,
+          backgroundColor: AppColors.yellowColor,
+          showCloseIcon: true,
+        ),
+        child: HomeItems(),
+      ),
       bottomNavigationBar: const Padding(
         padding: EdgeInsets.only(top: 20),
         child: NavigatorBar(

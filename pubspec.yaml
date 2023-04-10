@@ -17,6 +17,7 @@ dependencies:
   dartz: ^0.10.1
   device_info_plus: ^8.1.0
   dot_navigation_bar: ^1.0.1+4
+  double_back_to_close_app: ^2.1.0
   firebase_auth: ^4.4.0
   firebase_core: ^2.9.0
   firebase_messaging: ^14.4.0

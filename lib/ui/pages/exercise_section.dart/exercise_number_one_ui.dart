@@ -307,8 +307,12 @@ class _ExerciseOneState extends State<ExerciseOne> {
                       context.read<MasterSoalCubit>().setInitial();
                       context.read<LatihanSoalHeaderCubit>().setInitial();
                       context.read<LatihanSoalLinesCubit>().setInitial();
-                      Navigator.pushReplacementNamed(
-                          context, HomePage.routeName);
+
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        HomePage.routeName,
+                        (route) => false,
+                      );
 
                       showTopSnackBar(
                         Overlay.of(context),
