@@ -16,8 +16,6 @@ import 'package:flutter_huixin_app/ui/widgets/not_found.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 
 import 'package:just_audio/just_audio.dart';
-import 'package:loader_overlay/loader_overlay.dart';
-import 'package:lottie/lottie.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_sound_platform_interface/flutter_sound_recorder_platform_interface.dart'
     as fsr;
@@ -207,277 +205,242 @@ class _ReadingSectionState extends State<ReadingSection> {
       onWillPop: () async {
         return false;
       },
-      child: LoaderOverlay(
-        useDefaultLoading: false,
-        overlayWidget: Center(
-          child: Lottie.asset(
-            'assets/lottie/loader.zip',
-            fit: BoxFit.contain,
+      child: Scaffold(
+          appBar: AppBarReading(
+            title: 'Reading & Speaking',
+            context: context,
+            disabledRoute: false,
           ),
-        ),
-        child: Scaffold(
-            appBar: AppBarReading(
-              title: 'Reading & Speaking',
-              context: context,
-              disabledRoute: true,
-            ),
-            body: state.maybeMap(
-                orElse: () => const Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                initial: (value) {
-                  context.read<MasterMateriCubit>().getMasterMateri(
-                        user!.userId!,
-                        readingMateri!.masterGroupMateri.idLevel!,
-                        readingMateri!.masterGroupMateri.idGroupMateri!,
-                      );
-                  return null;
-                },
-                loaded: (value) {
-                  if (value.data.data == null || value.data.data!.isEmpty) {
-                    return const NotFound(
-                      text: 'Materi belum tersedia',
+          body: state.maybeMap(
+              orElse: () => const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+              initial: (value) {
+                context.read<MasterMateriCubit>().getMasterMateri(
+                      user!.userId!,
+                      readingMateri!.masterGroupMateri.idLevel!,
+                      readingMateri!.masterGroupMateri.idGroupMateri!,
                     );
-                  }
-                  final materi = value.data.data![_currentContent];
-                  masterMateri = materi;
-                  totalContent = value.data.data!.length;
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(32.0),
-                                child: Stack(
-                                  clipBehavior: Clip.none,
-                                  children: [
-                                    Center(
-                                      child: ContainerCourse(
-                                        text: materi.latihanTitle!,
-                                        color: _isMicrophoneClicked == true
-                                            ? AppColors.whiteColor4
-                                            : Colors.white,
+                return null;
+              },
+              loaded: (value) {
+                if (value.data.data == null || value.data.data!.isEmpty) {
+                  return const NotFound(
+                    text: 'Materi belum tersedia',
+                  );
+                }
+                final materi = value.data.data![_currentContent];
+                masterMateri = materi;
+                totalContent = value.data.data!.length;
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(32.0),
+                              child: Stack(
+                                clipBehavior: Clip.none,
+                                children: [
+                                  Center(
+                                    child: ContainerCourse(
+                                      text: materi.latihanTitle!,
+                                      color: _isMicrophoneClicked == true
+                                          ? AppColors.whiteColor4
+                                          : Colors.white,
+                                    ),
+                                  ),
+                                  Positioned(
+                                    top: 260,
+                                    left: 323,
+                                    child: InkWell(
+                                      onTap: () => setState(() {
+                                        _isVolumeClicked = true;
+                                      }),
+                                      child: Image.asset(
+                                        "assets/images/volume_reading.png",
+                                        fit: BoxFit.fill,
                                       ),
                                     ),
-                                    Positioned(
-                                      top: 260,
-                                      left: 323,
-                                      child: InkWell(
-                                        onTap: () => setState(() {
-                                          _isVolumeClicked = true;
-                                        }),
-                                        child: Image.asset(
-                                          "assets/images/volume_reading.png",
-                                          fit: BoxFit.fill,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-                              Visibility(
-                                visible: _isVolumeClicked,
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Column(
-                                      children: [
-                                        Text(
-                                          materi.latihanCina!,
-                                          style: const TextStyle(
-                                            fontSize: 36,
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors.red,
-                                          ),
+                            ),
+                            Visibility(
+                              visible: _isVolumeClicked,
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Column(
+                                    children: [
+                                      Text(
+                                        materi.latihanCina!,
+                                        style: const TextStyle(
+                                          fontSize: 36,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.red,
                                         ),
-                                      ],
-                                    ),
-                                    _isMicrophoneClicked
-                                        ? InkWell(
-                                            onTap: () {
-                                              _playAudio(
-                                                  '${materi.latihanUrlFile!.replaceAll('/level', '')}${materi.latihanVoice}');
-                                            },
-                                            child: Column(
-                                              children: [
-                                                const SizedBox(
-                                                  height: 20,
-                                                ),
-                                                Center(
-                                                  child: Container(
-                                                    height: 80,
-                                                    width: 300,
-                                                    decoration:
-                                                        const BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.circular(
-                                                                  10)),
-                                                      color:
-                                                          AppColors.lightGreen,
-                                                    ),
-                                                    child: Center(
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          const Text(
-                                                            "Correct \nAnswer",
-                                                            style: TextStyle(
-                                                              fontSize: 24,
-                                                              color:
-                                                                  Colors.black,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                            ),
+                                      ),
+                                    ],
+                                  ),
+                                  _isMicrophoneClicked
+                                      ? InkWell(
+                                          onTap: () {
+                                            _playAudio(
+                                                '${materi.latihanUrlFile!.replaceAll('/level', '')}${materi.latihanVoice}');
+                                          },
+                                          child: Column(
+                                            children: [
+                                              const SizedBox(
+                                                height: 20,
+                                              ),
+                                              Center(
+                                                child: Container(
+                                                  height: 80,
+                                                  width: 300,
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                10)),
+                                                    color: AppColors.lightGreen,
+                                                  ),
+                                                  child: Center(
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        const Text(
+                                                          "Correct \nAnswer",
+                                                          style: TextStyle(
+                                                            fontSize: 24,
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight.bold,
                                                           ),
-                                                          const SizedBox(
-                                                            width: 25,
-                                                          ),
-                                                          Image.asset(
-                                                            "assets/images/volume_ok.png",
-                                                            fit: BoxFit.fill,
-                                                            height: 40,
-                                                          ),
-                                                        ],
-                                                      ),
+                                                        ),
+                                                        const SizedBox(
+                                                          width: 25,
+                                                        ),
+                                                        Image.asset(
+                                                          "assets/images/volume_ok.png",
+                                                          fit: BoxFit.fill,
+                                                          height: 40,
+                                                        ),
+                                                      ],
                                                     ),
                                                   ),
                                                 ),
-                                                const SizedBox(
-                                                  height: 20,
-                                                ),
-                                              ],
-                                            ),
-                                          )
-                                        : const SizedBox(
-                                            height: 100,
+                                              ),
+                                              const SizedBox(
+                                                height: 20,
+                                              ),
+                                            ],
                                           ),
-                                    Column(
-                                      children: [
-                                        GestureDetector(
-                                          onTap: getRecorderFn(),
-                                          child: Image.asset(
-                                            "assets/images/microphone.png",
-                                            fit: BoxFit.fill,
-                                          ),
+                                        )
+                                      : const SizedBox(
+                                          height: 100,
                                         ),
-                                        const SizedBox(
-                                          height: 10.0,
+                                  Column(
+                                    children: [
+                                      GestureDetector(
+                                        onTap: getRecorderFn(),
+                                        child: Image.asset(
+                                          "assets/images/microphone.png",
+                                          fit: BoxFit.fill,
                                         ),
-                                        Text(
-                                          _mRecorder.isRecording
-                                              ? 'Stop'
-                                              : 'Speak',
-                                          style: const TextStyle(
-                                            fontSize: 24,
-                                            fontWeight: FontWeight.bold,
-                                            color: AppColors.yellowColor,
-                                          ),
+                                      ),
+                                      const SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      Text(
+                                        _mRecorder.isRecording
+                                            ? 'Stop'
+                                            : 'Speak',
+                                        style: const TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold,
+                                          color: AppColors.yellowColor,
                                         ),
-                                        const SizedBox(
-                                          height: 8,
+                                      ),
+                                      const SizedBox(
+                                        height: 8,
+                                      ),
+                                      ElevatedButton(
+                                        onPressed: getPlaybackFn(),
+                                        child: Text(
+                                          _mPlayer.isPlaying ? 'Stop' : 'Play',
                                         ),
-                                        ElevatedButton(
-                                          onPressed: getPlaybackFn(),
-                                          child: Text(
-                                            _mPlayer.isPlaying
-                                                ? 'Stop'
-                                                : 'Play',
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  );
-                }),
-            bottomNavigationBar: BottomNavigationBarButton(
-              name: totalContent == _currentContent + 2 ? 'FINISH' : 'NEXT',
-              color: _isMicrophoneClicked
-                  ? AppColors.greenColor
-                  : AppColors.greyWhite,
-              onTap: totalContent == _currentContent + 2
-                  ? () {
-                      context.loaderOverlay.show();
+                    ),
+                  ],
+                );
+              }),
+          bottomNavigationBar: BottomNavigationBarButton(
+            name: totalContent == _currentContent + 2 ? 'FINISH' : 'NEXT',
+            color: _isMicrophoneClicked
+                ? AppColors.greenColor
+                : AppColors.greyWhite,
+            onTap: totalContent == _currentContent + 2
+                ? () {
+                    context.read<FinishMateriCubit>().finishMateri(
+                          FinishMateriRequestModel(
+                            user_id: dataUser!.userId!,
+                            id_level: masterMateri!.idLevel!,
+                            id_group_materi:
+                                readingMateri!.masterGroupMateri.idGroupMateri!,
+                          ),
+                        );
+                    context.read<LogingHeaderCubit>().setInitial();
+                    context.read<LogingLinesCubit>().setInitial();
+                    context.read<MasterMateriCubit>().setInitial();
+                    final newMasterGroupMateri =
+                        readingMateri!.masterGroupMateri;
+                    newMasterGroupMateri.statusReading = 'finish';
 
-                      context
-                          .read<FinishMateriCubit>()
-                          .finishMateri(
-                            FinishMateriRequestModel(
-                              user_id: dataUser!.userId!,
-                              id_level: masterMateri!.idLevel!,
-                              id_group_materi: readingMateri!
-                                  .masterGroupMateri.idGroupMateri!,
-                            ),
-                          )
-                          .then(
-                            (value) => context.loaderOverlay.hide(),
-                          )
-                          .catchError(
-                            (error) => context.loaderOverlay.hide(),
-                          );
-                      context.read<LogingHeaderCubit>().setInitial();
-                      context.read<LogingLinesCubit>().setInitial();
-                      context.read<MasterMateriCubit>().setInitial();
-                      final newMasterGroupMateri =
-                          readingMateri!.masterGroupMateri;
-                      newMasterGroupMateri.statusReading = 'finish';
+                    Navigator.pushReplacementNamed(
+                      context,
+                      HomePage.routeName,
+                    );
 
-                      Navigator.pushReplacementNamed(
-                        context,
-                        HomePage.routeName,
-                      );
-
-                      showTopSnackBar(
-                        Overlay.of(context),
-                        CustomSnackBar.success(
-                          message:
-                              "Materi ${readingMateri!.masterGroupMateri.name} telah diselesaikan",
-                        ),
-                      );
-                    }
-                  : () {
-                      context.loaderOverlay.show();
-
-                      context
-                          .read<LogingLinesCubit>()
-                          .postLogingLines(
-                            LogingLinesRequestModel(
-                              id_log_materi_header:
-                                  readingMateri!.logingHeaderId,
-                              id_materi: masterMateri!.idMateri!,
-                              user_id: dataUser!.userId!,
-                              voice_try: File(_mPath),
-                            ),
-                          )
-                          .then(
-                            (value) => context.loaderOverlay.hide(),
-                          )
-                          .catchError(
-                            (error) => context.loaderOverlay.hide(),
-                          );
-                      setState(() {
-                        ++_currentContent;
-                        _isVolumeClicked = false;
-                        _isMicrophoneClicked = false;
-                      });
-                    },
-            )),
-      ),
+                    showTopSnackBar(
+                      Overlay.of(context),
+                      CustomSnackBar.success(
+                        message:
+                            "Materi ${readingMateri!.masterGroupMateri.name} telah diselesaikan",
+                      ),
+                    );
+                  }
+                : () {
+                    context.read<LogingLinesCubit>().postLogingLines(
+                          LogingLinesRequestModel(
+                            id_log_materi_header: readingMateri!.logingHeaderId,
+                            id_materi: masterMateri!.idMateri!,
+                            user_id: dataUser!.userId!,
+                            voice_try: File(_mPath),
+                          ),
+                        );
+                    setState(() {
+                      ++_currentContent;
+                      _isVolumeClicked = false;
+                      _isMicrophoneClicked = false;
+                    });
+                  },
+          )),
     );
   }
 }

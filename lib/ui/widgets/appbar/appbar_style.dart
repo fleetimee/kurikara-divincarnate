@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../common/constants/color.dart';
 import '../../../common/constants/font.dart';
@@ -255,13 +253,21 @@ class AppBarReading extends AppBar {
             child: InkWell(
               onTap: () {
                 disabledRoute == true
-                    ? showTopSnackBar(
-                        Overlay.of(context),
-                        const CustomSnackBar.error(
-                          message:
-                              "Tidak dapat kembali ke halaman sebelumnya karena belum menyelesaikan materi ini",
-                        ),
-                      )
+                    ? showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                              title: const Text("Sorry"),
+                              content: const Text(
+                                  "Tidak bisa kembali ke halaman sebelumnya, disaat sedang mengerjakan soal"),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text("Ok"),
+                                ),
+                              ],
+                            ))
                     : Navigator.pop(context);
               },
               child: const Image(
