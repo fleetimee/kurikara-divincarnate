@@ -29,6 +29,7 @@ dependencies:
   flutter_form_builder: ^7.8.0
   flutter_localizations:
     sdk: flutter
+  flutter_native_splash: ^2.2.19
   flutter_secure_storage: ^8.0.0
   flutter_sound: ^9.2.13
   flutter_sound_platform_interface: null
@@ -74,19 +75,30 @@ flutter:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/images/play_store_512.png"
+  image_path: "assets/images/fleetime.png"
   min_sdk_android: 21
   adaptive_icon_background: "#FFFF4546"
-  adaptive_icon_foreground: "assets/images/play_store_512.png"
+  adaptive_icon_foreground: "assets/images/fleetime.png"
   web:
     generate: true
-    image_path: "assets/images/play_store_512.png"
+    image_path: "assets/images/fleetime.png"
     background_color: "#FFFF4546"
     theme_color: "#FFFF4546"
   windows:
     generate: true
-    image_path: "assets/images/play_store_512.png"
+    image_path: "assets/images/fleetime.png"
     icon_size: 48
   macos:
     generate: true
-    image_path: "assets/images/play_store_512.png"
+    image_path: "assets/images/fleetime.png"
+
+flutter_native_splash:
+  background_image: "assets/images/background.png"
+  image: "assets/images/splash_icon.png"
+
+  android_12:
+    color: "#D79F00"
+    icon_background_color: "#FF4546"
+
+  web: false
+  fullscreen: true
