@@ -141,7 +141,10 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
               PrimaryButton(
                 text: 'SUBMIT',
                 onPressed: () {
-                  Navigator.pushNamed(context, ProfilePage.routeName);
+                  Navigator.pushNamed(
+                    context,
+                    ProfilePage.routeName,
+                  );
                 },
               ),
             ],
