@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:flutter_huixin_app/cubit/auth/auth_cubit.dart';
+import 'package:flutter_huixin_app/cubit/auth/login_apple/login_apple_cubit.dart';
+import 'package:flutter_huixin_app/cubit/auth/login_fb/login_fb_cubit.dart';
+import 'package:flutter_huixin_app/cubit/auth/login_google/login_google_cubit.dart';
+
 import 'package:flutter_huixin_app/data/models/auth/requests/login_request_model.dart';
 import 'package:flutter_huixin_app/ui/pages/singup/signup_ui.dart';
 import 'package:flutter_huixin_app/ui/widgets/button.dart';
@@ -9,6 +12,8 @@ import 'package:flutter_huixin_app/ui/widgets/login_form.dart';
 import 'package:flutter_huixin_app/ui/widgets/social_icons_button.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+
+import '../../../../cubit/auth/login_huixin/auth_cubit.dart';
 
 class BodyLogin extends StatelessWidget {
   const BodyLogin({
@@ -182,9 +187,15 @@ class BodyLogin extends StatelessWidget {
               height: 20,
             ),
             SocialIcon(
-              onTapGoogle: () {},
-              onTapFacebook: () {},
-              onTapApple: () {},
+              onTapGoogle: () {
+                context.read<LoginGoogleCubit>().loginWithGoogle();
+              },
+              onTapFacebook: () {
+                context.read<LoginFbCubit>().loginWithFb();
+              },
+              onTapApple: () {
+                context.read<LoginAppleCubit>().loginWithApple();
+              },
             )
           ],
         ),

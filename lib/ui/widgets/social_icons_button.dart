@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 class SocialIcon extends StatelessWidget {
@@ -39,17 +41,19 @@ class SocialIcon extends StatelessWidget {
             height: 50,
           ),
         ),
-        const SizedBox(
-          width: 40,
-        ),
-        GestureDetector(
-          onTap: onTapApple,
-          child: Image.asset(
-            "assets/images/register-apple.png",
-            width: 50,
-            height: 50,
+        if (Platform.isIOS)
+          const SizedBox(
+            width: 40,
           ),
-        ),
+        if (Platform.isIOS)
+          GestureDetector(
+            onTap: onTapApple,
+            child: Image.asset(
+              "assets/images/register-apple.png",
+              width: 50,
+              height: 50,
+            ),
+          ),
       ],
     );
   }

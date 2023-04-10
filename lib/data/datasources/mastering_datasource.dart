@@ -5,7 +5,6 @@ import 'package:flutter_huixin_app/data/models/mastering/master_group_materi_res
 import 'package:flutter_huixin_app/data/models/mastering/master_level_response_model.dart';
 import 'package:flutter_huixin_app/data/models/mastering/master_materi_response_model.dart';
 import 'package:flutter_huixin_app/data/models/mastering/master_soal_response_model.dart';
-import 'package:http/http.dart' as http;
 import 'package:pretty_http_logger/pretty_http_logger.dart';
 
 import '../../common/constants/api.dart';
