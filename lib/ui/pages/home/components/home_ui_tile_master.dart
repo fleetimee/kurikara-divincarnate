@@ -51,7 +51,7 @@ class TileMasterLevel extends StatelessWidget {
                     Overlay.of(context),
                     CustomSnackBar.error(
                       message:
-                          "Level ${masterLevel.name} belum terbuka, silahkan selesaikan level sebelumnya terlebih dahulu",
+                          "Level ${masterLevel.name} is not unlocked yet, please complete the previous level first",
                     ),
                   );
           }
@@ -62,147 +62,153 @@ class TileMasterLevel extends StatelessWidget {
     return InkWell(
       onTap: selectLevel,
       child: Card(
+        elevation: 0,
         color: AppColors.whiteColor,
-        child: Column(children: [
-          Padding(
-            padding: const EdgeInsets.only(right: 8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Image.asset(
-                  "assets/images/crown.png",
-                  height: 10,
-                  fit: BoxFit.fill,
-                ),
-                const SizedBox(
-                  width: 4,
-                ),
-                const Text(
-                  '1/2',
-                  style: TextStyle(
-                    color: Colors.black45,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w400,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Image.asset(
+                    "assets/images/crown.png",
+                    height: 10,
+                    fit: BoxFit.fill,
                   ),
-                )
-              ],
-            ),
-          ),
-          Expanded(
-            child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
+                  const SizedBox(
+                    width: 4,
+                  ),
+                  const Text(
+                    '1/2',
+                    style: TextStyle(
+                      color: Colors.black45,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  )
+                ],
               ),
-              child: state.maybeMap(
-                orElse: () => null,
-                loaded: (state) {
-                  if (index == 0) {
-                    return Container(
-                      color: AppColors.bottom,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                masterLevel.name ?? '',
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-                              CachedNetworkImage(
-                                imageUrl:
-                                    'https://huixin.id/assets/level/${masterLevel.imgFile}',
-                                placeholder: (context, url) => const Center(
-                                  child: CircularProgressIndicator(
-                                    color: AppColors.yellowColor,
+            ),
+            Expanded(
+              child: Card(
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: state.maybeMap(
+                  orElse: () => null,
+                  loaded: (state) {
+                    if (index == 0) {
+                      return Container(
+                        color: AppColors.bottom,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  masterLevel.name ?? '',
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                errorWidget: (context, url, error) =>
-                                    const Icon(
-                                  Icons.error,
-                                  color: AppColors.yellowColor,
+                                const SizedBox(height: 8),
+                                CachedNetworkImage(
+                                  imageUrl:
+                                      'https://huixin.id/assets/level/${masterLevel.imgFile}',
+                                  placeholder: (context, url) => const Center(
+                                    child: CircularProgressIndicator(
+                                      color: AppColors.yellowColor,
+                                    ),
+                                  ),
+                                  errorWidget: (context, url, error) =>
+                                      const Icon(
+                                    Icons.error,
+                                    color: AppColors.yellowColor,
+                                  ),
+                                  height: 80,
+                                  fit: BoxFit.fill,
                                 ),
-                                height: 80,
-                                fit: BoxFit.fill,
-                              ),
-                              const SizedBox(height: 8),
-                              Image.asset(
-                                "assets/images/progress_bar.png",
-                                fit: BoxFit.fill,
-                              ),
-                            ],
+                                const SizedBox(height: 8),
+                                Image.asset(
+                                  "assets/images/progress_bar.png",
+                                  fit: BoxFit.fill,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    );
-                  } else {
-                    return (state.data.data![index].reportReading!.isNotEmpty ||
-                            state.data.data![index].reportSpeaking!.isNotEmpty)
-                        ? Container(
-                            color: AppColors.bottom,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      masterLevel.name ?? '',
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 8),
-                                    CachedNetworkImage(
-                                      imageUrl:
-                                          'https://huixin.id/assets/level/${masterLevel.imgFile}',
-                                      placeholder: (context, url) =>
-                                          const Center(
-                                        child: CircularProgressIndicator(
-                                          color: AppColors.yellowColor,
+                      );
+                    } else {
+                      return (state.data.data![index].reportReading!
+                                  .isNotEmpty ||
+                              state
+                                  .data.data![index].reportSpeaking!.isNotEmpty)
+                          ? Container(
+                              color: AppColors.bottom,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        masterLevel.name ?? '',
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
                                         ),
                                       ),
-                                      errorWidget: (context, url, error) =>
-                                          const Icon(
-                                        Icons.error,
-                                        color: AppColors.yellowColor,
+                                      const SizedBox(height: 8),
+                                      CachedNetworkImage(
+                                        imageUrl:
+                                            'https://huixin.id/assets/level/${masterLevel.imgFile}',
+                                        placeholder: (context, url) =>
+                                            const Center(
+                                          child: CircularProgressIndicator(
+                                            color: AppColors.yellowColor,
+                                          ),
+                                        ),
+                                        errorWidget: (context, url, error) =>
+                                            const Icon(
+                                          Icons.error,
+                                          color: AppColors.yellowColor,
+                                        ),
+                                        height: 80,
+                                        fit: BoxFit.fill,
                                       ),
-                                      height: 80,
-                                      fit: BoxFit.fill,
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Image.asset(
-                                      "assets/images/progress_bar.png",
-                                      fit: BoxFit.fill,
-                                    ),
-                                  ],
+                                      const SizedBox(height: 8),
+                                      Image.asset(
+                                        "assets/images/progress_bar.png",
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          )
-                        : Container(
-                            color: AppColors.whiteColor2,
-                            child: Center(
-                              child: Image.asset(
-                                "assets/images/lock.png",
-                                height: 30,
-                                fit: BoxFit.fill,
+                            )
+                          : Container(
+                              color: AppColors.whiteColor2,
+                              child: Center(
+                                child: Image.asset(
+                                  "assets/images/lock.png",
+                                  height: 30,
+                                  fit: BoxFit.fill,
+                                ),
                               ),
-                            ),
-                          );
-                  }
-                },
+                            );
+                    }
+                  },
+                ),
               ),
-            ),
-          )
-        ]),
+            )
+          ],
+        ),
       ),
     );
   }

@@ -38,7 +38,7 @@ class MasterGroupMateriTile extends StatelessWidget {
                 Overlay.of(context),
                 const CustomSnackBar.error(
                   message:
-                      "Anda belum bisa mengakses materi ini, silahkan belajar materi sebelumnya terlebih dahulu",
+                      "You cannot access this course at the moment. Please complete the previous course first.",
                 ),
               );
             }
@@ -46,6 +46,7 @@ class MasterGroupMateriTile extends StatelessWidget {
         );
       },
       child: Card(
+        elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
@@ -53,6 +54,7 @@ class MasterGroupMateriTile extends StatelessWidget {
         child: Column(children: [
           Expanded(
             child: Card(
+              elevation: 0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
               ),

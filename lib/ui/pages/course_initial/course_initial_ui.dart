@@ -225,7 +225,7 @@ class MateriSelector extends StatelessWidget {
                     Overlay.of(context),
                     const CustomSnackBar.error(
                       message:
-                          "Selesaikan materi terlebih dahulu untuk mengakses latihan soal ini",
+                          "Please complete the reading section before doing the exercise, thank you.",
                     ),
                   );
                 }

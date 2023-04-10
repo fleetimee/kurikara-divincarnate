@@ -5,8 +5,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:flutter_huixin_app/cubit/auth/login_fb/login_fb_cubit.dart';
-import 'package:flutter_huixin_app/cubit/auth/login_google/login_google_cubit.dart';
 import 'package:flutter_huixin_app/cubit/auth/register_apple/register_apple_cubit.dart';
 import 'package:flutter_huixin_app/cubit/auth/register_google/register_google_cubit.dart';
 import 'package:flutter_huixin_app/data/models/auth/requests/register_request_model.dart';
@@ -18,7 +16,6 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 
 import 'package:image_picker/image_picker.dart';
 
-import '../../../cubit/auth/login_apple/login_apple_cubit.dart';
 import '../../../cubit/auth/register/register_cubit.dart';
 import '../../widgets/appbar/appbar_style.dart';
 import '../../widgets/button.dart';
@@ -124,9 +121,9 @@ class _SignUpPageState extends State<SignUpPage> {
                 loaded: (user) {
                   SuccessDialog(
                     context: context,
-                    title: 'Berhasil',
+                    title: 'Success',
                     desc:
-                        'Registrasi berhasil, silahkan login untuk mengakses aplikasi',
+                        'Your registration is successfull, please login to access the application',
                     btnOkOnPress: () {
                       Navigator.pushAndRemoveUntil(
                         context,
@@ -154,9 +151,9 @@ class _SignUpPageState extends State<SignUpPage> {
                 loaded: (user) {
                   SuccessDialog(
                     context: context,
-                    title: 'Berhasil',
+                    title: 'Success',
                     desc:
-                        'Registrasi dengan google berhasil, silahkan login untuk mengakses aplikasi',
+                        'Your registration with Google Account is successfull, please login to access the application, and don\'t forget to change your details in the profile page',
                     btnOkOnPress: () {
                       Navigator.pushAndRemoveUntil(
                         context,
@@ -170,7 +167,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 },
                 error: (error) => ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
-                    content: Text('Register dengan Google gagal'),
+                    content: Text('Register with Google Account failed'),
                   ),
                 ),
               );
@@ -184,9 +181,9 @@ class _SignUpPageState extends State<SignUpPage> {
                 loaded: (user) {
                   SuccessDialog(
                     context: context,
-                    title: 'Berhasil',
+                    title: 'Success',
                     desc:
-                        'Registrasi dengan appleid berhasil, silahkan login untuk mengakses aplikasi',
+                        'Your registration with Apple ID is successfull, please login to access the application, and don\'t forget to change your details in the profile page',
                     btnOkOnPress: () {
                       Navigator.pushAndRemoveUntil(
                         context,
@@ -200,7 +197,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 },
                 error: (error) => ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
-                    content: Text('Register dengan appleid gagal'),
+                    content: Text('Register with Apple ID failed'),
                   ),
                 ),
               );

@@ -58,7 +58,7 @@ class ReportTile extends StatelessWidget {
                 Overlay.of(context),
                 CustomSnackBar.error(
                   message:
-                      "Laporan untuk Level ${state.data.data![index].name} belum siap",
+                      "Report for level ${state.data.data![index].name} is not yet available, please wait for the teacher to upload the report",
                 ),
               );
             }

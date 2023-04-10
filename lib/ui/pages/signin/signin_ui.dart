@@ -3,7 +3,6 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_huixin_app/cubit/auth/login_apple/login_apple_cubit.dart';
-import 'package:flutter_huixin_app/cubit/auth/login_fb/login_fb_cubit.dart';
 import 'package:flutter_huixin_app/cubit/auth/login_google/login_google_cubit.dart';
 import 'package:flutter_huixin_app/cubit/auth/login_huixin/auth_cubit.dart';
 
@@ -50,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
                   ErrorDialog(
                     title: 'Invalid Credentials',
                     context: context,
-                    desc: 'Username atau Password salah',
+                    desc: 'Your username or password is incorrect',
                     btnOkText: 'OK',
                     btnOkOnPress: () {},
                   ).show();
@@ -90,7 +89,7 @@ class _LoginPageState extends State<LoginPage> {
                   ErrorDialog(
                     title: 'Invalid Credentials',
                     context: context,
-                    desc: 'Login Google Gagal',
+                    desc: 'Login with Google failed',
                     btnOkText: 'OK',
                     btnOkOnPress: () {},
                   ).show();
@@ -130,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                   ErrorDialog(
                     title: 'Invalid Credentials',
                     context: context,
-                    desc: 'Login Apple Gagal',
+                    desc: 'Login with Apple failed',
                     btnOkText: 'OK',
                     btnOkOnPress: () {},
                   ).show();

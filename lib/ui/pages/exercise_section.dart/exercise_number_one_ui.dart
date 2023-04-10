@@ -314,7 +314,7 @@ class _ExerciseOneState extends State<ExerciseOne> {
                         Overlay.of(context),
                         const CustomSnackBar.success(
                           message:
-                              "Latihan berhasil diselesaikan, silahkan cek hasil latihan kamu di menu reporting",
+                              "Exercise has been completed, please check your score in the reporting menu",
                         ),
                       );
                     }
