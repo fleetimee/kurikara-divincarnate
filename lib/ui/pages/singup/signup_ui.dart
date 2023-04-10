@@ -15,6 +15,9 @@ import 'package:flutter_huixin_app/utils/uuid_gen.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
 import 'package:image_picker/image_picker.dart';
+import 'package:loader_overlay/loader_overlay.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../cubit/auth/register/register_cubit.dart';
 import '../../widgets/appbar/appbar_style.dart';
@@ -165,9 +168,10 @@ class _SignUpPageState extends State<SignUpPage> {
                   },
                 ).show();
               },
-              error: (error) => ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Register with Google Account failed'),
+              error: (error) => showTopSnackBar(
+                Overlay.of(context),
+                const CustomSnackBar.error(
+                  message: 'Register with Google Account failed',
                 ),
               ),
             );
@@ -206,156 +210,172 @@ class _SignUpPageState extends State<SignUpPage> {
       ],
       child: BlocBuilder<RegisterCubit, RegisterState>(
         builder: (context, state) {
-          return Scaffold(
-            appBar: AppBarDefault(
-              title: "Signup",
-            ),
-            body: FormBuilder(
-              /// Initialize FormBuilder global
-              /// key to validate the form
-              key: _fbKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.07,
-                          ),
-                          _imagePicker(),
-                          const SizedBox(
-                            height: 20.0,
-                          ),
-                          RegisterForm(
-                              name: 'username',
-                              label: 'Username',
-                              controller: _usernameController,
-                              obscureTextEnabled: 'false',
+          return LoaderOverlay(
+            child: Scaffold(
+              appBar: AppBarDefault(
+                title: "Signup",
+              ),
+              body: FormBuilder(
+                /// Initialize FormBuilder global
+                /// key to validate the form
+                key: _fbKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.07,
+                            ),
+                            _imagePicker(),
+                            const SizedBox(
+                              height: 20.0,
+                            ),
+                            RegisterForm(
+                                name: 'username',
+                                label: 'Username',
+                                controller: _usernameController,
+                                obscureTextEnabled: 'false',
+                                validator: FormBuilderValidators.compose(
+                                  [
+                                    FormBuilderValidators.required(),
+                                    FormBuilderValidators.minLength(
+                                      6,
+                                      allowEmpty: false,
+                                      errorText:
+                                          'Username must be at least 6 characters',
+                                    ),
+                                  ],
+                                )),
+                            const SizedBox(
+                              height: 10.0,
+                            ),
+                            RegisterForm(
+                              name: 'password',
+                              label: 'Password',
+                              controller: _passwordController,
+                              obscureTextEnabled: 'true',
+                              obscureToggle: true,
                               validator: FormBuilderValidators.compose(
                                 [
-                                  FormBuilderValidators.required(),
+                                  FormBuilderValidators.required(
+                                    errorText: 'Password is required',
+                                  ),
                                   FormBuilderValidators.minLength(
                                     6,
                                     allowEmpty: false,
                                     errorText:
-                                        'Username must be at least 6 characters',
+                                        'Password must be at least 6 characters',
                                   ),
                                 ],
-                              )),
-                          const SizedBox(
-                            height: 10.0,
-                          ),
-                          RegisterForm(
-                            name: 'password',
-                            label: 'Password',
-                            controller: _passwordController,
-                            obscureTextEnabled: 'true',
-                            obscureToggle: true,
-                            validator: FormBuilderValidators.compose(
-                              [
-                                FormBuilderValidators.required(
-                                  errorText: 'Password is required',
-                                ),
-                                FormBuilderValidators.minLength(
-                                  6,
-                                  allowEmpty: false,
-                                  errorText:
-                                      'Password must be at least 6 characters',
-                                ),
-                              ],
+                              ),
                             ),
-                          ),
-                          const SizedBox(
-                            height: 10.0,
-                          ),
-                          RegisterForm(
-                            name: 'noMember',
-                            label: 'No Member',
-                            controller: _noMemberController,
-                            obscureTextEnabled: 'false',
-                            validator: FormBuilderValidators.compose([
-                              FormBuilderValidators.required(),
-                            ]),
-                          ),
-                          const SizedBox(
-                            height: 10.0,
-                          ),
-                          RegisterForm(
-                            name: 'fullName',
-                            label: 'Full Name',
-                            controller: _fullNameController,
-                            obscureTextEnabled: 'false',
-                            validator: FormBuilderValidators.required(),
-                          ),
-                          const SizedBox(
-                            height: 10.0,
-                          ),
-                          RegisterFormDate(
-                            name: 'birth_date',
-                            label: 'Birth Date',
-                            controller: _birthDateController,
-                          ),
-                          const SizedBox(
-                            height: 20.0,
-                          ),
-                          PrimaryButton(
-                            text: state.maybeWhen(
-                              loading: () => 'Loading...',
-                              orElse: () => 'Sign Up',
+                            const SizedBox(
+                              height: 10.0,
                             ),
-                            onPressed: () {
-                              if (_fbKey.currentState?.saveAndValidate() ??
-                                  false) {
-                                // Check if the image is not null
-                                // if null then show error dialog
-                                if (_image == null) {
-                                  _showErrorDialog(
-                                      context, 'Pilih gambar terlebih dahulu');
+                            RegisterForm(
+                              name: 'noMember',
+                              label: 'No Member',
+                              controller: _noMemberController,
+                              obscureTextEnabled: 'false',
+                              validator: FormBuilderValidators.compose([
+                                FormBuilderValidators.required(),
+                              ]),
+                            ),
+                            const SizedBox(
+                              height: 10.0,
+                            ),
+                            RegisterForm(
+                              name: 'fullName',
+                              label: 'Full Name',
+                              controller: _fullNameController,
+                              obscureTextEnabled: 'false',
+                              validator: FormBuilderValidators.required(),
+                            ),
+                            const SizedBox(
+                              height: 10.0,
+                            ),
+                            RegisterFormDate(
+                              name: 'birth_date',
+                              label: 'Birth Date',
+                              controller: _birthDateController,
+                            ),
+                            const SizedBox(
+                              height: 20.0,
+                            ),
+                            PrimaryButton(
+                              text: state.maybeWhen(
+                                loading: () => 'Loading...',
+                                orElse: () => 'Sign Up',
+                              ),
+                              onPressed: () {
+                                if (_fbKey.currentState?.saveAndValidate() ??
+                                    false) {
+                                  context.loaderOverlay.show();
+
+                                  // Check if the image is not null
+                                  // if null then show error dialog
+                                  if (_image == null) {
+                                    _showErrorDialog(context,
+                                        'Pilih gambar terlebih dahulu');
+                                  } else {
+                                    context
+                                        .read<RegisterCubit>()
+                                        .register(
+                                          _buildRegisterRequestModel(),
+                                        )
+                                        .then((value) =>
+                                            context.loaderOverlay.hide())
+                                        .onError((error, stackTrace) =>
+                                            context.loaderOverlay.hide());
+                                  }
                                 } else {
-                                  context.read<RegisterCubit>().register(
-                                        _buildRegisterRequestModel(),
-                                      );
+                                  debugPrint('validation failed');
                                 }
-                              } else {
-                                debugPrint('validation failed');
-                              }
-                            },
-                          ),
-                          const SizedBox(
-                            height: 20.0,
-                          ),
-                          const Text(
-                            'Or Sign Up With',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
+                              },
                             ),
-                          ),
-                          const SizedBox(
-                            height: 20.0,
-                          ),
-                          SocialIcon(
-                            onTapApple: () {
-                              context
-                                  .read<RegisterAppleCubit>()
-                                  .registerWithApple();
-                            },
-                            onTapFacebook: () {
-                              // context.read<LoginFbCubit>().registerWithFb();
-                            },
-                            onTapGoogle: () {
-                              context
-                                  .read<RegisterGoogleCubit>()
-                                  .registerWithGoogle();
-                            },
-                          ),
-                        ],
+                            const SizedBox(
+                              height: 20.0,
+                            ),
+                            const Text(
+                              'Or Sign Up With',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 20.0,
+                            ),
+                            SocialIcon(
+                              onTapApple: () {
+                                context
+                                    .read<RegisterAppleCubit>()
+                                    .registerWithApple();
+                              },
+                              onTapFacebook: () {
+                                // context.read<LoginFbCubit>().registerWithFb();
+                              },
+                              onTapGoogle: () {
+                                context.loaderOverlay.show();
+
+                                context
+                                    .read<RegisterGoogleCubit>()
+                                    .registerWithGoogle()
+                                    .then(
+                                        (value) => context.loaderOverlay.hide())
+                                    .onError((error, stackTrace) =>
+                                        context.loaderOverlay.hide());
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           );

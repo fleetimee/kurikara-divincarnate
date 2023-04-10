@@ -10,6 +10,7 @@ import 'package:flutter_huixin_app/ui/widgets/button.dart';
 import 'package:flutter_huixin_app/ui/widgets/login_form.dart';
 import 'package:flutter_huixin_app/ui/widgets/social_icons_button.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 import '../../../../cubit/auth/login_huixin/auth_cubit.dart';
 
@@ -111,20 +112,29 @@ class BodyLogin extends StatelessWidget {
               /// to show the loading indicator
               /// or the login button
               text: state.maybeWhen(
-                loading: () => 'Loading...',
+                loading: () => '..',
                 orElse: () => 'GO',
               ),
               onPressed: () {
                 if (_fbKeyAuth.currentState?.saveAndValidate() ?? false) {
+                  context.loaderOverlay.show();
+
                   /// Initialize the login request model
                   /// and pass it to the [AuthCubit]
                   /// to validate the user
-                  context.read<AuthCubit>().login(
+                  context
+                      .read<AuthCubit>()
+                      .login(
                         LoginRequestModel(
                           username: _usernameController.text,
                           password: _passwordController.text,
                         ),
-                      );
+                      )
+                      .then((value) {
+                    context.loaderOverlay.hide();
+                  }).onError((error, stackTrace) {
+                    context.loaderOverlay.hide();
+                  });
 
                   debugPrint('validation success');
                 } else {
@@ -177,13 +187,25 @@ class BodyLogin extends StatelessWidget {
             ),
             SocialIcon(
               onTapGoogle: () {
-                context.read<LoginGoogleCubit>().loginWithGoogle();
+                context.loaderOverlay.show();
+                context
+                    .read<LoginGoogleCubit>()
+                    .loginWithGoogle()
+                    .then((value) => context.loaderOverlay.hide())
+                    .onError(
+                        (error, stackTrace) => context.loaderOverlay.hide());
               },
               onTapFacebook: () {
                 // context.read<LoginFbCubit>().loginWithFb();
               },
               onTapApple: () {
-                context.read<LoginAppleCubit>().loginWithApple();
+                context.loaderOverlay.show();
+                context
+                    .read<LoginAppleCubit>()
+                    .loginWithApple()
+                    .then((value) => context.loaderOverlay.hide())
+                    .onError(
+                        (error, stackTrace) => context.loaderOverlay.hide());
               },
             )
           ],
