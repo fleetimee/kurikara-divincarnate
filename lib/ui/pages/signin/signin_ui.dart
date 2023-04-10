@@ -1,7 +1,9 @@
+import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_huixin_app/common/constants/color.dart';
 import 'package:flutter_huixin_app/cubit/auth/login_apple/login_apple_cubit.dart';
 import 'package:flutter_huixin_app/cubit/auth/login_google/login_google_cubit.dart';
 import 'package:flutter_huixin_app/cubit/auth/login_huixin/auth_cubit.dart';
@@ -12,6 +14,8 @@ import 'package:flutter_huixin_app/ui/pages/signin/components/signin_ui_body_log
 import 'package:flutter_huixin_app/ui/widgets/dialog_box.dart';
 
 class LoginPage extends StatefulWidget {
+  static const String routeName = '/login-page';
+
   const LoginPage({super.key});
 
   @override
@@ -154,29 +158,44 @@ class _LoginPageState extends State<LoginPage> {
           return SafeArea(
             child: Scaffold(
               resizeToAvoidBottomInset: false,
-              body: Stack(
-                children: [
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      color: Colors.transparent,
-                      child: Animate(
-                        effects: const [FadeEffect(), ScaleEffect()],
-                        child: Image.asset(
-                          "assets/images/illust-login.png",
-                          height: 400,
-                          fit: BoxFit.contain,
+              body: DoubleBackToCloseApp(
+                snackBar: const SnackBar(
+                  content: Text(
+                    'Press back again to exit the app',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  closeIconColor: Colors.white,
+                  backgroundColor: AppColors.yellowColor,
+                  showCloseIcon: true,
+                ),
+                child: Stack(
+                  children: [
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        color: Colors.transparent,
+                        child: Animate(
+                          effects: const [FadeEffect(), ScaleEffect()],
+                          child: Image.asset(
+                            "assets/images/illust-login.png",
+                            height: 400,
+                            fit: BoxFit.contain,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  BodyLogin(
-                    fbKeyAuth: _fbKeyAuth,
-                    usernameController: _usernameController,
-                    passwordController: _passwordController,
-                    state: state,
-                  ),
-                ],
+                    BodyLogin(
+                      fbKeyAuth: _fbKeyAuth,
+                      usernameController: _usernameController,
+                      passwordController: _passwordController,
+                      state: state,
+                    ),
+                  ],
+                ),
               ),
             ),
           );

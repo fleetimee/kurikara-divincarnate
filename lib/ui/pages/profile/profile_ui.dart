@@ -64,11 +64,10 @@ class _ProfilePageState extends State<ProfilePage> {
 
             GoogleSignIn().disconnect();
 
-            Navigator.pushReplacement(
+            Navigator.pushNamedAndRemoveUntil(
               context,
-              MaterialPageRoute(
-                builder: (context) => const LoginPage(),
-              ),
+              LoginPage.routeName,
+              (route) => false,
             );
 
             showTopSnackBar(
@@ -634,11 +633,10 @@ class _ProfilePageState extends State<ProfilePage> {
 
                   GoogleSignIn().disconnect();
 
-                  Navigator.pushReplacement(
+                  Navigator.pushNamedAndRemoveUntil(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => const LoginPage(),
-                    ),
+                    LoginPage.routeName,
+                    (route) => false,
                   );
                 },
               );
