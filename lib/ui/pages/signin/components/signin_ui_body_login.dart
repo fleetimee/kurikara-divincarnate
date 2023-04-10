@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_huixin_app/cubit/auth/login_apple/login_apple_cubit.dart';
-import 'package:flutter_huixin_app/cubit/auth/login_fb/login_fb_cubit.dart';
 import 'package:flutter_huixin_app/cubit/auth/login_google/login_google_cubit.dart';
 
 import 'package:flutter_huixin_app/data/models/auth/requests/login_request_model.dart';

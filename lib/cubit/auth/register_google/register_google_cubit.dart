@@ -18,7 +18,7 @@ class RegisterGoogleCubit extends Cubit<RegisterGoogleState> {
   RegisterGoogleCubit(
     this.authDataSource,
     this.firebaseDataSource,
-  ) : super(RegisterGoogleState.initial());
+  ) : super(const RegisterGoogleState.initial());
 
   Future<void> registerWithGoogle() async {
     emit(const RegisterGoogleState.loading());

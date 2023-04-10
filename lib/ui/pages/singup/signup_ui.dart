@@ -5,8 +5,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:flutter_huixin_app/cubit/auth/login_fb/login_fb_cubit.dart';
-import 'package:flutter_huixin_app/cubit/auth/login_google/login_google_cubit.dart';
 import 'package:flutter_huixin_app/cubit/auth/register_apple/register_apple_cubit.dart';
 import 'package:flutter_huixin_app/cubit/auth/register_google/register_google_cubit.dart';
 import 'package:flutter_huixin_app/data/models/auth/requests/register_request_model.dart';
@@ -18,7 +16,6 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 
 import 'package:image_picker/image_picker.dart';
 
-import '../../../cubit/auth/login_apple/login_apple_cubit.dart';
 import '../../../cubit/auth/register/register_cubit.dart';
 import '../../widgets/appbar/appbar_style.dart';
 import '../../widgets/button.dart';
