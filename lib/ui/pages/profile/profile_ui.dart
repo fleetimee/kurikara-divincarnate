@@ -108,79 +108,84 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         itemCount: allStats.length,
                         itemBuilder: (context, index) {
-                          return Builder(builder: (context) {
-                            return Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(20),
-                                border: Border.all(
-                                  color: Colors.grey.shade300,
-                                  width: 4,
+                          return Builder(
+                            builder: (context) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                  border: Border.all(
+                                    color: Colors.grey.shade300,
+                                    width: 4,
+                                  ),
                                 ),
-                              ),
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 20),
-                                child: Row(
-                                  children: [
-                                    Image.asset(
-                                      allStats[index].imageUrl,
-                                      fit: BoxFit.fill,
-                                    ),
-                                    const SizedBox(width: 20),
-                                    Expanded(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            allStats[index].title != 'Activity'
-                                                ? context.select(
-                                                    (XpCubit xpCubit) =>
-                                                        xpCubit.state.maybeMap(
-                                                      orElse: () => '..',
-                                                      loaded: (state) =>
-                                                          state.data.data?.first
-                                                              .jmlXp
-                                                              .toString() ??
-                                                          '..',
-                                                    ),
-                                                  )
-                                                : context.select(
-                                                    (DailyActivityCubit
-                                                            dailyActivityCubit) =>
-                                                        dailyActivityCubit.state
-                                                            .maybeMap(
-                                                      orElse: () => '..',
-                                                      loaded: (state) =>
-                                                          state.data.data?.first
-                                                              .jmlDaily
-                                                              .toString() ??
-                                                          '..',
-                                                    ),
-                                                  ),
-                                            style: const TextStyle(
-                                              fontSize: 25,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                          Text(
-                                            allStats[index].title,
-                                            style: const TextStyle(
-                                              fontSize: 18,
-                                              color: Colors.black54,
-                                            ),
-                                          ),
-                                        ],
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20),
+                                  child: Row(
+                                    children: [
+                                      Image.asset(
+                                        allStats[index].imageUrl,
+                                        fit: BoxFit.fill,
                                       ),
-                                    ),
-                                  ],
+                                      const SizedBox(width: 20),
+                                      Expanded(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              allStats[index].title !=
+                                                      'Activity'
+                                                  ? context.select(
+                                                      (XpCubit xpCubit) =>
+                                                          xpCubit.state
+                                                              .maybeMap(
+                                                        orElse: () => '..',
+                                                        loaded: (state) =>
+                                                            state.data.data
+                                                                ?.first.jmlXp
+                                                                .toString() ??
+                                                            '..',
+                                                      ),
+                                                    )
+                                                  : context.select(
+                                                      (DailyActivityCubit
+                                                              dailyActivityCubit) =>
+                                                          dailyActivityCubit
+                                                              .state
+                                                              .maybeMap(
+                                                        orElse: () => '..',
+                                                        loaded: (state) =>
+                                                            state.data.data
+                                                                ?.first.jmlDaily
+                                                                .toString() ??
+                                                            '..',
+                                                      ),
+                                                    ),
+                                              style: const TextStyle(
+                                                fontSize: 25,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                            Text(
+                                              allStats[index].title,
+                                              style: const TextStyle(
+                                                fontSize: 18,
+                                                color: Colors.black54,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            );
-                          });
+                              );
+                            },
+                          );
                         },
                       ),
                     ),
@@ -211,7 +216,44 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 40),
-                    child: logout(context),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        logout(context),
+                        TextButton(
+                          onPressed: () {
+                            PromptDialog(
+                              context: context,
+                              title: 'Delete Account',
+                              desc: 'Are you sure want to delete your account?',
+                              btnCancelOnPress: () {},
+                              btnOkOnPress: () async {
+                                // await AppSecureStorage.deleteUser();
+                                // Navigator.pushNamedAndRemoveUntil(
+                                //     context, LoginPage.routeName, (route) => false);
+
+                                ErrorDialog(
+                                  context: context,
+                                  title: 'LAST WARNING',
+                                  desc: 'ARE YOU SURE ?',
+                                  btnOkOnPress: () {},
+                                  btnOkText:
+                                      'I hereby confirm that I want to delete my account',
+                                ).show();
+                              },
+                            ).show();
+                          },
+                          child: const Text(
+                            'Delete Account',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
