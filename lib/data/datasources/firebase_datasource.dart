@@ -4,7 +4,6 @@ import 'dart:math';
 import 'package:crypto/crypto.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
@@ -31,20 +30,20 @@ class FirebaseDataSource {
     }
   }
 
-  Future<Either<String, String>> loginWithFacebook() async {
-    try {
-      final LoginResult loginResult = await FacebookAuth.instance.login(
-        loginBehavior: LoginBehavior.webOnly,
-      );
-      if (loginResult.accessToken != null) {
-        return Right(loginResult.accessToken!.userId);
-      } else {
-        return const Left('failed');
-      }
-    } on FirebaseAuthException catch (e) {
-      return Left('failed: ${e.stackTrace}');
-    }
-  }
+  // Future<Either<String, String>> loginWithFacebook() async {
+  //   try {
+  //     final LoginResult loginResult = await FacebookAuth.instance.login(
+  //       loginBehavior: LoginBehavior.webOnly,
+  //     );
+  //     if (loginResult.accessToken != null) {
+  //       return Right(loginResult.accessToken!.userId);
+  //     } else {
+  //       return const Left('failed');
+  //     }
+  //   } on FirebaseAuthException catch (e) {
+  //     return Left('failed: ${e.stackTrace}');
+  //   }
+  // }
 
   /// Generates a cryptographically secure random nonce, to be included in a
   /// credential request.

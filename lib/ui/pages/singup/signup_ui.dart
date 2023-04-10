@@ -7,6 +7,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_huixin_app/cubit/auth/login_fb/login_fb_cubit.dart';
 import 'package:flutter_huixin_app/cubit/auth/login_google/login_google_cubit.dart';
+import 'package:flutter_huixin_app/cubit/auth/register_apple/register_apple_cubit.dart';
+import 'package:flutter_huixin_app/cubit/auth/register_google/register_google_cubit.dart';
 import 'package:flutter_huixin_app/data/models/auth/requests/register_request_model.dart';
 import 'package:flutter_huixin_app/ui/pages/signin/signin_ui.dart';
 import 'package:flutter_huixin_app/ui/widgets/dialog_box.dart';
@@ -144,7 +146,7 @@ class _SignUpPageState extends State<SignUpPage> {
               );
             },
           ),
-          BlocListener<LoginGoogleCubit, LoginGoogleState>(
+          BlocListener<RegisterGoogleCubit, RegisterGoogleState>(
             listener: (context, state) {
               state.when(
                 initial: () {},
@@ -174,37 +176,7 @@ class _SignUpPageState extends State<SignUpPage> {
               );
             },
           ),
-          BlocListener<LoginFbCubit, LoginFbState>(
-            listener: (context, state) {
-              state.when(
-                initial: () {},
-                loading: () {},
-                loaded: (user) {
-                  SuccessDialog(
-                    context: context,
-                    title: 'Berhasil',
-                    desc:
-                        'Registrasi dengan facebook berhasil, silahkan login untuk mengakses aplikasi',
-                    btnOkOnPress: () {
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const LoginPage(),
-                        ),
-                        (route) => false,
-                      );
-                    },
-                  ).show();
-                },
-                error: (error) => ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Register dengan facebook gagal'),
-                  ),
-                ),
-              );
-            },
-          ),
-          BlocListener<LoginAppleCubit, LoginAppleState>(
+          BlocListener<RegisterAppleCubit, RegisterAppleState>(
             listener: (context, state) {
               state.when(
                 initial: () {},
@@ -370,15 +342,15 @@ class _SignUpPageState extends State<SignUpPage> {
                             SocialIcon(
                               onTapApple: () {
                                 context
-                                    .read<LoginAppleCubit>()
+                                    .read<RegisterAppleCubit>()
                                     .registerWithApple();
                               },
                               onTapFacebook: () {
-                                context.read<LoginFbCubit>().registerWithFb();
+                                // context.read<LoginFbCubit>().registerWithFb();
                               },
                               onTapGoogle: () {
                                 context
-                                    .read<LoginGoogleCubit>()
+                                    .read<RegisterGoogleCubit>()
                                     .registerWithGoogle();
                               },
                             ),

@@ -181,7 +181,7 @@ class BodyLogin extends StatelessWidget {
                 context.read<LoginGoogleCubit>().loginWithGoogle();
               },
               onTapFacebook: () {
-                context.read<LoginFbCubit>().loginWithFb();
+                // context.read<LoginFbCubit>().loginWithFb();
               },
               onTapApple: () {
                 context.read<LoginAppleCubit>().loginWithApple();

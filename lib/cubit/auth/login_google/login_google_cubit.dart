@@ -21,32 +21,6 @@ class LoginGoogleCubit extends Cubit<LoginGoogleState> {
     this.firebaseDataSource,
   ) : super(const LoginGoogleState.initial());
 
-  Future<void> registerWithGoogle() async {
-    emit(const LoginGoogleState.loading());
-    final result = await firebaseDataSource.loginWithGoogle();
-    result.fold(
-      (l) => emit(LoginGoogleState.error(l)),
-      (uid) async {
-        final request = RegisterRequestModel(
-          full_name: uid,
-          user_name: uid,
-          user_password: '123456',
-          token_device: UUIDGenerator.generateUUID(),
-          no_member: uid,
-          birth_date: DateFormat('yyyy-MM-dd', 'id').format(DateTime.now()),
-          id_google: uid,
-          email: uid,
-          no_telpon: uid,
-        );
-        final authResponse = await authDataSource.registerSosmed(request);
-        authResponse.fold(
-          (l) => emit(LoginGoogleState.error(l)),
-          (r) => emit(LoginGoogleState.loaded(r)),
-        );
-      },
-    );
-  }
-
   Future<void> loginWithGoogle() async {
     emit(const LoginGoogleState.loading());
     final result = await firebaseDataSource.loginWithGoogle();
