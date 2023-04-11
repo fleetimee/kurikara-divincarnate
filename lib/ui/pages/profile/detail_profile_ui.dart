@@ -119,7 +119,7 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
             showTopSnackBar(
               Overlay.of(context),
               const CustomSnackBar.error(
-                message: 'Something went wrong, please try again later',
+                message: 'Please update the profile picture',
               ),
             );
           },
@@ -235,6 +235,10 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
                                   email: _emailController!.text,
                                   user_npp: user?.userNpp ?? '',
                                   img_file: _image,
+                                  id_google: user?.idGoogle ?? '',
+                                  id_apple: user?.idApple ?? '',
+                                  id_fb: user?.idFb ?? '',
+                                  no_telpon: user?.noTelpon ?? '',
                                 ),
                               )
                               .then((value) => context.loaderOverlay.hide())
