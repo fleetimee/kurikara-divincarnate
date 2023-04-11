@@ -120,7 +120,16 @@ class RegisterFormDate extends StatelessWidget {
         currentDate: DateTime.now(),
         firstDate: DateTime(1900),
         lastDate: DateTime(2100),
-        valueTransformer: (date) => date.toString(),
+        valueTransformer: (date) {
+          // Transform the date to a string
+          // Like this '2021-08-20'
+          return DateFormat('yyyy-MM-dd').format(date!);
+        },
+        onChanged: (date) {
+          // Transform the date to a string
+          // Like this '2021-08-20'
+          debugPrint(DateFormat('yyyy-MM-dd').format(date!));
+        },
         format: DateFormat('EEEE, MMMM d, yyyy', 'id_ID'),
         decoration: InputDecoration(
           alignLabelWithHint: true,

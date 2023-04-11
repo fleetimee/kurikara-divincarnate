@@ -7,7 +7,6 @@ import 'package:flutter_huixin_app/ui/pages/home/components/home_ui_avatar_loade
 import 'package:flutter_huixin_app/ui/pages/home/components/home_ui_avatar_loading.dart';
 import 'package:flutter_huixin_app/ui/pages/home/components/home_ui_tile_master.dart';
 import 'package:flutter_huixin_app/ui/pages/home/components/home_ui_tile_master_loading.dart';
-import 'package:flutter_huixin_app/ui/widgets/appbar/appbar_style.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:shimmer/shimmer.dart';
@@ -80,58 +79,55 @@ class HomeItems extends StatelessWidget {
                     showMaterialModalBottomSheet(
                       expand: true,
                       context: context,
-                      builder: (context) => Scaffold(
-                        appBar: AppBarDefault(
-                          title: 'Active Students',
-                        ),
-                        body: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: BlocBuilder<ActiveStudentCubit,
-                              ActiveStudentState>(
-                            builder: (context, state) {
-                              return ListView.separated(
-                                controller: ModalScrollController.of(context),
-                                separatorBuilder: (context, index) {
-                                  return const Divider(
-                                    height: 1,
-                                    thickness: 1,
-                                  );
-                                },
-                                shrinkWrap: true,
-                                itemCount: state.maybeMap(
-                                  orElse: () => 6,
-                                  loaded: (state) =>
-                                      state.data.data?.length ?? 0,
-                                ),
-                                itemBuilder: (context, index) {
-                                  return state.when(
-                                    initial: () {
-                                      return const ListTileActiveStudentsLoader();
-                                    },
-                                    loading: () {
-                                      return const ListTileActiveStudentsLoader();
-                                    },
-                                    loaded: (data) {
-                                      return ListTile(
+                      builder: (context) => Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child:
+                            BlocBuilder<ActiveStudentCubit, ActiveStudentState>(
+                          builder: (context, state) {
+                            return ListView.separated(
+                              controller: ModalScrollController.of(context),
+                              separatorBuilder: (context, index) {
+                                return const Divider(
+                                  height: 1,
+                                  thickness: 1,
+                                );
+                              },
+                              shrinkWrap: true,
+                              itemCount: state.maybeMap(
+                                orElse: () => 6,
+                                loaded: (state) => state.data.data?.length ?? 0,
+                              ),
+                              itemBuilder: (context, index) {
+                                return state.when(
+                                  initial: () {
+                                    return const ListTileActiveStudentsLoader();
+                                  },
+                                  loading: () {
+                                    return const ListTileActiveStudentsLoader();
+                                  },
+                                  loaded: (data) {
+                                    return SizedBox(
+                                      width: double.infinity,
+                                      child: ListTile(
                                         leading: CachedNetworkImage(
-                                          imageUrl: data.data![index].imgFile ==
-                                                  null
-                                              ? 'https://pwco.com.sg/wp-content/uploads/2020/05/Generic-Profile-Placeholder-v3-1536x1536.png'
-                                              : 'https://huixin.id/assets/fileuser/${data.data![index].imgFile}',
-                                          imageBuilder: (context, image) =>
-                                              Container(
-                                            width: 50.0,
-                                            height: 50.0,
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              image: DecorationImage(
-                                                  image: image,
-                                                  fit: BoxFit.cover),
-                                            ),
-                                          ),
-                                        ),
+                                            imageUrl: data
+                                                        .data![index].imgFile ==
+                                                    null
+                                                ? 'https://pwco.com.sg/wp-content/uploads/2020/05/Generic-Profile-Placeholder-v3-1536x1536.png'
+                                                : 'https://huixin.id/assets/fileuser/${data.data![index].imgFile}',
+                                            imageBuilder: (context, image) =>
+                                                CircleAvatar(
+                                                  radius: 20,
+                                                  backgroundImage: image,
+                                                )),
                                         title: Text(
-                                          data.data![index].fullName ?? '..',
+                                          data.data![index].fullName != null &&
+                                                  data.data![index].fullName!
+                                                          .length >
+                                                      16
+                                              ? '${data.data![index].fullName!.substring(0, 16)}...' // Limit to 16 characters and append '...'
+                                              : data.data![index].fullName ??
+                                                  '..', // If fullName is null, display '..',
                                           style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 16,
@@ -156,16 +152,16 @@ class HomeItems extends StatelessWidget {
                                             fontWeight: FontWeight.w600,
                                           ),
                                         ),
-                                      );
-                                    },
-                                    error: (message) {
-                                      return Text(message);
-                                    },
-                                  );
-                                },
-                              );
-                            },
-                          ),
+                                      ),
+                                    );
+                                  },
+                                  error: (message) {
+                                    return Text(message);
+                                  },
+                                );
+                              },
+                            );
+                          },
                         ),
                       ),
                     );
@@ -229,41 +225,40 @@ class ListTileActiveStudentsLoader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: CachedNetworkImage(
-        imageUrl:
-            'https://pwco.com.sg/wp-content/uploads/2020/05/Generic-Profile-Placeholder-v3-1536x1536.png',
-        imageBuilder: (context, image) => Shimmer.fromColors(
-          baseColor: Colors.grey[300]!,
-          highlightColor: Colors.grey[100]!,
-          child: Container(
-            width: 50.0,
-            height: 50.0,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(image: image, fit: BoxFit.cover),
+    return SizedBox(
+      width: double.infinity,
+      child: ListTile(
+        leading: CachedNetworkImage(
+          imageUrl:
+              'https://pwco.com.sg/wp-content/uploads/2020/05/Generic-Profile-Placeholder-v3-1536x1536.png',
+          imageBuilder: (context, image) => Shimmer.fromColors(
+            baseColor: Colors.grey[300]!,
+            highlightColor: Colors.grey[100]!,
+            child: CircleAvatar(
+              radius: 25,
+              backgroundImage: image,
             ),
           ),
         ),
-      ),
-      title: const Text(
-        '..',
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 16,
+        title: const Text(
+          '..',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
         ),
-      ),
-      subtitle: const Text(
-        '..',
-        style: TextStyle(
-          fontSize: 14,
+        subtitle: const Text(
+          '..',
+          style: TextStyle(
+            fontSize: 14,
+          ),
         ),
-      ),
-      trailing: const Text(
-        '..',
-        style: TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.w600,
+        trailing: const Text(
+          '..',
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
     );

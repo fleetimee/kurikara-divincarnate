@@ -83,6 +83,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _noMemberController = TextEditingController();
   final TextEditingController _fullNameController = TextEditingController();
   final TextEditingController _birthDateController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
 
   void _showErrorDialog(BuildContext context, String message) {
     showDialog(
@@ -103,6 +104,7 @@ class _SignUpPageState extends State<SignUpPage> {
   RegisterRequestModel _buildRegisterRequestModel() {
     return RegisterRequestModel(
       user_name: _usernameController.text,
+      email: _emailController.text,
       user_password: _passwordController.text,
       no_member: _noMemberController.text,
       full_name: _fullNameController.text,
@@ -253,6 +255,21 @@ class _SignUpPageState extends State<SignUpPage> {
                               height: 10.0,
                             ),
                             RegisterForm(
+                              name: 'email',
+                              label: 'Email',
+                              controller: _emailController,
+                              obscureTextEnabled: 'false',
+                              validator: FormBuilderValidators.compose(
+                                [
+                                  FormBuilderValidators.required(),
+                                  FormBuilderValidators.email(),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10.0,
+                            ),
+                            RegisterForm(
                               name: 'password',
                               label: 'Password',
                               controller: _passwordController,
@@ -313,14 +330,11 @@ class _SignUpPageState extends State<SignUpPage> {
                               onPressed: () {
                                 if (_fbKey.currentState?.saveAndValidate() ??
                                     false) {
-                                  // context.loaderOverlay.show();
-
-                                  // Check if the image is not null
-                                  // if null then show error dialog
                                   if (_image == null) {
                                     _showErrorDialog(
                                         context, 'Please choose picture');
                                   } else {
+                                    context.loaderOverlay.show();
                                     context
                                         .read<RegisterCubit>()
                                         .register(

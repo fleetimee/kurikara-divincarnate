@@ -37,11 +37,13 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
   late String? password = '';
   late String? noMember = '';
   late String? fullName = '';
+  late String? email = '';
 
   TextEditingController? _usernameController;
   TextEditingController? _passwordController;
   TextEditingController? _noMemberController;
   TextEditingController? _fullNameController;
+  TextEditingController? _emailController;
 
   /// Initialize Global Key
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
@@ -53,6 +55,7 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
     _passwordController = TextEditingController();
     _noMemberController = TextEditingController();
     _fullNameController = TextEditingController();
+    _emailController = TextEditingController();
     _getUser();
   }
 
@@ -62,6 +65,8 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
     _passwordController!.dispose();
     _noMemberController!.dispose();
     _fullNameController!.dispose();
+    _emailController!.dispose();
+
     super.dispose();
   }
 
@@ -73,7 +78,9 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
       password = user?.passwordText;
       noMember = user?.noMember;
       fullName = user?.fullName;
+      email = user?.email;
 
+      _emailController!.text = email ?? '';
       _usernameController!.text = username ?? '';
       _passwordController!.text = '';
       _noMemberController!.text = noMember ?? '';
@@ -150,6 +157,13 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
                       obscureTextEnabled: 'false',
                       controller: _usernameController,
                       hintText: 'Username',
+                    ),
+                    Space,
+                    ProfileForm(
+                      name: 'email',
+                      obscureTextEnabled: 'false',
+                      controller: _emailController,
+                      hintText: 'Email',
                     ),
                     Space,
                     ProfileForm(
