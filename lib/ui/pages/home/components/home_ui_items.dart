@@ -10,6 +10,7 @@ import 'package:flutter_huixin_app/ui/pages/home/components/home_ui_tile_master_
 import 'package:flutter_huixin_app/ui/widgets/appbar/appbar_style.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:shimmer/shimmer.dart';
 
 class HomeItems extends StatelessWidget {
   const HomeItems({
@@ -105,10 +106,10 @@ class HomeItems extends StatelessWidget {
                                 itemBuilder: (context, index) {
                                   return state.when(
                                     initial: () {
-                                      return const AvatarLoading();
+                                      return const ListTileActiveStudentsLoader();
                                     },
                                     loading: () {
-                                      return const AvatarLoading();
+                                      return const ListTileActiveStudentsLoader();
                                     },
                                     loaded: (data) {
                                       return ListTile(
@@ -216,6 +217,54 @@ class HomeItems extends StatelessWidget {
             ),
           )
         ],
+      ),
+    );
+  }
+}
+
+class ListTileActiveStudentsLoader extends StatelessWidget {
+  const ListTileActiveStudentsLoader({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: CachedNetworkImage(
+        imageUrl:
+            'https://pwco.com.sg/wp-content/uploads/2020/05/Generic-Profile-Placeholder-v3-1536x1536.png',
+        imageBuilder: (context, image) => Shimmer.fromColors(
+          baseColor: Colors.grey[300]!,
+          highlightColor: Colors.grey[100]!,
+          child: Container(
+            width: 50.0,
+            height: 50.0,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              image: DecorationImage(image: image, fit: BoxFit.cover),
+            ),
+          ),
+        ),
+      ),
+      title: const Text(
+        '..',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 16,
+        ),
+      ),
+      subtitle: const Text(
+        '..',
+        style: TextStyle(
+          fontSize: 14,
+        ),
+      ),
+      trailing: const Text(
+        '..',
+        style: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w600,
+        ),
       ),
     );
   }
