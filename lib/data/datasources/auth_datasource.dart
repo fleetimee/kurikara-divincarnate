@@ -89,8 +89,8 @@ class AuthDataSource {
       var request = http_plus.MultipartRequest('POST',
           Uri.parse('${AppApi.baseUrl}/api_update_profile/?token_api=323232'));
       request.fields.addAll(model.toMap());
-      // request.files.add(await http_plus.MultipartFile.fromPath(
-      //     'img_file', model.img_file!.path));
+      request.files.add(await http_plus.MultipartFile.fromPath(
+          'img_file', model.img_file!.path));
       request.headers.addAll(headers);
 
       http_plus.StreamedResponse response = await request.send();

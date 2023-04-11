@@ -7,12 +7,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_huixin_app/cubit/auth/update_user/update_user_cubit.dart';
+import 'package:flutter_huixin_app/cubit/auth/user/user_cubit.dart';
 import 'package:flutter_huixin_app/data/datasources/local/app_secure_storage.dart';
 import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
+import 'package:flutter_huixin_app/ui/pages/signin/signin_ui.dart';
 import 'package:flutter_huixin_app/ui/widgets/dialog_box.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import 'package:image_picker/image_picker.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../data/models/auth/requests/update_profile_request_model.dart';
 import '../../widgets/appbar/appbar_style.dart';
@@ -110,24 +116,34 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
           initial: () {},
           loading: () {},
           error: (error) {
-            ErrorDialog(
-              context: context,
-              desc: error,
-              title: 'Error',
-              btnOkOnPress: () {},
-              btnOkText: 'OK',
-            ).show();
+            showTopSnackBar(
+              Overlay.of(context),
+              const CustomSnackBar.error(
+                message: 'Something went wrong, please try again later',
+              ),
+            );
           },
           loaded: (user) async {
-            await AppSecureStorage.setUser(user.data);
-
             if (context.mounted) {
               SuccessDialog(
                 context: context,
-                desc: 'Update Profile Success',
+                desc:
+                    'Profile has been updated, for the changes to take effect, we`ll need to log you out.',
                 title: 'Success',
                 btnOkOnPress: () {
-                  // Navigator.pop(context);
+                  AppSecureStorage.deleteAll().then(
+                    (value) {
+                      context.read<UserCubit>().clearUser();
+
+                      GoogleSignIn().disconnect();
+
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        LoginPage.routeName,
+                        (route) => false,
+                      );
+                    },
+                  );
                 },
                 btnOkText: 'OK',
               ).show();
@@ -137,83 +153,97 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
       },
       child: BlocBuilder<UpdateUserCubit, UpdateUserState>(
         builder: (context, state) {
-          return Scaffold(
-            resizeToAvoidBottomInset: false,
-            appBar: AppBarReading(
-              title: 'Profile',
-              context: context,
-            ),
-            body: Container(
-              padding: const EdgeInsets.only(top: 50, bottom: 50),
-              child: FormBuilder(
-                key: _fbKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    _imagePicker(),
-                    Space,
-                    ProfileForm(
-                      name: 'username',
-                      obscureTextEnabled: 'false',
-                      controller: _usernameController,
-                      hintText: 'Username',
-                    ),
-                    Space,
-                    ProfileForm(
-                      name: 'email',
-                      obscureTextEnabled: 'false',
-                      controller: _emailController,
-                      hintText: 'Email',
-                    ),
-                    Space,
-                    ProfileForm(
-                      name: 'password',
-                      obscureTextEnabled: 'false',
-                      controller: _passwordController,
-                      hintText: 'Password',
-                    ),
-                    Space,
-                    ProfileForm(
-                      name: 'noMember',
-                      obscureTextEnabled: 'false',
-                      controller: _noMemberController,
-                      hintText: 'No Member',
-                    ),
-                    Space,
-                    ProfileForm(
-                      name: 'fullName',
-                      obscureTextEnabled: 'false',
-                      controller: _fullNameController,
-                      hintText: 'Full Name',
-                    ),
-                    Space,
-                    const ProfileFormDate(
-                      name: 'birth_date',
-                      label: 'Birth date',
-                    ),
-                    const Spacer(),
-                    PrimaryButton(
-                      text: state.maybeMap(
-                        loading: (_) => 'Loading',
-                        orElse: () => 'Update',
+          return LoaderOverlay(
+            child: Scaffold(
+              resizeToAvoidBottomInset: false,
+              appBar: AppBarReading(
+                title: 'Profile',
+                context: context,
+              ),
+              body: Container(
+                padding: const EdgeInsets.only(top: 50, bottom: 50),
+                child: FormBuilder(
+                  key: _fbKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      _imagePicker(),
+                      Space,
+                      ProfileForm(
+                        name: 'username',
+                        obscureTextEnabled: 'false',
+                        controller: _usernameController,
+                        hintText: 'Username',
                       ),
-                      onPressed: () {
-                        context.read<UpdateUserCubit>().updateUser(
-                              UpdateProfileRequestModel(
-                                user_id: user?.userId ?? '',
-                                full_name: _fullNameController!.text,
-                                user_name: _usernameController!.text,
-                                user_password: _passwordController!.text.isEmpty
-                                    ? password!
-                                    : _passwordController!.text,
-                                no_member: _noMemberController!.text,
-                                birth_date: '2012-02-02',
-                                token_device: user?.tokenDevice ?? '',
-                              ),
-                            );
-                      },
-                    ),
-                  ],
+                      Space,
+                      ProfileForm(
+                        name: 'email',
+                        obscureTextEnabled: 'false',
+                        controller: _emailController,
+                        hintText: 'Email',
+                      ),
+                      Space,
+                      ProfileForm(
+                        name: 'password',
+                        obscureTextEnabled: 'false',
+                        controller: _passwordController,
+                        hintText: 'Password',
+                      ),
+                      Space,
+                      ProfileForm(
+                        name: 'noMember',
+                        obscureTextEnabled: 'false',
+                        controller: _noMemberController,
+                        hintText: 'No Member',
+                      ),
+                      Space,
+                      ProfileForm(
+                        name: 'fullName',
+                        obscureTextEnabled: 'false',
+                        controller: _fullNameController,
+                        hintText: 'Full Name',
+                      ),
+                      Space,
+                      const ProfileFormDate(
+                        name: 'birth_date',
+                        label: 'Birth date',
+                      ),
+                      const Spacer(),
+                      PrimaryButton(
+                        text: state.maybeMap(
+                          loading: (_) => 'Loading',
+                          orElse: () => 'Update',
+                        ),
+                        onPressed: () {
+                          context.loaderOverlay.show();
+                          context
+                              .read<UpdateUserCubit>()
+                              .updateUser(
+                                UpdateProfileRequestModel(
+                                  user_id: user?.userId ?? '',
+                                  full_name: _fullNameController!.text,
+                                  user_name: _usernameController!.text,
+                                  user_password:
+                                      _passwordController!.text.isEmpty
+                                          ? password!
+                                          : _passwordController!.text,
+                                  no_member: _noMemberController!.text,
+                                  birth_date: '2012-02-02',
+                                  token_device: user?.tokenDevice ?? '',
+                                  token_api: user?.tokenApi ?? '',
+                                  fcm_id: user?.fcmId ?? '',
+                                  email: _emailController!.text,
+                                  user_npp: user?.userNpp ?? '',
+                                  img_file: _image,
+                                ),
+                              )
+                              .then((value) => context.loaderOverlay.hide())
+                              .onError((error, stackTrace) =>
+                                  context.loaderOverlay.hide());
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

@@ -41,8 +41,8 @@ class _HomePageState extends State<HomePage> {
     String? token = await FirebaseMessaging.instance.getToken();
 
     setState(() {
-      context.read<AuthCubit>().updateFcm(
-          UpdateFcmRequestModel(user_id: user!.userId!, fcm_id: token ?? ''));
+      context.read<AuthCubit>().updateFcm(UpdateFcmRequestModel(
+          user_id: user?.userId ?? '0', fcm_id: token ?? ''));
       context.read<XpCubit>().getXp(user?.userId ?? '');
       context.read<DailyActivityCubit>().getDailyActivity(user?.userId ?? '');
       context.read<ActiveStudentCubit>().getActiveStudent();

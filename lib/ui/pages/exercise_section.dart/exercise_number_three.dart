@@ -540,8 +540,12 @@ class _ExerciseThreeState extends State<ExerciseThree> {
                       context.read<MasterSoalCubit>().setInitial();
                       context.read<LatihanSoalHeaderCubit>().setInitial();
                       context.read<LatihanSoalLinesCubit>().setInitial();
-                      Navigator.pushReplacementNamed(
-                          context, HomePage.routeName);
+
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        HomePage.routeName,
+                        (route) => false,
+                      );
 
                       showTopSnackBar(
                         Overlay.of(context),

@@ -14,12 +14,14 @@ class UpdateProfileRequestModel {
   final String? id_apple;
   final String? fcm_id;
   final String token_device;
+  final String? token_api;
   final String? email;
   final String? no_telpon;
   File? img_file;
   final String no_member;
   final String birth_date;
   UpdateProfileRequestModel({
+    this.token_api,
     required this.user_id,
     this.user_npp,
     required this.full_name,
@@ -54,6 +56,7 @@ class UpdateProfileRequestModel {
       // 'img_file': img_file?.toMap(),
       'no_member': no_member,
       'birth_date': birth_date,
+      'token_api': token_api ?? '',
     };
   }
 
@@ -61,6 +64,7 @@ class UpdateProfileRequestModel {
     return UpdateProfileRequestModel(
       user_id: map['user_id'] ?? '',
       user_npp: map['user_npp'] ?? '',
+      token_api: map['token_api'] ?? '',
       full_name: map['full_name'] ?? '',
       user_name: map['user_name'] ?? '',
       user_password: map['user_password'] ?? '',
