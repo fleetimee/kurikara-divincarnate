@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'delete_user_cubit.dart';
+part of 'forgot_password_cubit.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,12 +15,12 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$DeleteUserState {
+mixin _$ForgotPasswordState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(AuthResponseModel response) loaded,
+    required TResult Function(AuthResponseModel data) loaded,
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -28,7 +28,7 @@ mixin _$DeleteUserState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(AuthResponseModel response)? loaded,
+    TResult? Function(AuthResponseModel data)? loaded,
     TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -36,7 +36,7 @@ mixin _$DeleteUserState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(AuthResponseModel response)? loaded,
+    TResult Function(AuthResponseModel data)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -69,16 +69,16 @@ mixin _$DeleteUserState {
 }
 
 /// @nodoc
-abstract class $DeleteUserStateCopyWith<$Res> {
-  factory $DeleteUserStateCopyWith(
-          DeleteUserState value, $Res Function(DeleteUserState) then) =
-      _$DeleteUserStateCopyWithImpl<$Res, DeleteUserState>;
+abstract class $ForgotPasswordStateCopyWith<$Res> {
+  factory $ForgotPasswordStateCopyWith(
+          ForgotPasswordState value, $Res Function(ForgotPasswordState) then) =
+      _$ForgotPasswordStateCopyWithImpl<$Res, ForgotPasswordState>;
 }
 
 /// @nodoc
-class _$DeleteUserStateCopyWithImpl<$Res, $Val extends DeleteUserState>
-    implements $DeleteUserStateCopyWith<$Res> {
-  _$DeleteUserStateCopyWithImpl(this._value, this._then);
+class _$ForgotPasswordStateCopyWithImpl<$Res, $Val extends ForgotPasswordState>
+    implements $ForgotPasswordStateCopyWith<$Res> {
+  _$ForgotPasswordStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -95,7 +95,7 @@ abstract class _$$_InitialCopyWith<$Res> {
 
 /// @nodoc
 class __$$_InitialCopyWithImpl<$Res>
-    extends _$DeleteUserStateCopyWithImpl<$Res, _$_Initial>
+    extends _$ForgotPasswordStateCopyWithImpl<$Res, _$_Initial>
     implements _$$_InitialCopyWith<$Res> {
   __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
       : super(_value, _then);
@@ -108,7 +108,7 @@ class _$_Initial implements _Initial {
 
   @override
   String toString() {
-    return 'DeleteUserState.initial()';
+    return 'ForgotPasswordState.initial()';
   }
 
   @override
@@ -125,7 +125,7 @@ class _$_Initial implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(AuthResponseModel response) loaded,
+    required TResult Function(AuthResponseModel data) loaded,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -136,7 +136,7 @@ class _$_Initial implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(AuthResponseModel response)? loaded,
+    TResult? Function(AuthResponseModel data)? loaded,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -147,7 +147,7 @@ class _$_Initial implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(AuthResponseModel response)? loaded,
+    TResult Function(AuthResponseModel data)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -195,7 +195,7 @@ class _$_Initial implements _Initial {
   }
 }
 
-abstract class _Initial implements DeleteUserState {
+abstract class _Initial implements ForgotPasswordState {
   const factory _Initial() = _$_Initial;
 }
 
@@ -208,7 +208,7 @@ abstract class _$$_LoadingCopyWith<$Res> {
 
 /// @nodoc
 class __$$_LoadingCopyWithImpl<$Res>
-    extends _$DeleteUserStateCopyWithImpl<$Res, _$_Loading>
+    extends _$ForgotPasswordStateCopyWithImpl<$Res, _$_Loading>
     implements _$$_LoadingCopyWith<$Res> {
   __$$_LoadingCopyWithImpl(_$_Loading _value, $Res Function(_$_Loading) _then)
       : super(_value, _then);
@@ -221,7 +221,7 @@ class _$_Loading implements _Loading {
 
   @override
   String toString() {
-    return 'DeleteUserState.loading()';
+    return 'ForgotPasswordState.loading()';
   }
 
   @override
@@ -238,7 +238,7 @@ class _$_Loading implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(AuthResponseModel response) loaded,
+    required TResult Function(AuthResponseModel data) loaded,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -249,7 +249,7 @@ class _$_Loading implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(AuthResponseModel response)? loaded,
+    TResult? Function(AuthResponseModel data)? loaded,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -260,7 +260,7 @@ class _$_Loading implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(AuthResponseModel response)? loaded,
+    TResult Function(AuthResponseModel data)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -308,7 +308,7 @@ class _$_Loading implements _Loading {
   }
 }
 
-abstract class _Loading implements DeleteUserState {
+abstract class _Loading implements ForgotPasswordState {
   const factory _Loading() = _$_Loading;
 }
 
@@ -317,12 +317,12 @@ abstract class _$$_LoadedCopyWith<$Res> {
   factory _$$_LoadedCopyWith(_$_Loaded value, $Res Function(_$_Loaded) then) =
       __$$_LoadedCopyWithImpl<$Res>;
   @useResult
-  $Res call({AuthResponseModel response});
+  $Res call({AuthResponseModel data});
 }
 
 /// @nodoc
 class __$$_LoadedCopyWithImpl<$Res>
-    extends _$DeleteUserStateCopyWithImpl<$Res, _$_Loaded>
+    extends _$ForgotPasswordStateCopyWithImpl<$Res, _$_Loaded>
     implements _$$_LoadedCopyWith<$Res> {
   __$$_LoadedCopyWithImpl(_$_Loaded _value, $Res Function(_$_Loaded) _then)
       : super(_value, _then);
@@ -330,12 +330,12 @@ class __$$_LoadedCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? response = null,
+    Object? data = null,
   }) {
     return _then(_$_Loaded(
-      null == response
-          ? _value.response
-          : response // ignore: cast_nullable_to_non_nullable
+      null == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
               as AuthResponseModel,
     ));
   }
@@ -344,14 +344,14 @@ class __$$_LoadedCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Loaded implements _Loaded {
-  const _$_Loaded(this.response);
+  const _$_Loaded(this.data);
 
   @override
-  final AuthResponseModel response;
+  final AuthResponseModel data;
 
   @override
   String toString() {
-    return 'DeleteUserState.loaded(response: $response)';
+    return 'ForgotPasswordState.loaded(data: $data)';
   }
 
   @override
@@ -359,12 +359,11 @@ class _$_Loaded implements _Loaded {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Loaded &&
-            (identical(other.response, response) ||
-                other.response == response));
+            (identical(other.data, data) || other.data == data));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, response);
+  int get hashCode => Object.hash(runtimeType, data);
 
   @JsonKey(ignore: true)
   @override
@@ -377,10 +376,10 @@ class _$_Loaded implements _Loaded {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(AuthResponseModel response) loaded,
+    required TResult Function(AuthResponseModel data) loaded,
     required TResult Function(String message) error,
   }) {
-    return loaded(response);
+    return loaded(data);
   }
 
   @override
@@ -388,10 +387,10 @@ class _$_Loaded implements _Loaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(AuthResponseModel response)? loaded,
+    TResult? Function(AuthResponseModel data)? loaded,
     TResult? Function(String message)? error,
   }) {
-    return loaded?.call(response);
+    return loaded?.call(data);
   }
 
   @override
@@ -399,12 +398,12 @@ class _$_Loaded implements _Loaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(AuthResponseModel response)? loaded,
+    TResult Function(AuthResponseModel data)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(response);
+      return loaded(data);
     }
     return orElse();
   }
@@ -447,10 +446,10 @@ class _$_Loaded implements _Loaded {
   }
 }
 
-abstract class _Loaded implements DeleteUserState {
-  const factory _Loaded(final AuthResponseModel response) = _$_Loaded;
+abstract class _Loaded implements ForgotPasswordState {
+  const factory _Loaded(final AuthResponseModel data) = _$_Loaded;
 
-  AuthResponseModel get response;
+  AuthResponseModel get data;
   @JsonKey(ignore: true)
   _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
       throw _privateConstructorUsedError;
@@ -466,7 +465,7 @@ abstract class _$$_ErrorCopyWith<$Res> {
 
 /// @nodoc
 class __$$_ErrorCopyWithImpl<$Res>
-    extends _$DeleteUserStateCopyWithImpl<$Res, _$_Error>
+    extends _$ForgotPasswordStateCopyWithImpl<$Res, _$_Error>
     implements _$$_ErrorCopyWith<$Res> {
   __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
       : super(_value, _then);
@@ -495,7 +494,7 @@ class _$_Error implements _Error {
 
   @override
   String toString() {
-    return 'DeleteUserState.error(message: $message)';
+    return 'ForgotPasswordState.error(message: $message)';
   }
 
   @override
@@ -520,7 +519,7 @@ class _$_Error implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(AuthResponseModel response) loaded,
+    required TResult Function(AuthResponseModel data) loaded,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -531,7 +530,7 @@ class _$_Error implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(AuthResponseModel response)? loaded,
+    TResult? Function(AuthResponseModel data)? loaded,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -542,7 +541,7 @@ class _$_Error implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(AuthResponseModel response)? loaded,
+    TResult Function(AuthResponseModel data)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -590,7 +589,7 @@ class _$_Error implements _Error {
   }
 }
 
-abstract class _Error implements DeleteUserState {
+abstract class _Error implements ForgotPasswordState {
   const factory _Error(final String message) = _$_Error;
 
   String get message;

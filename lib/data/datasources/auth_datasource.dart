@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_huixin_app/data/datasources/local/app_secure_storage.dart';
 import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
 import 'package:flutter_huixin_app/data/models/auth/requests/delete_user_request_model.dart';
+import 'package:flutter_huixin_app/data/models/auth/requests/forgot_password_request_model.dart';
 import 'package:flutter_huixin_app/data/models/auth/requests/login_request_model.dart';
 import 'package:flutter_huixin_app/data/models/auth/requests/register_request_model.dart';
 import 'package:flutter_huixin_app/data/models/auth/requests/update_fcm_request_model.dart';
@@ -73,6 +74,22 @@ class AuthDataSource {
       };
       var response = await http.post(Uri.parse('${AppApi.baseUrl}/api_login'),
           headers: headers, body: model.toMap());
+
+      return Right(
+        AuthResponseModel.fromJson(jsonDecode(response.body)),
+      );
+    } catch (e) {
+      return Left(e.toString());
+    }
+  }
+
+  Future<Either<String, AuthResponseModel>> forgotPassword(
+      ForgotPasswordRequestModel model) async {
+    try {
+      var response = await http.post(
+        Uri.parse('${AppApi.baseUrl}/api_send_password'),
+        body: model.toMap(),
+      );
 
       return Right(
         AuthResponseModel.fromJson(jsonDecode(response.body)),

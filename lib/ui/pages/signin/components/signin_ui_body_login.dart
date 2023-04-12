@@ -5,6 +5,7 @@ import 'package:flutter_huixin_app/cubit/auth/login_apple/login_apple_cubit.dart
 import 'package:flutter_huixin_app/cubit/auth/login_google/login_google_cubit.dart';
 
 import 'package:flutter_huixin_app/data/models/auth/requests/login_request_model.dart';
+import 'package:flutter_huixin_app/ui/pages/forgot_password/forgot_password_ui.dart';
 import 'package:flutter_huixin_app/ui/pages/singup/signup_ui.dart';
 import 'package:flutter_huixin_app/ui/widgets/button.dart';
 import 'package:flutter_huixin_app/ui/widgets/login_form.dart';
@@ -91,7 +92,12 @@ class BodyLogin extends StatelessWidget {
               child: Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(
+                      context,
+                      ForgotPasswordPage.routeName,
+                    );
+                  },
                   child: const Text(
                     'Forgot Password?',
                     style: TextStyle(
