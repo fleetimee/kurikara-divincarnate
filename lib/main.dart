@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_huixin_app/data/datasources/local/app_secure_storage.dart';
@@ -9,22 +12,101 @@ import 'package:flutter_huixin_app/ui/pages/signin/signin_ui.dart';
 import 'package:flutter_huixin_app/utils/providers.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:form_builder_validators/localization/l10n.dart';
+import 'package:in_app_update/in_app_update.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 
 import 'common/constants/color.dart';
 import 'common/routes/routes.dart';
 import 'common/themes/theme_data.dart';
+import 'common/utils/notification_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await NotificationService().initNotification();
   runApp(const HuixinApp());
 }
 
-class HuixinApp extends StatelessWidget {
+class HuixinApp extends StatefulWidget {
   const HuixinApp({super.key});
+
+  @override
+  State<HuixinApp> createState() => _HuixinAppState();
+}
+
+class _HuixinAppState extends State<HuixinApp> {
+  @override
+  void initState() {
+    super.initState();
+    if (Platform.isAndroid) {
+      checkForUpdate();
+    }
+    setupFcm();
+  }
+
+  Future<void> subscribeNotification() async {
+    NotificationService().firebaseMessaging.subscribeToTopic('for-all-users');
+    debugPrint('Subscribed to topic');
+  }
+
+  Future<void> onMessage(RemoteMessage event) async {
+    NotificationService().showNotification(
+      title: event.notification!.title,
+      body: event.notification!.body,
+    );
+  }
+
+  void _handleMessage(RemoteMessage message) {
+    NotificationService().showNotification(
+      title: message.notification!.title,
+      body: message.notification!.body,
+    );
+  }
+
+  Future<void> setupFcm() async {
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+    NotificationSettings settings = await messaging.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+    } else if (settings.authorizationStatus ==
+        AuthorizationStatus.provisional) {
+      debugPrint('User granted provisional permission');
+    } else {
+      debugPrint('User declined or has not accepted permission');
+    }
+
+    FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
+    // FirebaseMessaging.onBackgroundMessage(
+    //     NotificationService().firebaseBackgroundHandler);
+    FirebaseMessaging.onMessage.listen(onMessage);
+
+    subscribeNotification();
+  }
+
+  Future<void> checkForUpdate() async {
+    await InAppUpdate.checkForUpdate().then((info) {
+      if (info.updateAvailability == UpdateAvailability.updateAvailable) {
+        performImmediateUpdate();
+      }
+    }).catchError((e) {
+      debugPrint(e.toString());
+    });
+  }
+
+  Future<void> performImmediateUpdate() async {
+    await InAppUpdate.performImmediateUpdate();
+  }
 
   @override
   Widget build(BuildContext context) {

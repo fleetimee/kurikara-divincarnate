@@ -30,6 +30,14 @@
           }
         },
         {
+          "client_id": "1039944241527-pqia4vu46eb454kbnutr6obt2516ck1h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "id.huixin.android",
+            "certificate_hash": "c89e9dffb94c20b31252d41eb67b4203de21b520"
+          }
+        },
+        {
           "client_id": "1039944241527-rgff9jms8f4g00vji8o6ra6uq3a8cq65.apps.googleusercontent.com",
           "client_type": 3
         }
