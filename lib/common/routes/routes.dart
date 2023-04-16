@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_huixin_app/ui/pages/exercise_section.dart/exercise_page.dart';
 import 'package:flutter_huixin_app/ui/pages/forgot_password/forgot_password_ui.dart';
+import 'package:flutter_huixin_app/ui/pages/lesson_selector/lesson_selector_ui.dart';
 import 'package:flutter_huixin_app/ui/pages/signin/signin_ui.dart';
 
 import '../../ui/pages/course_done/course_done_ui.dart';
@@ -22,6 +23,7 @@ final Map<String, WidgetBuilder> routes = {
   HomePage.routeName: (context) => const HomePage(),
   LoginPage.routeName: (context) => const LoginPage(),
   ForgotPasswordPage.routeName: (context) => const ForgotPasswordPage(),
+  LessonSelectorPage.routeName: (context) => const LessonSelectorPage(),
   CourseSelector.routeName: (context) => const CourseSelector(),
   CourseInitial.routeName: (context) => const CourseInitial(),
   CourseDone.routeName: (context) => const CourseDone(),

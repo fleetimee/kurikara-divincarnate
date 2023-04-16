@@ -5,6 +5,8 @@ import 'package:flutter_huixin_app/ui/widgets/appbar/appbar_style.dart';
 import 'package:flutter_huixin_app/ui/widgets/bottom_appbar_note.dart';
 
 class LessonSelectorPage extends StatelessWidget {
+  static const String routeName = '/lesson_selector';
+
   const LessonSelectorPage({super.key});
 
   @override
