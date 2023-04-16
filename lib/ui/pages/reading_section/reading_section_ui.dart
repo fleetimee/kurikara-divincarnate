@@ -207,7 +207,7 @@ class _ReadingSectionState extends State<ReadingSection> {
       },
       child: Scaffold(
           appBar: AppBarReading(
-            title: 'Reading & Speaking',
+            title: 'Reading',
             context: context,
             disabledRoute: false,
           ),
