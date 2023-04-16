@@ -6,6 +6,7 @@ import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
 import 'package:flutter_huixin_app/data/models/mastering/master_group_materi_response_model.dart';
 import 'package:flutter_huixin_app/ui/pages/course_initial/components/course_initial_ui_card_header.dart';
 import 'package:flutter_huixin_app/ui/pages/course_initial/components/course_initial_ui_reading_tile.dart';
+import 'package:flutter_huixin_app/ui/pages/course_initial/components/course_initial_ui_speaking_tile.dart';
 
 import '../../widgets/appbar/appbar_style.dart';
 import '../../widgets/bottom_appbar_note.dart';
@@ -80,21 +81,7 @@ class MateriSelector extends StatelessWidget {
           masterGroupMateri: masterGroupMateri,
           dataUser: dataUser,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Image.asset(
-              "assets/images/speaking.png",
-              height: 175,
-              fit: BoxFit.contain,
-            ),
-            Image.asset(
-              "assets/images/speaking_exercise.png",
-              height: 180,
-              fit: BoxFit.contain,
-            ),
-          ],
-        )
+        const SpeakingTile()
       ],
     );
   }
