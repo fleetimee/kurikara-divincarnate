@@ -5,7 +5,6 @@ import 'package:flutter_huixin_app/data/datasources/local/app_secure_storage.dar
 import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
 import 'package:flutter_huixin_app/firebase_options.dart';
 import 'package:flutter_huixin_app/ui/pages/home/home_ui.dart';
-import 'package:flutter_huixin_app/ui/pages/lesson_selector/lesson_selector_ui.dart';
 import 'package:flutter_huixin_app/ui/pages/signin/signin_ui.dart';
 import 'package:flutter_huixin_app/utils/providers.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -49,7 +48,11 @@ class HuixinApp extends StatelessWidget {
         theme: myLightTheme,
         darkTheme: myDarkTheme,
         themeMode: ThemeMode.light,
-        home: const LessonSelectorPage(),
+
+        /// For accessing lesson selector page
+        /// without logging in
+        // home: const LessonSelectorPage(),
+        home: const Init(),
         routes: routes,
         debugShowCheckedModeBanner: false,
         localizationsDelegates: const [
