@@ -66,6 +66,7 @@ class _CourseSelectorState extends State<CourseSelector> {
                         const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
                       childAspectRatio: 0.8,
+                      mainAxisSpacing: 10,
                     ),
                     itemBuilder: (context, index) {
                       return state.when(
