@@ -138,6 +138,17 @@ class _SpeakingSectionState extends State<SpeakingSection> {
                               ],
                             ),
                           ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Center(
+                            child: ElevatedButton(
+                              onPressed: () {},
+                              child: const Text(
+                                'Play',
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     );
