@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_huixin_app/common/constants/color.dart';
 import 'package:flutter_huixin_app/ui/widgets/appbar/appbar_style.dart';
+import 'package:flutter_huixin_app/ui/widgets/bottom_appbar_button.dart';
 
 class SpeakingExercise extends StatefulWidget {
   static const String routeName = '/speaking_exercise';
@@ -11,6 +12,8 @@ class SpeakingExercise extends StatefulWidget {
 }
 
 class _SpeakingExerciseState extends State<SpeakingExercise> {
+  bool isMicrophonePressed = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,10 +93,53 @@ class _SpeakingExerciseState extends State<SpeakingExercise> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
+              const SizedBox(
+                height: 60,
+              ),
+              Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          isMicrophonePressed = true;
+                        });
+                      },
+                      child: Image.asset(
+                        "assets/images/microphone.png",
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Text(
+                      'Speak',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.yellowColor,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
       ),
+      bottomNavigationBar: isMicrophonePressed
+          ? BottomNavigationBarButton(
+              color: AppColors.orangeColor,
+              name: 'Submit',
+              onTap: () {
+                // Navigator.pushNamed(context, '/speaking_exercise_result');
+              },
+            )
+          : const SizedBox(
+              height: 0,
+            ),
     );
   }
 }
