@@ -33,61 +33,7 @@ class _SpeakingExerciseState extends State<SpeakingExercise> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const SizedBox(
-                    height: 60,
-                  ),
-                  Container(
-                    height: 250,
-                    width: 300,
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(10)),
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          blurRadius: 5,
-                          offset: const Offset(0, 2),
-                          spreadRadius: 0,
-                        ),
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          blurRadius: 10,
-                          offset: const Offset(0, 8),
-                          spreadRadius: -3,
-                        ),
-                      ],
-                    ),
-                    child: Center(
-                      child: Image.asset(
-                        "assets/images/chinese-people.png",
-                        height: 200,
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 60,
-                  ),
-                  Row(
-                    children: [
-                      Image.asset(
-                        "assets/images/volume_reading.png",
-                        height: 40,
-                        fit: BoxFit.contain,
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      const Text(
-                        '你 叫 什么 名字？',
-                        style: TextStyle(
-                          fontSize: 36,
-                          color: AppColors.orangeColor,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
+                  const SpeakingExerciseTopSection(),
                   const SizedBox(
                     height: 60,
                   ),
@@ -203,13 +149,7 @@ class _SpeakingExerciseState extends State<SpeakingExercise> {
                             children: [
                               MicrophoneImage(
                                 isPressed: isMicrophonePressed,
-                                onPressed: () {
-                                  // setState(
-                                  //   () {
-                                  //     isMicrophonePressed = true;
-                                  //   },
-                                  // );
-                                },
+                                onPressed: () {},
                               ),
                               const SizedBox(
                                 height: 10,
@@ -265,13 +205,81 @@ class _SpeakingExerciseState extends State<SpeakingExercise> {
                       duration: const Duration(milliseconds: 500),
                       curve: Curves.easeOut,
                     );
-
-                    // scroll through very bottom of the page
                   },
                 )
           : const SizedBox(
               height: 0,
             ),
+    );
+  }
+}
+
+class SpeakingExerciseTopSection extends StatelessWidget {
+  const SpeakingExerciseTopSection({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const SizedBox(
+          height: 60,
+        ),
+        Container(
+          height: 250,
+          width: 300,
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                blurRadius: 5,
+                offset: const Offset(0, 2),
+                spreadRadius: 0,
+              ),
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                blurRadius: 10,
+                offset: const Offset(0, 8),
+                spreadRadius: -3,
+              ),
+            ],
+          ),
+          child: Center(
+            child: Image.asset(
+              "assets/images/chinese-people.png",
+              height: 200,
+              fit: BoxFit.contain,
+            ),
+          ),
+        ),
+        const SizedBox(
+          height: 60,
+        ),
+        Row(
+          children: [
+            Image.asset(
+              "assets/images/volume_reading.png",
+              height: 40,
+              fit: BoxFit.contain,
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            const Text(
+              '你 叫 什么 名字？',
+              style: TextStyle(
+                fontSize: 36,
+                color: AppColors.orangeColor,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
