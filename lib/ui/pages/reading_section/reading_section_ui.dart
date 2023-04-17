@@ -429,11 +429,13 @@ class _ReadingSectionState extends State<ReadingSection> {
                           voice_try: File(_mPath),
                         ),
                       );
-                  setState(() {
-                    ++_currentContent;
-                    _isVolumeClicked = false;
-                    _isMicrophoneClicked = false;
-                  });
+                  setState(
+                    () {
+                      ++_currentContent;
+                      _isVolumeClicked = false;
+                      _isMicrophoneClicked = false;
+                    },
+                  );
                 },
         ),
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_huixin_app/ui/pages/speaking_exercise/speaking_exercise_ui.dart';
 import 'package:flutter_huixin_app/ui/pages/speaking_section/speaking_section_ui.dart';
 
 class SpeakingTile extends StatelessWidget {
@@ -24,10 +25,18 @@ class SpeakingTile extends StatelessWidget {
             fit: BoxFit.contain,
           ),
         ),
-        Image.asset(
-          "assets/images/speaking_exercise.png",
-          height: 180,
-          fit: BoxFit.contain,
+        GestureDetector(
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              SpeakingExercise.routeName,
+            );
+          },
+          child: Image.asset(
+            "assets/images/speaking_exercise.png",
+            height: 180,
+            fit: BoxFit.contain,
+          ),
         ),
       ],
     );

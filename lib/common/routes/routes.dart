@@ -3,6 +3,7 @@ import 'package:flutter_huixin_app/ui/pages/exercise_section.dart/exercise_page.
 import 'package:flutter_huixin_app/ui/pages/forgot_password/forgot_password_ui.dart';
 import 'package:flutter_huixin_app/ui/pages/lesson_selector/lesson_selector_ui.dart';
 import 'package:flutter_huixin_app/ui/pages/signin/signin_ui.dart';
+import 'package:flutter_huixin_app/ui/pages/speaking_exercise/speaking_exercise_ui.dart';
 import 'package:flutter_huixin_app/ui/pages/speaking_section/speaking_section_ui.dart';
 
 import '../../ui/pages/course_done/course_done_ui.dart';
@@ -40,4 +41,5 @@ final Map<String, WidgetBuilder> routes = {
   ReportingDetailPage.routeName: (context) => const ReportingDetailPage(),
   ExercisePage.routeName: (context) => const ExercisePage(),
   SpeakingSection.routeName: (context) => const SpeakingSection(),
+  SpeakingExercise.routeName: (context) => const SpeakingExercise(),
 };
