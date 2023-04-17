@@ -96,35 +96,59 @@ class _SpeakingExerciseState extends State<SpeakingExercise> {
               const SizedBox(
                 height: 60,
               ),
-              Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          isMicrophonePressed = true;
-                        });
-                      },
-                      child: Image.asset(
-                        "assets/images/microphone.png",
-                        fit: BoxFit.fill,
+              Visibility(
+                visible: isMicrophonePressed ? false : true,
+                child: Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      MicrophoneImage(
+                        isPressed: isMicrophonePressed,
+                        onPressed: () {
+                          setState(
+                            () {
+                              isMicrophonePressed = true;
+                            },
+                          );
+                        },
                       ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    const Text(
-                      'Speak',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.yellowColor,
+                      const SizedBox(
+                        height: 10,
                       ),
-                    ),
-                  ],
+                      const Text(
+                        'Speak',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.yellowColor,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
+              Visibility(
+                visible: isMicrophonePressed,
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        "assets/images/volume_reading.png",
+                        height: 40,
+                        fit: BoxFit.contain,
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {},
+                        child: const Text('Play'),
+                      ),
+                    ],
+                  ),
+                ),
+              )
             ],
           ),
         ),
@@ -140,6 +164,28 @@ class _SpeakingExerciseState extends State<SpeakingExercise> {
           : const SizedBox(
               height: 0,
             ),
+    );
+  }
+}
+
+class MicrophoneImage extends StatelessWidget {
+  final bool isPressed;
+  final VoidCallback onPressed;
+
+  const MicrophoneImage({
+    super.key,
+    required this.isPressed,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onPressed,
+      child: Image.asset(
+        "assets/images/microphone.png",
+        fit: BoxFit.fill,
+      ),
     );
   }
 }
