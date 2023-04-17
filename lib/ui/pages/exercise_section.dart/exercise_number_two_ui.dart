@@ -198,64 +198,61 @@ class _ExerciseTwoState extends State<ExerciseTwo> {
               height: 60,
             ),
             state.maybeWhen(
-                orElse: () => const SizedBox(),
-                loaded: (data, index, isNext) {
-                  final currentSoal = data.data![index];
-                  return Container(
-                    height: 250,
-                    width: 300,
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(10)),
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          blurRadius: 5,
-                          offset: const Offset(0, 2),
-                          spreadRadius: 0,
+              orElse: () => const SizedBox(),
+              loaded: (data, index, isNext) {
+                final currentSoal = data.data![index];
+                return Container(
+                  height: 250,
+                  width: 300,
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        blurRadius: 5,
+                        offset: const Offset(0, 2),
+                        spreadRadius: 0,
+                      ),
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        blurRadius: 10,
+                        offset: const Offset(0, 8),
+                        spreadRadius: -3,
+                      ),
+                    ],
+                  ),
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        if (currentSoal.soalImage != 'default.png')
+                          CachedNetworkImage(
+                            imageUrl:
+                                '${currentSoal.fileUrl}${currentSoal.soalImage}',
+                            height: 140,
+                            errorWidget: (context, url, error) {
+                              return const Icon(Icons.error);
+                            },
+                          ),
+                        const SizedBox(
+                          height: 8,
                         ),
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          blurRadius: 10,
-                          offset: const Offset(0, 8),
-                          spreadRadius: -3,
+                        Text(
+                          currentSoal.soalTitle!,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: currentSoal.soalImage == 'default.png'
+                                  ? 32
+                                  : 16,
+                              color: Colors.black),
                         ),
                       ],
                     ),
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          if (currentSoal.soalImage != 'default.png')
-                            CachedNetworkImage(
-                              imageUrl:
-                                  '${currentSoal.fileUrl}${currentSoal.soalImage}',
-                              height: 140,
-                              errorWidget: (context, url, error) {
-                                return const Icon(Icons.error);
-                              },
-                            ),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          Text(
-                            currentSoal.soalTitle!,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: currentSoal.soalImage == 'default.png'
-                                    ? 32
-                                    : 16,
-                                color: Colors.black),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                }),
-            // const ContainerCourse(
-            //   text: '你好',
-            //   color: Colors.white,
-            // ),
+                  ),
+                );
+              },
+            ),
             const SizedBox(
               height: 30,
             ),
