@@ -23,7 +23,7 @@ dependencies:
   image_picker: ^0.8.7
   just_audio: ^0.9.32
   permission_handler: ^10.2.0
-  responsive_framework: ^0.2.0
+  responsive_framework: ^1.0.0
 
 dev_dependencies:
   flutter_launcher_icons: "^0.12.0"
