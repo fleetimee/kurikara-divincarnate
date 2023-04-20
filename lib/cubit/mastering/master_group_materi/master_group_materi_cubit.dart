@@ -13,10 +13,17 @@ class MasterGroupMateriCubit extends Cubit<MasterGroupMateriState> {
     this._masteringDatasource,
   ) : super(const MasterGroupMateriState.initial());
 
-  Future<void> getMasterGroupMateri(String userId, String levelId) async {
+  Future<void> getMasterGroupMateri(
+    String userId,
+    String levelId,
+    String lessonId,
+  ) async {
     emit(const MasterGroupMateriState.loading());
-    final result =
-        await _masteringDatasource.getMasterGroupMateri(userId, levelId);
+    final result = await _masteringDatasource.getMasterGroupMateri(
+      userId,
+      levelId,
+      lessonId,
+    );
     result.fold(
       (l) => emit(MasterGroupMateriState.error(l)),
       (r) => emit(MasterGroupMateriState.loaded(r)),

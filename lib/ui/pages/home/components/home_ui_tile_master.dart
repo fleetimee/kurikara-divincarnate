@@ -5,6 +5,7 @@ import 'package:flutter_huixin_app/common/constants/color.dart';
 import 'package:flutter_huixin_app/cubit/mastering/master_level/master_level_cubit.dart';
 import 'package:flutter_huixin_app/data/models/mastering/master_level_response_model.dart';
 import 'package:flutter_huixin_app/ui/pages/course_selector/course_selector_ui.dart';
+import 'package:flutter_huixin_app/ui/pages/lesson_selector/lesson_selector_ui.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
@@ -33,7 +34,7 @@ class TileMasterLevel extends StatelessWidget {
           if (masterLevel.open) {
             Navigator.pushNamed(
               context,
-              CourseSelector.routeName,
+              LessonSelectorPage.routeName,
               arguments: masterLevel,
             );
           } else {

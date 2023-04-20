@@ -93,7 +93,7 @@ class MasterLevel {
             ? []
             : List<ReportIng>.from(
                 json["report_speaking"]!.map((x) => ReportIng.fromJson(x))),
-        jmlSisaSoal: json["jml_sisa_soal"],
+        jmlSisaSoal: json["sisa_session"],
         open: json["open"],
       );
 

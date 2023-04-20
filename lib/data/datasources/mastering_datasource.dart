@@ -8,6 +8,7 @@ import 'package:flutter_huixin_app/data/models/mastering/master_soal_response_mo
 import 'package:pretty_http_logger/pretty_http_logger.dart';
 
 import '../../common/constants/api.dart';
+import '../models/mastering/master_lesson_response_model.dart';
 import 'local/app_secure_storage.dart';
 
 class MasteringDatasource {
@@ -32,11 +33,27 @@ class MasteringDatasource {
     }
   }
 
-  Future<Either<String, MasterGroupMateriResponseModel>> getMasterGroupMateri(
+  Future<Either<String, MasterLessonResponseModel>> getMasterLesson(
       String userId, String levelId) async {
     try {
       final response = await http.get(Uri.parse(
-          '${AppApi.baseUrl}/api_group_materi?${await getToken()}&user_id=$userId&id_level=$levelId'));
+          '${AppApi.baseUrl}/api_lesson?${await getToken()}&user_id=$userId&id_level=$levelId'));
+      return Right(
+        MasterLessonResponseModel.fromJson(jsonDecode(response.body)),
+      );
+    } catch (e) {
+      return Left(e.toString());
+    }
+  }
+
+  Future<Either<String, MasterGroupMateriResponseModel>> getMasterGroupMateri(
+    String userId,
+    String levelId,
+    String lessonId,
+  ) async {
+    try {
+      final response = await http.get(Uri.parse(
+          '${AppApi.baseUrl}/api_group_materi?${await getToken()}&user_id=$userId&id_level=$levelId&id_lesson=$lessonId'));
       return Right(
         MasterGroupMateriResponseModel.fromJson(jsonDecode(response.body)),
       );

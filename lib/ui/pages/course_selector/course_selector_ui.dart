@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_huixin_app/cubit/mastering/master_group_materi/master_group_materi_cubit.dart';
 import 'package:flutter_huixin_app/data/datasources/local/app_secure_storage.dart';
 import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
-import 'package:flutter_huixin_app/data/models/mastering/master_level_response_model.dart';
+import 'package:flutter_huixin_app/data/models/mastering/master_lesson_response_model.dart';
 import 'package:flutter_huixin_app/ui/pages/course_selector/components/course_selector_ui_master_group_tile.dart';
 import 'package:flutter_huixin_app/ui/pages/course_selector/components/course_selector_ui_master_group_tile_loading.dart';
 
@@ -19,7 +19,7 @@ class CourseSelector extends StatefulWidget {
 }
 
 class _CourseSelectorState extends State<CourseSelector> {
-  MasterLevel? masterLevel;
+  Lesson? lesson;
   DataUser? user;
 
   @override
@@ -35,10 +35,10 @@ class _CourseSelectorState extends State<CourseSelector> {
 
   @override
   Widget build(BuildContext context) {
-    masterLevel = ModalRoute.of(context)!.settings.arguments as MasterLevel;
+    lesson = ModalRoute.of(context)!.settings.arguments as Lesson;
     return Scaffold(
       appBar: AppBarCourse(
-        title: masterLevel?.name ?? '..',
+        title: lesson?.name ?? '..',
         progression: context.select<MasterGroupMateriCubit, String>(
           (cubit) => cubit.state.maybeMap(
             orElse: () => '../..',
@@ -74,9 +74,9 @@ class _CourseSelectorState extends State<CourseSelector> {
                           context
                               .read<MasterGroupMateriCubit>()
                               .getMasterGroupMateri(
-                                user?.userId ?? '',
-                                masterLevel?.idLevel ?? '',
-                              );
+                                  user?.userId ?? '',
+                                  lesson?.idLevel ?? '',
+                                  lesson?.idLesson ?? '');
                           return null;
                         },
                         loading: () {

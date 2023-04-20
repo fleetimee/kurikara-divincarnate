@@ -50,6 +50,7 @@ class MasterGroupMateri {
   MasterGroupMateri({
     this.idGroupMateri,
     this.idLevel,
+    this.idLesson,
     this.name,
     this.imgFile,
     this.imgUrl,
@@ -67,6 +68,7 @@ class MasterGroupMateri {
 
   String? idGroupMateri;
   String? idLevel;
+  String? idLesson;
   String? name;
   String? imgFile;
   String? imgUrl;
@@ -90,6 +92,7 @@ class MasterGroupMateri {
       MasterGroupMateri(
         idGroupMateri: json["id_group_materi"],
         idLevel: json["id_level"],
+        idLesson: json["id_lesson"],
         name: json["name"],
         imgFile: json["img_file"],
         imgUrl: json["img_url"],
