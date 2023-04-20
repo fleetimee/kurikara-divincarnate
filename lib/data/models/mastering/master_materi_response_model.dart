@@ -39,6 +39,7 @@ class MasterMateri {
   MasterMateri({
     this.idMateri,
     this.idLevel,
+    this.idLesson,
     this.idGroupMateri,
     this.urutan,
     this.latihanUrlFile,
@@ -56,6 +57,7 @@ class MasterMateri {
 
   String? idMateri;
   String? idLevel;
+  String? idLesson;
   String? idGroupMateri;
   String? urutan;
   String? latihanUrlFile;
@@ -78,6 +80,7 @@ class MasterMateri {
   factory MasterMateri.fromJson(Map<String, dynamic> json) => MasterMateri(
         idMateri: json["id_materi"],
         idLevel: json["id_level"],
+        idLesson: json["id_lesson"],
         idGroupMateri: json["id_group_materi"],
         urutan: json["urutan"],
         latihanUrlFile: json["latihan_url_file"],
