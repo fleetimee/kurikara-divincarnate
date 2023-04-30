@@ -75,8 +75,8 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      body: const DoubleBackToCloseApp(
-        snackBar: SnackBar(
+      body: DoubleBackToCloseApp(
+        snackBar: const SnackBar(
           content: Text(
             'Press back again to exit the app',
             style: TextStyle(
@@ -89,7 +89,9 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: AppColors.yellowColor,
           showCloseIcon: true,
         ),
-        child: HomeItems(),
+        child: HomeItems(
+          user: user,
+        ),
       ),
       bottomNavigationBar: const Padding(
         padding: EdgeInsets.only(top: 20),
