@@ -10,6 +10,7 @@ class LatihanLinesRequestModel {
   final String pg_answer;
   final String cocok_answer;
   File? voice_answer;
+  File? voice_answer_2;
   final bool status;
   final String user_id;
   LatihanLinesRequestModel({
@@ -19,6 +20,7 @@ class LatihanLinesRequestModel {
     required this.pg_answer,
     required this.cocok_answer,
     this.voice_answer,
+    this.voice_answer_2,
     required this.status,
     required this.user_id,
   });

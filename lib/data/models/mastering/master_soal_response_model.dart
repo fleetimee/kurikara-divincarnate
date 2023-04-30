@@ -39,6 +39,7 @@ class MasterSoal {
   MasterSoal({
     this.idSoal,
     this.idLevel,
+    this.idLesson,
     this.idGroupMateri,
     this.tipe,
     this.soalTitle,
@@ -69,6 +70,7 @@ class MasterSoal {
 
   String? idSoal;
   String? idLevel;
+  String? idLesson;
   String? idGroupMateri;
   String? tipe;
   String? soalTitle;
@@ -104,6 +106,7 @@ class MasterSoal {
   factory MasterSoal.fromJson(Map<String, dynamic> json) => MasterSoal(
         idSoal: json["id_soal"],
         idLevel: json["id_level"],
+        idLesson: json["id_lesson"],
         idGroupMateri: json["id_group_materi"],
         tipe: json["tipe"],
         soalTitle: json["soal_title"],

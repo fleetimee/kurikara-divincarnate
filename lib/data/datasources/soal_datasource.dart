@@ -49,6 +49,11 @@ class SoalDatasource {
       request.files.add(await http_plus.MultipartFile.fromPath(
           'voice_answer', model.voice_answer!.path));
 
+      if (model.voice_answer_2 != null) {
+        request.files.add(await http_plus.MultipartFile.fromPath(
+            'voice_answer_2', model.voice_answer_2!.path));
+      }
+
       http_plus.StreamedResponse response = await request.send();
       return Right(
         LatihanLinesResponseModel.fromJson(

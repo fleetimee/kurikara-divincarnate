@@ -91,4 +91,34 @@ class MasteringDatasource {
       return Left(e.toString());
     }
   }
+
+  Future<Either<String, MasterMateriResponseModel>> getMasterMateriSpeaking(
+      String userId, String idLevel, String idGroupMateri) async {
+    try {
+      final response = await http.get(
+        Uri.parse(
+            '${AppApi.baseUrl}/api_materi_speaking?${await getToken()}&user_id=$userId&id_level=$idLevel&id_group_materi=$idGroupMateri'),
+      );
+      return Right(
+        MasterMateriResponseModel.fromJson(jsonDecode(response.body)),
+      );
+    } catch (e) {
+      return Left(e.toString());
+    }
+  }
+
+  Future<Either<String, MasterSoalResponseModel>> getMasterSoalSpeaking(
+      String userId, String idLevel, String idGroupMateri) async {
+    try {
+      final response = await http.get(
+        Uri.parse(
+            '${AppApi.baseUrl}/api_soal_speaking?${await getToken()}&user_id=$userId&id_level=$idLevel&id_group_materi=$idGroupMateri'),
+      );
+      return Right(
+        MasterSoalResponseModel.fromJson(jsonDecode(response.body)),
+      );
+    } catch (e) {
+      return Left(e.toString());
+    }
+  }
 }

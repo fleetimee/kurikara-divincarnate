@@ -39,6 +39,7 @@ class MasterMateri {
   MasterMateri({
     this.idMateri,
     this.idLevel,
+    this.idLesson,
     this.idGroupMateri,
     this.urutan,
     this.latihanUrlFile,
@@ -47,6 +48,9 @@ class MasterMateri {
     this.latihanVoice,
     this.latihanCina,
     this.latihanIndonesia,
+    this.latihanVoice2,
+    this.latihanCina2,
+    this.latihanIndonesia2,
     this.materiCreateBy,
     this.materiCreateDate,
     this.materiUpdateBy,
@@ -56,6 +60,7 @@ class MasterMateri {
 
   String? idMateri;
   String? idLevel;
+  String? idLesson;
   String? idGroupMateri;
   String? urutan;
   String? latihanUrlFile;
@@ -64,6 +69,9 @@ class MasterMateri {
   String? latihanVoice;
   String? latihanCina;
   String? latihanIndonesia;
+  String? latihanVoice2;
+  String? latihanCina2;
+  String? latihanIndonesia2;
   String? materiCreateBy;
   DateTime? materiCreateDate;
   String? materiUpdateBy;
@@ -78,6 +86,7 @@ class MasterMateri {
   factory MasterMateri.fromJson(Map<String, dynamic> json) => MasterMateri(
         idMateri: json["id_materi"],
         idLevel: json["id_level"],
+        idLesson: json["id_lesson"],
         idGroupMateri: json["id_group_materi"],
         urutan: json["urutan"],
         latihanUrlFile: json["latihan_url_file"],
@@ -86,6 +95,9 @@ class MasterMateri {
         latihanVoice: json["latihan_voice"],
         latihanCina: json["latihan_cina"],
         latihanIndonesia: json["latihan_indonesia"],
+        latihanVoice2: json["latihan_voice_2"],
+        latihanCina2: json["latihan_cina_2"],
+        latihanIndonesia2: json["latihan_indonesia_2"],
         materiCreateBy: json["materi_create_by"],
         materiCreateDate: json["materi_create_date"] == null
             ? null

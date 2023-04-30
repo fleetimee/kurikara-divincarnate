@@ -81,7 +81,10 @@ class MateriSelector extends StatelessWidget {
           masterGroupMateri: masterGroupMateri,
           dataUser: dataUser,
         ),
-        const SpeakingTile()
+        SpeakingTile(
+          masterGroupMateri: masterGroupMateri,
+          dataUser: dataUser,
+        ),
       ],
     );
   }
