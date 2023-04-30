@@ -29,6 +29,7 @@ class _SpeakingExerciseState extends State<SpeakingExercise> {
           orElse: () => null,
           loaded: (value) => value.data,
         );
+
     super.initState();
   }
 
@@ -36,20 +37,21 @@ class _SpeakingExerciseState extends State<SpeakingExercise> {
   Widget build(BuildContext context) {
     readingMateri =
         ModalRoute.of(context)!.settings.arguments as ReadingMateri?;
-    final state = context.read<MasterSoalSpeakingCubit>().state;
+    final state = context.watch<MasterSoalSpeakingCubit>().state;
 
     return state.maybeMap(
       orElse: () => const Center(
         child: CircularProgressIndicator(),
       ),
-      initial: (_) {
+      initial: (value) {
         context.read<MasterSoalSpeakingCubit>().getMasterSoalSpeaking(
               dataUser!.userId!,
               readingMateri!.masterGroupMateri.idLevel!,
               readingMateri!.masterGroupMateri.idGroupMateri!,
             );
 
-        return const SizedBox();
+        // Proceed to loaded state
+        return const CircularProgressIndicator();
       },
       loaded: (value) {
         if (value.data.data == null || value.data.data!.isEmpty) {
