@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_huixin_app/cubit/home/active_student/active_student_cubit.dart';
 import 'package:flutter_huixin_app/cubit/mastering/master_level/master_level_cubit.dart';
+import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
 import 'package:flutter_huixin_app/ui/pages/home/components/home_ui_avatar_loaded.dart';
 import 'package:flutter_huixin_app/ui/pages/home/components/home_ui_avatar_loading.dart';
 import 'package:flutter_huixin_app/ui/pages/home/components/home_ui_tile_master.dart';
@@ -14,7 +15,10 @@ import 'package:shimmer/shimmer.dart';
 class HomeItems extends StatelessWidget {
   const HomeItems({
     super.key,
+    required this.user,
   });
+
+  final DataUser? user;
 
   @override
   Widget build(BuildContext context) {
@@ -201,6 +205,7 @@ class HomeItems extends StatelessWidget {
                           index: index,
                           masterLevel: data.data![index],
                           state: state,
+                          user: user,
                         );
                       },
                       error: (message) {

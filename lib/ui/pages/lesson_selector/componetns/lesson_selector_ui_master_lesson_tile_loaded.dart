@@ -2,8 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_huixin_app/common/constants/color.dart';
-import 'package:flutter_huixin_app/cubit/entities/lesson_selector.dart';
-import 'package:flutter_huixin_app/ui/pages/course_done/course_done_ui.dart';
 import 'package:flutter_huixin_app/ui/pages/course_selector/course_selector_ui.dart';
 
 import '../../../../data/models/mastering/master_lesson_response_model.dart';
@@ -22,7 +20,7 @@ class MasterLessonTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if(lesson.open == true) {
+        if (lesson.open == true) {
           Navigator.pushNamed(
             context,
             CourseSelector.routeName,
@@ -42,17 +40,16 @@ class MasterLessonTile extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Center(
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text(
                           '${lesson.name}',
                           style: const TextStyle(
                             color: AppColors.whiteColor,
-                            fontSize: 20,
+                            fontSize: 22,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        const SizedBox(height: 8),
                         CachedNetworkImage(
                           imageUrl:
                               '${lesson.imgUrl!.replaceAll('\t', '')}${lesson.imgFile}',

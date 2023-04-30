@@ -35,7 +35,6 @@ class MateriCardHeader extends StatelessWidget {
               width: 100.0,
               height: 100.0,
               decoration: BoxDecoration(
-                shape: BoxShape.circle,
                 image: DecorationImage(
                   image: imageProvider,
                   fit: BoxFit.cover,
@@ -48,7 +47,7 @@ class MateriCardHeader extends StatelessWidget {
         ),
         Positioned(
           bottom: MediaQuery.of(context).size.height / 30,
-          right: MediaQuery.of(context).size.width * 0.12,
+          right: MediaQuery.of(context).size.width * 0.17,
           child: Text(
             '${masterGroupMateri.name}',
             textAlign: TextAlign.center,

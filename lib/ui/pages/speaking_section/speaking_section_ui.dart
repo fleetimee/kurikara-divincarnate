@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_huixin_app/common/constants/color.dart';
-import 'package:flutter_huixin_app/cubit/entities/speaking_course.dart';
 import 'package:flutter_huixin_app/ui/widgets/appbar/appbar_style.dart';
 import 'package:flutter_huixin_app/ui/widgets/bottom_appbar_button.dart';
 import 'package:flutter_sound/flutter_sound.dart';
@@ -26,7 +25,6 @@ import '../../../data/models/mastering/master_group_materi_response_model.dart';
 import '../../../data/models/mastering/master_materi_response_model.dart';
 import '../../../data/models/materi_pelajaran/requests/finish_materi_request_model.dart';
 import '../../../data/models/materi_pelajaran/requests/loging_lines_request_model.dart';
-import '../../widgets/container_course.dart';
 import '../../widgets/not_found.dart';
 import '../home/home_ui.dart';
 
@@ -57,7 +55,7 @@ class _SpeakingSectionState extends State<SpeakingSection> {
   final FlutterSoundRecorder _mRecorder = FlutterSoundRecorder();
   Codec _codec = Codec.aacMP4;
   String _mPath = 'fleetime.mp4';
-  String _mPath2 = 'fleetime.mp4';
+  final String _mPath2 = 'fleetime.mp4';
   bool _mPlayerIsInited = false;
   bool _mRecorderIsInited = false;
   bool _mplaybackReady = false;
@@ -271,536 +269,256 @@ class _SpeakingSectionState extends State<SpeakingSection> {
           context: context,
         ),
         body: state.maybeMap(
-            orElse: () => const Center(
-                  child: CircularProgressIndicator(),
-                ),
-            initial: (value) {
-              context.read<MasterMateriSpeakingCubit>().getMasterMateriSpeaking(
-                    user!.userId!,
-                    readingMateri!.masterGroupMateri.idLevel!,
-                    readingMateri!.masterGroupMateri.idGroupMateri!,
-                  );
-              return null;
-            },
-            loaded: (value) {
-              if (value.data.data == null || value.data.data!.isEmpty) {
-                return const NotFound(
-                  text:
-                      'This course is currently empty, please wait until the course is ready',
+          orElse: () => const Center(
+            child: CircularProgressIndicator(),
+          ),
+          initial: (value) {
+            context.read<MasterMateriSpeakingCubit>().getMasterMateriSpeaking(
+                  user!.userId!,
+                  readingMateri!.masterGroupMateri.idLevel!,
+                  readingMateri!.masterGroupMateri.idGroupMateri!,
                 );
-              }
-              final materi = value.data.data![_currentContent];
-              masterMateri = materi;
-              totalContent = value.data.data!.length;
-              return Scrollbar(
-                child: SingleChildScrollView(
-                  child: Center(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const SizedBox(
-                          height: 60,
-                        ),
-                        Container(
-                          height: 300,
-                          width: 300,
-                          decoration: BoxDecoration(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(10)),
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                blurRadius: 5,
-                                offset: const Offset(0, 2),
-                                spreadRadius: 0,
-                              ),
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                blurRadius: 10,
-                                offset: const Offset(0, 8),
-                                spreadRadius: -3,
-                              ),
-                            ],
-                          ),
-                          child: Center(
-                            child: Image.network(
-                              '${materi.latihanUrlFile}${materi.latihanImage}',
-                              height: 250,
-                              fit: BoxFit.contain,
+            return null;
+          },
+          loaded: (value) {
+            if (value.data.data == null || value.data.data!.isEmpty) {
+              return const NotFound(
+                text:
+                    'This course is currently empty, please wait until the course is ready',
+              );
+            }
+            final materi = value.data.data![_currentContent];
+            masterMateri = materi;
+            totalContent = value.data.data!.length;
+            return Scrollbar(
+              child: SingleChildScrollView(
+                child: Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const SizedBox(
+                        height: 60,
+                      ),
+                      Container(
+                        height: 300,
+                        width: 300,
+                        decoration: BoxDecoration(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10)),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              blurRadius: 5,
+                              offset: const Offset(0, 2),
+                              spreadRadius: 0,
                             ),
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              blurRadius: 10,
+                              offset: const Offset(0, 8),
+                              spreadRadius: -3,
+                            ),
+                          ],
+                        ),
+                        child: Center(
+                          child: Image.network(
+                            '${materi.latihanUrlFile}${materi.latihanImage}',
+                            height: 250,
+                            fit: BoxFit.contain,
                           ),
                         ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-
-                        Padding(
-                          padding: const EdgeInsets.only(left: 36),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              InkWell(
-                                onTap: () => playLatihanVoice(
-                                    '${materi.latihanUrlFile}${materi.latihanVoice}'),
-                                child: Image.asset(
-                                  "assets/images/volume_reading.png",
-                                  height: 40,
-                                  fit: BoxFit.contain,
-                                ),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 36),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            InkWell(
+                              onTap: () => playLatihanVoice(
+                                  '${materi.latihanUrlFile}${materi.latihanVoice}'),
+                              child: Image.asset(
+                                "assets/images/volume_reading.png",
+                                height: 40,
+                                fit: BoxFit.contain,
                               ),
-                              const SizedBox(
-                                width: 10,
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    '${materi.latihanCina2}',
+                                    style: const TextStyle(
+                                      fontSize: 28,
+                                      color: AppColors.orangeColor,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    '${materi.latihanIndonesia2}',
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      color: AppColors.orangeColor,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      '${materi.latihanCina2}',
-                                      style: const TextStyle(
-                                        fontSize: 28,
-                                        color: AppColors.orangeColor,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      '${materi.latihanIndonesia2}',
-                                      style: const TextStyle(
-                                        fontSize: 20,
-                                        color: AppColors.orangeColor,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                      Center(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            InkWell(
+                              onTap: getRecorderFn(),
+                              child: Image.asset(
+                                "assets/images/microphone.png",
+                                fit: BoxFit.fill,
                               ),
-                            ],
-                          ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              _mRecorder.isRecording ? 'Stop' : 'Speak',
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.yellowColor,
+                              ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(
-                          height: 20.0,
-                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      if (_isMicrophoneClicked)
                         Center(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              InkWell(
-                                onTap: getRecorderFn(),
-                                child: Image.asset(
-                                  "assets/images/microphone.png",
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                _mRecorder.isRecording ? 'Stop' : 'Speak',
-                                style: const TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColors.yellowColor,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        if (_isMicrophoneClicked)
-                          Center(
-                            child: ElevatedButton(
-                              onPressed: () {},
-                              child: const Text(
-                                'Play',
-                              ),
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            child: const Text(
+                              'Play',
                             ),
                           ),
-                        const SizedBox(
-                          height: 80,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 36),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              InkWell(
-                                onTap: () => playLatihanVoice(
-                                    '${materi.latihanUrlFile}${materi.latihanVoice2}'),
-                                child: Image.asset(
-                                  "assets/images/volume_reading.png",
-                                  height: 40,
-                                  fit: BoxFit.contain,
-                                ),
+                      const SizedBox(
+                        height: 80,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 36),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            InkWell(
+                              onTap: () => playLatihanVoice(
+                                  '${materi.latihanUrlFile}${materi.latihanVoice2}'),
+                              child: Image.asset(
+                                "assets/images/volume_reading.png",
+                                height: 40,
+                                fit: BoxFit.contain,
                               ),
-                              const SizedBox(
-                                width: 10,
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    '${materi.latihanCina}',
+                                    style: const TextStyle(
+                                      fontSize: 28,
+                                      color: AppColors.orangeColor,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    '${materi.latihanIndonesia}',
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      color: AppColors.orangeColor,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      '${materi.latihanCina}',
-                                      style: const TextStyle(
-                                        fontSize: 28,
-                                        color: AppColors.orangeColor,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      '${materi.latihanIndonesia}',
-                                      style: const TextStyle(
-                                        fontSize: 20,
-                                        color: AppColors.orangeColor,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(
-                          height: 20.0,
+                      ),
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                      Center(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            InkWell(
+                              onTap: getRecorderFn2(),
+                              child: Image.asset(
+                                "assets/images/microphone.png",
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              _mRecorder.isRecording ? 'Stop' : 'Speak',
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.yellowColor,
+                              ),
+                            ),
+                          ],
                         ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      if (_isMicrophoneClicked2)
                         Center(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              InkWell(
-                                onTap: getRecorderFn2(),
-                                child: Image.asset(
-                                  "assets/images/microphone.png",
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                _mRecorder.isRecording ? 'Stop' : 'Speak',
-                                style: const TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColors.yellowColor,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        if (_isMicrophoneClicked2)
-                          Center(
-                            child: ElevatedButton(
-                              onPressed: () {},
-                              child: const Text(
-                                'Play',
-                              ),
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            child: const Text(
+                              'Play',
                             ),
                           ),
-
-                        // ListView.separated(
-                        //   itemCount: allSpeaking.length,
-                        //   separatorBuilder: (context, index) => const SizedBox(
-                        //     height: 80,
-                        //   ),
-                        //   physics: const NeverScrollableScrollPhysics(),
-                        //   shrinkWrap: true,
-                        //   itemBuilder: (context, index) {
-                        //     return Padding(
-                        //       padding:
-                        //           const EdgeInsets.symmetric(horizontal: 90),
-                        //       child: Column(
-                        //         crossAxisAlignment: CrossAxisAlignment.start,
-                        //         children: [
-                        //           Row(
-                        //             children: [
-                        //               Image.asset(
-                        //                 "assets/images/volume_reading.png",
-                        //                 height: 40,
-                        //                 fit: BoxFit.contain,
-                        //               ),
-                        //               const SizedBox(
-                        //                 width: 10,
-                        //               ),
-                        //               Expanded(
-                        //                 child: Column(
-                        //                   crossAxisAlignment:
-                        //                       CrossAxisAlignment.start,
-                        //                   children: [
-                        //                     Text(
-                        //                       '${materi.latihanCina}',
-                        //                       style: const TextStyle(
-                        //                         fontSize: 36,
-                        //                         color: AppColors.orangeColor,
-                        //                         fontWeight: FontWeight.w500,
-                        //                       ),
-                        //                     ),
-                        //                     const SizedBox(
-                        //                       height: 10,
-                        //                     ),
-                        //                     Text(
-                        //                       '${materi.latihanIndonesia}',
-                        //                       style: const TextStyle(
-                        //                         fontSize: 24,
-                        //                         color: AppColors.orangeColor,
-                        //                         fontWeight: FontWeight.w500,
-                        //                       ),
-                        //                     ),
-                        //                   ],
-                        //                 ),
-                        //               ),
-                        //             ],
-                        //           ),
-                        //           const SizedBox(
-                        //             height: 20.0,
-                        //           ),
-                        //           Center(
-                        //             child: Column(
-                        //               crossAxisAlignment:
-                        //                   CrossAxisAlignment.center,
-                        //               children: [
-                        //                 Image.asset(
-                        //                   "assets/images/microphone.png",
-                        //                   fit: BoxFit.fill,
-                        //                 ),
-                        //                 const SizedBox(
-                        //                   height: 10,
-                        //                 ),
-                        //                 const Text(
-                        //                   'Speak',
-                        //                   style: TextStyle(
-                        //                     fontSize: 24,
-                        //                     fontWeight: FontWeight.bold,
-                        //                     color: AppColors.yellowColor,
-                        //                   ),
-                        //                 ),
-                        //               ],
-                        //             ),
-                        //           ),
-                        //           const SizedBox(
-                        //             height: 20,
-                        //           ),
-                        //           Center(
-                        //             child: ElevatedButton(
-                        //               onPressed: () {},
-                        //               child: const Text(
-                        //                 'Play',
-                        //               ),
-                        //             ),
-                        //           ),
-                        //         ],
-                        //       ),
-                        //     );
-                        //   },
-                        // ),
-                        const SizedBox(
-                          height: 90,
                         ),
-                      ],
-                    ),
+                      const SizedBox(
+                        height: 90,
+                      ),
+                    ],
                   ),
                 ),
-              );
-
-              // Column(
-              //   crossAxisAlignment: CrossAxisAlignment.center,
-              //   mainAxisAlignment: MainAxisAlignment.start,
-              //   children: [
-              //     Expanded(
-              //       child: SingleChildScrollView(
-              //         child: Column(
-              //           children: [
-              //             Padding(
-              //               padding: const EdgeInsets.all(32.0),
-              //               child: Stack(
-              //                 clipBehavior: Clip.none,
-              //                 children: [
-              //                   Center(
-              //                     child:
-              //                         // ContainerCourse(
-              //                         //   text: materi.latihanTitle!,
-              //                         //   color: _isMicrophoneClicked == true
-              //                         //       ? AppColors.whiteColor4
-              //                         //       : Colors.white,
-              //                         // ),
-              //                         Container(
-              //                       height: 300,
-              //                       width: 300,
-              //                       decoration: BoxDecoration(
-              //                         borderRadius: const BorderRadius.all(
-              //                             Radius.circular(10)),
-              //                         color: Colors.white,
-              //                         boxShadow: [
-              //                           BoxShadow(
-              //                             color: Colors.grey.withOpacity(0.5),
-              //                             blurRadius: 5,
-              //                             offset: const Offset(0, 2),
-              //                             spreadRadius: 0,
-              //                           ),
-              //                           BoxShadow(
-              //                             color: Colors.grey.withOpacity(0.5),
-              //                             blurRadius: 10,
-              //                             offset: const Offset(0, 8),
-              //                             spreadRadius: -3,
-              //                           ),
-              //                         ],
-              //                       ),
-              //                       child: Center(
-              //                         child: Image.network(
-              //                           '${materi.latihanUrlFile}${materi.latihanImage}',
-              //                           height: 250,
-              //                           fit: BoxFit.contain,
-              //                         ),
-              //                       ),
-              //                     ),
-              //                   ),
-              //                   Positioned(
-              //                     top: 260,
-              //                     left: 323,
-              //                     child: InkWell(
-              //                       onTap: () => setState(() {
-              //                         _isVolumeClicked = true;
-              //                       }),
-              //                       child: Image.asset(
-              //                         "assets/images/volume_reading.png",
-              //                         fit: BoxFit.fill,
-              //                       ),
-              //                     ),
-              //                   ),
-              //                 ],
-              //               ),
-              //             ),
-              //             Visibility(
-              //               visible: _isVolumeClicked,
-              //               child: Column(
-              //                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-              //                 children: [
-              //                   Column(
-              //                     children: [
-              //                       Text(
-              //                         materi.latihanCina!,
-              //                         style: const TextStyle(
-              //                           fontSize: 36,
-              //                           fontWeight: FontWeight.w400,
-              //                           color: Colors.red,
-              //                         ),
-              //                       ),
-              //                     ],
-              //                   ),
-              //                   _isMicrophoneClicked
-              //                       ? InkWell(
-              //                           onTap: () {
-              //                             _playAudio(
-              //                                 '${materi.latihanUrlFile!.replaceAll('/level', '')}${materi.latihanVoice}');
-              //                           },
-              //                           child: Column(
-              //                             children: [
-              //                               const SizedBox(
-              //                                 height: 20,
-              //                               ),
-              //                               Center(
-              //                                 child: Container(
-              //                                   height: 80,
-              //                                   width: 300,
-              //                                   decoration: const BoxDecoration(
-              //                                     borderRadius:
-              //                                         BorderRadius.all(
-              //                                             Radius.circular(10)),
-              //                                     color: AppColors.lightGreen,
-              //                                   ),
-              //                                   child: Center(
-              //                                     child: Row(
-              //                                       mainAxisAlignment:
-              //                                           MainAxisAlignment
-              //                                               .center,
-              //                                       children: [
-              //                                         const Text(
-              //                                           "Correct \nAnswer",
-              //                                           style: TextStyle(
-              //                                             fontSize: 24,
-              //                                             color: Colors.black,
-              //                                             fontWeight:
-              //                                                 FontWeight.bold,
-              //                                           ),
-              //                                         ),
-              //                                         const SizedBox(
-              //                                           width: 25,
-              //                                         ),
-              //                                         Image.asset(
-              //                                           "assets/images/volume_ok.png",
-              //                                           fit: BoxFit.fill,
-              //                                           height: 40,
-              //                                         ),
-              //                                       ],
-              //                                     ),
-              //                                   ),
-              //                                 ),
-              //                               ),
-              //                               const SizedBox(
-              //                                 height: 20,
-              //                               ),
-              //                             ],
-              //                           ),
-              //                         )
-              //                       : const SizedBox(
-              //                           height: 100,
-              //                         ),
-              //                   Column(
-              //                     children: [
-              //                       GestureDetector(
-              //                         onTap: getRecorderFn(),
-              //                         child: Image.asset(
-              //                           "assets/images/microphone.png",
-              //                           fit: BoxFit.fill,
-              //                         ),
-              //                       ),
-              //                       const SizedBox(
-              //                         height: 10.0,
-              //                       ),
-              //                       Text(
-              //                         _mRecorder.isRecording ? 'Stop' : 'Speak',
-              //                         style: const TextStyle(
-              //                           fontSize: 24,
-              //                           fontWeight: FontWeight.bold,
-              //                           color: AppColors.yellowColor,
-              //                         ),
-              //                       ),
-              //                       const SizedBox(
-              //                         height: 8,
-              //                       ),
-              //                       ElevatedButton(
-              //                         onPressed: getPlaybackFn(),
-              //                         child: Text(
-              //                           _mPlayer.isPlaying ? 'Stop' : 'Play',
-              //                         ),
-              //                       ),
-              //                     ],
-              //                   ),
-              //                 ],
-              //               ),
-              //             ),
-              //           ],
-              //         ),
-              //       ),
-              //     ),
-              //   ],
-              // );
-            }),
+              ),
+            );
+          },
+        ),
         bottomNavigationBar: BottomNavigationBarButton(
           name: totalContent == _currentContent + 2 ? 'FINISH' : 'NEXT',
           color: _isMicrophoneClicked && _isMicrophoneClicked2

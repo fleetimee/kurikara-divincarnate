@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_huixin_app/common/constants/color.dart';
 import 'package:flutter_huixin_app/cubit/mastering/master_level/master_level_cubit.dart';
+import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
 import 'package:flutter_huixin_app/data/models/mastering/master_level_response_model.dart';
 import 'package:flutter_huixin_app/ui/pages/course_selector/course_selector_ui.dart';
 import 'package:flutter_huixin_app/ui/pages/lesson_selector/lesson_selector_ui.dart';
@@ -13,12 +14,14 @@ class TileMasterLevel extends StatelessWidget {
   final int index;
   final MasterLevel masterLevel;
   final MasterLevelState state;
+  final DataUser? user;
 
   const TileMasterLevel({
     Key? key,
     required this.index,
     required this.masterLevel,
     required this.state,
+    this.user,
   }) : super(key: key);
 
   @override
@@ -31,15 +34,16 @@ class TileMasterLevel extends StatelessWidget {
       state.maybeMap(
         orElse: () => null,
         loaded: (state) {
-          if (masterLevel.open) {
+          if (masterLevel.open && user?.noMember != '' ||
+              user?.noMember == null) {
             Navigator.pushNamed(
               context,
               LessonSelectorPage.routeName,
               arguments: masterLevel,
             );
           } else {
-            return (state.data.data![index].reportReading!.isNotEmpty ||
-                    state.data.data![index].reportSpeaking!.isNotEmpty)
+            return (masterLevel.open && user?.noMember != '' ||
+                    user?.noMember == null)
                 ? Navigator.pushNamed(
                     context,
                     CourseSelector.routeName,
@@ -48,13 +52,20 @@ class TileMasterLevel extends StatelessWidget {
                       'level_name': masterLevel.name,
                     },
                   )
-                : showTopSnackBar(
-                    Overlay.of(context),
-                    CustomSnackBar.error(
-                      message:
-                          "Level ${masterLevel.name} is not unlocked yet, please complete the previous level first",
-                    ),
-                  );
+                : user?.noMember == '' || user?.noMember == null
+                    ? showTopSnackBar(
+                        Overlay.of(context),
+                        const CustomSnackBar.error(
+                          message: "Please register your number member first",
+                        ),
+                      )
+                    : showTopSnackBar(
+                        Overlay.of(context),
+                        CustomSnackBar.error(
+                          message:
+                              "Level ${masterLevel.name} is not unlocked yet, please complete the previous level first",
+                        ),
+                      );
           }
         },
       );
@@ -100,7 +111,8 @@ class TileMasterLevel extends StatelessWidget {
                 child: state.maybeMap(
                   orElse: () => null,
                   loaded: (state) {
-                    if (index == 0) {
+                    if (index == 0 && user?.noMember != '' ||
+                        user?.noMember == null) {
                       return Container(
                         color: AppColors.bottom,
                         child: Padding(
@@ -145,10 +157,8 @@ class TileMasterLevel extends StatelessWidget {
                         ),
                       );
                     } else {
-                      return (state.data.data![index].reportReading!
-                                  .isNotEmpty ||
-                              state
-                                  .data.data![index].reportSpeaking!.isNotEmpty)
+                      return (masterLevel.open && user?.noMember != '' ||
+                              user?.noMember == null)
                           ? Container(
                               color: AppColors.bottom,
                               child: Padding(
