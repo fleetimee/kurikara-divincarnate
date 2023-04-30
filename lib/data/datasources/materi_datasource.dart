@@ -15,7 +15,7 @@ import 'local/app_secure_storage.dart';
 class MateriDatasource {
   HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
     HttpLogger(logLevel: LogLevel.BODY),
-]);
+  ]);
   Future<String> getToken() async {
     final token = await AppSecureStorage.getAccessToken();
     return 'token_api=$token';
@@ -41,12 +41,19 @@ class MateriDatasource {
   Future<Either<String, LogingLinesResponseModel>> postLogingLines(
       LogingLinesRequestModel model) async {
     try {
-      var request = http_plus.MultipartRequest(
-          'POST', Uri.parse('${AppApi.baseUrl}/loging_lines?${await getToken()}'));
+      var request = http_plus.MultipartRequest('POST',
+          Uri.parse('${AppApi.baseUrl}/loging_lines?${await getToken()}'));
       request.fields.addAll(model.toMap());
       request.files.add(
-        await http_plus.MultipartFile.fromPath('voice_try', model.voice_try!.path),
+        await http_plus.MultipartFile.fromPath(
+            'voice_try', model.voice_try!.path),
       );
+      if (model.voice_try_2 != null) {
+        request.files.add(
+          await http_plus.MultipartFile.fromPath(
+              'voice_try_2', model.voice_try_2!.path),
+        );
+      }
 
       http_plus.StreamedResponse response = await request.send();
 

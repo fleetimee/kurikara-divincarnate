@@ -7,11 +7,13 @@ class LogingLinesRequestModel {
   final String id_log_materi_header;
   final String id_materi;
   File? voice_try;
+  File? voice_try_2;
   final String user_id;
   LogingLinesRequestModel({
     required this.id_log_materi_header,
     required this.id_materi,
     this.voice_try,
+    this.voice_try_2,
     required this.user_id,
   });
 

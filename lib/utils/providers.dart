@@ -35,6 +35,16 @@ import 'package:flutter_huixin_app/data/datasources/report_datasource.dart';
 import 'package:flutter_huixin_app/data/datasources/soal_datasource.dart';
 
 import '../cubit/auth/register/register_cubit.dart';
+import '../cubit/mastering/master_materi_speaking/master_materi_speaking_cubit.dart';
+import '../cubit/mastering/master_soal_speaking/master_soal_speaking_cubit.dart';
+import '../cubit/materi/finish_materi_speaking/finish_materi_speaking_cubit.dart';
+import '../cubit/materi/loging_header_speaking/loging_header_speaking_cubit.dart';
+import '../cubit/materi/loging_lines_speaking/loging_lines_speaking_cubit.dart';
+import '../cubit/soal_speaking/finish_latihan_soal/finish_latihan_soal_speaking_cubit.dart';
+import '../cubit/soal_speaking/latihan_soal_header_speaking/latihan_soal_header_speaking_cubit.dart';
+import '../cubit/soal_speaking/latihan_soal_lines/latihan_soal_lines_speaking_cubit.dart';
+import '../data/datasources/materi_speaking_datasource.dart';
+import '../data/datasources/speaking_datasource.dart';
 
 class AppProviders extends StatelessWidget {
   const AppProviders({Key? key, required this.child}) : super(key: key);
@@ -101,6 +111,16 @@ class AppProviders extends StatelessWidget {
           ),
         ),
         BlocProvider(
+          create: (_) => MasterMateriSpeakingCubit(
+            MasteringDatasource(),
+          ),
+        ),
+        BlocProvider(
+          create: (_) => MasterSoalSpeakingCubit(
+            MasteringDatasource(),
+          ),
+        ),
+        BlocProvider(
           create: (_) => MasterSoalCubit(
             MasteringDatasource(),
           ),
@@ -124,6 +144,21 @@ class AppProviders extends StatelessWidget {
           ),
         ),
         BlocProvider(
+          create: (_) => LogingHeaderSpeakingCubit(
+            MateriSpeakingDatasource(),
+          ),
+        ),
+        BlocProvider(
+          create: (_) => LogingLinesSpeakingCubit(
+            MateriSpeakingDatasource(),
+          ),
+        ),
+        BlocProvider(
+          create: (_) => FinishMateriSpeakingCubit(
+            MateriSpeakingDatasource(),
+          ),
+        ),
+        BlocProvider(
           create: (_) => LatihanSoalHeaderCubit(
             SoalDatasource(),
           ),
@@ -136,6 +171,21 @@ class AppProviders extends StatelessWidget {
         BlocProvider(
           create: (_) => FinishLatihanSoalCubit(
             SoalDatasource(),
+          ),
+        ),
+        BlocProvider(
+          create: (_) => LatihanSoalHeaderSpeakingCubit(
+            SpeakingDatasource(),
+          ),
+        ),
+        BlocProvider(
+          create: (_) => LatihanSoalLinesSpeakingCubit(
+            SpeakingDatasource(),
+          ),
+        ),
+        BlocProvider(
+          create: (_) => FinishLatihanSoalSpeakingCubit(
+            SpeakingDatasource(),
           ),
         ),
         BlocProvider(
