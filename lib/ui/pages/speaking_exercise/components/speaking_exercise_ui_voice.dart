@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_huixin_app/common/constants/color.dart';
 import 'package:flutter_huixin_app/cubit/mastering/master_soal_speaking/master_soal_speaking_cubit.dart';
 import 'package:flutter_huixin_app/cubit/soal_speaking/latihan_soal_header_speaking/latihan_soal_header_speaking_cubit.dart';
+import 'package:flutter_huixin_app/cubit/soal_speaking/latihan_soal_lines/latihan_soal_lines_speaking_cubit.dart';
 import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
 import 'package:flutter_huixin_app/ui/pages/speaking_exercise/components/speaking_ecercise_ui_microphone.dart';
 import 'package:flutter_huixin_app/ui/pages/speaking_exercise/components/speaking_exercise_ui_bottom_bar_button.dart';
@@ -18,6 +21,14 @@ import 'package:just_audio/just_audio.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_sound_platform_interface/flutter_sound_recorder_platform_interface.dart'
     as fsr;
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
+
+import '../../../../cubit/auth/user/user_cubit.dart';
+import '../../../../cubit/soal_speaking/finish_latihan_soal/finish_latihan_soal_speaking_cubit.dart';
+import '../../../../data/models/latihan_soal/requests/finish_soal_request_model.dart';
+import '../../../../data/models/latihan_soal/requests/latihan_lines_request_model.dart';
+import '../../home/home_ui.dart';
 
 typedef Fn = void Function();
 
@@ -70,6 +81,11 @@ class _SpeakingExerciseVoiceState extends State<SpeakingExerciseVoice> {
         _mRecorderIsInited = true;
       });
     });
+
+    dataUser = context.read<UserCubit>().state.maybeMap(
+          orElse: () => null,
+          loaded: (value) => value.data,
+        );
 
     super.initState();
     player = AudioPlayer();
@@ -360,20 +376,110 @@ class _SpeakingExerciseVoiceState extends State<SpeakingExerciseVoice> {
           ),
         ),
       ),
-      bottomNavigationBar: _isFirstMicClicked
+      bottomNavigationBar: _isFirstMicClicked && !_isSubmitButtonPressed
           ? SpeakingExerciseBottomNavBar(
-              name: _isSubmitButtonPressed ? 'Next' : 'Submit',
-              color: _isSubmitButtonPressed
-                  ? AppColors.greenColor
-                  : AppColors.bottom,
+              name: 'SUBMIT',
+              color: AppColors.bottom,
               onTap: () {
                 setState(() {
                   _isSubmitButtonPressed = true;
                 });
-                _scrollToBottom();
               },
             )
-          : const SizedBox.shrink(),
+          : _isSubmitButtonPressed
+              ? SpeakingExerciseBottomNavBar(
+                  name: state.maybeMap(
+                    orElse: () => 'NEXT',
+                    loading: (state) => 'LOADING',
+                    loaded: (state) => state.isNext ? 'NEXT' : 'FINISH',
+                  ),
+                  color: _isFirstMicClicked && _isSecondMicClicked
+                      ? AppColors.greenColor
+                      : AppColors.greyWhite,
+                  onTap: _isFirstMicClicked && _isSecondMicClicked
+                      ? () {
+                          state.maybeMap(
+                            orElse: () {},
+                            loaded: (state) {
+                              context
+                                  .read<LatihanSoalLinesSpeakingCubit>()
+                                  .postLatihanSoalLines(
+                                      LatihanLinesRequestModel(
+                                    id_log_soal_header:
+                                        soalHeaderState.maybeMap(
+                                      orElse: () => '',
+                                      loaded: (state) => state
+                                          .data.data!.idLogSoalHeader
+                                          .toString(),
+                                    ),
+                                    id_soal:
+                                        state.data.data![state.index].idSoal!,
+                                    tipe: state.data.data![state.index].tipe!,
+                                    pg_answer: '',
+                                    cocok_answer: '',
+                                    voice_answer: File(_mPath),
+                                    voice_answer_2: File(_mPath2),
+                                    status: true,
+                                    user_id: dataUser!.userId!,
+                                  ));
+                              if (state.isNext) {
+                                _isFirstMicClicked = false;
+                                _isSecondMicClicked = false;
+                                _isSubmitButtonPressed = false;
+                                context
+                                    .read<MasterSoalSpeakingCubit>()
+                                    .nextContent();
+                              } else {
+                                context
+                                    .read<FinishLatihanSoalSpeakingCubit>()
+                                    .finishLatihanSoal(
+                                      FinishSoalRequestModel(
+                                        user_id: dataUser!.userId!,
+                                        id_level: soalHeaderState.maybeMap(
+                                          orElse: () => '',
+                                          loaded: (state) => state
+                                              .data.data!.idLevel
+                                              .toString(),
+                                        ),
+                                        id_group_materi:
+                                            soalHeaderState.maybeMap(
+                                          orElse: () => '',
+                                          loaded: (state) => state
+                                              .data.data!.idGroupMateri
+                                              .toString(),
+                                        ),
+                                      ),
+                                    );
+                                context
+                                    .read<MasterSoalSpeakingCubit>()
+                                    .setInitial();
+                                context
+                                    .read<LatihanSoalHeaderSpeakingCubit>()
+                                    .setInitial();
+                                context
+                                    .read<LatihanSoalLinesSpeakingCubit>()
+                                    .setInitial();
+
+                                Navigator.pushNamedAndRemoveUntil(
+                                  context,
+                                  HomePage.routeName,
+                                  (route) => false,
+                                );
+
+                                showTopSnackBar(
+                                  Overlay.of(context),
+                                  const CustomSnackBar.success(
+                                    message:
+                                        "Exercise has been completed, please check your score in the reporting menu",
+                                  ),
+                                );
+                              }
+                            },
+                          );
+                        }
+                      : () {},
+                )
+              : const SizedBox.shrink(),
     );
   }
 }

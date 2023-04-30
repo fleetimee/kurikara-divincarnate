@@ -60,16 +60,10 @@ class _SpeakingExerciseState extends State<SpeakingExercise> {
           );
         }
 
-        final listSoal = value.data.data!;
-        final currentSoal = listSoal[value.index];
+        // final listSoal = value.data.data!;
+        // final currentSoal = listSoal[value.index];
 
-        if (currentSoal.tipe == 'voice') {
-          return const SpeakingExerciseVoice();
-        }
-
-        return const Center(
-          child: Text('No Data'),
-        );
+        return const SpeakingExerciseVoice();
       },
     );
   }

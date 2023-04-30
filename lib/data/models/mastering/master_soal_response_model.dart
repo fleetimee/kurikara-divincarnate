@@ -45,6 +45,7 @@ class MasterSoal {
     this.soalTitle,
     this.soalImage,
     this.soalVoice,
+    this.correctVoice,
     this.fileUrl,
     this.pgJawabanA,
     this.pgJawabanB,
@@ -76,6 +77,7 @@ class MasterSoal {
   String? soalTitle;
   dynamic soalImage;
   dynamic soalVoice;
+  dynamic correctVoice;
   String? fileUrl;
   String? pgJawabanA;
   String? pgJawabanB;
@@ -112,6 +114,7 @@ class MasterSoal {
         soalTitle: json["soal_title"],
         soalImage: json["soal_image"],
         soalVoice: json["soal_voice"],
+        correctVoice: json["correct_voice"],
         fileUrl: json["file_url"],
         pgJawabanA: json["pg_jawaban_a"],
         pgJawabanB: json["pg_jawaban_b"],
