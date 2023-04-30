@@ -844,15 +844,18 @@
     "method": "POST",
     "sortNum": 20000,
     "created": "2023-04-30T03:33:28.120Z",
-    "modified": "2023-04-30T03:33:28.120Z",
+    "modified": "2023-04-30T22:47:31.099Z",
     "headers": [],
     "params": [
       {
         "name": "token_api",
-        "value": "323232"
+        "value": "323232",
+        "isPath": false
       }
     ],
     "body": {
+      "type": "formdata",
+      "raw": "",
       "form": [
         {
           "name": "user_id",
@@ -904,7 +907,7 @@
         },
         {
           "name": "no_member",
-          "value": "H0001"
+          "value": "H0001xxxxx"
         },
         {
           "name": "full_name",
@@ -914,11 +917,11 @@
       "files": [
         {
           "name": "img_file",
-          "value": "/C:/Users/tafta/Downloads/star.png"
+          "value": "C:\\C:\\Users\\tafta\\Downloads\\star.png"
         }
-      ],
-      "type": "formdata"
-    }
+      ]
+    },
+    "tests": []
   },
   {
     "_id": "a50ed5c4-7b02-4abd-93cd-d29ae4025464",

@@ -337,7 +337,7 @@ class _SpeakingExerciseVoiceState extends State<SpeakingExerciseVoice> {
                                   SpeakingExerciseCorrectAnswer(
                                     onTap: () {
                                       _playAudio(
-                                          '${currentSoal.fileUrl}${currentSoal.soalVoice}');
+                                          '${currentSoal.fileUrl}${currentSoal.correctVoice}');
                                     },
                                   ),
                                   const SizedBox(

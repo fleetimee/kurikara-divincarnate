@@ -78,13 +78,31 @@ class SpeakingExerciseTopSection extends StatelessWidget {
                 fit: BoxFit.contain,
               ),
             ),
-            Text(
-              chineseText,
-              style: const TextStyle(
-                fontSize: 36,
-                color: AppColors.orangeColor,
-                fontWeight: FontWeight.w900,
-                letterSpacing: 1.5,
+            const SizedBox(
+              width: 10.0,
+            ),
+            Flexible(
+              child: LayoutBuilder(
+                builder: (BuildContext context, BoxConstraints constraints) {
+                  final int textLength = chineseText.length;
+                  double fontSize = 36.0;
+
+                  if (textLength > 10) {
+                    fontSize = 24.0;
+                  } else if (textLength > 10) {
+                    fontSize = 20.0;
+                  }
+
+                  return Text(
+                    chineseText,
+                    style: TextStyle(
+                      fontSize: fontSize,
+                      color: AppColors.orangeColor,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 1.5,
+                    ),
+                  );
+                },
               ),
             ),
           ],

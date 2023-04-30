@@ -125,28 +125,38 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
           },
           loaded: (user) async {
             if (context.mounted) {
-              SuccessDialog(
-                context: context,
-                desc:
-                    'Profile has been updated, for the changes to take effect, we`ll need to log you out.',
-                title: 'Success',
-                btnOkOnPress: () {
-                  AppSecureStorage.deleteAll().then(
-                    (value) {
-                      context.read<UserCubit>().clearUser();
+              if (user.status == 'Error') {
+                ErrorDialog(
+                  context: context,
+                  title: 'Error',
+                  desc: user.message!,
+                  btnOkOnPress: () {},
+                  btnOkText: 'OK',
+                ).show();
+              } else {
+                SuccessDialog(
+                  context: context,
+                  desc:
+                      'Profile has been updated, for the changes to take effect, we`ll need to log you out.',
+                  title: 'Success',
+                  btnOkOnPress: () {
+                    AppSecureStorage.deleteAll().then(
+                      (value) {
+                        context.read<UserCubit>().clearUser();
 
-                      GoogleSignIn().disconnect();
+                        GoogleSignIn().disconnect();
 
-                      Navigator.pushNamedAndRemoveUntil(
-                        context,
-                        LoginPage.routeName,
-                        (route) => false,
-                      );
-                    },
-                  );
-                },
-                btnOkText: 'OK',
-              ).show();
+                        Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          LoginPage.routeName,
+                          (route) => false,
+                        );
+                      },
+                    );
+                  },
+                  btnOkText: 'OK',
+                ).show();
+              }
             }
           },
         );

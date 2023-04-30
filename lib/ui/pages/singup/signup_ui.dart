@@ -124,21 +124,31 @@ class _SignUpPageState extends State<SignUpPage> {
               initial: () {},
               loading: () {},
               loaded: (user) {
-                SuccessDialog(
-                  context: context,
-                  title: 'Success',
-                  desc:
-                      'Your registration is successfull, please login to access the application',
-                  btnOkOnPress: () {
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LoginPage(),
-                      ),
-                      (route) => false,
-                    );
-                  },
-                ).show();
+                if (user.status == 'Error') {
+                  ErrorDialog(
+                    context: context,
+                    title: 'Error',
+                    desc: user.message!,
+                    btnOkOnPress: () {},
+                    btnOkText: 'OK',
+                  ).show();
+                } else {
+                  SuccessDialog(
+                    context: context,
+                    title: 'Success',
+                    desc:
+                        'Your registration is successfull, please login to access the application',
+                    btnOkOnPress: () {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LoginPage(),
+                        ),
+                        (route) => false,
+                      );
+                    },
+                  ).show();
+                }
               },
               error: (error) => ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
