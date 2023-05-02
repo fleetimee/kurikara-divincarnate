@@ -52,12 +52,16 @@ class _SpeakingSectionState extends State<SpeakingSection> {
   late AudioPlayer player;
 
   final FlutterSoundPlayer _mPlayer = FlutterSoundPlayer();
+  final FlutterSoundPlayer _mPlayer2 = FlutterSoundPlayer();
   final FlutterSoundRecorder _mRecorder = FlutterSoundRecorder();
+  final FlutterSoundRecorder _mRecorder2 = FlutterSoundRecorder();
   Codec _codec = Codec.aacMP4;
   String _mPath = 'fleetime.mp4';
   final String _mPath2 = 'fleetime.mp4';
   bool _mPlayerIsInited = false;
+  bool _mPlayerIsInited2 = false;
   bool _mRecorderIsInited = false;
+  bool _mRecorderIsInited2 = false;
   bool _mplaybackReady = false;
   bool _mplaybackReady2 = false;
 
@@ -75,9 +79,21 @@ class _SpeakingSectionState extends State<SpeakingSection> {
       });
     });
 
+    _mPlayer2.openPlayer().then((value) {
+      setState(() {
+        _mPlayerIsInited2 = true;
+      });
+    });
+
     openTheRecorder().then((value) {
       setState(() {
         _mRecorderIsInited = true;
+      });
+    });
+
+    openTheRecorder2().then((value) {
+      setState(() {
+        _mRecorderIsInited2 = true;
       });
     });
 
@@ -95,6 +111,7 @@ class _SpeakingSectionState extends State<SpeakingSection> {
     _mPlayer.closePlayer();
 
     _mRecorder.closeRecorder();
+    _mRecorder2.closeRecorder();
     super.dispose();
   }
 
@@ -136,6 +153,44 @@ class _SpeakingSectionState extends State<SpeakingSection> {
     _mRecorderIsInited = true;
   }
 
+  Future<void> openTheRecorder2() async {
+    if (!kIsWeb) {
+      var status = await Permission.microphone.request();
+      if (status != PermissionStatus.granted) {
+        throw RecordingPermissionException('Microphone permission not granted');
+      }
+    }
+    await _mRecorder2.openRecorder();
+    if (!await _mRecorder2.isEncoderSupported(_codec) && kIsWeb) {
+      _codec = Codec.opusWebM;
+      _mPath = 'tau_file.webm';
+      if (!await _mRecorder2.isEncoderSupported(_codec) && kIsWeb) {
+        _mRecorderIsInited2 = true;
+        return;
+      }
+    }
+    final session = await AudioSession.instance;
+    await session.configure(AudioSessionConfiguration(
+      avAudioSessionCategory: AVAudioSessionCategory.playAndRecord,
+      avAudioSessionCategoryOptions:
+          AVAudioSessionCategoryOptions.allowBluetooth |
+              AVAudioSessionCategoryOptions.defaultToSpeaker,
+      avAudioSessionMode: AVAudioSessionMode.spokenAudio,
+      avAudioSessionRouteSharingPolicy:
+          AVAudioSessionRouteSharingPolicy.defaultPolicy,
+      avAudioSessionSetActiveOptions: AVAudioSessionSetActiveOptions.none,
+      androidAudioAttributes: const AndroidAudioAttributes(
+        contentType: AndroidAudioContentType.speech,
+        flags: AndroidAudioFlags.none,
+        usage: AndroidAudioUsage.voiceCommunication,
+      ),
+      androidAudioFocusGainType: AndroidAudioFocusGainType.gain,
+      androidWillPauseWhenDucked: true,
+    ));
+
+    _mRecorderIsInited2 = true;
+  }
+
   void record() {
     _mRecorder
         .startRecorder(
@@ -149,7 +204,7 @@ class _SpeakingSectionState extends State<SpeakingSection> {
   }
 
   void record2() {
-    _mRecorder
+    _mRecorder2
         .startRecorder(
       toFile: _mPath2,
       codec: _codec,
@@ -170,7 +225,7 @@ class _SpeakingSectionState extends State<SpeakingSection> {
   }
 
   void stopRecorder2() async {
-    await _mRecorder.stopRecorder().then((value) {
+    await _mRecorder2.stopRecorder().then((value) {
       setState(() {
         _mplaybackReady2 = true;
         _isMicrophoneClicked2 = true;
@@ -195,11 +250,11 @@ class _SpeakingSectionState extends State<SpeakingSection> {
   }
 
   void play2() {
-    assert(_mPlayerIsInited &&
+    assert(_mPlayerIsInited2 &&
         _mplaybackReady2 &&
-        _mRecorder.isStopped &&
-        _mPlayer.isStopped);
-    _mPlayer
+        _mRecorder2.isStopped &&
+        _mPlayer2.isStopped);
+    _mPlayer2
         .startPlayer(
             fromURI: _mPath2,
             whenFinished: () {
@@ -228,6 +283,12 @@ class _SpeakingSectionState extends State<SpeakingSection> {
     });
   }
 
+  void stopPlayer2() {
+    _mPlayer2.stopPlayer().then((value) {
+      setState(() {});
+    });
+  }
+
   _Fn? getRecorderFn() {
     if (!_mRecorderIsInited || !_mPlayer.isStopped) {
       return null;
@@ -236,10 +297,10 @@ class _SpeakingSectionState extends State<SpeakingSection> {
   }
 
   _Fn? getRecorderFn2() {
-    if (!_mRecorderIsInited || !_mPlayer.isStopped) {
+    if (!_mRecorderIsInited2 || !_mPlayer2.isStopped) {
       return null;
     }
-    return _mRecorder.isStopped ? record2 : stopRecorder2;
+    return _mRecorder2.isStopped ? record2 : stopRecorder2;
   }
 
   _Fn? getPlaybackFn() {
@@ -247,6 +308,13 @@ class _SpeakingSectionState extends State<SpeakingSection> {
       return null;
     }
     return _mPlayer.isStopped ? play : stopPlayer;
+  }
+
+  _Fn? getPlaybackFn2() {
+    if (!_mPlayerIsInited2 || !_mplaybackReady2 || !_mRecorder2.isStopped) {
+      return null;
+    }
+    return _mPlayer2.isStopped ? play2 : stopPlayer2;
   }
 
   void _playAudio(audioUrl) async {
@@ -414,7 +482,7 @@ class _SpeakingSectionState extends State<SpeakingSection> {
                       if (_isMicrophoneClicked)
                         Center(
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: getPlaybackFn(),
                             child: const Text(
                               'Play',
                             ),
@@ -487,7 +555,7 @@ class _SpeakingSectionState extends State<SpeakingSection> {
                               height: 10,
                             ),
                             Text(
-                              _mRecorder.isRecording ? 'Stop' : 'Speak',
+                              _mRecorder2.isRecording ? 'Stop' : 'Speak',
                               style: const TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
@@ -503,7 +571,7 @@ class _SpeakingSectionState extends State<SpeakingSection> {
                       if (_isMicrophoneClicked2)
                         Center(
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: getPlaybackFn2(),
                             child: const Text(
                               'Play',
                             ),
