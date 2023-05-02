@@ -840,16 +840,16 @@
     "colId": "3b5f8330-a7fd-4605-8e19-9d262e3c8b33",
     "containerId": "65e627bf-d969-4c65-afa5-0119565e500a",
     "name": "2. Update Profile",
-    "url": "{{huxin}}api_update_profile/?token_api=323232",
+    "url": "{{huxin}}api_update_profile/?token_api=904dc7c4-6ac4-41c8-a6d8-88420dc1cd9d",
     "method": "POST",
     "sortNum": 20000,
     "created": "2023-04-30T03:33:28.120Z",
-    "modified": "2023-04-30T22:47:31.099Z",
+    "modified": "2023-05-02T05:37:02.099Z",
     "headers": [],
     "params": [
       {
         "name": "token_api",
-        "value": "323232",
+        "value": "904dc7c4-6ac4-41c8-a6d8-88420dc1cd9d",
         "isPath": false
       }
     ],
@@ -859,7 +859,7 @@
       "form": [
         {
           "name": "user_id",
-          "value": "22"
+          "value": "43"
         },
         {
           "name": "user_npp",
@@ -907,17 +907,17 @@
         },
         {
           "name": "no_member",
-          "value": "H0001xxxxx"
+          "value": "MH0001"
         },
         {
           "name": "full_name",
-          "value": "Denies"
+          "value": "Novian"
         }
       ],
       "files": [
         {
           "name": "img_file",
-          "value": "C:\\C:\\Users\\tafta\\Downloads\\star.png"
+          "value": "c:\\Users\\DEV-MAGANG-01\\Desktop\\37149302.jpeg"
         }
       ]
     },

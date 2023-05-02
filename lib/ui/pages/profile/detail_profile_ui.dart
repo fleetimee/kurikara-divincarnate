@@ -165,99 +165,108 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
         builder: (context, state) {
           return LoaderOverlay(
             child: Scaffold(
-              resizeToAvoidBottomInset: false,
               appBar: AppBarReading(
                 title: 'Profile',
                 context: context,
               ),
-              body: Container(
-                padding: const EdgeInsets.only(top: 50, bottom: 50),
-                child: FormBuilder(
-                  key: _fbKey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      _imagePicker(),
-                      Space,
-                      ProfileForm(
-                        name: 'username',
-                        obscureTextEnabled: 'false',
-                        controller: _usernameController,
-                        hintText: 'Username',
-                      ),
-                      Space,
-                      ProfileForm(
-                        name: 'email',
-                        obscureTextEnabled: 'false',
-                        controller: _emailController,
-                        hintText: 'Email',
-                      ),
-                      Space,
-                      ProfileForm(
-                        name: 'password',
-                        obscureTextEnabled: 'false',
-                        controller: _passwordController,
-                        hintText: 'Password',
-                      ),
-                      Space,
-                      ProfileForm(
-                        name: 'noMember',
-                        obscureTextEnabled: 'false',
-                        controller: _noMemberController,
-                        hintText: 'No Member',
-                      ),
-                      Space,
-                      ProfileForm(
-                        name: 'fullName',
-                        obscureTextEnabled: 'false',
-                        controller: _fullNameController,
-                        hintText: 'Full Name',
-                      ),
-                      Space,
-                      const ProfileFormDate(
-                        name: 'birth_date',
-                        label: 'Birth date',
-                      ),
-                      const Spacer(),
-                      PrimaryButton(
-                        text: state.maybeMap(
-                          loading: (_) => 'Loading',
-                          orElse: () => 'Update',
+              body: FormBuilder(
+                key: _fbKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.07,
+                            ),
+                            _imagePicker(),
+                            Space,
+                            ProfileForm(
+                              name: 'username',
+                              obscureTextEnabled: 'false',
+                              controller: _usernameController,
+                              hintText: 'Username',
+                            ),
+                            Space,
+                            ProfileForm(
+                              name: 'email',
+                              obscureTextEnabled: 'false',
+                              controller: _emailController,
+                              hintText: 'Email',
+                            ),
+                            Space,
+                            ProfileForm(
+                              name: 'password',
+                              obscureTextEnabled: 'false',
+                              controller: _passwordController,
+                              hintText: 'Password',
+                            ),
+                            Space,
+                            ProfileForm(
+                              name: 'noMember',
+                              obscureTextEnabled: 'false',
+                              controller: _noMemberController,
+                              hintText: 'No Member',
+                            ),
+                            Space,
+                            ProfileForm(
+                              name: 'fullName',
+                              obscureTextEnabled: 'false',
+                              controller: _fullNameController,
+                              hintText: 'Full Name',
+                            ),
+                            Space,
+                            const ProfileFormDate(
+                              name: 'birth_date',
+                              label: 'Birth date',
+                            ),
+                            Space,
+                            PrimaryButton(
+                              text: state.maybeMap(
+                                loading: (_) => 'Loading',
+                                orElse: () => 'Update',
+                              ),
+                              onPressed: () {
+                                context.loaderOverlay.show();
+                                context
+                                    .read<UpdateUserCubit>()
+                                    .updateUser(
+                                      UpdateProfileRequestModel(
+                                        user_id: user?.userId ?? '',
+                                        full_name: _fullNameController!.text,
+                                        user_name: _usernameController!.text,
+                                        user_password:
+                                            _passwordController!.text.isEmpty
+                                                ? password!
+                                                : _passwordController!.text,
+                                        no_member: _noMemberController!.text,
+                                        birth_date: '2012-02-02',
+                                        token_device: user?.tokenDevice ?? '',
+                                        token_api: user?.tokenApi ?? '',
+                                        fcm_id: user?.fcmId ?? '',
+                                        email: _emailController!.text,
+                                        user_npp: user?.userNpp ?? '',
+                                        img_file: _image,
+                                        id_google: user?.idGoogle ?? '',
+                                        id_apple: user?.idApple ?? '',
+                                        id_fb: user?.idFb ?? '',
+                                        no_telpon: user?.noTelpon ?? '',
+                                      ),
+                                    )
+                                    .then(
+                                        (value) => context.loaderOverlay.hide())
+                                    .onError((error, stackTrace) =>
+                                        context.loaderOverlay.hide());
+                              },
+                            ),
+                          ],
                         ),
-                        onPressed: () {
-                          context.loaderOverlay.show();
-                          context
-                              .read<UpdateUserCubit>()
-                              .updateUser(
-                                UpdateProfileRequestModel(
-                                  user_id: user?.userId ?? '',
-                                  full_name: _fullNameController!.text,
-                                  user_name: _usernameController!.text,
-                                  user_password:
-                                      _passwordController!.text.isEmpty
-                                          ? password!
-                                          : _passwordController!.text,
-                                  no_member: _noMemberController!.text,
-                                  birth_date: '2012-02-02',
-                                  token_device: user?.tokenDevice ?? '',
-                                  token_api: user?.tokenApi ?? '',
-                                  fcm_id: user?.fcmId ?? '',
-                                  email: _emailController!.text,
-                                  user_npp: user?.userNpp ?? '',
-                                  img_file: _image,
-                                  id_google: user?.idGoogle ?? '',
-                                  id_apple: user?.idApple ?? '',
-                                  id_fb: user?.idFb ?? '',
-                                  no_telpon: user?.noTelpon ?? '',
-                                ),
-                              )
-                              .then((value) => context.loaderOverlay.hide())
-                              .onError((error, stackTrace) =>
-                                  context.loaderOverlay.hide());
-                        },
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
