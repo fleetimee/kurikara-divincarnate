@@ -119,7 +119,7 @@ class ReadingTile extends StatelessWidget {
                   );
                 }
               },
-              child: masterGroupMateri.statusReading == 'finish'
+              child: masterGroupMateri.statusReading != 'lock'
                   ? Image.asset(
                       "assets/images/exercise_remedial.png",
                       fit: BoxFit.fill,

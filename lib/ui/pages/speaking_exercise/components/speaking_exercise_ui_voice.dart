@@ -44,12 +44,16 @@ class SpeakingExerciseVoice extends StatefulWidget {
 class _SpeakingExerciseVoiceState extends State<SpeakingExerciseVoice> {
   final FlutterSoundPlayer _mPlayer = FlutterSoundPlayer();
   final FlutterSoundRecorder _mRecorder = FlutterSoundRecorder();
+  final FlutterSoundPlayer _mPlayer2 = FlutterSoundPlayer();
+  final FlutterSoundRecorder _mRecorder2 = FlutterSoundRecorder();
 
   Codec _codec = Codec.aacMP4;
   String _mPath = 'fleetime.mp4';
   final String _mPath2 = 'fleetime_2.mp4';
   bool _mPlayerIsInited = false;
   bool _mRecorderIsInited = false;
+  bool _mPlayerIsInited2 = false;
+  bool _mRecorderIsInited2 = false;
 
   bool _mplaybackReady = false;
   bool _mplaybackReady2 = false;
@@ -76,9 +80,21 @@ class _SpeakingExerciseVoiceState extends State<SpeakingExerciseVoice> {
       });
     });
 
+    _mPlayer2.openPlayer().then((value) {
+      setState(() {
+        _mPlayerIsInited2 = true;
+      });
+    });
+
     openTheRecorder().then((value) {
       setState(() {
         _mRecorderIsInited = true;
+      });
+    });
+
+    openTheRecorder2().then((value) {
+      setState(() {
+        _mRecorderIsInited2 = true;
       });
     });
 
@@ -137,6 +153,44 @@ class _SpeakingExerciseVoiceState extends State<SpeakingExerciseVoice> {
     _mRecorderIsInited = true;
   }
 
+  Future<void> openTheRecorder2() async {
+    if (!kIsWeb) {
+      var status = await Permission.microphone.request();
+      if (status != PermissionStatus.granted) {
+        throw RecordingPermissionException('Microphone permission not granted');
+      }
+    }
+    await _mRecorder2.openRecorder();
+    if (!await _mRecorder2.isEncoderSupported(_codec) && kIsWeb) {
+      _codec = Codec.opusWebM;
+      _mPath = 'tau_file.webm';
+      if (!await _mRecorder2.isEncoderSupported(_codec) && kIsWeb) {
+        _mRecorderIsInited2 = true;
+        return;
+      }
+    }
+    final session = await AudioSession.instance;
+    await session.configure(AudioSessionConfiguration(
+      avAudioSessionCategory: AVAudioSessionCategory.playAndRecord,
+      avAudioSessionCategoryOptions:
+          AVAudioSessionCategoryOptions.allowBluetooth |
+              AVAudioSessionCategoryOptions.defaultToSpeaker,
+      avAudioSessionMode: AVAudioSessionMode.spokenAudio,
+      avAudioSessionRouteSharingPolicy:
+          AVAudioSessionRouteSharingPolicy.defaultPolicy,
+      avAudioSessionSetActiveOptions: AVAudioSessionSetActiveOptions.none,
+      androidAudioAttributes: const AndroidAudioAttributes(
+        contentType: AndroidAudioContentType.speech,
+        flags: AndroidAudioFlags.none,
+        usage: AndroidAudioUsage.voiceCommunication,
+      ),
+      androidAudioFocusGainType: AndroidAudioFocusGainType.gain,
+      androidWillPauseWhenDucked: true,
+    ));
+
+    _mRecorderIsInited2 = true;
+  }
+
   void record() {
     _mRecorder
         .startRecorder(
@@ -150,7 +204,7 @@ class _SpeakingExerciseVoiceState extends State<SpeakingExerciseVoice> {
   }
 
   void record2() {
-    _mRecorder
+    _mRecorder2
         .startRecorder(
       toFile: _mPath2,
       codec: _codec,
@@ -179,11 +233,11 @@ class _SpeakingExerciseVoiceState extends State<SpeakingExerciseVoice> {
   }
 
   void play2() {
-    assert(_mPlayerIsInited &&
+    assert(_mPlayerIsInited2 &&
         _mplaybackReady2 &&
-        _mRecorder.isStopped &&
-        _mPlayer.isStopped);
-    _mPlayer
+        _mRecorder2.isStopped &&
+        _mPlayer2.isStopped);
+    _mPlayer2
         .startPlayer(
             fromURI: _mPath2,
             whenFinished: () {
@@ -200,6 +254,12 @@ class _SpeakingExerciseVoiceState extends State<SpeakingExerciseVoice> {
     });
   }
 
+  void stopPlayer2() {
+    _mPlayer2.stopPlayer().then((value) {
+      setState(() {});
+    });
+  }
+
   void stopRecorder() async {
     await _mRecorder.stopRecorder().then((value) {
       setState(() {
@@ -210,7 +270,7 @@ class _SpeakingExerciseVoiceState extends State<SpeakingExerciseVoice> {
   }
 
   void stopRecorder2() async {
-    await _mRecorder.stopRecorder().then((value) {
+    await _mRecorder2.stopRecorder().then((value) {
       setState(() {
         _mplaybackReady2 = true;
         _isSecondMicClicked = true;
@@ -226,10 +286,10 @@ class _SpeakingExerciseVoiceState extends State<SpeakingExerciseVoice> {
   }
 
   Fn? getRecorderFn2() {
-    if (!_mRecorderIsInited || !_mPlayer.isStopped) {
+    if (!_mRecorderIsInited2 || !_mPlayer2.isStopped) {
       return null;
     }
-    return _mRecorder.isStopped ? record2 : stopRecorder2;
+    return _mRecorder2.isStopped ? record2 : stopRecorder2;
   }
 
   Fn? getPlaybackFn() {
@@ -240,10 +300,10 @@ class _SpeakingExerciseVoiceState extends State<SpeakingExerciseVoice> {
   }
 
   Fn? getPlaybackFn2() {
-    if (!_mPlayerIsInited || !_mplaybackReady2 || !_mRecorder.isStopped) {
+    if (!_mPlayerIsInited2 || !_mplaybackReady2 || !_mRecorder2.isStopped) {
       return null;
     }
-    return _mPlayer.isStopped ? play2 : stopPlayer;
+    return _mPlayer2.isStopped ? play2 : stopPlayer;
   }
 
   final ScrollController _scrollController = ScrollController();
@@ -345,7 +405,7 @@ class _SpeakingExerciseVoiceState extends State<SpeakingExerciseVoice> {
                                   ),
                                   SpeakingExerciseMicrophone(
                                     onPressed: getRecorderFn2(),
-                                    text: _mRecorder.isRecording
+                                    text: _mRecorder2.isRecording
                                         ? 'Stop'
                                         : 'Record',
                                   ),
@@ -357,7 +417,7 @@ class _SpeakingExerciseVoiceState extends State<SpeakingExerciseVoice> {
                                     child: SpeakingExercisePreviewButton(
                                       onPressed: getPlaybackFn2(),
                                       name:
-                                          _mPlayer.isPlaying ? 'Stop' : 'Play',
+                                          _mPlayer2.isPlaying ? 'Stop' : 'Play',
                                     ),
                                   ),
                                   const SizedBox(

@@ -5,6 +5,8 @@ import 'package:flutter_huixin_app/data/models/latihan_soal/requests/latihan_hea
 
 import 'package:flutter_huixin_app/ui/pages/speaking_exercise/speaking_exercise_ui.dart';
 import 'package:flutter_huixin_app/ui/pages/speaking_section/speaking_section_ui.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../../cubit/materi/loging_header_speaking/loging_header_speaking_cubit.dart';
 import '../../../../data/models/auth/auth_response_model.dart';
@@ -99,19 +101,35 @@ class SpeakingTile extends StatelessWidget {
             );
             return GestureDetector(
               onTap: () {
-                context
-                    .read<LatihanSoalHeaderSpeakingCubit>()
-                    .postLatihanSoalHeader(LatihanHeaderRequestModel(
-                      user_id: dataUser.userId!,
-                      id_level: masterGroupMateri.idLevel!,
-                      id_group_materi: masterGroupMateri.idGroupMateri!,
-                    ));
+                if (masterGroupMateri.statusExercise != 'lock') {
+                  context
+                      .read<LatihanSoalHeaderSpeakingCubit>()
+                      .postLatihanSoalHeader(LatihanHeaderRequestModel(
+                        user_id: dataUser.userId!,
+                        id_level: masterGroupMateri.idLevel!,
+                        id_group_materi: masterGroupMateri.idGroupMateri!,
+                      ));
+                } else {
+                  showTopSnackBar(
+                    Overlay.of(context),
+                    const CustomSnackBar.error(
+                      message:
+                          "Please complete the speaking section before doing the exercise, thank you.",
+                    ),
+                  );
+                }
               },
-              child: Image.asset(
-                "assets/images/speaking_exercise.png",
-                height: 175,
-                fit: BoxFit.contain,
-              ),
+              child: masterGroupMateri.statusExercise != 'lock'
+                  ? Image.asset(
+                      "assets/images/speaking_exercise_open.png",
+                      height: 175,
+                      fit: BoxFit.contain,
+                    )
+                  : Image.asset(
+                      "assets/images/speaking_exercise.png",
+                      height: 175,
+                      fit: BoxFit.contain,
+                    ),
             );
           },
         ),
