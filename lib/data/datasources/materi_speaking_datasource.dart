@@ -15,7 +15,7 @@ import 'local/app_secure_storage.dart';
 class MateriSpeakingDatasource {
   HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
     HttpLogger(logLevel: LogLevel.BODY),
-]);
+  ]);
   Future<String> getToken() async {
     final token = await AppSecureStorage.getAccessToken();
     return 'token_api=$token';
@@ -26,7 +26,8 @@ class MateriSpeakingDatasource {
     try {
       var headers = {'Content-Type': 'application/x-www-form-urlencoded'};
       final response = await http.post(
-        Uri.parse('${AppApi.baseUrl}/loging_header_speaking?${await getToken()}'),
+        Uri.parse(
+            '${AppApi.baseUrl}/loging_header_speaking?${await getToken()}'),
         headers: headers,
         body: model.toMap(),
       );
@@ -42,11 +43,23 @@ class MateriSpeakingDatasource {
       LogingLinesRequestModel model) async {
     try {
       var request = http_plus.MultipartRequest(
-          'POST', Uri.parse('${AppApi.baseUrl}/loging_lines_speaking?${await getToken()}'));
+          'POST',
+          Uri.parse(
+              '${AppApi.baseUrl}/loging_lines_speaking?${await getToken()}'));
       request.fields.addAll(model.toMap());
-      request.files.add(
-        await http_plus.MultipartFile.fromPath('voice_try', model.voice_try!.path),
-      );
+      if (model.voice_try != null) {
+        request.files.add(
+          await http_plus.MultipartFile.fromPath(
+              'voice_try', model.voice_try!.path),
+        );
+      }
+
+      if (model.voice_try_2 != null) {
+        request.files.add(
+          await http_plus.MultipartFile.fromPath(
+              'voice_try_2', model.voice_try_2!.path),
+        );
+      }
 
       http_plus.StreamedResponse response = await request.send();
 

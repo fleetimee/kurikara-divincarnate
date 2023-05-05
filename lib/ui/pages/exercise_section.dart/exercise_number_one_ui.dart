@@ -302,6 +302,10 @@ class _ExerciseOneState extends State<ExerciseOne> {
                                 loaded: (state) =>
                                     state.data.data!.idGroupMateri.toString(),
                               ),
+                              id_lesson: latihanHeaderState.maybeMap(
+                                  orElse: () => '',
+                                  loaded: (state) =>
+                                      state.data.data!.idLesson.toString()),
                             ),
                           );
                       context.read<MasterSoalCubit>().setInitial();

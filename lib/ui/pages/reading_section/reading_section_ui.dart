@@ -368,12 +368,13 @@ class _ReadingSectionState extends State<ReadingSection> {
                                     const SizedBox(
                                       height: 8,
                                     ),
-                                    ElevatedButton(
-                                      onPressed: getPlaybackFn(),
-                                      child: Text(
-                                        _mPlayer.isPlaying ? 'Stop' : 'Play',
+                                    if (_isMicrophoneClicked)
+                                      ElevatedButton(
+                                        onPressed: getPlaybackFn(),
+                                        child: Text(
+                                          _mPlayer.isPlaying ? 'Stop' : 'Play',
+                                        ),
                                       ),
-                                    ),
                                   ],
                                 ),
                               ],
@@ -398,6 +399,7 @@ class _ReadingSectionState extends State<ReadingSection> {
                           id_level: masterMateri!.idLevel!,
                           id_group_materi:
                               readingMateri!.masterGroupMateri.idGroupMateri!,
+                          id_lesson: masterMateri!.idLesson!,
                         ),
                       );
                   context.read<LogingHeaderCubit>().setInitial();
@@ -420,13 +422,14 @@ class _ReadingSectionState extends State<ReadingSection> {
                     ),
                   );
                 }
-              : () {
+              : () async {
+                  File voiceFile = File((await _mRecorder.stopRecorder())!);
                   context.read<LogingLinesCubit>().postLogingLines(
                         LogingLinesRequestModel(
                           id_log_materi_header: readingMateri!.logingHeaderId,
                           id_materi: masterMateri!.idMateri!,
                           user_id: dataUser!.userId!,
-                          voice_try: File(_mPath),
+                          voice_try: voiceFile,
                         ),
                       );
                   setState(

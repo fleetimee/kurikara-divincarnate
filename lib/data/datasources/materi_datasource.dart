@@ -44,10 +44,14 @@ class MateriDatasource {
       var request = http_plus.MultipartRequest('POST',
           Uri.parse('${AppApi.baseUrl}/loging_lines?${await getToken()}'));
       request.fields.addAll(model.toMap());
-      request.files.add(
-        await http_plus.MultipartFile.fromPath(
-            'voice_try', model.voice_try!.path),
-      );
+
+      final fileName = model.voice_try!.path.split('/').last;
+      final bytes = await model.voice_try!.readAsBytes();
+
+      final multiPartFile = http_plus.MultipartFile.fromBytes(
+          "voice_try", bytes,
+          filename: fileName);
+      request.files.add(multiPartFile);
       if (model.voice_try_2 != null) {
         request.files.add(
           await http_plus.MultipartFile.fromPath(

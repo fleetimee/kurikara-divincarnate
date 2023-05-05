@@ -460,7 +460,7 @@ class _SpeakingExerciseVoiceState extends State<SpeakingExerciseVoice> {
                       ? () {
                           state.maybeMap(
                             orElse: () {},
-                            loaded: (state) {
+                            loaded: (state) async {
                               context
                                   .read<LatihanSoalLinesSpeakingCubit>()
                                   .postLatihanSoalLines(
@@ -477,8 +477,10 @@ class _SpeakingExerciseVoiceState extends State<SpeakingExerciseVoice> {
                                     tipe: state.data.data![state.index].tipe!,
                                     pg_answer: '',
                                     cocok_answer: '',
-                                    voice_answer: File(_mPath),
-                                    voice_answer_2: File(_mPath2),
+                                    voice_answer: File(
+                                        (await _mRecorder.stopRecorder())!),
+                                    voice_answer_2: File(
+                                        (await _mRecorder2.stopRecorder())!),
                                     status: true,
                                     user_id: dataUser!.userId!,
                                   ));
@@ -506,6 +508,12 @@ class _SpeakingExerciseVoiceState extends State<SpeakingExerciseVoice> {
                                           orElse: () => '',
                                           loaded: (state) => state
                                               .data.data!.idGroupMateri
+                                              .toString(),
+                                        ),
+                                        id_lesson: soalHeaderState.maybeMap(
+                                          orElse: () => '',
+                                          loaded: (state) => state
+                                              .data.data!.idLesson
                                               .toString(),
                                         ),
                                       ),

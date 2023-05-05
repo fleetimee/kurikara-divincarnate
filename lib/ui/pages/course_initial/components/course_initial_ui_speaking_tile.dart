@@ -61,6 +61,7 @@ class SpeakingTile extends StatelessWidget {
                       user_id: dataUser.userId!,
                       id_level: masterGroupMateri.idLevel!,
                       id_group_materi: masterGroupMateri.idGroupMateri!,
+                      id_lesson: masterGroupMateri.idLesson!,
                     ));
               },
               child: Image.asset(
@@ -101,13 +102,14 @@ class SpeakingTile extends StatelessWidget {
             );
             return GestureDetector(
               onTap: () {
-                if (masterGroupMateri.statusExercise != 'lock') {
+                if (masterGroupMateri.statusExerciseSpeaking != 'lock') {
                   context
                       .read<LatihanSoalHeaderSpeakingCubit>()
                       .postLatihanSoalHeader(LatihanHeaderRequestModel(
                         user_id: dataUser.userId!,
                         id_level: masterGroupMateri.idLevel!,
                         id_group_materi: masterGroupMateri.idGroupMateri!,
+                        id_lesson: masterGroupMateri.idLesson!,
                       ));
                 } else {
                   showTopSnackBar(
@@ -119,7 +121,7 @@ class SpeakingTile extends StatelessWidget {
                   );
                 }
               },
-              child: masterGroupMateri.statusExercise != 'lock'
+              child: masterGroupMateri.statusExerciseSpeaking != 'lock'
                   ? Image.asset(
                       "assets/images/speaking_exercise_open.png",
                       height: 175,

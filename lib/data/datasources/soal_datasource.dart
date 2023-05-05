@@ -46,9 +46,10 @@ class SoalDatasource {
       var request = http_plus.MultipartRequest('POST',
           Uri.parse('${AppApi.baseUrl}/latihan_lines?${await getToken()}'));
       request.fields.addAll(model.toMap());
-      request.files.add(await http_plus.MultipartFile.fromPath(
-          'voice_answer', model.voice_answer!.path));
-
+      if (model.voice_answer != null) {
+        request.files.add(await http_plus.MultipartFile.fromPath(
+            'voice_answer', model.voice_answer!.path));
+      }
       if (model.voice_answer_2 != null) {
         request.files.add(await http_plus.MultipartFile.fromPath(
             'voice_answer_2', model.voice_answer_2!.path));

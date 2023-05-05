@@ -102,9 +102,11 @@ class AuthDataSource {
   Future<Either<String, AuthResponseModel>> updateProfile(
       UpdateProfileRequestModel model) async {
     try {
+      final token = await AppSecureStorage.getAccessToken();
+
       var headers = {'Cookie': 'ci_session=ouvp29be2csimiohsjvhpt90oo3ejgcs'};
       var request = http_plus.MultipartRequest('POST',
-          Uri.parse('${AppApi.baseUrl}/api_update_profile/?token_api=323232'));
+          Uri.parse('${AppApi.baseUrl}/api_update_profile/?token_api=$token'));
       request.fields.addAll(model.toMap());
       request.files.add(await http_plus.MultipartFile.fromPath(
           'img_file', model.img_file!.path));
