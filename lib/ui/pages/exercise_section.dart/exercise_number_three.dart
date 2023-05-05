@@ -535,6 +535,10 @@ class _ExerciseThreeState extends State<ExerciseThree> {
                                 loaded: (state) =>
                                     state.data.data!.idGroupMateri.toString(),
                               ),
+                              id_lesson: latihanHeaderState.maybeMap(
+                                  orElse: () => '',
+                                  loaded: (state) =>
+                                      state.data.data!.idLesson.toString()),
                             ),
                           );
                       context.read<MasterSoalCubit>().setInitial();

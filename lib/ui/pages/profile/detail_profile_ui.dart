@@ -119,7 +119,7 @@ class _ProfileDetailPageState extends State<ProfileDetailPage> {
             showTopSnackBar(
               Overlay.of(context),
               const CustomSnackBar.error(
-                message: 'Please update the profile picture',
+                message: 'Connection Backend Error',
               ),
             );
           },

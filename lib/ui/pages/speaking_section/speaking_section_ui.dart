@@ -602,6 +602,7 @@ class _SpeakingSectionState extends State<SpeakingSection> {
                               id_level: masterMateri!.idLevel!,
                               id_group_materi: readingMateri!
                                   .masterGroupMateri.idGroupMateri!,
+                              id_lesson: masterMateri!.idLesson!,
                             ),
                           );
                       context.read<LogingHeaderSpeakingCubit>().setInitial();
@@ -625,15 +626,17 @@ class _SpeakingSectionState extends State<SpeakingSection> {
                         ),
                       );
                     }
-                  : () {
+                  : () async {
                       context.read<LogingLinesSpeakingCubit>().postLogingLines(
                             LogingLinesRequestModel(
                               id_log_materi_header:
                                   readingMateri!.logingHeaderId,
                               id_materi: masterMateri!.idMateri!,
                               user_id: dataUser!.userId!,
-                              voice_try: File(_mPath),
-                              voice_try_2: File(_mPath2),
+                              voice_try:
+                                  File((await _mRecorder.stopRecorder())!),
+                              voice_try_2:
+                                  File((await _mRecorder2.stopRecorder())!),
                             ),
                           );
                       setState(

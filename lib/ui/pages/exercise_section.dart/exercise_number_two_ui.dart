@@ -45,7 +45,7 @@ class _ExerciseTwoState extends State<ExerciseTwo> {
   final FlutterSoundPlayer _mPlayer = FlutterSoundPlayer();
   final FlutterSoundRecorder _mRecorder = FlutterSoundRecorder();
   Codec _codec = Codec.aacMP4;
-  String _mPath = 'fleetime.mp4';
+  String _mPath = 'huixin.mp4';
   bool _mPlayerIsInited = false;
   bool _mRecorderIsInited = false;
   bool _mplaybackReady = false;
@@ -321,7 +321,7 @@ class _ExerciseTwoState extends State<ExerciseTwo> {
             ? () {
                 state.maybeMap(
                   orElse: () {},
-                  loaded: (state) {
+                  loaded: (state) async{
                     context
                         .read<LatihanSoalLinesCubit>()
                         .postLatihanSoalLines(LatihanLinesRequestModel(
@@ -334,7 +334,7 @@ class _ExerciseTwoState extends State<ExerciseTwo> {
                           tipe: state.data.data![state.index].tipe!,
                           pg_answer: '',
                           cocok_answer: '',
-                          voice_answer: File(_mPath),
+                          voice_answer: File((await _mRecorder.stopRecorder())!),
                           status: true,
                           user_id: dataUser!.userId!,
                         ));
@@ -354,6 +354,12 @@ class _ExerciseTwoState extends State<ExerciseTwo> {
                                 loaded: (state) =>
                                     state.data.data!.idGroupMateri.toString(),
                               ),
+                              id_lesson: latihanHeaderState.maybeMap(
+                                          orElse: () => '',
+                                          loaded: (state) => state
+                                              .data.data!.idLesson
+                                              .toString(),
+                                        ),
                             ),
                           );
                       context.read<MasterSoalCubit>().setInitial();

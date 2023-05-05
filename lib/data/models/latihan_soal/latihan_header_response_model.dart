@@ -38,6 +38,7 @@ class Data {
     this.idGroupMateri,
     this.createdDate,
     this.status,
+    this.idLesson,
   });
 
   int? idLogSoalHeader;
@@ -46,6 +47,7 @@ class Data {
   String? idGroupMateri;
   DateTime? createdDate;
   String? status;
+  String? idLesson;
 
   factory Data.fromRawJson(String str) => Data.fromJson(json.decode(str));
 
@@ -60,6 +62,7 @@ class Data {
             ? null
             : DateTime.parse(json["created_date"]),
         status: json["status"],
+        idLesson: json["id_lesson"],
       );
 
   Map<String, dynamic> toJson() => {

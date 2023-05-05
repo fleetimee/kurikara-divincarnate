@@ -63,6 +63,7 @@ class ReadingTile extends StatelessWidget {
                       user_id: dataUser.userId!,
                       id_level: masterGroupMateri.idLevel!,
                       id_group_materi: masterGroupMateri.idGroupMateri!,
+                      id_lesson: masterGroupMateri.idLesson!,
                     ));
               },
               child: Image.asset(
@@ -108,6 +109,7 @@ class ReadingTile extends StatelessWidget {
                         user_id: dataUser.userId!,
                         id_level: masterGroupMateri.idLevel!,
                         id_group_materi: masterGroupMateri.idGroupMateri!,
+                        id_lesson: masterGroupMateri.idLesson!,
                       ));
                 } else {
                   showTopSnackBar(
