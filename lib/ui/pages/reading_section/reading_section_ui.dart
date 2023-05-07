@@ -194,6 +194,7 @@ class _ReadingSectionState extends State<ReadingSection> {
 
   void _playAudio(audioUrl) async {
     await player.setUrl(audioUrl);
+    player.setVolume(5.0);
     player.play();
   }
 

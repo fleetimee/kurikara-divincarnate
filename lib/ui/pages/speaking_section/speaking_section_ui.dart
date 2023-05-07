@@ -320,6 +320,7 @@ class _SpeakingSectionState extends State<SpeakingSection> {
 
   void _playAudio(audioUrl) async {
     await player.setUrl(audioUrl);
+    player.setVolume(5.0);
     player.play();
   }
 
@@ -612,10 +613,10 @@ class _SpeakingSectionState extends State<SpeakingSection> {
                       final newMasterGroupMateri =
                           readingMateri!.masterGroupMateri;
                       newMasterGroupMateri.statusReading = 'finish';
-                      context.read<MasterGroupMateriCubit>().getMasterGroupMateri(
-                      dataUser!.userId!,
-                      masterMateri!.idLevel!,
-                      masterMateri!.idLesson!);
+                      context
+                          .read<MasterGroupMateriCubit>()
+                          .getMasterGroupMateri(dataUser!.userId!,
+                              masterMateri!.idLevel!, masterMateri!.idLesson!);
 
                       Navigator.pushNamedAndRemoveUntil(
                         context,
