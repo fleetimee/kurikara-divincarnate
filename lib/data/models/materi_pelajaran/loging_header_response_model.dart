@@ -40,7 +40,7 @@ class Data {
     this.status,
   });
 
-  int? idLogMateriHeader;
+  String? idLogMateriHeader;
   String? userId;
   String? idLevel;
   String? idGroupMateri;

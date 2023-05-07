@@ -39,7 +39,7 @@ class Data {
     this.voiceTry,
   });
 
-  int? idLogMateriLines;
+  String? idLogMateriLines;
   String? idLogMateriHeader;
   String? idMateri;
   DateTime? createdDate;

@@ -66,6 +66,7 @@ class MasterGroupMateri {
     this.statusReading,
     this.statusExerciseSpeaking,
     this.statusReadingSpeaking,
+    this.openSpeaking = false,
   });
 
   String? idGroupMateri;
@@ -86,6 +87,7 @@ class MasterGroupMateri {
   String? statusExerciseSpeaking;
   String? statusReadingSpeaking;
   bool open;
+  bool openSpeaking;
 
   factory MasterGroupMateri.fromRawJson(String str) =>
       MasterGroupMateri.fromJson(json.decode(str));
@@ -119,6 +121,7 @@ class MasterGroupMateri {
                 json["report_speaking"]!.map((x) => ReportIng.fromJson(x))),
         statusExercise: json["status_exercise"],
         open: json["open"] ?? false,
+        openSpeaking: json["open_speaking"] ?? false,
         statusReading: json["status_reading"],
         statusExerciseSpeaking: json["status_exercise_speaking"],
         statusReadingSpeaking: json["status_reading_speaking"],

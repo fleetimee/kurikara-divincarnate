@@ -16,6 +16,7 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../cubit/auth/user/user_cubit.dart';
+import '../../../cubit/mastering/master_group_materi/master_group_materi_cubit.dart';
 import '../../../cubit/mastering/master_materi_speaking/master_materi_speaking_cubit.dart';
 import '../../../cubit/materi/finish_materi_speaking/finish_materi_speaking_cubit.dart';
 import '../../../cubit/materi/loging_header_speaking/loging_header_speaking_cubit.dart';
@@ -611,6 +612,10 @@ class _SpeakingSectionState extends State<SpeakingSection> {
                       final newMasterGroupMateri =
                           readingMateri!.masterGroupMateri;
                       newMasterGroupMateri.statusReading = 'finish';
+                      context.read<MasterGroupMateriCubit>().getMasterGroupMateri(
+                      dataUser!.userId!,
+                      masterMateri!.idLevel!,
+                      masterMateri!.idLesson!);
 
                       Navigator.pushNamedAndRemoveUntil(
                         context,
