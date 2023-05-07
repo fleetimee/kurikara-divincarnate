@@ -27,7 +27,7 @@ class MasterGroupMateriTile extends StatelessWidget {
         state.maybeMap(
           orElse: () => null,
           loaded: (state) {
-            if (masterGroupMateri.open) {
+            if (masterGroupMateri.open && masterGroupMateri.openSpeaking) {
               Navigator.pushNamed(
                 context,
                 CourseInitial.routeName,
@@ -61,7 +61,8 @@ class MasterGroupMateriTile extends StatelessWidget {
               child: state.maybeMap(
                 orElse: () => null,
                 loaded: (state) {
-                  if (masterGroupMateri.open) {
+                  if (masterGroupMateri.open &&
+                      masterGroupMateri.openSpeaking) {
                     return Container(
                       color: AppColors.bottom,
                       child: Padding(

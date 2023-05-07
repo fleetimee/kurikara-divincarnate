@@ -42,7 +42,7 @@ class Data {
     this.createdDate,
   });
 
-  int? idLogSoalLines;
+  String? idLogSoalLines;
   String? idSoal;
   String? tipe;
   String? pgAnswer;

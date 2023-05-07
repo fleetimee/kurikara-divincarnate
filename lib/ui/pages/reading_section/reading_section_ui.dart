@@ -24,6 +24,7 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../common/constants/color.dart';
 import '../../../cubit/auth/user/user_cubit.dart';
+import '../../../cubit/mastering/master_group_materi/master_group_materi_cubit.dart';
 import '../../../data/models/mastering/master_group_materi_response_model.dart';
 import '../../../data/models/materi_pelajaran/requests/finish_materi_request_model.dart';
 import '../../widgets/appbar/appbar_style.dart';
@@ -407,7 +408,10 @@ class _ReadingSectionState extends State<ReadingSection> {
                   context.read<MasterMateriCubit>().setInitial();
                   final newMasterGroupMateri = readingMateri!.masterGroupMateri;
                   newMasterGroupMateri.statusReading = 'finish';
-
+                  context.read<MasterGroupMateriCubit>().getMasterGroupMateri(
+                      dataUser!.userId!,
+                      masterMateri!.idLevel!,
+                      masterMateri!.idLesson!);
                   Navigator.pushNamedAndRemoveUntil(
                     context,
                     HomePage.routeName,

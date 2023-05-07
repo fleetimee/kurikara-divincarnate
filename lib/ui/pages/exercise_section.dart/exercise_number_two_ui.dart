@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_huixin_app/cubit/mastering/master_group_materi/master_group_materi_cubit.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 
 import 'package:audio_session/audio_session.dart';
@@ -321,7 +322,7 @@ class _ExerciseTwoState extends State<ExerciseTwo> {
             ? () {
                 state.maybeMap(
                   orElse: () {},
-                  loaded: (state) async{
+                  loaded: (state) async {
                     context
                         .read<LatihanSoalLinesCubit>()
                         .postLatihanSoalLines(LatihanLinesRequestModel(
@@ -334,7 +335,8 @@ class _ExerciseTwoState extends State<ExerciseTwo> {
                           tipe: state.data.data![state.index].tipe!,
                           pg_answer: '',
                           cocok_answer: '',
-                          voice_answer: File((await _mRecorder.stopRecorder())!),
+                          voice_answer:
+                              File((await _mRecorder.stopRecorder())!),
                           status: true,
                           user_id: dataUser!.userId!,
                         ));
@@ -355,16 +357,29 @@ class _ExerciseTwoState extends State<ExerciseTwo> {
                                     state.data.data!.idGroupMateri.toString(),
                               ),
                               id_lesson: latihanHeaderState.maybeMap(
-                                          orElse: () => '',
-                                          loaded: (state) => state
-                                              .data.data!.idLesson
-                                              .toString(),
-                                        ),
+                                orElse: () => '',
+                                loaded: (state) =>
+                                    state.data.data!.idLesson.toString(),
+                              ),
                             ),
                           );
                       context.read<MasterSoalCubit>().setInitial();
                       context.read<LatihanSoalHeaderCubit>().setInitial();
                       context.read<LatihanSoalLinesCubit>().setInitial();
+                      context
+                          .read<MasterGroupMateriCubit>()
+                          .getMasterGroupMateri(
+                              dataUser!.userId!,
+                              latihanHeaderState.maybeMap(
+                                orElse: () => '',
+                                loaded: (state) =>
+                                    state.data.data!.idLevel.toString(),
+                              ),
+                              latihanHeaderState.maybeMap(
+                                orElse: () => '',
+                                loaded: (state) =>
+                                    state.data.data!.idLesson.toString(),
+                              ));
 
                       Navigator.pushNamedAndRemoveUntil(
                         context,

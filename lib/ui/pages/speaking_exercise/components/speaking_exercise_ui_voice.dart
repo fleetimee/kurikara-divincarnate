@@ -25,6 +25,7 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../../cubit/auth/user/user_cubit.dart';
+import '../../../../cubit/mastering/master_group_materi/master_group_materi_cubit.dart';
 import '../../../../cubit/soal_speaking/finish_latihan_soal/finish_latihan_soal_speaking_cubit.dart';
 import '../../../../data/models/latihan_soal/requests/finish_soal_request_model.dart';
 import '../../../../data/models/latihan_soal/requests/latihan_lines_request_model.dart';
@@ -527,6 +528,23 @@ class _SpeakingExerciseVoiceState extends State<SpeakingExerciseVoice> {
                                 context
                                     .read<LatihanSoalLinesSpeakingCubit>()
                                     .setInitial();
+
+                                context
+                                    .read<MasterGroupMateriCubit>()
+                                    .getMasterGroupMateri(
+                                        dataUser!.userId!,
+                                        soalHeaderState.maybeMap(
+                                          orElse: () => '',
+                                          loaded: (state) => state
+                                              .data.data!.idLevel
+                                              .toString(),
+                                        ),
+                                        soalHeaderState.maybeMap(
+                                          orElse: () => '',
+                                          loaded: (state) => state
+                                              .data.data!.idLesson
+                                              .toString(),
+                                        ));
 
                                 Navigator.pushNamedAndRemoveUntil(
                                   context,

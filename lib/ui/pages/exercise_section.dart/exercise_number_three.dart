@@ -7,6 +7,7 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../common/constants/color.dart';
 import '../../../cubit/auth/user/user_cubit.dart';
+import '../../../cubit/mastering/master_group_materi/master_group_materi_cubit.dart';
 import '../../../cubit/mastering/master_soal/master_soal_cubit.dart';
 import '../../../cubit/soal/latihan_soal_header/latihan_soal_header_cubit.dart';
 import '../../../cubit/soal/latihan_soal_lines/latihan_soal_lines_cubit.dart';
@@ -544,7 +545,20 @@ class _ExerciseThreeState extends State<ExerciseThree> {
                       context.read<MasterSoalCubit>().setInitial();
                       context.read<LatihanSoalHeaderCubit>().setInitial();
                       context.read<LatihanSoalLinesCubit>().setInitial();
-
+                      context
+                          .read<MasterGroupMateriCubit>()
+                          .getMasterGroupMateri(
+                              dataUser!.userId!,
+                              latihanHeaderState.maybeMap(
+                                orElse: () => '',
+                                loaded: (state) =>
+                                    state.data.data!.idLevel.toString(),
+                              ),
+                              latihanHeaderState.maybeMap(
+                                orElse: () => '',
+                                loaded: (state) =>
+                                    state.data.data!.idLesson.toString(),
+                              ));
                       Navigator.pushNamedAndRemoveUntil(
                         context,
                         HomePage.routeName,

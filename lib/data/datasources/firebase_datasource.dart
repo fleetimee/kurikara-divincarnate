@@ -24,6 +24,7 @@ class FirebaseDataSource {
       );
       UserCredential userCredential =
           await auth.signInWithCredential(credential);
+          
       return Right(userCredential.user!.uid);
     } else {
       return const Left('failed');
