@@ -7,6 +7,7 @@ import 'package:flutter_huixin_app/data/models/mastering/master_lesson_response_
 import 'package:flutter_huixin_app/ui/pages/course_selector/components/course_selector_ui_master_group_tile.dart';
 import 'package:flutter_huixin_app/ui/pages/course_selector/components/course_selector_ui_master_group_tile_loading.dart';
 
+import '../../../cubit/auth/user/user_cubit.dart';
 import '../../widgets/appbar/appbar_style.dart';
 import '../../widgets/bottom_appbar_note.dart';
 
@@ -24,14 +25,18 @@ class _CourseSelectorState extends State<CourseSelector> {
 
   @override
   void initState() {
+    context.read<MasterGroupMateriCubit>().setInitial();
     super.initState();
 
-    _getUser();
+    user = context.read<UserCubit>().state.maybeMap(
+          orElse: () => null,
+          loaded: (value) => value.data,
+        );
   }
 
-  void _getUser() async {
-    user = await AppSecureStorage.getUser();
-  }
+  // void _getUser() async {
+  //   user = await AppSecureStorage.getUser();
+  // }
 
   @override
   Widget build(BuildContext context) {

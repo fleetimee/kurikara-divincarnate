@@ -87,7 +87,7 @@ class SpeakingTile extends StatelessWidget {
                   SpeakingExercise.routeName,
                   arguments: readingMateri,
                 );
-                context.read<LatihanSoalHeaderSpeakingCubit>().setInitial();
+                // context.read<LatihanSoalHeaderSpeakingCubit>().setInitial();
               },
             );
           },

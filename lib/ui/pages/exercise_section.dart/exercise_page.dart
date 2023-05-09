@@ -24,6 +24,7 @@ class _ExercisePageState extends State<ExercisePage> {
 
   @override
   void initState() {
+    context.read<MasterSoalCubit>().setInitial();
     dataUser = context.read<UserCubit>().state.maybeMap(
           orElse: () => null,
           loaded: (value) => value.data,

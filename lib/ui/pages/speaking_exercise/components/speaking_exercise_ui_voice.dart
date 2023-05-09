@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:audioplayers/audioplayers.dart' as ap;
 import 'package:flutter_huixin_app/common/constants/color.dart';
 import 'package:flutter_huixin_app/cubit/mastering/master_soal_speaking/master_soal_speaking_cubit.dart';
 import 'package:flutter_huixin_app/cubit/soal_speaking/latihan_soal_header_speaking/latihan_soal_header_speaking_cubit.dart';
@@ -69,9 +70,8 @@ class _SpeakingExerciseVoiceState extends State<SpeakingExerciseVoice> {
   DataUser? dataUser;
 
   void _playAudio(audioUrl) async {
-    await player.setUrl(audioUrl);
-    player.setVolume(5.0);
-    player.play();
+    ap.AudioPlayer audioPlayer = ap.AudioPlayer();
+    await audioPlayer.play(ap.UrlSource(audioUrl));
   }
 
   @override
@@ -518,6 +518,7 @@ class _SpeakingExerciseVoiceState extends State<SpeakingExerciseVoice> {
                                               .data.data!.idLesson
                                               .toString(),
                                         ),
+                                        mode: 'speaking',
                                       ),
                                     );
                                 context

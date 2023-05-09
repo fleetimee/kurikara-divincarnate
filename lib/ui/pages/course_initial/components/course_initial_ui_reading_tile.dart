@@ -102,7 +102,7 @@ class ReadingTile extends StatelessWidget {
             );
             return GestureDetector(
               onTap: () {
-                if (masterGroupMateri.statusReading == 'finish') {
+                if (masterGroupMateri.statusExercise != 'lock') {
                   context
                       .read<LatihanSoalHeaderCubit>()
                       .postLatihanSoalHeader(LatihanHeaderRequestModel(
@@ -121,7 +121,7 @@ class ReadingTile extends StatelessWidget {
                   );
                 }
               },
-              child: masterGroupMateri.statusReading != 'lock'
+              child: masterGroupMateri.statusExercise != 'lock'
                   ? Image.asset(
                       "assets/images/exercise_remedial.png",
                       fit: BoxFit.fill,

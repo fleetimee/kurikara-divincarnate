@@ -29,4 +29,8 @@ class MasterGroupMateriCubit extends Cubit<MasterGroupMateriState> {
       (r) => emit(MasterGroupMateriState.loaded(r)),
     );
   }
+
+  setInitial() {
+    emit(const MasterGroupMateriState.initial());
+  }
 }

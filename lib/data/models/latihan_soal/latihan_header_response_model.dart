@@ -41,7 +41,7 @@ class Data {
     this.idLesson,
   });
 
-  String? idLogSoalHeader;
+  dynamic idLogSoalHeader;
   String? userId;
   String? idLevel;
   String? idGroupMateri;

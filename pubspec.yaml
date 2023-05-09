@@ -2,13 +2,14 @@ name: flutter_huixin_app
 description: Learn mandarin with Huixin App and have fun!
 publish_to: "none"
 
-version: 1.0.2-test9+5
+version: 1.0.2-test14+5
 
 environment:
   sdk: ">=2.19.4 <3.0.0"
 
 dependencies:
   audio_session: ^0.1.13
+  audioplayers: ^4.0.1
   awesome_dialog: ^3.0.2
   bloc: ^8.1.1
   cached_network_image: ^3.2.3

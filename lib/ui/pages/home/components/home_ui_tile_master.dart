@@ -111,8 +111,8 @@ class TileMasterLevel extends StatelessWidget {
                 child: state.maybeMap(
                   orElse: () => null,
                   loaded: (state) {
-                    if (index == 0 && user?.noMember != '' ||
-                        user?.noMember == null) {
+                    if (index == 0 &&
+                        (user?.noMember != '' || user?.noMember == null)) {
                       return Container(
                         color: AppColors.bottom,
                         child: Padding(
@@ -157,8 +157,8 @@ class TileMasterLevel extends StatelessWidget {
                         ),
                       );
                     } else {
-                      return (masterLevel.open && user?.noMember != '' ||
-                              user?.noMember == null)
+                      return (masterLevel.open &&
+                              (user?.noMember != '' || user?.noMember == null))
                           ? Container(
                               color: AppColors.bottom,
                               child: Padding(

@@ -21,7 +21,8 @@ class MasterSoalCubit extends Cubit<MasterSoalState> {
         await _masteringDatasource.getMasterSoal(userId, levelId, groupId);
     result.fold(
       (l) => emit(MasterSoalState.error(l)),
-      (r) => emit(MasterSoalState.loaded(r, 0, r.data!.isNotEmpty)),
+      (r) => emit(MasterSoalState.loaded(
+          r, 0, r.data!.isNotEmpty && r.data!.length > 1)),
     );
   }
 

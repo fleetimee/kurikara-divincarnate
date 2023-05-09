@@ -21,7 +21,8 @@ class MasterSoalSpeakingCubit extends Cubit<MasterSoalSpeakingState> {
         userId, levelId, groupId);
     result.fold(
       (l) => emit(MasterSoalSpeakingState.error(l)),
-      (r) => emit(MasterSoalSpeakingState.loaded(r, 0, r.data!.isNotEmpty)),
+      (r) => emit(MasterSoalSpeakingState.loaded(
+          r, 0, r.data!.isNotEmpty && r.data!.length > 1)),
     );
   }
 
