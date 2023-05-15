@@ -2,11 +2,6 @@ import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_huixin_app/data/models/materi_pelajaran/loging_header_response_model.dart';
-import 'package:flutter_huixin_app/data/models/materi_pelajaran/loging_lines_response_model.dart';
-import 'package:flutter_huixin_app/data/models/materi_pelajaran/requests/finish_materi_request_model.dart';
-import 'package:flutter_huixin_app/data/models/materi_pelajaran/requests/loging_header_request_model.dart';
-import 'package:flutter_huixin_app/data/models/materi_pelajaran/requests/loging_lines_request_model.dart';
 import 'package:http/http.dart' as http_plus;
 import 'package:pretty_http_logger/pretty_http_logger.dart';
 

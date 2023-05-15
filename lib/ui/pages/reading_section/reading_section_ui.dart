@@ -15,7 +15,6 @@ import 'package:flutter_huixin_app/data/models/materi_pelajaran/requests/loging_
 import 'package:flutter_huixin_app/ui/pages/home/home_ui.dart';
 import 'package:flutter_huixin_app/ui/widgets/not_found.dart';
 import 'package:flutter_sound/flutter_sound.dart';
-import 'package:just_audio/just_audio.dart';
 
 // import 'package:just_audio/just_audio.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -268,15 +267,21 @@ class _ReadingSectionState extends State<ReadingSection> {
                                   ),
                                 ),
                                 Positioned(
-                                  top: 260,
-                                  left: 323,
-                                  child: InkWell(
-                                    onTap: () => setState(() {
-                                      _isVolumeClicked = true;
-                                    }),
-                                    child: Image.asset(
+                                  top: MediaQuery.of(context).size.height *
+                                      0.267,
+                                  left: MediaQuery.of(context).size.width * 0.6,
+                                  child: IconButton(
+                                    enableFeedback: true,
+                                    iconSize: 50,
+                                    onPressed: () {
+                                      setState(() {
+                                        _isVolumeClicked = !_isVolumeClicked;
+                                      });
+                                    },
+                                    icon: Image.asset(
                                       "assets/images/volume_reading.png",
-                                      fit: BoxFit.fill,
+                                      fit: BoxFit.contain,
+                                      height: 50,
                                     ),
                                   ),
                                 ),

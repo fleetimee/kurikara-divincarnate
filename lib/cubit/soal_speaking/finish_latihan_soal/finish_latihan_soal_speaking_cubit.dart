@@ -4,7 +4,6 @@ import 'package:flutter_huixin_app/data/datasources/speaking_datasource.dart';
 import 'package:flutter_huixin_app/data/models/latihan_soal/requests/finish_soal_request_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'package:flutter_huixin_app/data/datasources/soal_datasource.dart';
 
 part 'finish_latihan_soal_speaking_cubit.freezed.dart';
 part 'finish_latihan_soal_speaking_state.dart';

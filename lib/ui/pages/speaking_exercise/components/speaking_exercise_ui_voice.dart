@@ -310,14 +310,6 @@ class _SpeakingExerciseVoiceState extends State<SpeakingExerciseVoice> {
 
   final ScrollController _scrollController = ScrollController();
 
-  void _scrollToBottom() {
-    _scrollController.animateTo(
-      _scrollController.position.maxScrollExtent,
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.easeOut,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final state = context.watch<MasterSoalSpeakingCubit>().state;

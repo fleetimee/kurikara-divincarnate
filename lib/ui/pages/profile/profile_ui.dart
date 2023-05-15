@@ -661,10 +661,10 @@ class _ProfilePageState extends State<ProfilePage> {
             },
           ).show();
         },
-        child: Row(
+        child: const Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: const [
+          children: [
             Image(
               image: AssetImage('assets/images/door.png'),
               width: 30,

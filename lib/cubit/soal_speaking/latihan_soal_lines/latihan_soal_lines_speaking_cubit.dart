@@ -5,7 +5,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'package:flutter_huixin_app/data/models/latihan_soal/latihan_lines_response_model.dart';
 
-import '../../../data/datasources/soal_datasource.dart';
 
 part 'latihan_soal_lines_speaking_cubit.freezed.dart';
 part 'latihan_soal_lines_speaking_state.dart';

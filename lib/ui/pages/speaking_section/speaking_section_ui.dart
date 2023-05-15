@@ -43,6 +43,7 @@ class SpeakingSection extends StatefulWidget {
 
 class _SpeakingSectionState extends State<SpeakingSection> {
   DataUser? dataUser;
+  // ignore: unused_field
   bool _isVolumeClicked = false;
   bool _isMicrophoneClicked = false;
   bool _isMicrophoneClicked2 = false;
@@ -311,12 +312,6 @@ class _SpeakingSectionState extends State<SpeakingSection> {
       return null;
     }
     return _mPlayer2.isStopped ? play2 : stopPlayer2;
-  }
-
-  void _playAudio(audioUrl) async {
-    await player.setUrl(audioUrl);
-    player.setVolume(5.0);
-    player.play();
   }
 
   @override
