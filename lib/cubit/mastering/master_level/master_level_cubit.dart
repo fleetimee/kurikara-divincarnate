@@ -21,4 +21,8 @@ class MasterLevelCubit extends Cubit<MasterLevelState> {
       (r) => emit(MasterLevelState.loaded(r)),
     );
   }
+
+  setInitial() {
+    emit(const MasterLevelState.initial());
+  }
 }

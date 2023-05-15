@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_huixin_app/common/constants/color.dart';
 
@@ -8,6 +9,10 @@ class SpeakingExerciseCorrectAnswer extends StatelessWidget {
   });
 
   final void Function() onTap;
+  void playAnswer(String url) async {
+    AudioPlayer audioPlayer = AudioPlayer();
+    await audioPlayer.play(UrlSource(url));
+  }
 
   @override
   Widget build(BuildContext context) {

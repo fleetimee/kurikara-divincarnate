@@ -30,8 +30,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+    context.read<MasterLevelCubit>().setInitial();
     super.initState();
-
     _getUser();
   }
 

@@ -361,6 +361,7 @@ class _ExerciseTwoState extends State<ExerciseTwo> {
                                 loaded: (state) =>
                                     state.data.data!.idLesson.toString(),
                               ),
+                              mode: 'reading',
                             ),
                           );
                       context.read<MasterSoalCubit>().setInitial();

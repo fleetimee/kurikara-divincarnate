@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:audio_session/audio_session.dart';
+import 'package:audioplayers/audioplayers.dart' as ap;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,8 +15,9 @@ import 'package:flutter_huixin_app/data/models/materi_pelajaran/requests/loging_
 import 'package:flutter_huixin_app/ui/pages/home/home_ui.dart';
 import 'package:flutter_huixin_app/ui/widgets/not_found.dart';
 import 'package:flutter_sound/flutter_sound.dart';
-
 import 'package:just_audio/just_audio.dart';
+
+// import 'package:just_audio/just_audio.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_sound_platform_interface/flutter_sound_recorder_platform_interface.dart'
     as fsr;
@@ -50,9 +52,10 @@ class _ReadingSectionState extends State<ReadingSection> {
 
   ReadingMateri? readingMateri;
   DataUser? user;
-  late AudioPlayer player;
+  // late AudioPlayer player;
 
   final FlutterSoundPlayer _mPlayer = FlutterSoundPlayer();
+  final FlutterSoundPlayer _mPlayerAnswer = FlutterSoundPlayer();
   final FlutterSoundRecorder _mRecorder = FlutterSoundRecorder();
   Codec _codec = Codec.aacMP4;
   String _mPath = 'fleetime.mp4';
@@ -64,6 +67,7 @@ class _ReadingSectionState extends State<ReadingSection> {
 
   @override
   void initState() {
+    context.read<MasterMateriCubit>().setInitial();
     dataUser = context.read<UserCubit>().state.maybeMap(
           orElse: () => null,
           loaded: (value) => value.data,
@@ -85,13 +89,14 @@ class _ReadingSectionState extends State<ReadingSection> {
           loaded: (value) => value.data,
         );
     super.initState();
-    player = AudioPlayer();
+    // player = AudioPlayer();
   }
 
   @override
   void dispose() {
-    player.dispose();
+    // player.dispose();
     _mPlayer.closePlayer();
+    _mPlayerAnswer.closePlayer();
 
     _mRecorder.closeRecorder();
     super.dispose();
@@ -172,6 +177,11 @@ class _ReadingSectionState extends State<ReadingSection> {
     });
   }
 
+  void playAnswer(String url) async {
+    ap.AudioPlayer audioPlayer = ap.AudioPlayer();
+    await audioPlayer.play(ap.UrlSource(url));
+  }
+
   void stopPlayer() {
     _mPlayer.stopPlayer().then((value) {
       setState(() {});
@@ -192,11 +202,12 @@ class _ReadingSectionState extends State<ReadingSection> {
     return _mPlayer.isStopped ? play : stopPlayer;
   }
 
-  void _playAudio(audioUrl) async {
-    await player.setUrl(audioUrl);
-    player.setVolume(5.0);
-    player.play();
-  }
+  // void _playAudio(audioUrl) async {
+  //   debugPrint('audioUrl: $audioUrl');
+  //   await player.setUrl(audioUrl);
+  //   player.setVolume(1);
+  //   player.play();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -292,7 +303,7 @@ class _ReadingSectionState extends State<ReadingSection> {
                                 _isMicrophoneClicked
                                     ? InkWell(
                                         onTap: () {
-                                          _playAudio(
+                                          playAnswer(
                                               '${materi.latihanUrlFile!.replaceAll('/level', '')}${materi.latihanVoice}');
                                         },
                                         child: Column(
@@ -394,14 +405,24 @@ class _ReadingSectionState extends State<ReadingSection> {
           color:
               _isMicrophoneClicked ? AppColors.greenColor : AppColors.greyWhite,
           onTap: totalContent == _currentContent + 2
-              ? () {
+              ? () async {
+                  File voiceFile = File((await _mRecorder.stopRecorder())!);
+                  context.read<LogingLinesCubit>().postLogingLines(
+                        LogingLinesRequestModel(
+                          id_log_materi_header: readingMateri!.logingHeaderId,
+                          id_materi: masterMateri!.idMateri!,
+                          user_id: dataUser!.userId!,
+                          voice_try: voiceFile,
+                        ),
+                      );
                   context.read<FinishMateriCubit>().finishMateri(
                         FinishMateriRequestModel(
                           user_id: dataUser!.userId!,
                           id_level: masterMateri!.idLevel!,
                           id_group_materi:
                               readingMateri!.masterGroupMateri.idGroupMateri!,
-                          id_lesson: masterMateri!.idLesson!,
+                          id_lesson: readingMateri!.masterGroupMateri.idLesson!,
+                          mode: 'reading',
                         ),
                       );
                   context.read<LogingHeaderCubit>().setInitial();

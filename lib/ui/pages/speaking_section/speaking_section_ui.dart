@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:audio_session/audio_session.dart';
+import 'package:audioplayers/audioplayers.dart' as ap;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -70,6 +71,7 @@ class _SpeakingSectionState extends State<SpeakingSection> {
 
   @override
   void initState() {
+    context.read<MasterMateriSpeakingCubit>().setInitial();
     dataUser = context.read<UserCubit>().state.maybeMap(
           orElse: () => null,
           loaded: (value) => value.data,
@@ -266,16 +268,9 @@ class _SpeakingSectionState extends State<SpeakingSection> {
     });
   }
 
-  void playLatihanVoice(String url) {
-    _mPlayer
-        .startPlayer(
-            fromURI: url,
-            whenFinished: () {
-              setState(() {});
-            })
-        .then((value) {
-      setState(() {});
-    });
+  void playLatihanVoice(String url) async {
+    ap.AudioPlayer audioPlayer = ap.AudioPlayer();
+    await audioPlayer.play(ap.UrlSource(url));
   }
 
   void stopPlayer() {
@@ -597,14 +592,28 @@ class _SpeakingSectionState extends State<SpeakingSection> {
           onTap: !_isMicrophoneClicked && !_isMicrophoneClicked2
               ? () {}
               : totalContent == _currentContent + 2
-                  ? () {
+                  ? () async {
+                      context.read<LogingLinesSpeakingCubit>().postLogingLines(
+                            LogingLinesRequestModel(
+                              id_log_materi_header:
+                                  readingMateri!.logingHeaderId,
+                              id_materi: masterMateri!.idMateri!,
+                              user_id: dataUser!.userId!,
+                              voice_try:
+                                  File((await _mRecorder.stopRecorder())!),
+                              voice_try_2:
+                                  File((await _mRecorder2.stopRecorder())!),
+                            ),
+                          );
                       context.read<FinishMateriSpeakingCubit>().finishMateri(
                             FinishMateriRequestModel(
                               user_id: dataUser!.userId!,
                               id_level: masterMateri!.idLevel!,
                               id_group_materi: readingMateri!
                                   .masterGroupMateri.idGroupMateri!,
-                              id_lesson: masterMateri!.idLesson!,
+                              id_lesson:
+                                  readingMateri!.masterGroupMateri.idLesson!,
+                              mode: 'speaking',
                             ),
                           );
                       context.read<LogingHeaderSpeakingCubit>().setInitial();

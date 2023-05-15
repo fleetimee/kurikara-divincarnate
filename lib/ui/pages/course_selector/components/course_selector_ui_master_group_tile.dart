@@ -80,11 +80,6 @@ class MasterGroupMateriTile extends StatelessWidget {
                                 ),
                               ),
                               const SizedBox(height: 8),
-                              // Image.network(
-                              //   'https://huixin.id/assets/group_materi/$imageUrl',
-                              //   height: 50,
-                              //   fit: BoxFit.fill,
-                              // ),
                               CachedNetworkImage(
                                 imageUrl:
                                     'https://huixin.id/assets/group_materi/${masterGroupMateri.imgFile}',
@@ -111,64 +106,17 @@ class MasterGroupMateriTile extends StatelessWidget {
                         ),
                       ),
                     );
-                  } else {
-                    return (state.data.data![index].reportReading!.isNotEmpty ||
-                            state.data.data![index].reportSpeaking!.isNotEmpty)
-                        ? Container(
-                            color: AppColors.bottom,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      masterGroupMateri.name ?? '',
-                                      style: const TextStyle(
-                                        color: AppColors.whiteColor,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 8),
-                                    CachedNetworkImage(
-                                      imageUrl:
-                                          'https://huixin.id/assets/group_materi/${masterGroupMateri.imgFile}',
-                                      placeholder: (context, url) =>
-                                          const Center(
-                                        child: CircularProgressIndicator(
-                                          color: AppColors.yellowColor,
-                                        ),
-                                      ),
-                                      errorWidget: (context, url, error) =>
-                                          const Icon(
-                                        Icons.error,
-                                        color: AppColors.yellowColor,
-                                      ),
-                                      height: 50,
-                                      fit: BoxFit.fill,
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Image.asset(
-                                      "assets/images/progress_bar.png",
-                                      fit: BoxFit.fill,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          )
-                        : Container(
-                            color: AppColors.whiteColor2,
-                            child: Center(
-                              child: Image.asset(
-                                "assets/images/lock.png",
-                                height: 30,
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                          );
                   }
+                  return Container(
+                    color: AppColors.whiteColor2,
+                    child: Center(
+                      child: Image.asset(
+                        "assets/images/lock.png",
+                        height: 30,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  );
                 },
               ),
             ),

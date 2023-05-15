@@ -540,6 +540,7 @@ class _ExerciseThreeState extends State<ExerciseThree> {
                                   orElse: () => '',
                                   loaded: (state) =>
                                       state.data.data!.idLesson.toString()),
+                              mode: 'reading',
                             ),
                           );
                       context.read<MasterSoalCubit>().setInitial();
