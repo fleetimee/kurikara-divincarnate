@@ -20,8 +20,7 @@ import 'package:flutter_sound/flutter_sound.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_sound_platform_interface/flutter_sound_recorder_platform_interface.dart'
     as fsr;
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
+import 'package:quickalert/quickalert.dart';
 
 import '../../../common/constants/color.dart';
 import '../../../cubit/auth/user/user_cubit.dart';
@@ -275,7 +274,10 @@ class _ReadingSectionState extends State<ReadingSection> {
                                     iconSize: 50,
                                     onPressed: () {
                                       setState(() {
-                                        _isVolumeClicked = !_isVolumeClicked;
+                                        _isVolumeClicked = true;
+
+                                        playAnswer(
+                                            '${materi.latihanUrlFile!.replaceAll('/level', '')}${materi.latihanVoice}');
                                       });
                                     },
                                     icon: Image.asset(
@@ -305,64 +307,9 @@ class _ReadingSectionState extends State<ReadingSection> {
                                     ),
                                   ],
                                 ),
-                                _isMicrophoneClicked
-                                    ? InkWell(
-                                        onTap: () {
-                                          playAnswer(
-                                              '${materi.latihanUrlFile!.replaceAll('/level', '')}${materi.latihanVoice}');
-                                        },
-                                        child: Column(
-                                          children: [
-                                            const SizedBox(
-                                              height: 20,
-                                            ),
-                                            Center(
-                                              child: Container(
-                                                height: 80,
-                                                width: 300,
-                                                decoration: const BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(10)),
-                                                  color: AppColors.lightGreen,
-                                                ),
-                                                child: Center(
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      const Text(
-                                                        "Correct \nAnswer",
-                                                        style: TextStyle(
-                                                          fontSize: 24,
-                                                          color: Colors.black,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
-                                                      ),
-                                                      const SizedBox(
-                                                        width: 25,
-                                                      ),
-                                                      Image.asset(
-                                                        "assets/images/volume_ok.png",
-                                                        fit: BoxFit.fill,
-                                                        height: 40,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 20,
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                    : const SizedBox(
-                                        height: 100,
-                                      ),
+                                const SizedBox(
+                                  height: 100,
+                                ),
                                 Column(
                                   children: [
                                     GestureDetector(
@@ -445,12 +392,18 @@ class _ReadingSectionState extends State<ReadingSection> {
                     (route) => false,
                   );
 
-                  showTopSnackBar(
-                    Overlay.of(context),
-                    CustomSnackBar.success(
-                      message:
-                          "Reading ${readingMateri!.masterGroupMateri.name} has been finished, you can proceed to the exercise section",
-                    ),
+                  // showTopSnackBar(
+                  //   Overlay.of(context),
+                  //   CustomSnackBar.success(
+                  //     message:
+                  //         "Reading ${readingMateri!.masterGroupMateri.name} has been finished, you can proceed to the exercise section",
+                  //   ),
+                  // );
+                  QuickAlert.show(
+                    context: context,
+                    type: QuickAlertType.success,
+                    text:
+                        'Reading lesson has been completed, you can now proceed to the Reading exercise',
                   );
                 }
               : () async {

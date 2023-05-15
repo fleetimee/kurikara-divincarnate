@@ -22,8 +22,7 @@ import 'package:just_audio/just_audio.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_sound_platform_interface/flutter_sound_recorder_platform_interface.dart'
     as fsr;
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
+import 'package:quickalert/quickalert.dart';
 
 import '../../../../cubit/auth/user/user_cubit.dart';
 import '../../../../cubit/mastering/master_group_materi/master_group_materi_cubit.dart';
@@ -350,18 +349,18 @@ class _SpeakingExerciseVoiceState extends State<SpeakingExerciseVoice> {
                         },
                       ),
                       const SizedBox(
-                        height: 60,
+                        height: 15,
                       ),
                       const Text(
                         'Answer :',
                         style: TextStyle(
-                          fontSize: 36,
+                          fontSize: 28,
                           color: AppColors.blackColor,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       const SizedBox(
-                        height: 30,
+                        height: 15,
                       ),
                       Center(
                         child: Column(
@@ -385,9 +384,6 @@ class _SpeakingExerciseVoiceState extends State<SpeakingExerciseVoice> {
                             if (_isSubmitButtonPressed)
                               Column(
                                 children: [
-                                  const SizedBox(
-                                    height: 15,
-                                  ),
                                   SpeakingExerciseCorrectAnswer(
                                     onTap: () {
                                       _playAudio(
@@ -395,7 +391,7 @@ class _SpeakingExerciseVoiceState extends State<SpeakingExerciseVoice> {
                                     },
                                   ),
                                   const SizedBox(
-                                    height: 40,
+                                    height: 20,
                                   ),
                                   SpeakingExerciseMicrophone(
                                     onPressed: getRecorderFn2(),
@@ -546,12 +542,19 @@ class _SpeakingExerciseVoiceState extends State<SpeakingExerciseVoice> {
                                   (route) => false,
                                 );
 
-                                showTopSnackBar(
-                                  Overlay.of(context),
-                                  const CustomSnackBar.success(
-                                    message:
-                                        "Exercise has been completed, please check your score in the reporting menu",
-                                  ),
+                                // showTopSnackBar(
+                                //   Overlay.of(context),
+                                //   const CustomSnackBar.success(
+                                //     message:
+                                //         "Exercise has been completed, please check your score in the reporting menu",
+                                //   ),
+                                // );
+
+                                QuickAlert.show(
+                                  context: context,
+                                  type: QuickAlertType.success,
+                                  text:
+                                      'Lesson has been completed, please do next lesson tomorrow',
                                 );
                               }
                             },

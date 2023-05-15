@@ -20,13 +20,13 @@ class SpeakingExerciseCorrectAnswer extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         const SizedBox(
-          height: 40,
+          height: 25,
         ),
         InkWell(
           onTap: onTap,
           child: Container(
             height: 80,
-            width: 300,
+            width: MediaQuery.of(context).size.width * 0.5,
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(10)),
               color: AppColors.lightGreen,

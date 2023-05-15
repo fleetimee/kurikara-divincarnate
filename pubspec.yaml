@@ -50,6 +50,7 @@ dependencies:
   modal_bottom_sheet: ^3.0.0-pre
   permission_handler: ^10.2.0
   pretty_http_logger: ^0.2.1
+  quickalert: ^1.0.1
   random_avatar: ^0.0.8
   responsive_framework: ^0.2.0
   shimmer: ^2.0.0
@@ -64,7 +65,6 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   freezed: ^2.3.4
-
 
 flutter:
   uses-material-design: true

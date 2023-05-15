@@ -14,8 +14,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:permission_handler/permission_handler.dart';
 
 import 'package:flutter_sound_platform_interface/flutter_sound_recorder_platform_interface.dart';
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
+import 'package:quickalert/quickalert.dart';
 
 import '../../../common/constants/color.dart';
 import '../../../cubit/auth/user/user_cubit.dart';
@@ -388,12 +387,18 @@ class _ExerciseTwoState extends State<ExerciseTwo> {
                         (route) => false,
                       );
 
-                      showTopSnackBar(
-                        Overlay.of(context),
-                        const CustomSnackBar.success(
-                          message:
-                              "Exercise has been completed, please check your score in the reporting menu",
-                        ),
+                      // showTopSnackBar(
+                      //   Overlay.of(context),
+                      //   const CustomSnackBar.success(
+                      //     message:
+                      //         "Exercise has been completed, please check your score in the reporting menu",
+                      //   ),
+                      // );
+                      QuickAlert.show(
+                        context: context,
+                        type: QuickAlertType.success,
+                        text:
+                            'Reading exercise has been completed, please now do speaking lesson',
                       );
                     }
                   },

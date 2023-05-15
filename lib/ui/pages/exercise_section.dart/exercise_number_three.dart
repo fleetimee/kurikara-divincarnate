@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_huixin_app/cubit/soal/finish_latihan_soal/finish_latihan_soal_cubit.dart';
 import 'package:flutter_huixin_app/data/models/latihan_soal/requests/finish_soal_request_model.dart';
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
+import 'package:quickalert/quickalert.dart';
 
 import '../../../common/constants/color.dart';
 import '../../../cubit/auth/user/user_cubit.dart';
@@ -262,9 +261,6 @@ class _ExerciseThreeState extends State<ExerciseThree> {
                           ),
                         ],
                       ),
-                      const SizedBox(
-                        height: 12,
-                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -315,9 +311,6 @@ class _ExerciseThreeState extends State<ExerciseThree> {
                             ),
                           ),
                         ],
-                      ),
-                      const SizedBox(
-                        height: 12,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -370,9 +363,6 @@ class _ExerciseThreeState extends State<ExerciseThree> {
                           ),
                         ],
                       ),
-                      const SizedBox(
-                        height: 12,
-                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -423,9 +413,6 @@ class _ExerciseThreeState extends State<ExerciseThree> {
                             ),
                           ),
                         ],
-                      ),
-                      const SizedBox(
-                        height: 12,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -566,12 +553,18 @@ class _ExerciseThreeState extends State<ExerciseThree> {
                         (route) => false,
                       );
 
-                      showTopSnackBar(
-                        Overlay.of(context),
-                        const CustomSnackBar.success(
-                          message:
-                              "Exercises have been completed, please check your score in the reporting menu",
-                        ),
+                      // showTopSnackBar(
+                      //   Overlay.of(context),
+                      //   const CustomSnackBar.success(
+                      //     message:
+                      //         "Exercises have been completed, please check your score in the reporting menu",
+                      //   ),
+                      // );
+                      QuickAlert.show(
+                        context: context,
+                        type: QuickAlertType.success,
+                        text:
+                            'Reading exercise has been completed, please now do speaking lesson',
                       );
                     }
                   },
