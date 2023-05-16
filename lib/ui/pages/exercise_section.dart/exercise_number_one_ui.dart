@@ -38,6 +38,8 @@ class _ExerciseOneState extends State<ExerciseOne> {
           orElse: () => null,
           loaded: (value) => value.data,
         );
+    isAnswer = false;
+    currentAnswer = '';
     super.initState();
   }
 
@@ -288,6 +290,8 @@ class _ExerciseOneState extends State<ExerciseOne> {
                         ));
                     if (state.isNext) {
                       context.read<MasterSoalCubit>().nextContent();
+                      isAnswer = false;
+                      currentAnswer = '';
                     } else {
                       context.read<FinishLatihanSoalCubit>().finishLatihanSoal(
                             FinishSoalRequestModel(

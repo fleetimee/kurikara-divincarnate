@@ -356,74 +356,80 @@ class _ReadingSectionState extends State<ReadingSection> {
           name: totalContent == _currentContent + 2 ? 'FINISH' : 'NEXT',
           color:
               _isMicrophoneClicked ? AppColors.greenColor : AppColors.greyWhite,
-          onTap: totalContent == _currentContent + 2
-              ? () async {
-                  File voiceFile = File((await _mRecorder.stopRecorder())!);
-                  context.read<LogingLinesCubit>().postLogingLines(
-                        LogingLinesRequestModel(
-                          id_log_materi_header: readingMateri!.logingHeaderId,
-                          id_materi: masterMateri!.idMateri!,
-                          user_id: dataUser!.userId!,
-                          voice_try: voiceFile,
-                        ),
+          onTap: _isMicrophoneClicked
+              ? totalContent == _currentContent + 2
+                  ? () async {
+                      File voiceFile = File((await _mRecorder.stopRecorder())!);
+                      context.read<LogingLinesCubit>().postLogingLines(
+                            LogingLinesRequestModel(
+                              id_log_materi_header:
+                                  readingMateri!.logingHeaderId,
+                              id_materi: masterMateri!.idMateri!,
+                              user_id: dataUser!.userId!,
+                              voice_try: voiceFile,
+                            ),
+                          );
+                      context.read<FinishMateriCubit>().finishMateri(
+                            FinishMateriRequestModel(
+                              user_id: dataUser!.userId!,
+                              id_level: masterMateri!.idLevel!,
+                              id_group_materi: readingMateri!
+                                  .masterGroupMateri.idGroupMateri!,
+                              id_lesson:
+                                  readingMateri!.masterGroupMateri.idLesson!,
+                              mode: 'reading',
+                            ),
+                          );
+                      context.read<LogingHeaderCubit>().setInitial();
+                      context.read<LogingLinesCubit>().setInitial();
+                      context.read<MasterMateriCubit>().setInitial();
+                      final newMasterGroupMateri =
+                          readingMateri!.masterGroupMateri;
+                      newMasterGroupMateri.statusReading = 'finish';
+                      context
+                          .read<MasterGroupMateriCubit>()
+                          .getMasterGroupMateri(dataUser!.userId!,
+                              masterMateri!.idLevel!, masterMateri!.idLesson!);
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        HomePage.routeName,
+                        (route) => false,
                       );
-                  context.read<FinishMateriCubit>().finishMateri(
-                        FinishMateriRequestModel(
-                          user_id: dataUser!.userId!,
-                          id_level: masterMateri!.idLevel!,
-                          id_group_materi:
-                              readingMateri!.masterGroupMateri.idGroupMateri!,
-                          id_lesson: readingMateri!.masterGroupMateri.idLesson!,
-                          mode: 'reading',
-                        ),
-                      );
-                  context.read<LogingHeaderCubit>().setInitial();
-                  context.read<LogingLinesCubit>().setInitial();
-                  context.read<MasterMateriCubit>().setInitial();
-                  final newMasterGroupMateri = readingMateri!.masterGroupMateri;
-                  newMasterGroupMateri.statusReading = 'finish';
-                  context.read<MasterGroupMateriCubit>().getMasterGroupMateri(
-                      dataUser!.userId!,
-                      masterMateri!.idLevel!,
-                      masterMateri!.idLesson!);
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    HomePage.routeName,
-                    (route) => false,
-                  );
 
-                  // showTopSnackBar(
-                  //   Overlay.of(context),
-                  //   CustomSnackBar.success(
-                  //     message:
-                  //         "Reading ${readingMateri!.masterGroupMateri.name} has been finished, you can proceed to the exercise section",
-                  //   ),
-                  // );
-                  QuickAlert.show(
-                    context: context,
-                    type: QuickAlertType.success,
-                    text:
-                        'Reading lesson has been completed, you can now proceed to the Reading exercise',
-                  );
-                }
-              : () async {
-                  File voiceFile = File((await _mRecorder.stopRecorder())!);
-                  context.read<LogingLinesCubit>().postLogingLines(
-                        LogingLinesRequestModel(
-                          id_log_materi_header: readingMateri!.logingHeaderId,
-                          id_materi: masterMateri!.idMateri!,
-                          user_id: dataUser!.userId!,
-                          voice_try: voiceFile,
-                        ),
+                      // showTopSnackBar(
+                      //   Overlay.of(context),
+                      //   CustomSnackBar.success(
+                      //     message:
+                      //         "Reading ${readingMateri!.masterGroupMateri.name} has been finished, you can proceed to the exercise section",
+                      //   ),
+                      // );
+                      QuickAlert.show(
+                        context: context,
+                        type: QuickAlertType.success,
+                        text:
+                            'Reading lesson has been completed, you can now proceed to the Reading exercise',
                       );
-                  setState(
-                    () {
-                      ++_currentContent;
-                      _isVolumeClicked = false;
-                      _isMicrophoneClicked = false;
-                    },
-                  );
-                },
+                    }
+                  : () async {
+                      File voiceFile = File((await _mRecorder.stopRecorder())!);
+                      context.read<LogingLinesCubit>().postLogingLines(
+                            LogingLinesRequestModel(
+                              id_log_materi_header:
+                                  readingMateri!.logingHeaderId,
+                              id_materi: masterMateri!.idMateri!,
+                              user_id: dataUser!.userId!,
+                              voice_try: voiceFile,
+                            ),
+                          );
+                      setState(
+                        () {
+                          ++_currentContent;
+                          _isVolumeClicked = false;
+                          _isMicrophoneClicked = false;
+                        },
+                      );
+                    }
+              : () {},
         ),
       ),
     );

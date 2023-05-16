@@ -508,6 +508,13 @@ class _ExerciseThreeState extends State<ExerciseThree> {
                           user_id: dataUser!.userId!,
                         ));
                     if (state.isNext) {
+                      isAnswer1 = false;
+                      isAnswer2 = false;
+                      isAnswer3 = false;
+                      isAnswer4 = false;
+                      isAnswer5 = false;
+                      currentAnswerNo = 1;
+                      currentAnswer = '';
                       context.read<MasterSoalCubit>().nextContent();
                     } else {
                       context.read<FinishLatihanSoalCubit>().finishLatihanSoal(
