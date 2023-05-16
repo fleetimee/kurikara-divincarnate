@@ -398,7 +398,7 @@ class _ExerciseTwoState extends State<ExerciseTwo> {
                         context: context,
                         type: QuickAlertType.success,
                         text:
-                            'Reading exercise has been completed, please now do speaking lesson',
+                            'reading exercise complete, please now do speaking lesson',
                       );
                     }
                   },

@@ -418,7 +418,7 @@ class _ReadingSectionState extends State<ReadingSection> {
                         context: context,
                         type: QuickAlertType.success,
                         text:
-                            'Reading lesson has been completed, you can now proceed to the Reading exercise',
+                            'reading lesson complete, please now do reading exercise',
                       );
                     }
                   : () async {

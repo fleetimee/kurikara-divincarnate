@@ -623,7 +623,7 @@ class _SpeakingSectionState extends State<SpeakingSection> {
                         context: context,
                         type: QuickAlertType.success,
                         text:
-                            'Speaking lesson has been completed, you can proceed to the Speaking exercise',
+                            'speaking lesson complete, please now do speaking exercise',
                       );
                     }
                   : () async {

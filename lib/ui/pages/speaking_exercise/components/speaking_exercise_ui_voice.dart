@@ -554,7 +554,7 @@ class _SpeakingExerciseVoiceState extends State<SpeakingExerciseVoice> {
                                   context: context,
                                   type: QuickAlertType.success,
                                   text:
-                                      'Lesson has been completed, please do next lesson tomorrow',
+                                      'lesson complete, please do next lesson tomorrow',
                                 );
                               }
                             },
