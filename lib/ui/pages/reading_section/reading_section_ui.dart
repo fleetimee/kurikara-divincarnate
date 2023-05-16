@@ -305,6 +305,17 @@ class _ReadingSectionState extends State<ReadingSection> {
                                         color: Colors.red,
                                       ),
                                     ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      materi.latihanIndonesia!,
+                                      style: const TextStyle(
+                                        fontSize: 36,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.red,
+                                      ),
+                                    ),
                                   ],
                                 ),
                                 const SizedBox(
