@@ -78,6 +78,12 @@ class _ExerciseOneState extends State<ExerciseOne> {
         colorAnswerC = AppColors.greyWhite;
         colorAnswerD = AppColors.greenColor;
         break;
+      default:
+        colorAnswerA = AppColors.greyWhite;
+        colorAnswerB = AppColors.greyWhite;
+        colorAnswerC = AppColors.greyWhite;
+        colorAnswerD = AppColors.greyWhite;
+        break;
     }
     setState(() {});
   }
@@ -292,6 +298,11 @@ class _ExerciseOneState extends State<ExerciseOne> {
                       context.read<MasterSoalCubit>().nextContent();
                       isAnswer = false;
                       currentAnswer = '';
+                      colorAnswerA = AppColors.greyWhite;
+                      colorAnswerB = AppColors.greyWhite;
+                      colorAnswerC = AppColors.greyWhite;
+                      colorAnswerD = AppColors.greyWhite;
+                      setState(() {});
                     } else {
                       context.read<FinishLatihanSoalCubit>().finishLatihanSoal(
                             FinishSoalRequestModel(
