@@ -415,7 +415,7 @@ class _SpeakingSectionState extends State<SpeakingSection> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    '${materi.latihanCina2}',
+                                    '${materi.latihanCina}',
                                     style: const TextStyle(
                                       fontSize: 28,
                                       color: AppColors.orangeColor,
@@ -426,7 +426,7 @@ class _SpeakingSectionState extends State<SpeakingSection> {
                                     height: 10,
                                   ),
                                   Text(
-                                    '${materi.latihanIndonesia2}',
+                                    '${materi.latihanIndonesia}',
                                     style: const TextStyle(
                                       fontSize: 20,
                                       color: AppColors.orangeColor,
@@ -469,8 +469,8 @@ class _SpeakingSectionState extends State<SpeakingSection> {
                         Center(
                           child: ElevatedButton(
                             onPressed: getPlaybackFn(),
-                            child: const Text(
-                              'Play',
+                            child: Text(
+                              _mPlayer.isPlaying ? 'Stop' : 'Play',
                             ),
                           ),
                         ),
@@ -496,7 +496,7 @@ class _SpeakingSectionState extends State<SpeakingSection> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    '${materi.latihanCina}',
+                                    '${materi.latihanCina2}',
                                     style: const TextStyle(
                                       fontSize: 28,
                                       color: AppColors.orangeColor,
@@ -507,7 +507,7 @@ class _SpeakingSectionState extends State<SpeakingSection> {
                                     height: 10,
                                   ),
                                   Text(
-                                    '${materi.latihanIndonesia}',
+                                    '${materi.latihanIndonesia2}',
                                     style: const TextStyle(
                                       fontSize: 20,
                                       color: AppColors.orangeColor,
@@ -550,8 +550,8 @@ class _SpeakingSectionState extends State<SpeakingSection> {
                         Center(
                           child: ElevatedButton(
                             onPressed: getPlaybackFn2(),
-                            child: const Text(
-                              'Play',
+                            child: Text(
+                              _mPlayer2.isPlaying ? 'Stop' : 'Play',
                             ),
                           ),
                         ),
