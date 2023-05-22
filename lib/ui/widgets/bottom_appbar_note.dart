@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../common/constants/color.dart';
 
-
 class BottomAppBarWithNotes extends StatelessWidget {
   const BottomAppBarWithNotes({
     super.key,
@@ -48,7 +47,7 @@ class BottomAppBarWithNotes extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'This lesson must finish in one day. If you miss this leasone you must finish previous lesson to learn & finish this lesson ',
+                          'Do the lesson daily.',
                           style: TextStyle(
                             fontSize: 14,
                             color: AppColors.blackColor,

@@ -65,7 +65,7 @@ class SpeakingExerciseTopSection extends StatelessWidget {
           ),
         ),
         const SizedBox(
-          height: 60,
+          height: 20,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

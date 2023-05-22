@@ -13,8 +13,7 @@ import 'package:just_audio/just_audio.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_sound_platform_interface/flutter_sound_recorder_platform_interface.dart'
     as fsr;
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
+import 'package:quickalert/quickalert.dart';
 
 import '../../../cubit/auth/user/user_cubit.dart';
 import '../../../cubit/mastering/master_group_materi/master_group_materi_cubit.dart';
@@ -43,6 +42,7 @@ class SpeakingSection extends StatefulWidget {
 
 class _SpeakingSectionState extends State<SpeakingSection> {
   DataUser? dataUser;
+  // ignore: unused_field
   bool _isVolumeClicked = false;
   bool _isMicrophoneClicked = false;
   bool _isMicrophoneClicked2 = false;
@@ -313,12 +313,6 @@ class _SpeakingSectionState extends State<SpeakingSection> {
     return _mPlayer2.isStopped ? play2 : stopPlayer2;
   }
 
-  void _playAudio(audioUrl) async {
-    await player.setUrl(audioUrl);
-    player.setVolume(5.0);
-    player.play();
-  }
-
   @override
   Widget build(BuildContext context) {
     readingMateri = ModalRoute.of(context)!.settings.arguments as ReadingMateri;
@@ -363,10 +357,10 @@ class _SpeakingSectionState extends State<SpeakingSection> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const SizedBox(
-                        height: 60,
+                        height: 20,
                       ),
                       Container(
-                        height: 300,
+                        height: MediaQuery.of(context).size.height * 0.3,
                         width: 300,
                         decoration: BoxDecoration(
                           borderRadius:
@@ -421,95 +415,6 @@ class _SpeakingSectionState extends State<SpeakingSection> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    '${materi.latihanCina2}',
-                                    style: const TextStyle(
-                                      fontSize: 28,
-                                      color: AppColors.orangeColor,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(
-                                    '${materi.latihanIndonesia2}',
-                                    style: const TextStyle(
-                                      fontSize: 20,
-                                      color: AppColors.orangeColor,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20.0,
-                      ),
-                      Center(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            InkWell(
-                              onTap: getRecorderFn(),
-                              child: Image.asset(
-                                "assets/images/microphone.png",
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              _mRecorder.isRecording ? 'Stop' : 'Speak',
-                              style: const TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.yellowColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      if (_isMicrophoneClicked)
-                        Center(
-                          child: ElevatedButton(
-                            onPressed: getPlaybackFn(),
-                            child: const Text(
-                              'Play',
-                            ),
-                          ),
-                        ),
-                      const SizedBox(
-                        height: 80,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 36),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            InkWell(
-                              onTap: () => playLatihanVoice(
-                                  '${materi.latihanUrlFile}${materi.latihanVoice2}'),
-                              child: Image.asset(
-                                "assets/images/volume_reading.png",
-                                height: 40,
-                                fit: BoxFit.contain,
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
                                     '${materi.latihanCina}',
                                     style: const TextStyle(
                                       fontSize: 28,
@@ -534,8 +439,86 @@ class _SpeakingSectionState extends State<SpeakingSection> {
                           ],
                         ),
                       ),
-                      const SizedBox(
-                        height: 20.0,
+                      Center(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            InkWell(
+                              onTap: getRecorderFn(),
+                              child: Image.asset(
+                                "assets/images/microphone.png",
+                                fit: BoxFit.contain,
+                                height: 80,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              _mRecorder.isRecording ? 'Stop' : 'Speak',
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.yellowColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      if (_isMicrophoneClicked)
+                        Center(
+                          child: ElevatedButton(
+                            onPressed: getPlaybackFn(),
+                            child: Text(
+                              _mPlayer.isPlaying ? 'Stop' : 'Play',
+                            ),
+                          ),
+                        ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 36),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            InkWell(
+                              onTap: () => playLatihanVoice(
+                                  '${materi.latihanUrlFile}${materi.latihanVoice2}'),
+                              child: Image.asset(
+                                "assets/images/volume_reading.png",
+                                height: 40,
+                                fit: BoxFit.contain,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    '${materi.latihanCina2}',
+                                    style: const TextStyle(
+                                      fontSize: 28,
+                                      color: AppColors.orangeColor,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    '${materi.latihanIndonesia2}',
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      color: AppColors.orangeColor,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                       Center(
                         child: Column(
@@ -545,7 +528,8 @@ class _SpeakingSectionState extends State<SpeakingSection> {
                               onTap: getRecorderFn2(),
                               child: Image.asset(
                                 "assets/images/microphone.png",
-                                fit: BoxFit.fill,
+                                fit: BoxFit.contain,
+                                height: 80,
                               ),
                             ),
                             const SizedBox(
@@ -554,7 +538,7 @@ class _SpeakingSectionState extends State<SpeakingSection> {
                             Text(
                               _mRecorder2.isRecording ? 'Stop' : 'Speak',
                               style: const TextStyle(
-                                fontSize: 24,
+                                fontSize: 16,
                                 fontWeight: FontWeight.bold,
                                 color: AppColors.yellowColor,
                               ),
@@ -562,21 +546,15 @@ class _SpeakingSectionState extends State<SpeakingSection> {
                           ],
                         ),
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
                       if (_isMicrophoneClicked2)
                         Center(
                           child: ElevatedButton(
                             onPressed: getPlaybackFn2(),
-                            child: const Text(
-                              'Play',
+                            child: Text(
+                              _mPlayer2.isPlaying ? 'Stop' : 'Play',
                             ),
                           ),
                         ),
-                      const SizedBox(
-                        height: 90,
-                      ),
                     ],
                   ),
                 ),
@@ -633,12 +611,19 @@ class _SpeakingSectionState extends State<SpeakingSection> {
                         (route) => false,
                       );
 
-                      showTopSnackBar(
-                        Overlay.of(context),
-                        CustomSnackBar.success(
-                          message:
-                              "Speaking ${readingMateri!.masterGroupMateri.name} has been finished, you can proceed to the exercise section",
-                        ),
+                      // showTopSnackBar(
+                      //   Overlay.of(context),
+                      //   CustomSnackBar.success(
+                      //     message:
+                      //         "Speaking ${readingMateri!.masterGroupMateri.name} has been finished, you can proceed to the exercise section",
+                      //   ),
+                      // );
+
+                      QuickAlert.show(
+                        context: context,
+                        type: QuickAlertType.success,
+                        text:
+                            'speaking lesson complete, please now do speaking exercise',
                       );
                     }
                   : () async {

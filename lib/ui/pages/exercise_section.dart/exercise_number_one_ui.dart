@@ -6,8 +6,7 @@ import 'package:flutter_huixin_app/cubit/soal/latihan_soal_header/latihan_soal_h
 import 'package:flutter_huixin_app/cubit/soal/latihan_soal_lines/latihan_soal_lines_cubit.dart';
 import 'package:flutter_huixin_app/data/models/auth/auth_response_model.dart';
 import 'package:flutter_huixin_app/ui/pages/home/home_ui.dart';
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
+import 'package:quickalert/quickalert.dart';
 
 import '../../../common/constants/color.dart';
 import '../../../cubit/mastering/master_group_materi/master_group_materi_cubit.dart';
@@ -39,6 +38,8 @@ class _ExerciseOneState extends State<ExerciseOne> {
           orElse: () => null,
           loaded: (value) => value.data,
         );
+    isAnswer = false;
+    currentAnswer = '';
     super.initState();
   }
 
@@ -76,6 +77,12 @@ class _ExerciseOneState extends State<ExerciseOne> {
         colorAnswerB = AppColors.greyWhite;
         colorAnswerC = AppColors.greyWhite;
         colorAnswerD = AppColors.greenColor;
+        break;
+      default:
+        colorAnswerA = AppColors.greyWhite;
+        colorAnswerB = AppColors.greyWhite;
+        colorAnswerC = AppColors.greyWhite;
+        colorAnswerD = AppColors.greyWhite;
         break;
     }
     setState(() {});
@@ -289,6 +296,13 @@ class _ExerciseOneState extends State<ExerciseOne> {
                         ));
                     if (state.isNext) {
                       context.read<MasterSoalCubit>().nextContent();
+                      isAnswer = false;
+                      currentAnswer = '';
+                      colorAnswerA = AppColors.greyWhite;
+                      colorAnswerB = AppColors.greyWhite;
+                      colorAnswerC = AppColors.greyWhite;
+                      colorAnswerD = AppColors.greyWhite;
+                      setState(() {});
                     } else {
                       context.read<FinishLatihanSoalCubit>().finishLatihanSoal(
                             FinishSoalRequestModel(
@@ -309,7 +323,6 @@ class _ExerciseOneState extends State<ExerciseOne> {
                                       state.data.data!.idLesson.toString()),
                               mode: 'reading',
                             ),
-
                           );
                       context.read<MasterSoalCubit>().setInitial();
                       context.read<LatihanSoalHeaderCubit>().setInitial();
@@ -334,12 +347,18 @@ class _ExerciseOneState extends State<ExerciseOne> {
                         (route) => false,
                       );
 
-                      showTopSnackBar(
-                        Overlay.of(context),
-                        const CustomSnackBar.success(
-                          message:
-                              "Exercise has been completed, please check your score in the reporting menu",
-                        ),
+                      // showTopSnackBar(
+                      //   Overlay.of(context),
+                      //   const CustomSnackBar.success(
+                      //     message:
+                      //         "Exercise has been completed, please check your score in the reporting menu",
+                      //   ),
+                      // );
+                      QuickAlert.show(
+                        context: context,
+                        type: QuickAlertType.success,
+                        text:
+                            'reading exercise complete, please now do speaking lesson',
                       );
                     }
                   },

@@ -19,13 +19,13 @@ class BottomNavigationBarButton extends StatelessWidget {
         topLeft: Radius.circular(20.0),
         topRight: Radius.circular(20.0),
       ),
-      child: BottomAppBar(
-        color: color,
-        child: SizedBox(
-          height: 70,
-          child: Center(
-            child: InkWell(
-              onTap: onTap,
+      child: InkWell(
+        onTap: onTap,
+        child: BottomAppBar(
+          color: color,
+          child: SizedBox(
+            height: 70,
+            child: Center(
               child: Text(
                 name,
                 style: const TextStyle(

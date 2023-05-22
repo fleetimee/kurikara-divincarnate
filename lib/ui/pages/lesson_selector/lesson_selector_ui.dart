@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_huixin_app/cubit/entities/lesson_selector.dart';
 import 'package:flutter_huixin_app/cubit/mastering/master_lesson/master_lesson_cubit.dart';
 import 'package:flutter_huixin_app/ui/pages/lesson_selector/componetns/lesson_selector_ui_master_lesson_tile_loaded.dart';
 import 'package:flutter_huixin_app/ui/widgets/appbar/appbar_style.dart';

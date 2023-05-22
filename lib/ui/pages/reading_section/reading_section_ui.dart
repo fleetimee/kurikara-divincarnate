@@ -15,14 +15,12 @@ import 'package:flutter_huixin_app/data/models/materi_pelajaran/requests/loging_
 import 'package:flutter_huixin_app/ui/pages/home/home_ui.dart';
 import 'package:flutter_huixin_app/ui/widgets/not_found.dart';
 import 'package:flutter_sound/flutter_sound.dart';
-import 'package:just_audio/just_audio.dart';
 
 // import 'package:just_audio/just_audio.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_sound_platform_interface/flutter_sound_recorder_platform_interface.dart'
     as fsr;
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
+import 'package:quickalert/quickalert.dart';
 
 import '../../../common/constants/color.dart';
 import '../../../cubit/auth/user/user_cubit.dart';
@@ -268,15 +266,24 @@ class _ReadingSectionState extends State<ReadingSection> {
                                   ),
                                 ),
                                 Positioned(
-                                  top: 260,
-                                  left: 323,
-                                  child: InkWell(
-                                    onTap: () => setState(() {
-                                      _isVolumeClicked = true;
-                                    }),
-                                    child: Image.asset(
+                                  top: MediaQuery.of(context).size.height *
+                                      0.267,
+                                  left: MediaQuery.of(context).size.width * 0.6,
+                                  child: IconButton(
+                                    enableFeedback: true,
+                                    iconSize: 50,
+                                    onPressed: () {
+                                      setState(() {
+                                        _isVolumeClicked = true;
+
+                                        playAnswer(
+                                            '${materi.latihanUrlFile!.replaceAll('/level', '')}${materi.latihanVoice}');
+                                      });
+                                    },
+                                    icon: Image.asset(
                                       "assets/images/volume_reading.png",
-                                      fit: BoxFit.fill,
+                                      fit: BoxFit.contain,
+                                      height: 50,
                                     ),
                                   ),
                                 ),
@@ -298,66 +305,22 @@ class _ReadingSectionState extends State<ReadingSection> {
                                         color: Colors.red,
                                       ),
                                     ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      materi.latihanIndonesia!,
+                                      style: const TextStyle(
+                                        fontSize: 36,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.red,
+                                      ),
+                                    ),
                                   ],
                                 ),
-                                _isMicrophoneClicked
-                                    ? InkWell(
-                                        onTap: () {
-                                          playAnswer(
-                                              '${materi.latihanUrlFile!.replaceAll('/level', '')}${materi.latihanVoice}');
-                                        },
-                                        child: Column(
-                                          children: [
-                                            const SizedBox(
-                                              height: 20,
-                                            ),
-                                            Center(
-                                              child: Container(
-                                                height: 80,
-                                                width: 300,
-                                                decoration: const BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(10)),
-                                                  color: AppColors.lightGreen,
-                                                ),
-                                                child: Center(
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      const Text(
-                                                        "Correct \nAnswer",
-                                                        style: TextStyle(
-                                                          fontSize: 24,
-                                                          color: Colors.black,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
-                                                      ),
-                                                      const SizedBox(
-                                                        width: 25,
-                                                      ),
-                                                      Image.asset(
-                                                        "assets/images/volume_ok.png",
-                                                        fit: BoxFit.fill,
-                                                        height: 40,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 20,
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                    : const SizedBox(
-                                        height: 100,
-                                      ),
+                                const SizedBox(
+                                  height: 100,
+                                ),
                                 Column(
                                   children: [
                                     GestureDetector(
@@ -404,68 +367,80 @@ class _ReadingSectionState extends State<ReadingSection> {
           name: totalContent == _currentContent + 2 ? 'FINISH' : 'NEXT',
           color:
               _isMicrophoneClicked ? AppColors.greenColor : AppColors.greyWhite,
-          onTap: totalContent == _currentContent + 2
-              ? () async {
-                  File voiceFile = File((await _mRecorder.stopRecorder())!);
-                  context.read<LogingLinesCubit>().postLogingLines(
-                        LogingLinesRequestModel(
-                          id_log_materi_header: readingMateri!.logingHeaderId,
-                          id_materi: masterMateri!.idMateri!,
-                          user_id: dataUser!.userId!,
-                          voice_try: voiceFile,
-                        ),
+          onTap: _isMicrophoneClicked
+              ? totalContent == _currentContent + 2
+                  ? () async {
+                      File voiceFile = File((await _mRecorder.stopRecorder())!);
+                      context.read<LogingLinesCubit>().postLogingLines(
+                            LogingLinesRequestModel(
+                              id_log_materi_header:
+                                  readingMateri!.logingHeaderId,
+                              id_materi: masterMateri!.idMateri!,
+                              user_id: dataUser!.userId!,
+                              voice_try: voiceFile,
+                            ),
+                          );
+                      context.read<FinishMateriCubit>().finishMateri(
+                            FinishMateriRequestModel(
+                              user_id: dataUser!.userId!,
+                              id_level: masterMateri!.idLevel!,
+                              id_group_materi: readingMateri!
+                                  .masterGroupMateri.idGroupMateri!,
+                              id_lesson:
+                                  readingMateri!.masterGroupMateri.idLesson!,
+                              mode: 'reading',
+                            ),
+                          );
+                      context.read<LogingHeaderCubit>().setInitial();
+                      context.read<LogingLinesCubit>().setInitial();
+                      context.read<MasterMateriCubit>().setInitial();
+                      final newMasterGroupMateri =
+                          readingMateri!.masterGroupMateri;
+                      newMasterGroupMateri.statusReading = 'finish';
+                      context
+                          .read<MasterGroupMateriCubit>()
+                          .getMasterGroupMateri(dataUser!.userId!,
+                              masterMateri!.idLevel!, masterMateri!.idLesson!);
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        HomePage.routeName,
+                        (route) => false,
                       );
-                  context.read<FinishMateriCubit>().finishMateri(
-                        FinishMateriRequestModel(
-                          user_id: dataUser!.userId!,
-                          id_level: masterMateri!.idLevel!,
-                          id_group_materi:
-                              readingMateri!.masterGroupMateri.idGroupMateri!,
-                          id_lesson: readingMateri!.masterGroupMateri.idLesson!,
-                          mode: 'reading',
-                        ),
-                      );
-                  context.read<LogingHeaderCubit>().setInitial();
-                  context.read<LogingLinesCubit>().setInitial();
-                  context.read<MasterMateriCubit>().setInitial();
-                  final newMasterGroupMateri = readingMateri!.masterGroupMateri;
-                  newMasterGroupMateri.statusReading = 'finish';
-                  context.read<MasterGroupMateriCubit>().getMasterGroupMateri(
-                      dataUser!.userId!,
-                      masterMateri!.idLevel!,
-                      masterMateri!.idLesson!);
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    HomePage.routeName,
-                    (route) => false,
-                  );
 
-                  showTopSnackBar(
-                    Overlay.of(context),
-                    CustomSnackBar.success(
-                      message:
-                          "Reading ${readingMateri!.masterGroupMateri.name} has been finished, you can proceed to the exercise section",
-                    ),
-                  );
-                }
-              : () async {
-                  File voiceFile = File((await _mRecorder.stopRecorder())!);
-                  context.read<LogingLinesCubit>().postLogingLines(
-                        LogingLinesRequestModel(
-                          id_log_materi_header: readingMateri!.logingHeaderId,
-                          id_materi: masterMateri!.idMateri!,
-                          user_id: dataUser!.userId!,
-                          voice_try: voiceFile,
-                        ),
+                      // showTopSnackBar(
+                      //   Overlay.of(context),
+                      //   CustomSnackBar.success(
+                      //     message:
+                      //         "Reading ${readingMateri!.masterGroupMateri.name} has been finished, you can proceed to the exercise section",
+                      //   ),
+                      // );
+                      QuickAlert.show(
+                        context: context,
+                        type: QuickAlertType.success,
+                        text:
+                            'reading lesson complete, please now do reading exercise',
                       );
-                  setState(
-                    () {
-                      ++_currentContent;
-                      _isVolumeClicked = false;
-                      _isMicrophoneClicked = false;
-                    },
-                  );
-                },
+                    }
+                  : () async {
+                      File voiceFile = File((await _mRecorder.stopRecorder())!);
+                      context.read<LogingLinesCubit>().postLogingLines(
+                            LogingLinesRequestModel(
+                              id_log_materi_header:
+                                  readingMateri!.logingHeaderId,
+                              id_materi: masterMateri!.idMateri!,
+                              user_id: dataUser!.userId!,
+                              voice_try: voiceFile,
+                            ),
+                          );
+                      setState(
+                        () {
+                          ++_currentContent;
+                          _isVolumeClicked = false;
+                          _isMicrophoneClicked = false;
+                        },
+                      );
+                    }
+              : () {},
         ),
       ),
     );

@@ -19,15 +19,16 @@ class SpeakingExerciseMicrophone extends StatelessWidget {
         children: [
           Image.asset(
             "assets/images/microphone.png",
-            fit: BoxFit.fill,
+            fit: BoxFit.contain,
+            height: 65,
           ),
           const SizedBox(
-            height: 20,
+            height: 5,
           ),
           Text(
             text,
             style: const TextStyle(
-              fontSize: 28,
+              fontSize: 20,
               fontWeight: FontWeight.bold,
               color: AppColors.yellowColor,
             ),
